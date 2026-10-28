@@ -138,7 +138,12 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:2;opac
 .box{display:grid;justify-items:center;gap:14px;text-align:center}
 .box a{display:grid;justify-items:center;gap:10px;text-decoration:none;position:relative}
 .box a::before{content:"";position:absolute;top:-10%;left:50%;width:120%;height:90%;transform:translateX(-50%);background:radial-gradient(ellipse at center,rgba(230,190,130,.14),transparent 65%);z-index:-1}
-.box svg{width:min(100%,380px);height:auto}
+.box .pic{margin:0;width:min(100%,720px);position:relative;padding:10px;border:1px solid var(--line);border-radius:6px;background:rgba(196,166,118,.05);box-shadow:0 0 0 6px rgba(196,166,118,.04),0 24px 50px rgba(0,0,0,.45);transition:transform .35s,box-shadow .35s}
+.box .pic img{display:block;width:100%;height:auto;border-radius:3px}
+.box .pic::before,.box .pic::after{content:"";position:absolute;inset:10px;border-radius:3px;pointer-events:none}
+.box .pic::before{background:#c9a26a;mix-blend-mode:soft-light;opacity:.4}
+.box .pic::after{background:radial-gradient(ellipse 60% 70% at 50% 45%,rgba(255,226,170,.12),transparent 70%),linear-gradient(180deg,rgba(0,0,0,0) 60%,rgba(23,17,12,.35))}
+.box a:hover .pic,.box a:focus-visible .pic{transform:translateY(-3px);box-shadow:0 0 0 6px rgba(196,166,118,.08),0 30px 60px rgba(0,0,0,.5)}
 .box svg .lid{transition:transform .35s;transform-origin:30% 100%}
 .box a:hover svg .lid,.box a:focus-visible svg .lid{transform:translateY(-6px) rotate(-3deg)}
 .box .tt{font-family:var(--ko);font-weight:800;font-size:24px;color:var(--parch)}
@@ -278,20 +283,7 @@ footer{text-align:center;font-family:var(--caps);font-size:10px;letter-spacing:.
 
     <section id="box" class="box" aria-labelledby="box-h">
       <div class="sec"><span class="k">the Walnut Box</span><h2 id="box-h">호두나무 상자</h2></div>
-      <a href="letters.html"><svg viewBox="0 0 360 240" role="img" aria-label="편지가 비죽 나온 호두나무 상자">
-<defs><linearGradient id="wb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7a5236"/><stop offset=".5" stop-color="#5a3d29"/><stop offset="1" stop-color="#43291a"/></linearGradient></defs>
-<ellipse cx="180" cy="222" rx="150" ry="10" fill="#000" opacity=".22"/>
-<rect x="70" y="92" width="22" height="70" fill="#f2e6d0" stroke="#bfa47e" transform="rotate(-8 81 127)"/>
-<rect x="96" y="80" width="150" height="70" fill="#f6ecda" stroke="#bfa47e"/>
-<rect x="112" y="72" width="150" height="70" fill="#efe1c7" stroke="#bfa47e" transform="rotate(3 187 107)"/>
-<path d="M112 72 l75 40 75 -40" fill="none" stroke="#bfa47e" transform="rotate(3 187 107)"/>
-<circle cx="196" cy="112" r="11" fill="#8e2f25" transform="rotate(3 187 107)"/>
-<rect x="250" y="84" width="40" height="64" fill="#8e2f25" transform="rotate(10 270 116)"/>
-<rect x="40" y="120" width="280" height="96" rx="4" fill="url(#wb)"/>
-<path d="M52 140 c40 -6 80 6 120 0 s80 -6 136 2 M52 166 c50 -4 90 8 140 2 s70 -8 116 0 M52 192 c40 -6 90 6 130 0 s80 -4 126 2" stroke="#1e120a" stroke-width="1.2" fill="none" opacity=".5"/>
-<rect x="168" y="146" width="24" height="18" rx="2" fill="#e0bd6e"/><circle cx="180" cy="155" r="3" fill="#5a3d29"/>
-<g class="lid"><path d="M34 120 h292 l-14 -26 H48z" fill="#6b4630"/><path d="M48 94 H312" stroke="#1e120a" stroke-width="1.2" opacity=".5"/></g>
-</svg><span class="tt">루카스의 편지 61통</span><span class="sub">JANUARY 9 — MARCH 2 · OPEN</span></a>
+      <a href="letters.html"><figure class="pic"><img src="box.jpg" alt="편지가 비죽 나온 호두나무 상자" width="1600" height="726" loading="lazy"></figure><span class="tt">루카스의 편지 61통</span><span class="sub">JANUARY 9 — MARCH 2 · OPEN</span></a>
     </section>
 
     <div class="vault" id="vault"><a href="take3-draft.html">THE VAULT · new take#3 버린 원고</a></div>
