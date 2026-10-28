@@ -7,23 +7,23 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@900&family=Nanum+Gothic:wght@400;700;800&display=swap">
 <style>
 :root{
-  --desk:#d8d4d4; --ink:#141012; --pink:#ff6f9c; --pink-soft:#ffd3e2;
-  --face:#c9c4c4; --hi:#ffffff; --lo:#7c7676; --paper:#f4f2f2;
+  --desk:#17110c; --ink:#21180f; --pink:#8f7149; --pink-soft:#eadfc9;
+  --face:#d8cbb3; --hi:#f4ecdc; --lo:#8c7b62; --paper:#f3ece0;
   --display:"Noto Serif KR","Times New Roman",serif;
   --body:"Nanum Gothic","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
 }
 *{box-sizing:border-box}
 html,body{height:100%;margin:0}
 [hidden]{display:none!important}
-body{background:var(--desk);color:var(--ink);font-family:var(--body);font-size:14px;
+body{background:radial-gradient(ellipse 80% 45% at 50% 0%,rgba(214,180,120,.14),transparent 70%) no-repeat var(--desk);color:var(--ink);font-family:var(--body);font-size:14px;
   padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(24px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
 .wrap{max-width:440px;margin:0 auto;display:flex;flex-direction:column;gap:14px;min-height:100%}
-h1{font-family:var(--display);font-weight:900;font-size:clamp(28px,8vw,38px);letter-spacing:-.5px;margin:0;line-height:1.05}
-h1 small{display:block;font-family:var(--body);font-size:13px;font-weight:700;letter-spacing:.08em;color:#5c5456;margin-top:6px}
+h1{color:#ece2cd;font-family:var(--display);font-weight:900;font-size:clamp(28px,8vw,38px);letter-spacing:-.5px;margin:0;line-height:1.05}
+h1 small{display:block;font-family:var(--body);font-size:13px;font-weight:700;letter-spacing:.08em;color:#c4a676;margin-top:6px}
 
 .win{background:var(--face);padding:3px;
-  box-shadow:inset -2px -2px 0 var(--ink),inset 2px 2px 0 var(--hi),inset -4px -4px 0 var(--lo),inset 4px 4px 0 #e6e2e2}
-.bar{background:var(--pink);color:#fff;display:flex;align-items:center;gap:8px;padding:5px 6px 5px 8px;font-weight:800;font-size:15px;text-shadow:1px 1px 0 #b03a62}
+  box-shadow:inset -2px -2px 0 var(--ink),inset 2px 2px 0 var(--hi),inset -4px -4px 0 var(--lo),inset 4px 4px 0 #efe6d6}
+.bar{background:var(--pink);color:#fff;display:flex;align-items:center;gap:8px;padding:5px 6px 5px 8px;font-weight:800;font-size:15px;text-shadow:1px 1px 0 #5e4630}
 .bar .ttl{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .heart{width:16px;height:14px;flex:none;image-rendering:pixelated}
 .wbtn{width:20px;height:18px;background:var(--face);color:var(--ink);font:700 11px/16px var(--body);text-align:center;text-shadow:none;
@@ -35,10 +35,10 @@ h1 small{display:block;font-family:var(--body);font-size:13px;font-weight:700;le
   box-shadow:inset 2px 2px 0 var(--lo),inset -2px -2px 0 var(--hi),inset 3px 3px 0 var(--ink)}
 .cover{margin:auto;text-align:center;display:flex;flex-direction:column;gap:10px;padding:10px}
 .cover b{font-family:var(--display);font-weight:900;font-size:40px;letter-spacing:-1px}
-.cover span{font-size:13px;color:#5c5456;line-height:1.6}
-.chap{align-self:center;font-weight:800;font-size:12px;padding:3px 12px;background:var(--pink);color:#fff;text-shadow:1px 1px 0 #b03a62;
-  box-shadow:inset -1px -1px 0 #b03a62,inset 1px 1px 0 #ffb1c8;margin-top:6px}
-.nar{align-self:stretch;background:#ece8e8;border:1px dashed #9b9394;padding:8px 10px;font-size:13px;line-height:1.55;color:#4b4244;text-align:center;word-break:keep-all}
+.cover span{font-size:13px;color:#6d5d4a;line-height:1.6}
+.chap{align-self:center;font-weight:800;font-size:12px;padding:3px 12px;background:var(--pink);color:#fff;text-shadow:1px 1px 0 #5e4630;
+  box-shadow:inset -1px -1px 0 #5e4630,inset 1px 1px 0 #c9ad84;margin-top:6px}
+.nar{align-self:stretch;background:#ebe2d2;border:1px dashed #b3a184;padding:8px 10px;font-size:13px;line-height:1.55;color:#4a3d30;text-align:center;word-break:keep-all}
 .msg{display:flex;gap:8px;align-items:flex-start;max-width:100%;animation:pop .2s ease-out}
 .msg.me{flex-direction:row-reverse}
 .av{width:44px;height:44px;flex:none;border:2px solid var(--ink);background:#fff;object-fit:cover;box-shadow:2px 2px 0 rgba(0,0,0,.25)}
@@ -49,27 +49,27 @@ h1 small{display:block;font-family:var(--body);font-size:13px;font-weight:700;le
 .me .bub{background:var(--pink-soft)}
 .nar,.chap{animation:pop .2s ease-out}
 .input{display:flex;gap:6px;margin:0 4px 4px}
-.field{flex:1;min-width:0;background:#fff;font-size:13px;color:#9a9294;padding:7px 8px;box-shadow:inset 2px 2px 0 var(--lo),inset -2px -2px 0 var(--hi)}
+.field{flex:1;min-width:0;background:#fff;font-size:13px;color:#9a8d7c;padding:7px 8px;box-shadow:inset 2px 2px 0 var(--lo),inset -2px -2px 0 var(--hi)}
 .send{font-size:13px;font-weight:800;padding:0 12px;display:flex;align-items:center;box-shadow:inset -1px -1px 0 var(--ink),inset 1px 1px 0 var(--hi),inset -2px -2px 0 var(--lo)}
 .status{display:flex;gap:4px;margin:0 4px 1px;font-size:11px}
 .status span{padding:2px 6px;box-shadow:inset 1px 1px 0 var(--lo),inset -1px -1px 0 var(--hi);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #st1{flex:1}#st2{min-width:96px;text-align:right}
 .ctrl{display:flex;gap:10px}
 .btn{flex:1;padding:13px 8px;background:var(--face);border:0;font:800 16px var(--body);color:var(--ink);cursor:pointer;
-  box-shadow:inset -2px -2px 0 var(--ink),inset 2px 2px 0 var(--hi),inset -4px -4px 0 var(--lo),inset 4px 4px 0 #e6e2e2}
+  box-shadow:inset -2px -2px 0 var(--ink),inset 2px 2px 0 var(--hi),inset -4px -4px 0 var(--lo),inset 4px 4px 0 #efe6d6}
 .btn:active{box-shadow:inset 2px 2px 0 var(--ink),inset -2px -2px 0 var(--hi),inset 4px 4px 0 var(--lo)}
-.btn.main{flex:2;background:var(--pink);color:#fff;text-shadow:1px 1px 0 #b03a62}
-.btn:disabled{color:#8a8484;text-shadow:none;cursor:default}
-.btn.main:disabled{background:#e9a9be}
+.btn.main{flex:2;background:var(--pink);color:#fff;text-shadow:1px 1px 0 #5e4630}
+.btn:disabled{color:#8f826f;text-shadow:none;cursor:default}
+.btn.main:disabled{background:#bfa888}
 .btn:focus-visible{outline:2px dashed var(--ink);outline-offset:3px}
-.hint{font-size:12px;color:#5c5456;margin:0;text-align:center}
+.hint{font-size:12px;color:#a39580;margin:0;text-align:center}
 @keyframes pop{from{transform:translateY(6px);opacity:.3}to{transform:none;opacity:1}}
 @media (prefers-reduced-motion:reduce){.msg,.nar,.chap{animation:none}.panel{scroll-behavior:auto}}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <a href="index.html" onclick="if(history.length>1){history.back();return false}" style="display:inline-block;margin:0 0 10px;padding:4px 12px;border:2px solid #141012;background:#fff;color:#141012;font:700 13px/1.4 sans-serif;text-decoration:none">← 목록으로</a>
+  <a href="index.html" onclick="if(history.length>1){history.back();return false}" style="display:inline-block;align-self:flex-start;margin:0 0 10px;padding:4px 14px;border:1px solid rgba(196,166,118,.5);border-radius:20px;background:transparent;color:#e6d6b2;font:700 13px/1.4 sans-serif;text-decoration:none">← 목록으로</a>
   <h1>new take#4<small>Heidelberg · 61통</small></h1>
   <div class="win">
     <div class="bar">
