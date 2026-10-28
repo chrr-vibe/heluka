@@ -111,7 +111,7 @@ let pos=0,shown=0;   // pos: STORY 인덱스, shown: 보여 준 장면 수(제�
 
 function build(s){
   const k=s[0],t=s[1];
-  if(k==='H'){const e=document.createElement('div');e.className='chap';e.textContent=t;const c=Object.keys(CAROL).find(x=>t.startsWith(x));if(c){const a=document.createElement('a');a.className='carol';a.target='_blank';a.rel='noopener';a.href='https://www.youtube.com/results?search_query='+encodeURIComponent(CAROL[c][1]);const ct=CAROL[c][0].replace(/ · (\d장까지|끝까지)$/,'');a.onclick=function(ev){if(window.bgmPlay){ev.preventDefault();window.bgmPlay(CAROLID[c],ct);}};window.__carolNow=[CAROLID[c],ct];if(window.bgmAuto)window.bgmAuto(CAROLID[c],ct);a.textContent='♪ '+CAROL[c][0];e.appendChild(document.createElement('br'));e.appendChild(a);}return e;}
+  if(k==='H'){const e=document.createElement('div');e.className='chap';e.textContent=t;const c=null;if(c){const a=document.createElement('a');a.className='carol';a.target='_blank';a.rel='noopener';a.href='https://www.youtube.com/results?search_query='+encodeURIComponent(CAROL[c][1]);const ct=CAROL[c][0].replace(/ · (\d장까지|끝까지)$/,'');a.onclick=function(ev){if(window.bgmPlay){ev.preventDefault();window.bgmPlay(CAROLID[c],ct);}};a.textContent='♪ '+CAROL[c][0];e.appendChild(document.createElement('br'));e.appendChild(a);}return e;}
   if(k==='N'){const e=document.createElement('div');e.className='nar';e.textContent=t;return e;}
   const who=k==='L'?'me':({K:'k',M:'m',O:'o',D:'d',R:'r',G:'g',U:'u'}[k]||'p'),e=document.createElement('div');
   e.className='msg'+(who==='me'?' me':'');
@@ -175,6 +175,6 @@ const px=(p.x+Math.sin(t/2400+p.d)*.01)*w,py=p.y*h;x.beginPath();x.arc(px,py,p.r
 if(!still)requestAnimationFrame(draw)}
 requestAnimationFrame(draw)})();
 </script>
-<!--bgm--><script>window.BGM={"ids": ["hJw-ey1DPRA", "Y1oLk54R5Xg"], "title": "O Holy Night"};</script><script src="bgm.js" defer></script><!--/bgm-->
+<!--bgm--><script>window.BGM={"ids": ["5kHH6LJpEbQ", "b27DylO-ucw", "UE3rqdjHP3U"], "title": "Somewhere in My Memory · John Williams"};</script><script src="bgm.js" defer></script><!--/bgm-->
 </body>
 </html>
