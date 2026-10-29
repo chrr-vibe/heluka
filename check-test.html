@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>서방력 · 마누라력</title>
+<style>html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}*{box-sizing:border-box}</style>
+</head>
+<body>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Cinzel:wght@400;600&display=swap">
+<style>
+/* Layout: an archival condition-report card per person, tabbed; two checklists side by side, stacking on phones */
+:root{
+  --paper:#17110c; --sheet:#21180f; --ink:#ece2cd; --muted:#a39580; --rule:rgba(196,166,118,.26);
+  --navy:#d4b27a; --red:#d9826a; --navySoft:rgba(212,178,122,.13); --redSoft:rgba(217,130,106,.15);
+  --acc:var(--navy); --accSoft:var(--navySoft);
+  --f-display:"Nanum Myeongjo","Noto Serif KR",serif;
+  --f-body:"Nanum Myeongjo","Noto Serif KR",serif;
+  --f-mono:"Cinzel","Times New Roman",serif;
+  color-scheme:dark;
+}
+body{background:radial-gradient(ellipse 80% 40% at 50% 0%,rgba(214,180,120,.12),transparent 70%) no-repeat var(--paper)!important}
+.back{display:inline-block;align-self:flex-start;padding:4px 14px;border:1px solid rgba(196,166,118,.5);border-radius:20px;color:#e6d6b2;font:700 13px/1.4 "Nanum Myeongjo",serif;text-decoration:none}
+.back:hover,.back:focus-visible{background:rgba(196,166,118,.15);outline:none}
+.card{box-shadow:0 0 0 5px rgba(196,166,118,.04),0 20px 40px rgba(0,0,0,.35)}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 40px}
+.wrap{max-width:880px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+body.him{--acc:var(--red);--accSoft:var(--redSoft)}
+
+.top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.top h1{font-family:var(--f-display);font-weight:800;font-size:1.35rem;margin:0;text-wrap:balance}
+.top small{font-family:var(--f-mono);font-size:.72rem;color:var(--muted);letter-spacing:.06em}
+.tabs{display:flex;gap:6px}
+.tabs a{font-family:var(--f-body);font-weight:600;font-size:.9rem;text-decoration:none;color:var(--muted);
+  padding:6px 14px;border:1px solid var(--rule);border-radius:999px}
+.tabs a[aria-current="true"]{background:var(--acc);border-color:var(--acc);color:var(--sheet)}
+.tabs a:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+
+.card{background:var(--sheet);border:1px solid var(--rule);border-radius:6px;padding:22px clamp(16px,4vw,32px);display:flex;flex-direction:column;gap:22px}
+.head{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:center}
+.photo{width:108px;aspect-ratio:1;max-width:100%;border-radius:4px;background:var(--accSoft);display:grid;place-items:center;position:relative;overflow:hidden;border:1px solid var(--rule)}
+.photo span{font-family:var(--f-display);font-weight:800;font-size:2.6rem;color:var(--acc)}
+.photo i{position:absolute;bottom:6px;right:8px;font-style:normal;font-family:var(--f-mono);font-size:.6rem;color:var(--muted)}
+.who{min-width:0}
+.who .label{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+.who h2{font-family:var(--f-display);font-weight:800;font-size:clamp(1.6rem,5vw,2.1rem);margin:2px 0 6px;line-height:1.2}
+.stats{font-family:var(--f-mono);font-size:.8rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 14px}
+.stats b{color:var(--ink);font-weight:500}
+
+.scores{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.score{border-top:2px solid var(--ink);padding-top:8px}
+.score .k{font-size:.8rem;color:var(--muted);font-weight:500}
+.score .v{font-family:var(--f-display);font-weight:800;font-size:2.3rem;line-height:1.1;font-variant-numeric:tabular-nums}
+.score .v small{font-size:.9rem;font-family:var(--f-body);font-weight:500;color:var(--muted);margin-left:2px}
+.bar{height:6px;background:var(--rule);border-radius:3px;margin-top:6px;overflow:hidden}
+.bar div{height:100%;background:var(--acc);border-radius:3px}
+.score.win .v{color:var(--acc)}
+.verdict{font-family:var(--f-display);font-size:1.05rem;margin:0;padding:12px 14px;background:var(--accSoft);border-radius:4px;line-height:1.6}
+
+.lists{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.lists section{min-width:0}
+.lists h3{font-family:var(--f-display);font-weight:800;font-size:1.1rem;margin:0 0 4px;display:flex;justify-content:space-between;align-items:baseline}
+.lists h3 span{font-family:var(--f-mono);font-size:.75rem;color:var(--muted);font-weight:400}
+ol{list-style:none;margin:0;padding:0}
+li{display:grid;grid-template-columns:22px 26px 1fr;gap:6px;padding:9px 0;border-bottom:1px solid var(--rule);align-items:start}
+li .n{font-family:var(--f-mono);font-size:.7rem;color:var(--muted);padding-top:3px;font-variant-numeric:tabular-nums}
+li .c{width:18px;height:18px;border:1.5px solid var(--rule);border-radius:3px;margin-top:2px;display:grid;place-items:center;font-size:.75rem;line-height:1}
+li.on .c{background:var(--acc);border-color:var(--acc);color:var(--sheet)}
+li .t{min-width:0}
+li .q{font-size:.92rem}
+li:not(.on) .q{color:var(--muted)}
+li .m{display:block;font-family:var(--f-display);font-size:.82rem;color:var(--muted);margin-top:1px}
+li.on .m{color:var(--acc)}
+
+footer{font-family:var(--f-mono);font-size:.72rem;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px}
+@media (max-width:640px){.lists{grid-template-columns:1fr}.head{grid-template-columns:1fr}.photo{width:92px}}
+</style>
+
+<div class="wrap">
+  <a class="back" href="index.html">← 목록으로</a>
+  <div class="top">
+    <div>
+      <h1>서방력 · 마누라력 테스트</h1>
+      <small>세계관 B · 복원가와 화가 · RH 50%</small>
+    </div>
+    <nav class="tabs" aria-label="인물 선택">
+      <a href="#luka" id="tab-luka">루카</a>
+      <a href="#him" id="tab-him">그</a>
+    </nav>
+  </div>
+  <main class="card" id="card"></main>
+  <footer><span>원본 테스트 · @4_nb_</span><span>문항은 요약해 옮겼어요</span></footer>
+</div>
+
+<script>
+const S=["가부장적인 편","책임감이 강하다","가족을 먹여 살리고 싶다","감정을 숨기고 솔직하지 못하다","가족 식사는 무슨 일이 있어도 챙긴다","아파도 티 내지 않는다","다쳐도 참고 버틴다","상대의 편식이나 남긴 음식을 받아 준다","남 앞에서 울지 않는다","독립심이 강하다","말없이 사라질 것 같다","애교가 없다","집착이 없다","카페에선 늘 커피","술이 세다","술자리에서 대신 막아 준다","눈물 대신 피를 흘릴 만큼 독하다","다리를 벌리고 앉는다","작은 위험도 막아 준다","새우 껍질, 생선 가시를 발라 준다","집에 올 때 뭘 자주 사 온다","일하느라 혹사당한다","불 속성","몸에 흉터가 있다","보수적이고 융통성이 없다"];
+const M=["집안일에 충실하다","남을 잘 받아들인다","애교가 많다","포근하게 안아 줄 수 있다","귀찮게 군다","남에게 기댈 줄 안다","감정을 잘 드러낸다","의존하는 편이다","가끔 상대를 들볶는다","남을 잘 챙긴다","외로움을 잘 탄다","단나사마 율동을 할 수 있다","집착이 강하다","적게 먹고 편식한다","카페에선 허니브레드","손이 많이 간다","아프면 울음부터 터진다","얌전하게 앉는다","사소한 걸로 시비를 건다","발라 준 음식을 받아먹는다","기다리는 데 익숙하다","혼자서도 묵묵히 제 몫을 한다","물 속성","피부가 깨끗하다","생각이 유연하다"];
+
+const P={
+ luka:{name:"루카스 아스카니엔",tag:"Lukas Askanien · 루카",mono:"L",
+  stats:[["생일","10월 18일"],["직업","고문헌 복원가 15년 차"],["습관","습도 50%"]],
+  s:[[0,"가부장보다는 습도계장"],[1,"0.1밀리까지"],[1,"냉장고에 습도계부터 붙임"],[1,"귀가 대신 말함"],[1,"일요일 수프 통은 같이 먹으려고 남겨 둠"],[1,"손목 부러지고도 상자 먼저"],[1,"빙판 위 시편집"],[1,"탄 계란도 남기면 내가 먹어"],[1,"너 앞에서 딱 한 번. 금박 여섯 장"],[1,"15년 혼자 복원실"],[1,"\"다시 볼 일 없습니다.\""],[1,"…바람 소리야"],[0,"습도계 다섯 개가 증거"],[0,"커피 대신 물 한 잔, 4분"],[0,"맥주 두 잔이면 귀 끝이 빨개짐"],[1,"다나 씨가 권하면 대신 잔을 가져감"],[1,"아파도 말 안 함. 핀셋은 수평"],[0,"작업대 앞 자세는 늘 반듯"],[1,"서점에서 등으로 가려 줌"],[1,"핀셋 쓰는 사람의 생선 가시"],[1,"해바라기, 나무 빗, 구운 아몬드"],[0,"출근 30분 늦은 건 딱 한 번"],[0,""],[1,"오른손목, 나사 하나"],[1,"반쪽만 듣고 판결하던 사람"]],
+  m:[[1,"물감도 색상환 순서로"],[0,"낯선 사람은 일단 경계"],[0,""],[0,"새벽 세 시 팔은 안 빼 줌. 그게 최선"],[0,""],[1,"15년은 종이에, 지금은 네 목소리에"],[0,"표정 대신 귀가 빨개짐"],[0,""],[1,"\"빨강은 한 군데만.\""],[1,"말없이. 꼭"],[1,"현관에 20분 서 있던 밤"],[0,"요나스가 영상 보내도 안 함"],[1,"아끼는 건 전부 습도 관리"],[1,"밥 거르기 상습범"],[0,""],[1,"단추 못 채우던 석 달"],[0,"울면 안 된다고 생각함"],[1,"작업대 앞에서도 소파에서도 반듯"],[1,"요나스 지하 3층행"],[0,"발라 주는 쪽"],[0,"기다리는 법은 배우는 중"],[1,"0.1밀리씩 매일"],[1,"조용하고 차가운 쪽"],[1,"복원실은 늘 습도 50%"],[0,"\"대부분은 됩니다\" 정도의 유연함"]]
+ },
+ him:{name:"그",tag:"이름 없음 · 붉은 연작의 화가",mono:"",
+  stats:[["머리","무릎까지, 붉은색"],["직업","화가"],["습관","붓 씻을 때 콧노래"]],
+  s:[[0,""],[1,"마거릿의 스케치북을 끝까지"],[1,"월·화·수 이름 붙인 수프 통"],[1,"자기 고민만은 꼭 숨김"],[1,"루카 밥이 먼저"],[0,"아프면 말하라고 하는 쪽"],[0,""],[1,"\"탄 데가 맛있어요.\""],[0,"잘 울어요 ㅎㅎ"],[1,"혼자 결정하는 버릇"],[1,"장갑만 그려 두고 떠난 적 있음"],[0,"애교 담당"],[1,"\"싫다는 사람 붙잡으면 안 돼요\""],[0,""],[1,"덩치만큼 술도 셈"],[1,"루카 잔은 내가"],[0,""],[1,"다리가 길어서 어쩔 수 없음"],[1,"컵 조각 앞에서 손목을 잡음"],[1,"루카 접시만 깨끗"],[1,"아몬드 한 봉지, 케이크 세 개"],[1,"\"다음 작품은요?\" 앞에서 1년"],[1,"붉은 머리, 붉은 연작"],[0,""],[0,""]],
+  m:[[1,"냉장고 수프 통 담당"],[1,"두 걸음 떨어진 의자에서 기다림"],[1,"\"좋아서요 ㅎㅎ\""],[1,"사람 하나 통째로 덮는 담요"],[1,"케이크 세 개 사 오는 사람"],[0,"기대야 할 때 숨김"],[1,"말로 다 함"],[0,""],[0,""],[1,"손난로 열 개, 털장갑"],[1,"지하 작업실이 잠긴 뒤 1년"],[1,"시키면 다 함"],[0,"붙잡는 법을 휘트니에서 처음 배움"],[0,"잘 먹음. 탄 데까지"],[1,"단 거 좋아함"],[0,"챙기는 쪽"],[0,"우는 건 많지만 아파서는 아님"],[1,"무릎에 손 얹고, 혼날 준비"],[0,""],[1,"루카가 가시 발라 줌"],[1,"일곱 시 반부터 다리 위"],[1,"몰래 독일어 반년"],[0,"불 속성 쪽"],[1,"붉은 머리 손질도 루카가"],[1,"땋든 자르든 루카 좋을 대로"]]
+ }
+};
+
+function count(a){return a.filter(x=>x[0]).length*4}
+function list(title,qs,ans){
+  const pts=count(ans);
+  return `<section><h3>${title}<span>${pts}점</span></h3><ol>${qs.map((q,i)=>{const[a,m]=ans[i];
+   return `<li class="${a?'on':''}"><span class="n">${String(i+1).padStart(2,'0')}</span><span class="c" aria-label="${a?'해당':'해당 없음'}">${a?'✓':''}</span><span class="t"><span class="q">${q}</span>${m?`<span class="m">${m}</span>`:''}</span></li>`}).join('')}</ol></section>`;
+}
+function render(){
+  const id=location.hash==="#him"?"him":"luka";
+  const p=P[id]; document.body.classList.toggle("him",id==="him");
+  document.getElementById("tab-luka").setAttribute("aria-current",id==="luka");
+  document.getElementById("tab-him").setAttribute("aria-current",id==="him");
+  const s=count(p.s), m=count(p.m);
+  const verdict=id==="luka"
+   ?`서방 ${s}점, 마누라 ${m}점. 판정은 서방 쪽이에요. 다만 마누라 쪽 점수 대부분이 "밥 거름"과 "집착(습도계)"에서 나왔다는 게 루카답죠.`
+   :`서방 ${s}점, 마누라 ${m}점. 동점이에요. 챙기는 건 서방처럼, 기다리는 건 마누라처럼. 양쪽 다예요.`;
+  document.getElementById("card").innerHTML=`
+   <div class="head">
+     <div class="photo" role="img" aria-label="${p.name} 이미지 자리">${id==="luka"?'<span>L</span>':'<svg viewBox="0 0 60 60" width="64" height="64" aria-hidden="true"><path d="M20 8c10-6 22-2 24 10 3 14 0 30 2 42H38c-1-10-2-20-8-24-6 4-7 14-8 24h-8c2-14-2-28-2-38 0-6 3-11 8-14z" fill="var(--acc)"/></svg>'}<i>1:1</i></div>
+     <div class="who"><div class="label">${p.tag}</div><h2>${p.name}</h2>
+       <div class="stats">${p.stats.map(([k,v])=>`<span>${k} <b>${v}</b></span>`).join('')}</div></div>
+   </div>
+   <div class="scores">
+     <div class="score ${s>=m?'win':''}"><div class="k">나의 서방 점수</div><div class="v">${s}<small>점</small></div><div class="bar"><div style="width:${s}%"></div></div></div>
+     <div class="score ${m>=s?'win':''}"><div class="k">나의 마누라 점수</div><div class="v">${m}<small>점</small></div><div class="bar"><div style="width:${m}%"></div></div></div>
+   </div>
+   <p class="verdict">${verdict}</p>
+   <div class="lists">${list("서방력",S,p.s)}${list("마누라력",M,p.m)}</div>`;
+}
+addEventListener("hashchange",render); render();
+</script>
+
+<!--bgm--><script>window.BGM={"ids": ["rOcWd2jRPJU", "vw2vg6zvBaM"], "title": "Gymnopédie No.1 · Satie"};</script><script src="bgm.js" defer></script><!--/bgm-->
+</body></html>

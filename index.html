@@ -149,6 +149,14 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:2;opac
 .box .tt{font-family:var(--ko);font-weight:800;font-size:24px;color:var(--parch)}
 .box .sub{font-family:var(--caps);font-size:10.5px;letter-spacing:.22em;color:var(--gold)}
 .box a:focus-visible{outline:2px solid var(--gold);outline-offset:6px}
+.ledger{display:grid;gap:22px}
+.ledger .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:18px}
+.ledger a{display:grid;gap:8px;justify-items:center;text-align:center;text-decoration:none;padding:26px 20px 22px;border:1px solid var(--line);border-radius:120px 120px 10px 10px;background:linear-gradient(180deg,rgba(196,166,118,.09),rgba(196,166,118,.02));transition:background .3s,transform .3s}
+.ledger a:hover,.ledger a:focus-visible{background:linear-gradient(180deg,rgba(196,166,118,.18),rgba(196,166,118,.05));transform:translateY(-3px);outline:none}
+.ledger svg{width:44px;height:44px;fill:none;stroke:var(--gold);stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round}
+.ledger .tt{font-family:var(--ko);font-weight:800;font-size:20px;color:var(--parch)}
+.ledger .sub{font-family:var(--ko);font-size:13.5px;color:var(--muted);line-height:1.6}
+.ledger .k2{font-family:var(--caps);font-size:10.5px;letter-spacing:.22em;color:var(--gold)}
 .vault{display:flex;justify-content:center}
 .vault a{font-family:var(--caps);font-size:11px;letter-spacing:.2em;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--gold-lo);padding-bottom:2px}
 .vault a:hover{color:var(--gold-hi)}
@@ -189,7 +197,7 @@ footer{text-align:center;font-family:var(--caps);font-size:10px;letter-spacing:.
     <svg class="emblem" viewBox="0 0 120 120" aria-hidden="true"><g fill="none" stroke="#c4a676" stroke-width="1.3" opacity=".9"><circle cx="60" cy="60" r="56"/><circle cx="60" cy="60" r="48" stroke-width="1"/><path d="M16 74 H104"/><path d="M22 74 v-8 a10 10 0 0 1 20 0 v8 M44 74 v-8 a10 10 0 0 1 20 0 v8 M66 74 v-8 a10 10 0 0 1 20 0 v8 M88 74 v-6"/><path d="M28 74 V40 l5 -8 5 8 V74 M82 74 V40 l5 -8 5 8 V74"/><path d="M20 88 q10 -4 20 0 t20 0 20 0 20 0" stroke-width="1.2"/><path d="M60 22 l3 6 6 1 -5 4 1 6 -5 -3 -5 3 1 -6 -5 -4 6 -1z" fill="#c4a676" stroke="none"/></g></svg>
     <div class="name">Alte Brücke</div>
     <div class="sub">HEIDELBERG · 7:55</div>
-    <nav class="tabs"><a class="tab" href="#window"><svg viewBox="0 0 24 24"><path d="M12 2 C6 4 4 8 4 12 v10 h16 V12 c0-4-2-8-8-10z M12 6 v16 M4 14 h16"/></svg><span>다리</span></a><a class="tab" href="#easels"><svg viewBox="0 0 24 24"><path d="M12 3 L6 21 M12 3 l6 18 M12 3 v15 M5 15 h14"/><rect x="7" y="4" width="10" height="8"/></svg><span>초상</span></a><a class="tab" href="#chron"><svg viewBox="0 0 24 24"><path d="M12 2 v20 M8 6 h8 M8 12 h8 M8 18 h8"/></svg><span>연대기</span></a><a class="tab" href="#box"><svg viewBox="0 0 24 24"><path d="M3 7 h18 v12 H3z M3 7 l9 7 9-7"/></svg><span>편지</span></a><a class="tab" href="#vault"><svg viewBox="0 0 24 24"><path d="M4 8 h16 v13 H4z M3 4 h18 v4 H3z M9 12 h6"/></svg><span>수장고</span></a></nav>
+    <nav class="tabs"><a class="tab" href="#window"><svg viewBox="0 0 24 24"><path d="M12 2 C6 4 4 8 4 12 v10 h16 V12 c0-4-2-8-8-10z M12 6 v16 M4 14 h16"/></svg><span>다리</span></a><a class="tab" href="#easels"><svg viewBox="0 0 24 24"><path d="M12 3 L6 21 M12 3 l6 18 M12 3 v15 M5 15 h14"/><rect x="7" y="4" width="10" height="8"/></svg><span>초상</span></a><a class="tab" href="#chron"><svg viewBox="0 0 24 24"><path d="M12 2 v20 M8 6 h8 M8 12 h8 M8 18 h8"/></svg><span>연대기</span></a><a class="tab" href="#box"><svg viewBox="0 0 24 24"><path d="M3 7 h18 v12 H3z M3 7 l9 7 9-7"/></svg><span>편지</span></a><a class="tab" href="#ledger"><svg viewBox="0 0 24 24"><path d="M6 3 h12 v18 H6z"/><path d="M9 8 l1.5 1.5 L13 7 M9 13 l1.5 1.5 L13 12 M15 8 h1 M15 13 h1 M9 18 h7"/></svg><span>기록</span></a><a class="tab" href="#vault"><svg viewBox="0 0 24 24"><path d="M4 8 h16 v13 H4z M3 4 h18 v4 H3z M9 12 h6"/></svg><span>수장고</span></a></nav>
     <div class="foot">MDCCLXXXVIII</div>
   </aside>
 
@@ -289,6 +297,14 @@ footer{text-align:center;font-family:var(--caps);font-size:10px;letter-spacing:.
     <section id="box" class="box" aria-labelledby="box-h">
       <div class="sec"><span class="k">the Walnut Box</span><h2 id="box-h">호두나무 상자</h2></div>
       <a href="letters.html"><figure class="pic"><img src="box.jpg" alt="편지가 비죽 나온 호두나무 상자" width="1600" height="726" loading="lazy"></figure><span class="tt">루카스의 편지 61통</span><span class="sub">JANUARY 9 — MARCH 2 · OPEN</span></a>
+    </section>
+
+    <section id="ledger" class="ledger" aria-labelledby="ledger-h">
+      <div class="sec"><span class="k">the Ledger</span><h2 id="ledger-h">기록 카드</h2></div>
+      <div class="cards">
+        <a href="check-test.html"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M10 6 h28 v36 H10z"/><path d="M16 15 l2.5 2.5 L23 13 M16 24 l2.5 2.5 L23 22 M16 33 h4 M27 15 h6 M27 24 h6 M27 33 h6"/></svg><span class="k2">CONDITION REPORT</span><span class="tt">서방력 · 마누라력</span><span class="sub">루카와 그, 각자 50문항</span></a>
+        <a href="check-home.html"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M8 22 L24 8 L40 22 V42 H8z"/><path d="M20 42 V30 h8 v12"/><circle cx="33" cy="28" r="3"/><path d="M33 26 v2 h1.5"/></svg><span class="k2">DIE WOHNUNG · 3. STOCK</span><span class="tt">동거 생활 체크리스트</span><span class="sub">계단 52개, 다리 건너 3층의 집</span></a>
+      </div>
     </section>
 
     <div class="vault" id="vault"><a href="take3-draft.html">THE VAULT · new take#3 버린 원고</a></div>

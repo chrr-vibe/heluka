@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>동거 생활 체크리스트</title>
+<style>html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}*{box-sizing:border-box}</style>
+</head>
+<body>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Cinzel:wght@400;600&display=swap">
+<style>
+/* Layout: a flat floor sheet up top, then a two-column ledger (루카 / 그) per section; each row stacks on phones */
+:root{
+  --paper:#17110c; --sheet:#21180f; --ink:#ece2cd; --muted:#a39580; --rule:rgba(196,166,118,.26);
+  --navy:#d4b27a; --red:#d9826a; --navySoft:rgba(212,178,122,.13); --redSoft:rgba(217,130,106,.15);
+  --acc:var(--navy); --accSoft:var(--navySoft);
+  --f-display:"Nanum Myeongjo","Noto Serif KR",serif;
+  --f-body:"Nanum Myeongjo","Noto Serif KR",serif;
+  --f-mono:"Cinzel","Times New Roman",serif;
+  color-scheme:dark;
+}
+body{background:radial-gradient(ellipse 80% 40% at 50% 0%,rgba(214,180,120,.12),transparent 70%) no-repeat var(--paper)!important}
+.back{display:inline-block;align-self:flex-start;padding:4px 14px;border:1px solid rgba(196,166,118,.5);border-radius:20px;color:#e6d6b2;font:700 13px/1.4 "Nanum Myeongjo",serif;text-decoration:none}
+.back:hover,.back:focus-visible{background:rgba(196,166,118,.15);outline:none}
+.card{box-shadow:0 0 0 5px rgba(196,166,118,.04),0 20px 40px rgba(0,0,0,.35)}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 40px}
+.wrap{max-width:900px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
+header h1{font-family:var(--f-display);font-weight:800;font-size:clamp(1.5rem,5vw,2rem);margin:0;text-wrap:balance}
+header p{margin:4px 0 0;color:var(--muted);font-size:.9rem}
+.mono{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.08em;color:var(--muted)}
+
+.card{background:var(--sheet);border:1px solid var(--rule);border-radius:6px;padding:20px clamp(16px,4vw,30px)}
+.card h2{font-family:var(--f-display);font-weight:800;font-size:1.2rem;margin:0 0 12px}
+
+.house{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px 20px}
+.house div{border-top:1px solid var(--ink);padding-top:6px;min-width:0}
+.house dt{font-size:.75rem;color:var(--muted)}
+.house dd{margin:0;font-family:var(--f-display);font-weight:700;font-size:1rem}
+.house dd small{display:block;font-family:var(--f-body);font-weight:400;font-size:.8rem;color:var(--muted)}
+
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:.85rem;font-weight:600}
+.legend span{display:flex;align-items:center;gap:6px}
+.legend i{width:10px;height:10px;border-radius:2px;display:inline-block}
+.l i{background:var(--navy)} .h i{background:var(--red)}
+
+.row{display:grid;grid-template-columns:150px 1fr 1fr;gap:12px;padding:11px 0;border-bottom:1px solid var(--rule);align-items:start}
+.row:last-child{border-bottom:0}
+.row .q{font-size:.85rem;font-weight:600;color:var(--muted);padding-top:4px}
+.a{min-width:0;padding:6px 10px;border-radius:4px;font-size:.92rem}
+.a.l{background:var(--navySoft)} .a.h{background:var(--redSoft)}
+.a b{display:none;font-family:var(--f-mono);font-size:.65rem;font-weight:500;letter-spacing:.08em}
+.a.l b{color:var(--navy)} .a.h b{color:var(--red)}
+.a.both{grid-column:2 / 4;background:none;border:1px dashed var(--rule)}
+.head{display:grid;grid-template-columns:150px 1fr 1fr;gap:12px;padding-bottom:6px;border-bottom:1.5px solid var(--ink)}
+.head span{font-family:var(--f-display);font-weight:800}
+.head .l{color:var(--navy)} .head .h{color:var(--red)}
+
+footer{font-family:var(--f-mono);font-size:.72rem;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px}
+@media (max-width:620px){
+  .row{grid-template-columns:1fr 1fr}
+  .row .q{grid-column:1 / 3;padding-top:0}
+  .a.both{grid-column:1 / 3}
+  .a b{display:block}
+  .head{display:none}
+}
+</style>
+
+<div class="wrap">
+  <a class="back" href="index.html">← 목록으로</a>
+  <header>
+    <div class="mono">세계관 B · 다리 건너 3층 · RH 50%</div>
+    <h1>동거 생활 체크리스트</h1>
+    <p>"여기 살아. 나랑." 그 뒤의 집</p>
+  </header>
+
+  <section class="card">
+    <h2>집 구조</h2>
+    <dl class="house" id="house"></dl>
+  </section>
+
+  <div class="legend"><span class="l"><i></i>루카</span><span class="h"><i></i>그</span></div>
+  <div id="sections" style="display:flex;flex-direction:column;gap:22px"></div>
+
+  <footer><span>원본 체크리스트 · @pattapattamaam</span><span>문항은 요약해 옮겼어요</span></footer>
+</div>
+
+<script>
+const house=[
+ ["주거 형태","오래된 맨션","5층짜리 석조 건물"],
+ ["이동","계단만","52개. 엘리베이터 없음"],
+ ["층","3층","북향 창, 다리가 보임"],
+ ["방","방 2개","침실 하나, 작은 서재 하나"],
+ ["잠자리","침대 1개","새벽 세 시의 팔"],
+ ["욕실","1개","아침마다 순서 정함"],
+ ["부속 공간","작은 창고","여기도 습도계"],
+ ["거실 물건 고르기","루카 오래, 그 바로","결국 루카가 고른 걸로"],
+ ["거실","소파, 책장, 이젤","습도계 다섯 개, 북쪽 벽 장갑 그림"],
+ ["부엌","냄비, 주전자, 오븐","커피머신 없음"],
+ ["침실","침대, 옷장","리넨 셔츠 전용 칸, 나무 빗"],
+ ["선호 방 크기","루카 작게, 그 넓게","천장은 그에게 늘 낮음"]
+];
+const S=[
+ ["인사와 집안일",[
+  ["외출 인사","\"…다녀올게.\" 짧게, 꼭","\"다녀올게요, 루카!\" 꼭"],
+  ["인사에 답하기","\"응.\" 고개는 안 듦","현관까지 뛰어나옴"],
+  ["귀가 기다리기","안 기다리는 척 습도계 확인","소파에서 기다림. 대놓고"],
+  ["배웅","7시 55분 다리까지 같이","계단 52개 끝까지"],
+  ["장보기","목록은 루카가 씀","장바구니는 그가 듦"],
+  ["요리","계란 담당. 가끔 탐","수프, 칠면조, 나머지 전부"],
+  ["냉장고 채우기","정렬 담당","요일 이름 붙인 수프 통"],
+  ["요리 실력","\"…탔어.\"","\"탄 데가 맛있어요.\""],
+  ["식사 방식","같이 집밥",null],
+  ["식사량","적음. 잘 거름","많이. 루카 몫까지 챙김"],
+  ["같이 먹는 밥","말은 안 하지만 아주 중요","아주 중요하다고 말함"],
+  ["음식 취향","담백한 것, 구운 아몬드","단 것, 칠면조"],
+  ["못 먹는 것","너무 단 디저트","없음"],
+  ["식사 시간","점심을 자주 잊음","세 끼 꼬박"],
+  ["간식·커피","커피 대신 물 한 잔","단 간식, 우유 넣은 홍차"],
+  ["설거지","먹자마자 바로","몰아서. 그래서 루카가 함"],
+  ["고무장갑","니트릴 장갑. 직업병","맨손"],
+  ["상비 식재료","계란, 아몬드, 홍차, 수프 재료",null],
+  ["냉장고 보관","칸마다 줄 맞춤","라벨은 그의 글씨"]
+ ]],
+ ["욕실과 몸 관리",[
+  ["세안","손은 손목까지, 비누 두 번","물로 대충"],
+  ["샤워","짧게","길게. 머리 감는 데만 한참"],
+  ["욕실 슬리퍼","신음","맨발"],
+  ["머리 말리기","수건으로 끝","무릎까지라 루카가 말려 줌"],
+  ["양치·세수","정해진 순서대로","콧노래 부르면서"],
+  ["욕실 소음","조용함","콧노래가 다 들림"]
+ ]],
+ ["잠과 아침",[
+  ["잘 때 불","완전히 끔","상관없음"],
+  ["잠귀","밝음. 잠이 얕음","한번 자면 안 깸"],
+  ["취침","늦게","먼저 잠듦"],
+  ["기상","일찍. 단추 서른네 개 때문에","루카가 깨움"],
+  ["이불 정리","각 맞춰 반듯이","안 함. 루카가 함"],
+  ["알람","한 번에 끔","세 번째에 일어남"],
+  ["잠드는 데","오래 걸림","눕자마자"],
+  ["잠옷","단정한 잠옷","큰 티셔츠"]
+ ]],
+ ["방과 생활",[
+  ["방 분위기","조용하고 북향 빛","따뜻하고 물감 냄새"],
+  ["인테리어","여백, 정돈","벽마다 그림"],
+  ["정리","물감도 색상환 순서로","쌓아 두고 기억함"],
+  ["청소","매일 조금씩","주말에 몰아서"],
+  ["집안일 담당","빨래(리넨 셔츠 관리), 청소","분리수거, 높은 데"],
+  ["냉난방","습도 50%가 기준","루카 기준에 맞춤"],
+  ["추위·더위","추위 탐. 손난로, 털장갑","더위 탐"],
+  ["혼자 있는 시간","필요함","별로. 그래도 기다려 줌"],
+  ["주말","집. 도해집 41쪽","작업실, 그다음 다리"],
+  ["노래·TV","무음","붓 씻을 때 콧노래"],
+  ["향","금지. 종이에 안 좋음","테레빈 냄새 묻혀 옴"],
+  ["식물","습도 때문에 고민 중","해바라기를 꽂아 둠"],
+  ["전구 교체","의자 가져옴","그냥 손 뻗음"],
+  ["소장품","장갑, 구김 남은 보고서, 매듭 도해집","스케치북, 일곱 살 크레용 그림"]
+ ]]
+];
+document.getElementById("house").innerHTML=house.map(([k,v,s])=>`<div><dt>${k}</dt><dd>${v}<small>${s}</small></dd></div>`).join("");
+document.getElementById("sections").innerHTML=S.map(([t,rows])=>`<section class="card"><h2>${t}</h2>
+ <div class="head"><span></span><span class="l">루카</span><span class="h">그</span></div>
+ ${rows.map(([q,a,b])=>b===null
+   ?`<div class="row"><div class="q">${q}</div><div class="a both">${a}</div></div>`
+   :`<div class="row"><div class="q">${q}</div><div class="a l"><b>루카</b>${a}</div><div class="a h"><b>그</b>${b}</div></div>`).join("")}
+ </section>`).join("");
+</script>
+
+<!--bgm--><script>window.BGM={"ids": ["rOcWd2jRPJU", "vw2vg6zvBaM"], "title": "Gymnopédie No.1 · Satie"};</script><script src="bgm.js" defer></script><!--/bgm-->
+</body></html>
