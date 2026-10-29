@@ -1,0 +1,43 @@
+/* 지금, 하이델베르크 — 홈 지도 */
+.lm-wrap{display:grid;gap:12px;justify-items:center;width:100%}
+.lm-wrap .lm-k{font-family:var(--caps);font-size:11px;letter-spacing:.28em;color:var(--gold)}
+#lm{--c-luka:#d4b27a;--c-him:#d9826a;--c-jonas:#e0a04f;--c-else:#a9b7c9;--c-maren:#8fb59a;--c-dana:#e3c2d0;--c-ruth:#e8d58a;position:relative;width:100%;max-width:980px;height:min(66vh,600px);min-height:400px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#1b140e;box-shadow:0 0 0 6px rgba(196,166,118,.04),0 24px 50px rgba(0,0,0,.45);touch-action:pan-y;user-select:none;-webkit-user-select:none}
+#lm::before{content:"";position:absolute;inset:0;background:url("bridge.jpg") center/cover no-repeat;opacity:.16;filter:saturate(.6) blur(1.5px)}
+#lm svg{position:absolute;inset:0;width:100%;height:100%;cursor:grab}
+#lm svg.lm-drag{cursor:grabbing}
+#lm svg text{font-family:var(--ko)}
+.lm-bar{position:absolute;top:10px;left:12px;right:12px;display:flex;justify-content:space-between;align-items:center;gap:8px;pointer-events:none}
+.lm-clock{font-family:var(--caps);font-size:12.5px;letter-spacing:.12em;color:var(--gold-hi,#e6d6b2);background:rgba(23,17,12,.78);padding:4px 12px;border-radius:20px;border:1px solid var(--line);font-variant-numeric:tabular-nums}
+.lm-zoom{display:flex;gap:6px;pointer-events:auto}
+.lm-zoom button{width:34px;height:34px;border-radius:8px;border:1px solid var(--line);background:rgba(23,17,12,.82);font:inherit;font-size:18px;line-height:1;color:var(--gold-hi,#e6d6b2);cursor:pointer}
+.lm-zoom .lm-zreset{width:auto;padding:0 10px;font-size:13px}
+.lm-zoom button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.lm-legend{position:absolute;left:12px;bottom:10px;right:12px;display:flex;flex-wrap:wrap;gap:4px 12px;font-size:12px;color:var(--muted);pointer-events:none}
+.lm-legend span{display:inline-flex;align-items:center;gap:6px;background:rgba(23,17,12,.66);padding:2px 8px;border-radius:12px}
+.lm-legend i{display:inline-block;width:11px;height:11px;border-radius:50%}
+.lm-lg-now{background:#e6d6b2;box-shadow:0 0 0 3px rgba(230,214,178,.25)}
+.lm-lg-hub{background:#6e5737;border:1.5px solid var(--gold)}
+.lm-lg-vis{border:1.5px solid var(--gold)}
+.lm-lg-unk{border:1.5px dashed var(--muted)}
+.lm-pop{position:absolute;z-index:3;min-width:190px;max-width:min(280px,80%);padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:rgba(27,20,14,.96);box-shadow:0 12px 30px rgba(0,0,0,.5);font-size:13.5px;line-height:1.6;color:var(--text,#ddd2bd);text-align:left}
+.lm-pop h3{margin:0;font-size:16px;color:var(--parch);font-family:var(--ko)}
+.lm-pop .lm-ty{font-size:12px;color:var(--muted);margin-bottom:6px}
+.lm-pop ul{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.lm-pop li{display:grid;grid-template-columns:auto 1fr;gap:8px;align-items:start}
+.lm-pop li i{width:9px;height:9px;border-radius:50%;margin-top:6px}
+.lm-pop li b{color:var(--parch)}
+.lm-pop .lm-none{color:var(--muted)}
+.lm-pop .lm-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px}
+.lm-pop .lm-x{position:absolute;top:6px;right:8px;border:0;background:none;color:var(--muted);font-size:16px;cursor:pointer}
+.lm-lbl{font-size:15px;font-weight:700;fill:var(--parch);paint-order:stroke;stroke:#17110c;stroke-width:4px;stroke-linejoin:round}
+.lm-dim{fill:var(--muted);font-weight:400}
+.lm-node{cursor:pointer;outline:none}
+.lm-node .lm-ring{fill:none;stroke:#e6d6b2;stroke-width:2;opacity:0}
+.lm-node.lm-lit .lm-ring{opacity:.9;animation:lmBreathe 2.6s ease-in-out infinite}
+.lm-node:focus-visible .lm-ring{opacity:1;stroke-dasharray:3 3}
+.lm-chip{cursor:pointer}
+.lm-chip text{font-size:13px;font-weight:700;fill:#17110c}
+.lm-note{font-size:12.5px;color:var(--muted);text-align:center;margin:0}
+@keyframes lmBreathe{50%{opacity:.25}}
+@media (prefers-reduced-motion:reduce){.lm-node.lm-lit .lm-ring{animation:none}}
+@media (max-width:560px){#lm{height:60vh;min-height:360px}.lm-lbl{font-size:16px}.lm-legend{font-size:11px}}

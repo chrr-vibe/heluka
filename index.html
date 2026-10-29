@@ -1,6 +1,7 @@
 <title>옛 다리 위에서</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Pinyon+Script&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Nanum+Myeongjo:wght@400;700;800&display=swap">
+<link rel="stylesheet" href="livemap.css">
 <style>
 /* Layout: a candlelit library nave. An arched gold sidebar on the left; the stained-glass window as the altar; below it the easels, a gilded chronicle and the walnut box. */
 :root{
@@ -210,10 +211,27 @@ footer{text-align:center;font-family:var(--caps);font-size:10px;letter-spacing:.
       <div class="cap">BLEIB · ICH BLEIBE · GEBLIEBEN</div>
     </section>
 
-    <section class="medals" aria-label="아침의 숫자">
-      <div class="medal"><div><b>61</b><span>LETTERS</span></div></div>
-      <div class="medal"><div><b>34</b><span>BUTTONS</span></div></div>
-      <div class="medal"><div><b>7</b><span>HYGROMETERS</span></div></div>
+    <section class="lm-wrap" id="now" aria-label="지금 하이델베르크">
+      <span class="lm-k">HEIDELBERG · JETZT</span>
+      <div id="lm">
+        <svg viewBox="0 60 1000 720" preserveAspectRatio="xMidYMid meet" role="img" aria-label="하이델베르크 지도와 지금 사람들이 있는 곳">
+          <defs><pattern id="lm-dots" width="26" height="26" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.3" fill="rgba(196,166,118,.22)"/></pattern></defs>
+          <g class="lm-world">
+            <rect x="-1500" y="-1500" width="4000" height="3700" fill="url(#lm-dots)"/>
+            <path d="M-1500 300 C 200 280, 400 360, 620 320 S 1000 300, 2500 330 L 2500 400 C 1000 370, 800 380, 620 390 S 200 350, -1500 370 Z" fill="rgba(120,150,160,.16)"/>
+            <text x="760" y="372" class="lm-lbl lm-dim" style="font-family:var(--caps);letter-spacing:.3em;font-size:13px">NECKAR</text>
+            <g class="lm-edges"></g><g class="lm-nodes"></g><g class="lm-chips"></g>
+          </g>
+          <rect class="lm-sky" x="-50" y="0" width="1100" height="800" fill="#0a0e1e" opacity="0" pointer-events="none"/>
+        </svg>
+        <div class="lm-bar">
+          <span class="lm-clock">--:--</span>
+          <div class="lm-zoom"><button class="lm-zin" aria-label="확대">+</button><button class="lm-zout" aria-label="축소">−</button><button class="lm-zreset">제자리</button></div>
+        </div>
+        <div class="lm-legend"><span><i class="lm-lg-now"></i>지금 누가 있는 곳</span><span><i class="lm-lg-hub"></i>집·다리·복원실</span><span><i class="lm-lg-vis"></i>가 본 곳</span><span><i class="lm-lg-unk"></i>아직 가 보지 않은 곳</span></div>
+        <div class="lm-pop" hidden></div>
+      </div>
+      <p class="lm-note">한국 시간과 같이 흘러요. 장소나 이름표를 누르면 지금 무엇을 하는지 보여요.</p>
     </section>
 
     <section id="easels" class="easels" aria-labelledby="easels-h">
@@ -343,4 +361,5 @@ function f(t){x.clearRect(0,0,w,h);for(const s of d){if(!still){s.y-=s.v;if(s.y<
 const a=.25+.55*Math.abs(Math.sin(t/1400+s.p));x.fillStyle='rgba(230,214,178,'+(a*.6).toFixed(2)+')';x.beginPath();x.arc(s.x*w,s.y*h,s.r*dpr,0,6.3);x.fill()}
 if(!still)requestAnimationFrame(f)}requestAnimationFrame(f)})();
 </script>
+<script src="livemap.js" defer></script>
 <!--bgm--><script>window.BGM={"ids": ["rOcWd2jRPJU", "vw2vg6zvBaM"], "title": "Gymnopédie No.1 · Satie"};</script><script src="bgm.js" defer></script><!--/bgm-->
