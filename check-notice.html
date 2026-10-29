@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>어디까지 알아챌 수 있어?</title>
+<style>html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}*{box-sizing:border-box}</style>
+</head>
+<body>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Cinzel:wght@400;600&display=swap">
+<style>
+/* Layout: pair header, then check ledger with two columns (루카 / 그); the few open questions get one short line */
+:root{
+  --paper:#17110c; --sheet:#21180f; --ink:#ece2cd; --muted:#a39580; --rule:rgba(196,166,118,.26);
+  --navy:#d4b27a; --red:#d9826a; --navySoft:rgba(212,178,122,.13); --redSoft:rgba(217,130,106,.15); --onAcc:#17110c;
+  --acc:var(--navy); --accSoft:var(--navySoft);
+  --f-display:"Nanum Myeongjo","Noto Serif KR",serif;
+  --f-body:"Nanum Myeongjo","Noto Serif KR",serif;
+  --f-mono:"Cinzel","Times New Roman",serif;
+  color-scheme:dark;
+}
+body{background:radial-gradient(ellipse 80% 40% at 50% 0%,rgba(214,180,120,.12),transparent 70%) no-repeat var(--paper)!important}
+.back{display:inline-block;align-self:flex-start;padding:4px 14px;border:1px solid rgba(196,166,118,.5);border-radius:20px;color:#e6d6b2;font:700 13px/1.4 "Nanum Myeongjo",serif;text-decoration:none}
+.back:hover,.back:focus-visible{background:rgba(196,166,118,.15);outline:none}
+.card{box-shadow:0 0 0 5px rgba(196,166,118,.04),0 20px 40px rgba(0,0,0,.35)}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 40px}
+.wrap{max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
+.mono{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
+header h1{font-family:var(--f-display);font-weight:800;font-size:clamp(1.6rem,5.5vw,2.2rem);margin:2px 0 0;text-wrap:balance}
+.pair{display:flex;align-items:baseline;gap:10px;margin-top:8px;font-family:var(--f-display);font-weight:800;font-size:1.3rem}
+.pair .l{color:var(--navy)} .pair .h{color:var(--red)} .pair em{font-style:normal;font-family:var(--f-mono);font-size:.8rem;color:var(--muted);font-weight:400}
+
+.card{background:var(--sheet);border:1px solid var(--rule);border-radius:6px;padding:20px clamp(16px,4vw,30px)}
+.card h2{font-family:var(--f-display);font-weight:800;font-size:1.2rem;margin:0 0 8px}
+.chk{display:grid;grid-template-columns:1fr 44px 44px;gap:8px;padding:9px 0;border-bottom:1px solid var(--rule);align-items:center}
+.chk:last-child{border-bottom:0}
+.chk.hd{border-bottom:1.5px solid var(--ink);padding-top:0}
+.chk.hd span{font-family:var(--f-display);font-weight:800;text-align:center}
+.chk.hd .l{color:var(--navy)} .chk.hd .h{color:var(--red)}
+.s{font-size:.92rem;min-width:0}
+.box{width:20px;height:20px;border:1.5px solid var(--rule);border-radius:4px;justify-self:center;display:grid;place-items:center;font-size:.8rem;line-height:1}
+.box.l.on{background:var(--navy);border-color:var(--navy);color:var(--onAcc)}
+.box.h.on{background:var(--red);border-color:var(--red);color:var(--onAcc)}
+
+.open{padding:10px 0;border-bottom:1px solid var(--rule);display:flex;flex-direction:column;gap:6px}
+.open .s{font-weight:600}
+.open .ans{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.open .ans div{padding:6px 10px;border-radius:4px;font-family:var(--f-display);font-size:.95rem;min-width:0}
+.ans .l{background:var(--navySoft)} .ans .h{background:var(--redSoft)}
+.ans small{display:block;font-family:var(--f-mono);font-size:.65rem}
+.ans .l small{color:var(--navy)} .ans .h small{color:var(--red)}
+footer{font-family:var(--f-mono);font-size:.72rem;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px}
+@media (max-width:480px){.open .ans{grid-template-columns:1fr}}
+</style>
+
+<div class="wrap">
+  <a class="back" href="index.html">← 목록으로</a>
+  <header>
+    <div class="mono">세계관 B · Pair Name</div>
+    <h1>어디까지 알아챌 수 있어?</h1>
+    <div class="pair"><span class="l">루카</span><em>×</em><span class="h">그</span></div>
+  </header>
+  <div id="parts" style="display:flex;flex-direction:column;gap:22px"></div>
+  <footer><span>원본 시트 · @oneway_cm</span><span>문항은 요약해 옮겼어요</span></footer>
+</div>
+
+<script>
+/* 체크: [문장, 루카, 그] / 서술: [질문, 루카 답, 그 답, "open"] */
+const P=[
+ ["먼저",[
+  ["어디까지 알아챌 수 있다고 생각해?","대부분.","말 안 하는 것까지요.","open"],
+  ["평소 눈치가 빠른 편이다",0,1],
+  ["상대가 나를 잘 알고 있다고 생각한다",1,1]
+ ]],
+ ["어디까지 눈치챌 수 있어?",[
+  ["평소에 기민하다는 말을 많이 듣는다",1,1],
+  ["가까운 사람의 변화를 놓치는 편이다",1,0],
+  ["상대에게만 눈치가 발동한다",1,0],
+  ["상대의 기분 변화를 알아챈다",1,1],
+  ["기분이 변한 이유도 알아챈다",0,1],
+  ["상대가 필요한 것을 맞춰 줄 수 있다",1,1],
+  ["상대의 메이크업 변화를 알아챈다",0,0],
+  ["상대의 미세한 컨디션 변화를 알아챈다",1,1],
+  ["상대의 미세한 체중 변화를 알아챈다",1,1],
+  ["상대의 패션 스타일 변화를 알아챈다",1,1],
+  ["상대가 다쳤을 때 바로 알아챈다",1,0],
+  ["\"나 달라진 거 없어?\" 질문이 곤란하다",1,0],
+  ["그 질문에 바로 대답할 수 있다",0,1],
+  ["상대를 많이 안다고 생각한다",0,1],
+  ["상대가 말하지 않아도 진심을 안다",0,1],
+  ["상대를 다루는 노하우가 생겼다",1,1],
+  ["나도 못 본 나를 상대가 알아준다",1,1],
+  ["눈치가 빨라 서프라이즈가 어렵다",1,0],
+  ["상대가 나에 대해 너무 모른다",0,0],
+  ["상대가 먼저 관심을 가져 주길 바란다",1,0],
+  ["눈치 못 채도 물어보면 된다고 생각한다",0,1],
+  ["기민함과 둔함은 고칠 수 없는 천성이다",0,0]
+ ]],
+ ["이런 것마저도?",[
+  ["상대의 컨디션이 나빠 보여도 속아 준다",1,0],
+  ["기분 나빠 보이는데 \"화 안 났어\"라고 하면?","기다려.","문 닫는 속도를 봐요.","open"],
+  ["상대를 속이는 노하우가 있다",0,1],
+  ["상대의 \"괜찮아\"를 믿는다",0,0],
+  ["오늘을 망치기 싫어 괜찮다고 거짓말한 적 있다",1,1]
+ ]],
+ ["서로에게 한마디",[
+  ["","…다 알아도 돼. 너는.","제가 다 찾을게요. 천천히요 ㅎㅎ","open"]
+ ]]
+];
+document.getElementById("parts").innerHTML=P.map(([t,rows])=>{
+  const hasChk=rows.some(r=>r[3]!=="open");
+  return `<section class="card"><h2>${t}</h2>
+  ${hasChk?`<div class="chk hd"><span></span><span class="l">루카</span><span class="h">그</span></div>`:""}
+  ${rows.map(([s,l,h,k])=>k==="open"
+   ?`<div class="open">${s?`<span class="s">${s}</span>`:""}<div class="ans"><div class="l"><small>루카</small>${l}</div><div class="h"><small>그</small>${h}</div></div></div>`
+   :`<div class="chk"><span class="s">${s}</span><span class="box l ${l?"on":""}" aria-label="루카 ${l?"해당":"해당 없음"}">${l?"✓":""}</span><span class="box h ${h?"on":""}" aria-label="그 ${h?"해당":"해당 없음"}">${h?"✓":""}</span></div>`).join("")}
+  </section>`}).join("");
+</script>
+
+<!--bgm--><script>window.BGM={"ids": ["rOcWd2jRPJU", "vw2vg6zvBaM"], "title": "Gymnopédie No.1 · Satie"};</script><script src="bgm.js" defer></script><!--/bgm-->
+</body></html>
