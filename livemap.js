@@ -50,7 +50,7 @@ function base(id,dow){ // dow 0=Sun..6=Sat
  if(id==='luka'){
   if(sun) return [[0,'home','잠. 오늘은 아무도 안 깨움'],[h(7),'home','일어남. 핀셋 금지인 날'],[h(9,30),'home','아침. 가장자리가 까만 계란'],[h(11),'home','서재. 습도계는 안 보는 척'],[h(14),'home','소파. 습도계 쪽으로 눈을 굴리다 들킴'],[h(15),'home','소파. 키스 세 번 계약 이행 중'],[h(19,30),'home','저녁. 그가 끓인 수프'],[h(22,30),'home','그가 읽어 주는 편지 한 통'],[h(23,30),'home','불을 끄고 누움. 아직 안 잠']];
   const d=[[0,'home','잠. 잠귀가 밝음'],[h(6,30),'home','일어남. 습도계 다섯 개 확인, 계란'],[h(7,15),'home','그를 깨움. 단추 서른네 개, 그리고 땋기'],[h(7,45),'home>bridge','다리로'],[h(7,55),'bridge','난간에 기대어 있음'],
-   [h(8,50),'bridge>lib','"출근." 한 번 뒤돌아봄'],[h(9),'lib','손목까지 비누 두 번. 작업 시작'],[h(12,30),'lib',lunchDay?'그가 가져온 도시락. 핀셋은 안 내려놓음':'점심. 잊어버리는 중'],[h(13,30),'lib','작업. 0.1밀리'],
+   [h(8,50),'bridge>lib','"출근." 한 번 뒤돌아봄'],[h(9),'lib','작업 중. 손목까지 비누 두 번 하고 시작'],[h(12,30),'lib',lunchDay?'그가 가져온 도시락. 핀셋은 안 내려놓음':'점심. 잊어버리는 중'],[h(13,30),'lib','작업. 0.1밀리'],
    [h(18,30),'lib>market','퇴근'],[h(18,40),'market','장보기. 목록은 루카스가 씀'],[h(18,55),'market>home','계단 52개'],[h(19,10),'home','습도계 먼저, 그다음에 코트'],[h(19,30),'home','저녁'],[h(21),'home','소파. 도해집 41쪽, 네 갈래 매듭'],[h(22,30),'home','그가 읽어 주는 편지 한 통'],[h(23,30),'home','불을 끄고 누움. 아직 안 잠']];
   if(sat){ d.splice(5); d.push([h(8,50),'bridge>home','토요일. 집으로'],[h(9),'home','청소. 리넨 셔츠 빨래'],[h(13),'home','서재. 습도계 붙은 상자 정리'],[h(17,30),'home>market','장보러'],[h(17,45),'market','장보기. 장바구니는 그가 듦'],[h(18,30),'market>home','같이 귀가'],[h(18,45),'home','저녁 준비. 계란 담당'],[h(19,30),'home','저녁'],[h(22,30),'home','그가 읽어 주는 편지 한 통'],[h(23,30),'home','불을 끄고 누움']); }
   return d;
@@ -134,7 +134,7 @@ function parts(t){const d=new Date(t+KST);return{y:d.getUTCFullYear(),mo:d.getUT
 function dayStart(t){const p=parts(t);return Date.UTC(p.y,p.mo-1,p.da)-KST}
 const pad=n=>String(n).padStart(2,'0');
 
-function where(id,t){
+function where0(id,t){
  const p=parts(t), md=pad(p.mo)+'-'+pad(p.da);
  const s=schedule(id,p.dow,md); if(!s.length) return null;
  const mins=p.m+p.s/60;
@@ -146,6 +146,63 @@ function where(id,t){
  return{place:P[e[1]].n,pid:e[1],x:P[e[1]].x,y:P[e[1]].y,what:e[2]};
 }
 
+
+
+/* ---------- little moments: 20분마다 바뀌는 작은 일들 ---------- */
+const MO={
+ luka:{
+  lib:['핀셋을 받침과 평행하게 내려놓고 목 스트레칭. 딱 두 번','습도계 확인. 50퍼센트. 만족','휴대폰 확인. 그가 보낸 오늘의 강 사진. 답장은 "응."','물 한 잔. 커피 대신','금박 한 장 띄우는 중. 숨 참는 중','구운 아몬드 세 알. 간식 끝','오른손목 흉터를 주무르는 중. 내일 비 올 듯','문자: "점심 먹었어요? ㅎㅎ" → "먹을 거야."','창밖 다리 쪽을 한 번 봄','중성지 접는 중. 모서리가 하나도 안 틀어짐','장갑 벗고 손목까지 비누 두 번. 다시'],
+  home:['습도계 다섯 개를 순서대로 확인','도해집 41쪽. 네 갈래에서 또 막힘','먹자마자 설거지','그의 땋은 머리 끝을 다듬어 주는 중','그가 웃겨서 "…바람 소리야."','내일 입을 리넨 셔츠 다림질'],
+  bridge:['난간에 기대 강을 봄','그의 붓 끝을 보는 중. 들키면 강을 봄','털장갑 낀 손을 코트 주머니에'],
+  market:['장보기 목록 대로만. 정확히']
+ },
+ him:{
+  studio:['붓 씻으면서 콧노래. 옆 작업실에서 박수','스트레칭. 천장에 손이 닿음','루카에게 오늘의 강 사진을 보냄','다나 전화. "아직이에요 ㅎㅎ"','초콜릿 하나. 그리고 하나 더','땋은 머리 끝이 물감에 닿을 뻔. 루카 말이 맞았음','창가에 서서 다리 쪽을 보는 중','\'Mostly\' 서른한 번째에 천을 다시 덮음','요나스 문자: "선배님 오늘 기분 좋으세요" → 왜 아는지 물어봄','낮잠 10분. 소파가 짧아서 다리가 밖으로','물감을 색상환 순서로 다시 정리. 루카가 볼까 봐','루카 문자 확인. "응." 하나에 웃음'],
+  bridge:['관광객이 알아봄. 웃으면서 손가락을 입에','이젤 위에 낙엽 한 장. 그대로 그려 넣음','루카 쪽을 한 번 보고 다시 붓을 듦'],
+  home:['수프 간 보는 중. 루카 몫은 조금 더 따뜻하게','머리 감는 중. 한참 걸림','소파에 누워 루카 무릎을 베고 있음','편지 공책에 다음 편지 표시해 두는 중']
+ },
+ jonas:{
+  lib:['중성지 자르다가 선배님 쪽 눈치','몰래 빵 한 입. 들킴','마렌에게 문자. 답장 "응." 하나에 기뻐함','하품. 엘제 선생님과 눈이 마주침','고양이 사진을 보여 주려다 포기','스트레칭하다 의자가 삐걱','지하 3층 소리가 나오자 반사적으로 장갑을 벗음'],
+  flat:['고양이가 털실 뭉치를 노리는 중. 막는 중','마렌에게 보낼 문자를 세 번 지움','땋기 영상을 볼까 말까']
+ },
+ else:{
+  lib:['사과 깎는 중. 껍질이 한 줄로','루카스 작업대 뒤에서 1초 보고 지나감','창문을 열고 습도 재확인','직물 보존과와 1분짜리 통화','안경 닦는 중','요나스 하품을 목격']
+ },
+ maren:{
+  vet:['고양이 발톱 깎는 중. 한 번 할퀴임','요나스 문자 확인. "응." 답장','커피 한 잔. 웃는 걸 아무도 못 봄','큰 개를 달래는 중. 말은 짧게','메스를 수평으로 내려놓음']
+ }
+};
+/* 같은 자리에 있을 때만 생기는 장면 */
+const SC=[
+ {at:'lib',who:['luka','jonas'],luka:'"…지하 3층."',jonas:'"선배님, 오늘 귀 빨개요."'},
+ {at:'lib',who:['luka','jonas'],luka:'농담에 대답 없음. 귀 끝만 조금 붉어짐',jonas:'선배님한테 농담 하나. 반응 없음'},
+ {at:'lib',who:['luka','else'],luka:'말없이 고개 한 번. 회의 끝',else:'"알겠다."'},
+ {at:'lib',who:['jonas','else'],jonas:'"넵."',else:'"하품은 집에서 해."'},
+ {at:'lib',who:['luka','him','jonas'],luka:'"…탄 데가 맛있다며."',him:'"요나스, 계란말이 안 탔어요 ㅎㅎ"',jonas:'"저는 안 탄 게 좋아요."'},
+ {at:'bridge',who:['luka','him'],luka:'"턱 들라고 하지 마."',him:'"아직 아무 말도 안 했어요 ㅎㅎ"'},
+ {at:'home',who:['luka','him'],luka:'"…스물셋."',him:'"오늘 몇 번째 편지인지 알아요?"'},
+ {at:'home',who:['luka','him'],luka:'"그냥 둬."',him:'땋은 머리 풀까요, 하고 물어봄'},
+ {at:'monkey',who:['jonas','maren'],jonas:'헤헤',maren:'"…코트." 깃을 말없이 펴 줌'}
+];
+const QUIET={home:[h(19,30),h(22,30)],bridge:[h(7,55),h(8,50)]};
+function hsh(s){let x=5381;for(let i=0;i<s.length;i++)x=((x<<5)+x+s.charCodeAt(i))|0;return Math.abs(x)}
+function spCovers(md,id,mins){return (SP[md]||[]).some(([f,t,m])=>m[id]&&mins>=f&&mins<t)}
+function flavor(id,w,t){
+ if(!w||w.trav) return w;
+ const p=parts(t), md=pad(p.mo)+'-'+pad(p.da), mins=p.m+p.s/60;
+ if(spCovers(md,id,mins)) return w;
+ const q=QUIET[w.pid]; if(q&&(mins<q[0]||mins>=q[1])) return w;
+ if(/잠|누움/.test(w.what)) return w;
+ const slot=Math.floor(mins/20), key=`${p.y}${md}${slot}${w.pid}`;
+ const here=C.filter(c=>{const o=c.id===id?w:where0(c.id,t);return o&&!o.trav&&o.pid===w.pid}).map(c=>c.id);
+ const sc=SC.filter(s=>s.at===w.pid&&s.who.every(x=>here.includes(x)));
+ if(sc.length&&hsh(key+'scene')%3===0){const s=sc[hsh(key+'pick')%sc.length];if(s[id])return Object.assign({},w,{what:s[id]})}
+ const list=(MO[id]||{})[w.pid]; if(!list) return w;
+ const r=hsh(key+id);
+ if(r%5<2) return w;
+ return Object.assign({},w,{what:list[r%list.length]});
+}
+function where(id,t){return flavor(id,where0(id,t),t)}
 
 /* ---------- draw ---------- */
 const NS='http://www.w3.org/2000/svg';
