@@ -190,6 +190,17 @@ footer{text-align:center;font-family:var(--caps);font-size:10px;letter-spacing:.
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
+<style>
+.wardrobe{display:grid;gap:30px;margin-top:70px}
+.sub-sec{display:grid;justify-items:center;gap:2px;text-align:center}
+.sub-sec .k{font-family:var(--script);font-size:30px;line-height:1.1;color:var(--gold)}
+.sub-sec h3{margin:0;font-family:var(--ko);font-weight:800;font-size:20px;color:var(--parch);letter-spacing:.06em}
+.pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:40px;align-items:start}
+.piece2{display:grid;gap:22px}
+.piece2 .label{max-width:none}
+.piece2 .shot img{aspect-ratio:5/6;object-fit:cover;object-position:50% 30%}
+@media (max-width:640px){.pair{grid-template-columns:1fr;gap:46px}}
+</style>
 <style id="tabmode">
 /* 탭 방식: 왼쪽 메뉴를 누르면 오른쪽 칸만 바뀜 */
 .main>[data-panel][hidden]{display:none!important}
@@ -262,6 +273,19 @@ footer{text-align:center;font-family:var(--caps);font-size:10px;letter-spacing:.
         <div class="labels">
           <div class="label"><span class="pos">왼쪽 이젤</span><span class="plaque">Self-portrait</span><span class="m">oil on canvas · 같은 의자, 다음 날</span><p>화가가 그린 자기 얼굴 가운데 모델이 "이걸로 해"라고 한마디로 골라 준 한 점. 반쯤 내리뜬 눈이 누구를 보고 있었는지는 기록되지 않았다.</p><span class="acc">KEPT AT 50% HUMIDITY</span></div>
           <div class="label"><span class="pos">오른쪽 이젤</span><span class="plaque">Mostly, <i>No. 32</i></span><span class="m">oil on canvas · 북향 창, 해 질 녘</span><p>얼굴을 허락받은 뒤 처음 그린 루카스. 모델은 끝까지 정면을 보지 않았고, 화가는 그 각도를 그대로 남겼다.</p><span class="acc">PRIVATE COLLECTION · NOT FOR LOAN</span></div>
+        </div>
+      </div>
+          <div class="wardrobe">
+        <div class="sub-sec"><span class="k">the Wardrobe</span><h3>입으라고 만든 것</h3></div>
+        <div class="pair">
+          <div class="piece2">
+            <figure class="shot"><img src="sweater.jpg" alt="남색, 이끼색, 겨자색 줄에 분홍 지그재그와 빨강 한 줄이 들어간 스웨터를 입고 웃는 붉은 머리 화가" loading="lazy"></figure>
+            <div class="label"><span class="plaque">Disqualified</span><span class="m">oil on canvas · 세 번째 겨울</span><p>루카스가 10월부터 몰래 뜬 스웨터. 남색, 이끼색, 겨자색, 분홍 지그재그, 그리고 심장 자리에 빨강 한 줄. 파티 순위표에는 '실격, 출전 자격 없음'. 그는 그해 12월 내내 이것만 입었다.</p><span class="acc">KNITTED BY L. · TOO WELL MADE</span></div>
+          </div>
+          <div class="piece2">
+            <figure class="shot"><img src="tee.jpg" alt="7시 55분의 옛 다리와 빨간 점 하나가 그려진 흰 티셔츠를 입은 검은 머리 루카스" loading="lazy"></figure>
+            <div class="label"><span class="plaque">7:55, <i>Worn</i></span><span class="m">textile paint · 이듬해 3월</span><p>그가 스웨터의 다섯 색으로 그려 준 티셔츠. 7시 55분의 옛 다리, 빨강 한 점. 상자에 넣으려던 루카스에게 "입으라고 그린 거예요." 그 뒤로 셔츠 안에, 일요일엔 이것만.</p><span class="acc">HAND-WASHED · IN THE BOX AFTER WEARING</span></div>
+          </div>
         </div>
       </div>
     </section>
