@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>한 사람 몫</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Pinyon+Script&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Nanum+Myeongjo:wght@400;700;800&display=swap">
+<style>
+:root{color-scheme:dark;--night:#17110c;--gold:#c4a676;--gold-hi:#e6d6b2;--line:rgba(196,166,118,.42);--parch:#ece2cd;--text:#ddd2bd;--muted:#a39580;
+  --caps:"Cinzel","Times New Roman",serif;--script:"Pinyon Script","Times New Roman",cursive;--ko:"Nanum Myeongjo","AppleMyungjo","Batang",serif}
+*{box-sizing:border-box}
+html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;background-color:var(--night);color:var(--text);font-family:var(--ko);font-size:17px;line-height:2;
+  background-image:radial-gradient(ellipse 70% 40% at 50% 0%,rgba(214,180,120,.12),transparent 70%);background-repeat:no-repeat;
+  padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px));padding-block:24px 80px}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;opacity:.5;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .9  0 0 0 0 .8  0 0 0 0 .6  0 0 0 .05 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+.wrap{max-width:620px;margin:0 auto}
+.back{display:inline-block;font-family:var(--caps);font-size:11px;letter-spacing:.2em;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:2px}
+.back:hover,.back:focus-visible{color:var(--gold-hi);outline:none}
+header{text-align:center;margin:56px 0 48px;display:grid;gap:6px;justify-items:center}
+header .lat{font-family:var(--script);font-size:44px;line-height:1;color:var(--gold)}
+header h1{margin:0;font-family:var(--ko);font-weight:800;font-size:clamp(28px,6vw,36px);color:var(--parch);letter-spacing:.08em}
+header .when{font-family:var(--caps);font-size:11px;letter-spacing:.28em;color:var(--muted)}
+header svg{width:160px;height:16px;margin-top:10px}
+article p{margin:0 0 1.1em;word-break:keep-all}
+.talk{margin:0 0 1.1em;padding-left:14px;border-left:1px solid var(--line)}
+.talk p{margin:0;color:var(--parch)}
+h2{margin:2.6em 0 1.4em;text-align:center;font-family:var(--ko);font-weight:700;font-size:16px;letter-spacing:.12em;color:var(--gold)}
+h2 span{padding:0 14px;background:var(--night);position:relative}
+h2::before{content:"";display:block;height:1px;background:var(--line);transform:translateY(1em)}
+.end{text-align:center;margin-top:56px;display:grid;gap:18px;justify-items:center}
+.end .mark{font-family:var(--caps);font-size:11px;letter-spacing:.3em;color:var(--muted)}
+.end a{font-family:var(--ko);font-size:15px;color:var(--gold-hi);text-decoration:none;border:1px solid var(--line);border-radius:40px 40px 10px 10px;padding:8px 22px}
+.end a:hover,.end a:focus-visible{background:rgba(196,166,118,.15);outline:none}
+
+.part{text-align:center;margin:84px 0 40px;display:grid;gap:4px;justify-items:center}
+.part.first{margin-top:0}
+.part .eyebrow{font-family:var(--script);font-size:32px;line-height:1.1;color:var(--gold)}
+.part h2{margin:0;font-family:var(--ko);font-weight:800;font-size:24px;color:var(--parch);letter-spacing:.06em}
+.part h2::before{display:none}
+.part .sub{font-family:var(--caps);font-size:11px;letter-spacing:.24em;color:var(--muted)}
+.orn2{color:var(--gold);margin-bottom:22px}
+.scene{display:flex;align-items:center;gap:12px;margin:56px 0 26px;color:var(--muted);font-size:14px;letter-spacing:.1em}
+.scene::before,.scene::after{content:"";flex:1;height:1px;background:var(--line)}
+.scene b{font-family:var(--caps);font-weight:600;color:var(--gold);letter-spacing:.12em}
+.list{margin:4px 0 1.4em;padding:14px 20px;border:1px solid var(--line);border-radius:6px;background:rgba(236,226,205,.05);font-size:15.5px;line-height:1.9;color:var(--parch)}
+.list ol{margin:0;padding-left:1.4em}
+.list .note{color:var(--muted);font-size:14px}
+.chat{margin:4px 0 1.6em;display:flex;flex-direction:column;gap:6px}
+.chat .who{font-size:12.5px;color:var(--muted);margin:4px 0 -2px}
+.chat .msg{align-self:flex-start;max-width:86%;background:rgba(236,226,205,.08);border:1px solid var(--line);color:var(--parch);padding:6px 13px;border-radius:14px 14px 14px 4px;font-size:15px;line-height:1.6}
+.chat .msg.me{align-self:flex-end;border-radius:14px 14px 4px 14px;background:rgba(217,130,106,.18);border-color:rgba(217,130,106,.45)}
+.chat .room{align-self:center;font-family:var(--ko);font-size:12px;color:var(--gold);letter-spacing:.06em;margin-bottom:4px}
+.quiet{color:var(--muted)}
+.note-card{margin:4px auto 1.4em;padding:12px 18px;border:1px dashed var(--gold);border-radius:4px;color:var(--parch);font-size:15px;text-align:center;max-width:320px;background:rgba(236,226,205,.04)}
+article b{color:var(--gold-hi)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="index.html#chron" onclick="if(history.length>1){history.back();return false}">← 목록으로</a>
+  <header>
+    <span class="lat">a Share for One</span>
+    <h1>한 사람 몫</h1>
+    <span class="when">단편 · 결혼 직후, 어느 토요일</span>
+    <svg viewBox="0 0 180 18" aria-hidden="true"><g fill="none" stroke="#c4a676" stroke-width="1.2"><path d="M0 9 H70 M110 9 H180"/><path d="M90 3 l6 6 -6 6 -6 -6z" fill="#c4a676"/></g></svg>
+  </header>
+  <article>
+<div class="scene"><b>토요일 오전</b> 마르크트플라츠</div>
+
+<p>토요일 오전의 마르크트플라츠는 루카스가 싫어하는 것들로 가득했다. 사람이 많았고, 목소리가 컸고, 누군가는 늘 사진을 찍었다.</p>
+<p>그래도 토요일 장은 같이 보는 거였다. 목록은 루카스가 쓰고, 장바구니는 그가 들었다.</p>
+
+<p>&quot;감자, 양파, 사과 네 개, 우유.&quot;</p>
+<p>&quot;아몬드는요?&quot;</p>
+<p>&quot;목록에 없어.&quot;</p>
+<p>&quot;그럼 지금 써요ㅎㅎ&quot;</p>
+
+<p>루카스는 대답하지 않고 감자를 하나씩 들어 무게를 쟀다. 그는 옆에서 구운 아몬드 노점 쪽으로 고개를 반쯤 돌린 채 서 있었다. 땋은 머리 끝이 무릎 근처에서 흔들렸다.</p>
+
+<p>&quot;……아스카니엔 선배?&quot;</p>
+
+<p>뒤에서 들린 목소리였다. 루카스는 감자를 든 채 천천히 돌아섰다.</p>
+<p>회색 코트를 입은 남자가 서 있었다. 단정하게 넘긴 머리, 반듯한 어깨, 낮은 목소리. 루카스는 그 얼굴을 3초 동안 보았다. 아무것도 떠오르지 않았다.</p>
+
+<p>&quot;……누구십니까.&quot;</p>
+
+<p>오랜만에 나온 존댓말이었다. 옆에서 그가 눈을 조금 크게 떴다.</p>
+
+<p>&quot;펠릭스요. 펠릭스 바그너. 석사 때 같은 연구실이었는데.&quot;</p>
+<p>&quot;……&quot;</p>
+<p>&quot;한 학기 내내 아침마다 커피 사 갔던.&quot;</p>
+
+<p>그제야 루카스의 얼굴이 아주 조금 움직였다. 얼굴이 아니라 커피가 기억난 것이었다. 종이컵, 연구실 문 앞, 매일 여덟 시 십 분.</p>
+<p>그리고 생각보다 먼저 말이 나왔다.</p>
+
+<p>&quot;아. ……그 맛없던.&quot;</p>
+
+<p>정적이 흘렀다.</p>
+<p>그가 장바구니를 든 채 고개를 옆으로 돌렸다. 어깨가 떨렸다. 그는 이 커피 이야기를 알았다. 너는 커피 사 오지 마, 너한테는 대답할 거니까. 그 커피였다.</p>
+
+<p>펠릭스는 민망하게 웃었다.</p>
+<p>&quot;맛없었어요? 그거 사실 고백이었는데. 선배는 맨날 &#x27;고맙습니다&#x27;만 하셨잖아요. 모르셨죠?&quot;</p>
+
+<p>루카스는 감자를 바구니에 넣었다. 다른 감자들과 모서리를 맞추듯 반듯하게.</p>
+<p>&quot;알았습니다.&quot;</p>
+<p>&quot;……네?&quot;</p>
+<p>&quot;그래서 고맙다고만 한 겁니다.&quot;</p>
+
+<p>펠릭스가 입을 다물었다. 십 년 만에 철벽이 공식 확인되는 순간이었다.</p>
+<p>그리고 그의 시선이, 자연스럽게 옆으로 옮겨 갔다. 무릎까지 오는 붉은 머리, 물감 자국이 묻은 소매, 장바구니를 든 손. 그 손의 반지.</p>
+
+<p>&quot;혹시……&quot;</p>
+<p>&quot;……남편입니다.&quot;</p>
+
+<p>루카스의 귀 끝이 붉어졌다. 그는 장바구니를 든 그대로 꾸벅 고개를 숙였다.</p>
+<p>&quot;안녕하세요ㅎㅎ&quot;</p>
+
+<div class="scene"><b>같은 자리</b> 감자 봉투</div>
+
+<p>그 뒤로 펠릭스는 조금 더 머물렀다. 지금은 대학 출판부에서 일한다고 했다. 고문헌 디지털화 작업을 맡고 있다고. 루카스가 짧게 묻고, 펠릭스가 짧게 답했다. 어떤 필사본 이야기가 나오자 루카스가 말했다.</p>
+
+<p>&quot;그건 1790년 판본입니다.&quot;</p>
+<p>&quot;아, 맞다. 선배는 그런 거 하나도 안 틀리셨죠.&quot;</p>
+
+<p>펠릭스가 웃었다. 루카스는 웃지 않았지만, 고개를 아주 조금 끄덕였다.</p>
+
+<p>그는 그 둘을 보고 있었다.</p>
+
+<p>화가의 눈은 쓸데없는 것까지 보았다. 펠릭스의 장바구니에 든 것. 빵 하나, 작은 치즈 하나, 사과 두 개. 딱 한 사람 몫이었다. 코트 소매 끝은 해지지 않았고, 신발은 닦여 있었다.</p>
+<p>그리고 둘이 서 있는 모습. 둘 다 목소리가 낮았다. 말과 말 사이에 쉬는 박자가 비슷했다. 루카스가 판본 연도를 말할 때, 펠릭스는 그게 무슨 뜻인지 알아들었다.</p>
+
+<p>그는 그 사이에 낄 말이 없었다.</p>
+
+<p>자기는 아까 아몬드 노점 앞에서 목소리가 컸다. 머리는 어디서나 눈에 띄었고, 소매엔 어제 칠한 남색이 묻어 있었다. 루카스가 싫어하는 것들. 시끄러운 것, 눈에 띄는 것.</p>
+
+<p>저 그림이 맞는 그림 아닌가. 차분한 사람 옆에 차분한 사람.</p>
+
+<p>그는 장바구니 손잡이를 고쳐 쥐었다. 손가락에 힘이 들어갔다.</p>
+
+<p>&quot;커피 매일 사다 주셨다면서요.&quot;</p>
+<p>그가 웃으며 말했다.</p>
+<p>&quot;루카 그런 거 잘 마셨어요?&quot;</p>
+<p>&quot;다 마시긴 하셨어요. 표정은 늘 이랬지만.&quot;</p>
+<p>펠릭스가 미간을 찌푸려 보였다. 꽤 닮았다. 그는 다시 웃었다. 이번엔 눈이 따라 웃지 않았다.</p>
+
+<p>헤어질 무렵 펠릭스가 말했다.</p>
+<p>&quot;선배, 그 카페 아직 있어요. 언제 한번……&quot;</p>
+
+<p>루카스는 감자 봉투를 그에게 넘기며 말했다.</p>
+<p>&quot;커피 안 마십니다. 이제.&quot;</p>
+
+<p>그걸로 끝이었다.</p>
+
+<div class="scene"><b>돌아오는 길</b> 옛 다리</div>
+
+<p>옛 다리로 돌아오는 길, 그는 조용했다.</p>
+
+<p>루카스는 처음엔 몰랐다. 다리 입구에서야 알아챘다. 이 길에서 그는 늘 떠들었다. 강 색깔이 오늘은 어떻다느니, 빵집 주인이 오늘은 웃었다느니, 저 구름은 회색이 세 겹이라느니. 오늘은 아무 말이 없었다.</p>
+
+<p>다리 한가운데에서 루카스가 멈춰 섰다.</p>
+
+<p>&quot;……끝까지 말해. 반쪽 말고.&quot;</p>
+
+<p>그는 한참 동안 웃기만 했다. 그러다 강 쪽을 보며 말했다.</p>
+
+<p>&quot;그분, 차분하더라고요.&quot;</p>
+<p>&quot;……&quot;</p>
+<p>&quot;루카랑 잘 어울렸어요. 둘이 서 있는 게 그림 같았어요. 제가 그리면 색을 하나도 안 바꿔도 되겠다 싶을 만큼.&quot;</p>
+<p>&quot;……&quot;</p>
+<p>&quot;저는 시끄럽잖아요.&quot;</p>
+
+<p>말끝이 점점 작아졌다.</p>
+
+<p>루카스는 대답하지 않았다. 대신 바람에 흔들리는 그의 땋은 머리 끝을 집어, 말없이 그의 코트 주머니에 넣었다. 그리고 강을 보며 말했다.</p>
+
+<p>&quot;조용한 사람 둘이면, 집에 아무 소리도 안 나.&quot;</p>
+<p>&quot;……&quot;</p>
+<p>&quot;너 도쿄 갔을 때. 현관에 이십 분 서 있었어.&quot;</p>
+<p>&quot;……&quot;</p>
+<p>&quot;너 붓 씻을 때 부르는 거. 그거 없으면, 나 못 자.&quot;</p>
+
+<p>말을 마치자마자 루카스는 먼저 걷기 시작했다. 귀가 붉었다. 몇 걸음 가다가 멈췄다. 돌아보지는 않았다.</p>
+
+<p>&quot;……얼굴도 기억 안 났어. 걔.&quot;</p>
+
+<p>그제야 그가 웃었다. 소리 내서. 장바구니를 든 채 뛰어와 루카스 옆에 섰다. 두 걸음이 아니라, 어깨가 닿게.</p>
+
+<div class="scene"><b>저녁</b> 3층 거실</div>
+
+<p>알아챈 건 집에 와서였다.</p>
+
+<p>현관에서 신발을 벗고, 코트보다 먼저 습도계를 보던 순간이었다. 48. 바늘을 보다가 루카스는 멈췄다.</p>
+
+<p>장바구니 손잡이를 고쳐 쥐던 손. 웃는데 따라오지 않던 눈. 그 사람 차분하더라고요, 하던 작은 목소리.</p>
+
+<p>저거, 아는 거였다.</p>
+
+<p>빵집 창가에서 요나스가 그의 손등을 연필로 쳤을 때. 다음 날 요나스를 지하 3층으로 보내려고 했던 그것. 엘제 선생님이 질투니, 하고 물었고, 아니라고 했던 그것. 처음 해 봤고, 생각보다 유치했던 그것.</p>
+
+<p>그러니까 그는 질투한 거였다.</p>
+<p>루카스 때문에.</p>
+<p>십 년 전 맛없는 커피 한 잔 때문에.</p>
+
+<p>귀가 붉어졌다. 이번에는 3초로 끝나지 않았다.</p>
+
+<p>루카스는 습도계를 다시 보았다. 48. 수첩에 적었다. 코트를 걸고 돌아와 또 보았다. 48. 또 적었다. 수첩에 48이 세 줄 나란히 적혔다. 루카스는 그걸 내려다보다가 수첩을 덮었다.</p>
+
+<p>저녁엔 계란을 부쳤다. 평소보다 더 탔다.</p>
+<p>&quot;탄 데가 맛있어요ㅎㅎ&quot;</p>
+<p>그가 말했다. 루카스는 그 얼굴을 보지 못했다. 보면 다리 위의 그 얼굴이 겹칠 것 같았다.</p>
+
+<p>저녁 내내 그랬다.</p>
+
+<p>소파에서 도해집 41쪽을 폈다. 다리 위에서도 넘기지 못한 장이었다. 지금도 넘어가지 않았다. 아마실 세 가닥을 잡고 연습 매듭을 지었다. 세 번째 매듭이 1밀리 틀어졌다. 풀고 다시 지었다. 또 틀어졌다.</p>
+
+<p>다 가진 것처럼 웃는 사람이었다. 거리에서 사람들이 알아보는 사람, 누구에게나 다정한 사람. 그 사람이 감자 봉투를 들고 서서, 자기가 시끄럽다고 했다.</p>
+<p>시끄러워서 안 어울린다고.</p>
+<p>루카스 옆에.</p>
+
+<p>매듭이 또 틀어졌다.</p>
+
+<p>욕실 쪽에서 물소리가 났다. 붓 씻는 소리, 그리고 콧노래. 가사 없이 음만. 이 년 동안 들어서 다 외운 그 노래. 오늘은 평소보다 조금 컸다.</p>
+
+<p>루카스는 그게 일부러라는 걸 알았다. 알아서, 귀가 더 붉어졌다.</p>
+
+<div class="scene"><b>밤</b> 침대</div>
+
+<p>루카스가 먼저 침대에 들어갔다. 벽 쪽으로, 똑바로, 반듯하게.</p>
+<p>아무렇지 않으려고 머리맡 습도계를 보았다. 이상 없음.</p>
+<p>머릿속은 이상 있음이었다.</p>
+
+<p>질투했어.</p>
+<p>나 때문에.</p>
+
+<p>문이 열렸다. 침대가 한쪽으로 기울었다. 이불이 들렸다가 내려앉았고, 붉은 머리가 루카스의 칸까지 넘어왔다.</p>
+
+<p>&quot;루카, 습도계는 내일 봐요ㅎㅎ 이리 와요.&quot;</p>
+
+<p>불이 꺼져 있어서 그는 보지 못했다. 귀 끝부터 목덜미까지 다 붉은 것을.</p>
+
+<p>루카스는 벽 쪽으로 반 뼘 붙었다. 한참 뒤, 어둠 속에서 아주 작게 말했다.</p>
+
+<p>&quot;……너, 아까.&quot;</p>
+<p>&quot;네?&quot;</p>
+<p>&quot;……&quot;</p>
+<p>&quot;루카?&quot;</p>
+<p>&quot;……아니야.&quot;</p>
+
+<p>끝까지 말하라고 한 사람이, 반쪽만 말하고 멈췄다.</p>
+<p>이건 아직, 혼자만 알고 싶었다.</p>
+
+<p>옆에서 숨소리가 금방 고르게 바뀌었다. 한번 자면 깨지 않는 사람이었다.</p>
+
+<div class="scene"><b>새벽 세 시</b> </div>
+
+<p>새벽 세 시.</p>
+
+<p>그가 돌아누웠다. 팔이 루카스의 허리에 감겼다. 깨어 있을 때는 그러지 않으면서. 본인은 모르면서. 매일 밤 그 시간에.</p>
+
+<p>루카스는 그날도 깨어 있었다.</p>
+
+<p>평소에는 그냥 두기만 했다. 빼지 않는 것, 그게 다였다.</p>
+<p>오늘은 그 팔 위에, 손을 얹었다.</p>
+
+<p>손바닥 아래에서 맥박이 천천히 뛰었다. 루카스는 그걸 오래 세었다. 습도계를 볼 때처럼, 아주 정확하게.</p>
+
+<p>시끄럽다고 했지.</p>
+<p>루카스는 생각했다.</p>
+<p>이 집에서 제일 정직한 소리가, 이거야.</p>
+
+<p>귀 끝은 아침까지 붉었다.</p>
+
+  </article>
+  <div class="end"><span class="mark">— FIN —</span><a href="index.html#chron" onclick="if(history.length>1){history.back();return false}">목록으로 돌아가기</a></div>
+</div>
+<!--bgm--><script>window.BGM={"ids": ["z2kEpGPDdRA", "4cnRPqr3oDI", "R1eX6Vuc0BI"], "title": "Je te veux · Satie"};</script><script src="bgm.js" defer></script><!--/bgm-->
+</body>
+</html>
