@@ -190,6 +190,27 @@ footer{text-align:center;font-family:var(--caps);font-size:10px;letter-spacing:.
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
+<style id="tabmode">
+/* 탭 방식: 왼쪽 메뉴를 누르면 오른쪽 칸만 바뀜 */
+.main>[data-panel][hidden]{display:none!important}
+.main{min-height:70vh}
+.panel-in{animation:panelIn .35s ease-out}
+@keyframes panelIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.tab[aria-current="page"]{background:rgba(196,166,118,.22);border-color:var(--gold);color:var(--parch)}
+.tab[aria-current="page"] svg{stroke:var(--gold-hi)}
+@media (prefers-reduced-motion:reduce){.panel-in{animation:none}}
+@media (max-width:900px){
+  .page{gap:22px}
+  .side{position:sticky;top:0;z-index:20;padding:8px 8px 8px;border-radius:0 0 16px 16px;margin-inline:calc(-1 * max(16px, env(safe-area-inset-left,0px)));padding-top:calc(8px + env(safe-area-inset-top,0px));gap:0}
+  .side .banner,.side .emblem,.side .name,.side .sub,.side .foot{display:none}
+  .tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding:2px}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{flex:0 0 auto;flex-direction:row;gap:5px;padding:7px 13px;font-size:13px;border-radius:20px}
+  .tab svg{width:15px;height:15px}
+  #bgm{top:auto!important;bottom:max(14px,env(safe-area-inset-bottom,0px))!important}
+}
+</style>
+
 
 <canvas id="dust" aria-hidden="true"></canvas>
 <div class="page">
@@ -203,7 +224,7 @@ footer{text-align:center;font-family:var(--caps);font-size:10px;letter-spacing:.
   </aside>
 
   <main class="main">
-    <section class="altar" id="window" aria-labelledby="t">
+    <section class="altar" id="window" data-panel="window" aria-labelledby="t">
       <figure class="win"><img src="bridge.jpg" alt="하이델베르크 옛 다리와 언덕 위의 성을 그린 유화"></figure>
       <div class="when">7:55 · EVERY MORNING</div>
       <h1 id="t">Alte Brücke</h1>
@@ -211,7 +232,7 @@ footer{text-align:center;font-family:var(--caps);font-size:10px;letter-spacing:.
       <div class="cap">BLEIB · ICH BLEIBE · GEBLIEBEN</div>
     </section>
 
-    <section class="lm-wrap" id="now" aria-label="지금 하이델베르크">
+    <section class="lm-wrap" id="now" data-panel="window" aria-label="지금 하이델베르크">
       <span class="lm-k">HEIDELBERG · JETZT</span>
       <div id="lm">
         <svg viewBox="0 60 1000 720" preserveAspectRatio="xMidYMid meet" role="img" aria-label="하이델베르크 지도와 지금 사람들이 있는 곳">
@@ -234,7 +255,7 @@ footer{text-align:center;font-family:var(--caps);font-size:10px;letter-spacing:.
       <p class="lm-note">한국 시간과 같이 흘러요. 장소나 이름표를 누르면 지금 무엇을 하는지 보여요.</p>
     </section>
 
-    <section id="easels" class="easels" aria-labelledby="easels-h">
+    <section id="easels" data-panel="easels" class="easels" aria-labelledby="easels-h">
       <div class="sec"><span class="k">the Gallery</span><h2 id="easels-h">두 점의 초상</h2><svg class="orn" viewBox="0 0 180 18" aria-hidden="true"><g fill="none" stroke="#d4ac5e" stroke-width="1.4"><path d="M0 9 H70 M110 9 H180"/><path d="M90 2 l7 7 -7 7 -7 -7z" fill="#d4ac5e"/><path d="M70 9 q6 -6 12 0 M110 9 q-6 -6 -12 0"/></g></svg></div>
       <div class="studio">
         <figure class="shot"><img src="studio.jpg" alt="창가 화실의 두 이젤. 왼쪽에 붉은 머리 화가의 자화상, 오른쪽에 검은 머리 루카스의 초상이 놓여 있다"></figure>
@@ -245,7 +266,7 @@ footer{text-align:center;font-family:var(--caps);font-size:10px;letter-spacing:.
       </div>
     </section>
 
-    <section id="chron" aria-labelledby="chron-h" style="display:grid;gap:46px">
+    <section id="chron" data-panel="chron" aria-labelledby="chron-h" style="display:grid;gap:46px">
       <div class="sec"><span class="k">the Chronicle</span><h2 id="chron-h">연대기</h2><svg class="orn" viewBox="0 0 180 18" aria-hidden="true"><g fill="none" stroke="#d4ac5e" stroke-width="1.4"><path d="M0 9 H70 M110 9 H180"/><path d="M90 2 l7 7 -7 7 -7 -7z" fill="#d4ac5e"/><path d="M70 9 q6 -6 12 0 M110 9 q-6 -6 -12 0"/></g></svg></div>
       <ol class="chron">
 <li class="">
@@ -337,19 +358,19 @@ footer{text-align:center;font-family:var(--caps);font-size:10px;letter-spacing:.
       </ol>
     </section>
 
-    <section id="box" class="box" aria-labelledby="box-h">
+    <section id="box" data-panel="box" class="box" aria-labelledby="box-h">
       <div class="sec"><span class="k">the Walnut Box</span><h2 id="box-h">호두나무 상자</h2></div>
       <a href="letters.html"><figure class="pic"><img src="box.jpg" alt="편지가 비죽 나온 호두나무 상자" width="1600" height="726" loading="lazy"></figure><span class="tt">루카스의 편지 61통</span><span class="sub">JANUARY 9 — MARCH 2 · OPEN</span></a>
     </section>
 
-    <section id="others" class="ledger" aria-labelledby="others-h">
+    <section id="others" data-panel="others" class="ledger" aria-labelledby="others-h">
       <div class="sec"><span class="k">the Neighbours</span><h2 id="others-h">주변 인물</h2></div>
       <div class="cards">
         <a href="story-jonas.html"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="18" r="8"/><path d="M10 42 c2-10 8-14 14-14 s12 4 14 14"/><path d="M36 10 l2 -4 M40 14 l4 -2 M38 20 h4"/></svg><span class="k2">JONAS · AUSSERHALB DER CHRONIK</span><span class="tt">선배님, 연애 상담 좀</span><span class="sub">요나스에게 여자친구가 생겼다<br>조언은 하나도 도움이 안 됐다</span></a>
       </div>
     </section>
 
-    <section id="ledger" class="ledger" aria-labelledby="ledger-h">
+    <section id="ledger" data-panel="ledger" class="ledger" aria-labelledby="ledger-h">
       <div class="sec"><span class="k">the Ledger</span><h2 id="ledger-h">기록 카드</h2></div>
       <div class="cards">
         <a href="check-test.html"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M10 6 h28 v36 H10z"/><path d="M16 15 l2.5 2.5 L23 13 M16 24 l2.5 2.5 L23 22 M16 33 h4 M27 15 h6 M27 24 h6 M27 33 h6"/></svg><span class="k2">CONDITION REPORT</span><span class="tt">서방력 · 마누라력</span><span class="sub">루카와 그, 각자 50문항</span></a>
@@ -358,7 +379,7 @@ footer{text-align:center;font-family:var(--caps);font-size:10px;letter-spacing:.
       </div>
     </section>
 
-    <div class="vault" id="vault"><a href="take3-draft.html">THE VAULT · new take#3 버린 원고</a></div>
+    <div class="vault" id="vault" data-panel="vault"><a href="take3-draft.html">THE VAULT · new take#3 버린 원고</a></div>
     <footer>HUMIDITY 50% · NOBODY COUNTS THE FIVE MINUTES</footer>
   </main>
 </div>
@@ -370,6 +391,26 @@ const still=matchMedia('(prefers-reduced-motion: reduce)').matches;
 function f(t){x.clearRect(0,0,w,h);for(const s of d){if(!still){s.y-=s.v;if(s.y<-.02){s.y=1.02;s.x=Math.random()}}
 const a=.25+.55*Math.abs(Math.sin(t/1400+s.p));x.fillStyle='rgba(230,214,178,'+(a*.6).toFixed(2)+')';x.beginPath();x.arc(s.x*w,s.y*h,s.r*dpr,0,6.3);x.fill()}
 if(!still)requestAnimationFrame(f)}requestAnimationFrame(f)})();
+</script>
+
+<script>
+(function(){
+ var main=document.querySelector('.main'), panels=[].slice.call(main.querySelectorAll('[data-panel]')), tabs=[].slice.call(document.querySelectorAll('.tabs .tab'));
+ var names=tabs.map(function(t){return t.getAttribute('href').slice(1)});
+ function show(name,scroll){
+  if(names.indexOf(name)<0) name='window';
+  panels.forEach(function(p){var on=p.getAttribute('data-panel')===name;p.hidden=!on;if(on){p.classList.remove('panel-in');void p.offsetWidth;p.classList.add('panel-in')}});
+  tabs.forEach(function(t){if(t.getAttribute('href')==='#'+name)t.setAttribute('aria-current','page');else t.removeAttribute('aria-current')});
+  var cur=document.querySelector('.tab[aria-current]'); if(cur&&cur.scrollIntoView&&innerWidth<=900) cur.scrollIntoView({block:'nearest',inline:'center'});
+  if(scroll)scrollTo(0,0);
+  dispatchEvent(new Event('resize'));
+ }
+ tabs.forEach(function(t){t.addEventListener('click',function(e){e.preventDefault();var n=t.getAttribute('href').slice(1);if(location.hash!=='#'+n)history.pushState(null,'','#'+n);show(n,true)})});
+ addEventListener('popstate',function(){show(location.hash.slice(1),true)});
+ addEventListener('hashchange',function(){show(location.hash.slice(1),true)});
+ if('scrollRestoration' in history)history.scrollRestoration='manual';
+ show(location.hash.slice(1),false); scrollTo(0,0); addEventListener('load',function(){scrollTo(0,0)});
+})();
 </script>
 <script src="livemap.js?v=1adc007" defer></script>
 <!--bgm--><script>window.BGM={"ids": ["rOcWd2jRPJU", "vw2vg6zvBaM"], "title": "Gymnopédie No.1 · Satie"};</script><script src="bgm.js" defer></script><!--/bgm-->
