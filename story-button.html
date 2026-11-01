@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>서른네 번째</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Pinyon+Script&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Nanum+Myeongjo:wght@400;700;800&display=swap">
+<style>
+:root{color-scheme:dark;--night:#17110c;--gold:#c4a676;--gold-hi:#e6d6b2;--line:rgba(196,166,118,.42);--parch:#ece2cd;--text:#ddd2bd;--muted:#a39580;
+  --caps:"Cinzel","Times New Roman",serif;--script:"Pinyon Script","Times New Roman",cursive;--ko:"Nanum Myeongjo","AppleMyungjo","Batang",serif}
+*{box-sizing:border-box}
+html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;background-color:var(--night);color:var(--text);font-family:var(--ko);font-size:17px;line-height:2;
+  background-image:radial-gradient(ellipse 70% 40% at 50% 0%,rgba(214,180,120,.12),transparent 70%);background-repeat:no-repeat;
+  padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px));padding-block:24px 80px}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;opacity:.5;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .9  0 0 0 0 .8  0 0 0 0 .6  0 0 0 .05 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+.wrap{max-width:620px;margin:0 auto}
+.back{display:inline-block;font-family:var(--caps);font-size:11px;letter-spacing:.2em;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:2px}
+.back:hover,.back:focus-visible{color:var(--gold-hi);outline:none}
+header{text-align:center;margin:56px 0 48px;display:grid;gap:6px;justify-items:center}
+header .lat{font-family:var(--script);font-size:44px;line-height:1;color:var(--gold)}
+header h1{margin:0;font-family:var(--ko);font-weight:800;font-size:clamp(28px,6vw,36px);color:var(--parch);letter-spacing:.08em}
+header .when{font-family:var(--caps);font-size:11px;letter-spacing:.28em;color:var(--muted)}
+header svg{width:160px;height:16px;margin-top:10px}
+article p{margin:0 0 1.1em;word-break:keep-all}
+.talk{margin:0 0 1.1em;padding-left:14px;border-left:1px solid var(--line)}
+.talk p{margin:0;color:var(--parch)}
+h2{margin:2.6em 0 1.4em;text-align:center;font-family:var(--ko);font-weight:700;font-size:16px;letter-spacing:.12em;color:var(--gold)}
+h2 span{padding:0 14px;background:var(--night);position:relative}
+h2::before{content:"";display:block;height:1px;background:var(--line);transform:translateY(1em)}
+.end{text-align:center;margin-top:56px;display:grid;gap:18px;justify-items:center}
+.end .mark{font-family:var(--caps);font-size:11px;letter-spacing:.3em;color:var(--muted)}
+.end a{font-family:var(--ko);font-size:15px;color:var(--gold-hi);text-decoration:none;border:1px solid var(--line);border-radius:40px 40px 10px 10px;padding:8px 22px}
+.end a:hover,.end a:focus-visible{background:rgba(196,166,118,.15);outline:none}
+
+.part{text-align:center;margin:84px 0 40px;display:grid;gap:4px;justify-items:center}
+.part.first{margin-top:0}
+.part .eyebrow{font-family:var(--script);font-size:32px;line-height:1.1;color:var(--gold)}
+.part h2{margin:0;font-family:var(--ko);font-weight:800;font-size:24px;color:var(--parch);letter-spacing:.06em}
+.part h2::before{display:none}
+.part .sub{font-family:var(--caps);font-size:11px;letter-spacing:.24em;color:var(--muted)}
+.orn2{color:var(--gold);margin-bottom:22px}
+.scene{display:flex;align-items:center;gap:12px;margin:56px 0 26px;color:var(--muted);font-size:14px;letter-spacing:.1em}
+.scene::before,.scene::after{content:"";flex:1;height:1px;background:var(--line)}
+.scene b{font-family:var(--caps);font-weight:600;color:var(--gold);letter-spacing:.12em}
+.list{margin:4px 0 1.4em;padding:14px 20px;border:1px solid var(--line);border-radius:6px;background:rgba(236,226,205,.05);font-size:15.5px;line-height:1.9;color:var(--parch)}
+.list ol{margin:0;padding-left:1.4em}
+.list .note{color:var(--muted);font-size:14px}
+.chat{margin:4px 0 1.6em;display:flex;flex-direction:column;gap:6px}
+.chat .who{font-size:12.5px;color:var(--muted);margin:4px 0 -2px}
+.chat .msg{align-self:flex-start;max-width:86%;background:rgba(236,226,205,.08);border:1px solid var(--line);color:var(--parch);padding:6px 13px;border-radius:14px 14px 14px 4px;font-size:15px;line-height:1.6}
+.chat .msg.me{align-self:flex-end;border-radius:14px 14px 4px 14px;background:rgba(217,130,106,.18);border-color:rgba(217,130,106,.45)}
+.chat .room{align-self:center;font-family:var(--ko);font-size:12px;color:var(--gold);letter-spacing:.06em;margin-bottom:4px}
+.quiet{color:var(--muted)}
+.note-card{margin:4px auto 1.4em;padding:12px 18px;border:1px dashed var(--gold);border-radius:4px;color:var(--parch);font-size:15px;text-align:center;max-width:320px;background:rgba(236,226,205,.04)}
+article b{color:var(--gold-hi)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="index.html#chron" onclick="if(history.length>1){history.back();return false}">← 목록으로</a>
+  <header>
+    <span class="lat">the Thirty-fourth</span>
+    <h1>서른네 번째</h1>
+    <span class="when">단편 · 어느 봄, 평일 아침</span>
+    <svg viewBox="0 0 180 18" aria-hidden="true"><g fill="none" stroke="#c4a676" stroke-width="1.2"><path d="M0 9 H70 M110 9 H180"/><path d="M90 3 l6 6 -6 6 -6 -6z" fill="#c4a676"/></g></svg>
+  </header>
+  <article>
+
+<div class="scene"><b>7:15</b> 욕실 거울 앞</div>
+
+<p>루카스는 늘 하던 대로 아래에서부터 단추를 채웠다. 하나, 둘, 셋. 손끝이 리넨 위를 일정한 속도로 올라갔다. 3분 20초짜리 일이었고, 일부러 천천히 하는 날은 4분이었다.</p>
+<p>서른셋에서 손이 멈췄다.</p>
+<p>맨 위, 목 바로 아래. 단추가 있어야 할 자리에 실 두 가닥만 짧게 삐져나와 있었다.</p>
+<p>&quot;……하나 없어.&quot;</p>
+<p>그는 거울 속에서 웃었다. &quot;서른셋도 충분해요ㅎㅎ&quot;</p>
+<p>&quot;안 괜찮아.&quot;</p>
+<p>목소리가 아주 정확했다. 루카스는 실 두 가닥을 손끝으로 한 번 만져 보고, 그 자리를 오래 내려다봤다. 그날 땋기는 6분 58초였다. 빗질하는 내내 루카스의 눈이 거울 속 그의 목 아래, 비어 있는 자리로 돌아갔다.</p>
+
+<div class="scene"><b>이튿날 아침</b> 거울 앞</div>
+
+<p>이튿날 아침, 그는 이상한 걸 봤다.</p>
+<p>루카스가 서른세 번째 단추를 채우고, 손을 한 칸 더 올렸다. 아무것도 없는 자리였다. 그런데 손가락이 그 자리에서 단추를 채우는 동작을 했다. 엄지와 검지로, 없는 단추를 단춧구멍에 밀어 넣는 것처럼. 정확하게, 아주 진지하게.</p>
+<p>그리고 거기서 멈췄다.</p>
+<p>&quot;…….&quot;</p>
+<p>루카스는 자기 손을 내려다봤다. 허공을 쥔 손가락 두 개.</p>
+<p>그는 웃음을 참으려고 입술을 깨물었다. 소용없었다. 어깨가 먼저 흔들렸다.</p>
+<p>&quot;루카, 지금…….&quot;</p>
+<p>&quot;습관이야.&quot;</p>
+<p>&quot;없는 걸 채웠어요ㅎㅎ&quot;</p>
+<p>&quot;……습관이라고.&quot;</p>
+<p>귀 끝이 빨갰다. 루카스는 손을 내리지도 못하고 그대로 쥐고 있었다. 그는 그 손을 들어 손가락 끝에 입을 맞췄다. 방금 없는 단추를 채운 그 두 손가락에.</p>
+<p>&quot;서른네 번째 단추 채워 줘서 고마워요.&quot;</p>
+<p>&quot;……안 채웠어.&quot;</p>
+<p>&quot;채웠어요. 제가 봤어요.&quot;</p>
+<p>그날 땋기는 7분 10초였다. 루카스가 빗을 든 채 한 번씩 멈췄기 때문이었다. 그는 거울로 다 봤다. 멈출 때마다 루카스의 입꼬리가 아주 조금 움직이다가, 다시 굳는 걸.</p>
+
+<div class="scene"><b>그날 저녁</b> 수색</div>
+
+<p>수색은 그날 저녁부터 시작됐다.</p>
+<p>루카스는 습도계를 점검하듯 집을 수색했다. 구역을 나눴다. 욕실, 침실, 서재, 거실, 현관. 수첩에 표를 그리고 끝난 구역에 줄을 그었다.</p>
+<p>세탁기 필터에서는 실밥만 나왔다. 침대 밑에서는 풀린 머리끈 두 개가 나왔다. 서재 상자 주변은 핀셋으로 훑었다.</p>
+<p>그리고 소파.</p>
+<p>그가 씻고 나왔을 때 루카스는 거실 바닥에 엎드려 있었다. 볼을 바닥에 대고, 한 손에는 손전등을, 다른 손에는 핀셋을 쥐고. 소파 밑을 들여다보는 눈이 복원실에서 금박을 볼 때와 똑같았다.</p>
+<p>그는 문가에 서서 한참 그걸 봤다.</p>
+<p>검은 머리 끝에 먼지가 하나 붙어 있었다. 손전등 불빛이 소파 밑을 아주 천천히, 왼쪽에서 오른쪽으로 훑었다. 수평으로. 루카스는 아무것도 놓치지 않으려고 숨까지 참는 것 같았다.</p>
+<p>그는 조용히 다가가 옆에 엎드렸다. 바닥이 차가웠다. 붉은 머리가 마룻바닥 위로 쏟아졌다.</p>
+<p>&quot;……방해돼.&quot;</p>
+<p>&quot;같이 찾아요ㅎㅎ&quot;</p>
+<p>&quot;네 머리가 소파 밑으로 들어가.&quot;</p>
+<p>정말이었다. 땋은 끝이 소파 밑 어둠 속으로 들어가 있었다. 루카스는 미간을 찌푸리고 그 끝을 손으로 집어 그의 등 위에 올려놓았다. 그러고는 손전등을 두 사람 사이로 옮겼다. 둘 다 볼 수 있게.</p>
+<p>소파 밑에서 나온 건 붉은 머리카락 세 가닥, 연필 한 자루, 그리고 작년 크리스마스 시장 폭스링 판화의 귀퉁이였다.</p>
+<p>단추는 없었다.</p>
+<p>루카스는 머리카락 세 가닥을 핀셋으로 하나씩 집어 손바닥에 올려놓았다. 버리지 않았다.</p>
+<p>&quot;그거 증거물이에요?&quot;</p>
+<p>&quot;……요나스가 세는 거야.&quot;</p>
+<p>그는 바닥에 볼을 댄 채로 웃었다. 루카스의 얼굴이 손전등 불빛 반대편에서 아주 가까이 있었다. 진지한 얼굴이었다. 너무 진지해서, 볼에 마룻바닥 무늬가 찍혀 있는 걸 본인만 몰랐다.</p>
+<p>그는 그 자국을 말해 주지 않았다. 다음 날 아침까지.</p>
+
+<div class="scene"><b>이튿날</b> 단톡방</div>
+
+<p>이튿날, 단톡방 이름이 바뀌어 있었다.</p>
+<div class="note-card">🔍 서른네 번째 단추 수색대</div>
+<p>요나스였다.</p>
+<div class="chat">
+  <div class="room">🔍 서른네 번째 단추 수색대</div>
+  <div class="who">요나스</div>
+  <div class="msg">선배님이 오늘 출근하자마자 복원실 바닥을 핀셋으로 훑으셨어요</div>
+  <div class="who">요나스</div>
+  <div class="msg">단추가 복원실에 있을 리 없잖아요 선배님 셔츠도 아닌데</div>
+  <div class="who">요나스</div>
+  <div class="msg">근데 아무도 말 못 했어요</div>
+  <div class="who">다나</div>
+  <div class="msg">도쿄 그 가게 전화했어. 단종이래</div>
+  <div class="who">다나</div>
+  <div class="msg">같은 단추 이제 없어</div>
+  <div class="who">민디</div>
+  <div class="msg">(캡처) 그분 셔츠 단추 서른셋 됨</div>
+  <div class="who">루스</div>
+  <div class="msg">마거릿도 단추를 자주 잃어버렸어요. 아버지가 매번 찾아 줬죠.</div>
+</div>
+<p>루카스는 알림을 꺼 둔 채였다. 그런데도 점심때 휴대폰을 오래 들여다봤다. 루스의 마지막 메시지에서 손가락이 멈췄다.</p>
+
+<div class="scene"><b>점심</b> 복원실</div>
+
+<p>복원실. 루카스는 대체 단추를 고르고 있었다.</p>
+<p>작업대 위에 흰 단추가 일곱 개 줄지어 놓여 있었다. 자개, 소뼈, 유리, 오래된 리넨 셔츠에서 뗀 것. 핀셋으로 하나씩 들어 빛에 비춰 보고, 지름을 재고, 다시 내려놓았다. 일곱 개 모두 모서리를 맞춰서.</p>
+<p>엘제 선생님이 지나가다 멈췄다. 일곱 개를 내려다봤다.</p>
+<p>&quot;결손부 메울 거면 표시해. 원본인 척하면 안 돼.&quot;</p>
+<p>그리고 그대로 지나갔다.</p>
+<p>루카스는 수첩에 적었다. &#x27;보충할 것. 단, 표시할 것.&#x27;</p>
+
+<div class="scene"><b>그날 밤</b> 서재</div>
+
+<p>그날 밤, 그는 서재 문틈으로 불빛이 새어 나오는 걸 봤다.</p>
+<p>루카스가 책상 앞에 앉아 있었다. 등이 반듯했다. 책상 위에 리넨 천 한 조각이 펼쳐져 있었고, 루카스는 거기에 단추를 달고 있었다.</p>
+<p>하나가 아니었다.</p>
+<p>천 위에 흰 단추가 줄지어 있었다. 가로 다섯 개, 세로 네 줄. 전부 같은 간격이었다. 자로 잰 것처럼. 실제로 자로 잰 것이었다. 자가 천 옆에 반듯하게 놓여 있었다.</p>
+<p>&quot;……루카.&quot;</p>
+<p>루카스가 바늘을 든 채 돌아봤다. 들킨 얼굴이었다.</p>
+<p>&quot;연습이야.&quot;</p>
+<p>&quot;몇 개 했어요?&quot;</p>
+<p>&quot;…….&quot;</p>
+<p>&quot;루카.&quot;</p>
+<p>&quot;……스물.&quot;</p>
+<p>그는 문틀에 기댄 채 한동안 아무 말도 하지 못했다. 단추 스무 개. 한 개를 달기 위해. 셔츠에 달 것도 아닌 천 조각에. 천 귀퉁이에는 작은 글씨로 날짜와 번호까지 적혀 있었다. 1번은 조금 기울어 있었고, 스무 번째는 완벽했다.</p>
+<p>&quot;……1번은 실이 너무 길었어.&quot;</p>
+<p>묻지도 않았는데 루카스가 말했다. 설명하는 목소리가 아주 진지했다.</p>
+<p>&quot;4번부터 매듭을 바꿨어. 8번은 바늘이 미끄러졌고.&quot;</p>
+<p>그는 걸어 들어가서 루카스 뒤에 섰다. 의자 등받이 너머로 두 팔을 감았다. 턱을 루카스 머리 위에 얹었다.</p>
+<p>&quot;……방해돼.&quot;</p>
+<p>&quot;알아요ㅎㅎ&quot;</p>
+<p>그는 비키지 않았다. 루카스도 바늘을 내려놓지 않았다. 스물한 번째를 달기 시작했다. 그의 팔 안에서, 아주 천천히.</p>
+<p>그는 그 손을 내려다봤다. 바늘이 천을 들어갔다 나오는 속도가 일정했다. 복원실에서 0.1밀리를 다루는 손이 지금 셔츠 단추 하나를 위해 스물한 번째 연습을 하고 있었다.</p>
+<p>이 사람을 어떻게 안 귀여워할 수 있는지, 그는 정말로 몰랐다.</p>
+<p>&quot;루카. 저 서른셋도 좋다고 했잖아요.&quot;</p>
+<p>&quot;……알아.&quot;</p>
+<p>&quot;하나 비어 있으면 루카가 거기서 한 번 더 멈추잖아요. 그것도 좋아요.&quot;</p>
+<p>루카스의 손이 멈췄다. 한참.</p>
+<p>&quot;……그래도 서른넷이야.&quot;</p>
+<p>그리고 아주 작게.</p>
+<p>&quot;……도쿄에서 산 거잖아.&quot;</p>
+<p>그건 서른네 개의 단추를 처음 채운 날의 이야기였다. &quot;여기 살아. 나랑.&quot; 그 말을 하던 날의 셔츠였다.</p>
+<p>그는 아무 말도 하지 않고 루카스 정수리에 입을 맞췄다. 루카스는 스물한 번째 단추를 마저 달았다. 그날 밤 연습 천에는 단추가 스물두 개 달렸다.</p>
+
+<div class="scene"><b>사흘째 아침</b> 다리 끝 빵집</div>
+
+<p>사흘째 아침. 다리 위에서 그림 한 칸을 채우고 내려오는데, 다리 끝 빵집 주인이 문 앞에서 손짓을 했다. 종이봉투 하나를 건넸다.</p>
+<p>안에 브레첼 하나, 그리고 작은 흰 단추 하나.</p>
+<p>&quot;2층 창가 자리 의자 틈에서요. 빨간 머리 분 거죠?&quot;</p>
+<p>이 동네에서 그 단추가 누구 건지 모르는 사람은 없었다. 지난 일요일 아침, 탄 샌드위치를 먹던 그 자리였다.</p>
+<p>그는 봉투를 들고 복원실까지 뛰어갔다. 뛰지 말라는 말은 나중에 들었다.</p>
+<p>루카스는 봉투 안을 들여다보고, 단추를 핀셋으로 집어 빛에 비춰 봤다. 지름을 쟀다. 앞뒤를 확인했다. 한참.</p>
+<p>&quot;……맞아.&quot;</p>
+<p>그 한마디에 요나스가 뒤에서 박수를 쳤다. 엘제 선생님이 쳐다보자 멈췄다.</p>
+
+<div class="scene"><b>그날 밤</b> 소파</div>
+
+<p>그날 밤, 루카스가 단추를 다시 달았다.</p>
+<p>실은 세 갈래로 땋은 아마실이었다. 스물두 번 연습한 손이었다. 바늘이 리넨을 지나갈 때마다 그는 소파에서 숨을 죽이고 그걸 봤다.</p>
+<p>마지막 한 땀에서 루카스가 실을 바꿨다.</p>
+<p>빨간 실이었다.</p>
+<p>&quot;……그건 왜요?&quot;</p>
+<p>&quot;표시.&quot;</p>
+<p>루카스는 매듭을 짓고 실을 끊었다. 단추 아래에 빨간 땀이 하나, 아주 작게 보였다.</p>
+<p>&quot;여기 한 번 떨어졌던 거야. 다시 단 자리.&quot;</p>
+<p>엘제 선생님 말대로였다. 원본인 척하지 않는 것. 그리고 그건 그의 물감 상자를 정리하던 날의 말이기도 했다.</p>
+<p>빨강은 한 군데만.</p>
+
+<div class="scene"><b>다음 날 7:15</b> 욕실 거울 앞</div>
+
+<p>하나, 둘, 셋. 루카스의 손끝이 리넨 위를 올라갔다. 서른셋. 그리고 서른넷.</p>
+<p>빨간 땀이 있는 단추에서 루카스의 손이 아주 잠깐 멈췄다. 엄지가 그 땀을 한 번 쓸었다. 그러고는 단춧구멍에 밀어 넣었다.</p>
+<p>&quot;……됐어.&quot;</p>
+<p>그날 단추는 3분 21초가 걸렸다. 1초는 그 단추 몫이었다.</p>
+<p>그는 거울 속에서 웃었다. 루카스의 볼에 아직 희미하게 남아 있는 마룻바닥 무늬를 보면서.</p>
+<p>&quot;루카.&quot;</p>
+<p>&quot;응.&quot;</p>
+<p>&quot;어제 볼에 소파 밑 바닥 자국 있었던 거 알아요?&quot;</p>
+<p>&quot;…….&quot;</p>
+<p>루카스가 거울 속 자기 얼굴을 봤다. 자국은 거의 사라져 있었다. 거의.</p>
+<p>&quot;왜 말 안 했어.&quot;</p>
+<p>&quot;귀여워서요ㅎㅎ&quot;</p>
+<p>귀 끝이 빨개졌다. 목덜미까지. 3초.</p>
+<p>루카스는 대답 대신 빗을 집었다. 끝에서부터, 조금씩, 위로. 그날 땋기는 7분 30초였다. 신기록과는 거리가 멀었다. 아무도 세지 않았다.</p>
+<p>단톡방 이름은 아직 &#x27;🔍 서른네 번째 단추 수색대&#x27;였다. 아무도 바꾸지 않았다.</p>
+  </article>
+  <div class="end"><span class="mark">— FIN —</span><a href="index.html#chron" onclick="if(history.length>1){history.back();return false}">목록으로 돌아가기</a></div>
+</div>
+<!--bgm--><script>window.BGM={"ids": ["i1gE3nyQnKg", "NdPsPJV1aEw", "XMrdhgWR9Zk"], "title": "Golliwogg's Cakewalk · Debussy"};</script><script src="bgm.js" defer></script><!--/bgm-->
+</body>
+</html>
