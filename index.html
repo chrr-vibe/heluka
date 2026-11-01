@@ -189,6 +189,30 @@ footer{text-align:center;font-family:var(--caps);font-size:10px;letter-spacing:.
   .mrow{justify-content:flex-start!important;padding-left:4px}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* 연대기 보기 전환 */
+.chron[hidden],.clist[hidden]{display:none!important}
+.cview{display:flex;justify-content:center;gap:8px;margin:-22px 0 -10px}
+.cview button{display:inline-flex;align-items:center;gap:6px;font:600 13px/1 var(--ko);color:var(--muted);background:transparent;border:1px solid var(--line);border-radius:999px;padding:8px 16px;cursor:pointer}
+.cview button svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.6}
+.cview button[aria-pressed="true"]{color:var(--night);background:var(--gold);border-color:var(--gold)}
+.cview button:focus-visible{outline:2px solid var(--gold-hi);outline-offset:2px}
+.clist{border-top:1px solid var(--line);font-variant-numeric:tabular-nums}
+.clist a.row{display:grid;grid-template-columns:2.6em 5.2em minmax(0,1fr) auto;align-items:baseline;gap:12px;padding:11px 6px;border-bottom:1px solid rgba(196,166,118,.18);color:var(--text);text-decoration:none}
+.clist a.row:hover,.clist a.row:focus-visible{background:rgba(196,166,118,.08);outline:none}
+.clist .cl-n{font-family:var(--latin);color:var(--gold-lo);font-size:15px;text-align:right}
+.clist .cl-k{font-size:12px;color:var(--gold);letter-spacing:.04em;white-space:nowrap}
+.clist .cl-k.cl-main{color:var(--gold-hi);font-weight:700}
+.clist .cl-t{font-size:16px;color:var(--parch);min-width:0;overflow-wrap:anywhere}
+.clist .cl-d{font-family:var(--latin);font-style:italic;color:var(--muted);font-size:14px;white-space:nowrap}
+.clist .cl-mk{padding:9px 6px 7px;text-align:center;font:600 11px/1 var(--caps);letter-spacing:.2em;color:var(--gold);border-bottom:1px solid rgba(196,166,118,.18)}
+@media (max-width:600px){
+  .clist a.row{grid-template-columns:2em auto minmax(0,1fr);gap:1px 10px;padding:9px 2px}
+  .clist .cl-n{grid-row:1 / span 2;align-self:center}
+  .clist .cl-k{grid-column:2;grid-row:1}
+  .clist .cl-d{grid-column:3;grid-row:1;justify-self:end;font-size:12.5px;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+  .clist .cl-t{grid-column:2 / span 2;grid-row:2;font-size:15.5px}
+}
 </style>
 <style>
 .wardrobe{display:grid;gap:30px;margin-top:70px}
@@ -292,6 +316,11 @@ footer{text-align:center;font-family:var(--caps);font-size:10px;letter-spacing:.
 
     <section id="chron" data-panel="chron" aria-labelledby="chron-h" style="display:grid;gap:46px">
       <div class="sec"><span class="k">the Chronicle</span><h2 id="chron-h">연대기</h2><svg class="orn" viewBox="0 0 180 18" aria-hidden="true"><g fill="none" stroke="#d4ac5e" stroke-width="1.4"><path d="M0 9 H70 M110 9 H180"/><path d="M90 2 l7 7 -7 7 -7 -7z" fill="#d4ac5e"/><path d="M70 9 q6 -6 12 0 M110 9 q-6 -6 -12 0"/></g></svg></div>
+      <div class="cview" role="group" aria-label="연대기 보기 방식">
+        <button type="button" id="cv-tl" data-v="tl" aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M7 7h3M14 12h3M7 17h3"/><circle cx="12" cy="7" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="17" r="1.6"/></svg>연대기로</button>
+        <button type="button" id="cv-ls" data-v="ls" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6h12M8 12h12M8 18h12"/><circle cx="4" cy="6" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="4" cy="18" r="1"/></svg>목록으로</button>
+      </div>
+      <div class="clist" id="clist" hidden></div>
       <ol class="chron">
 <li class="">
   <span class="date">10월 · 뉴욕</span>
@@ -394,6 +423,11 @@ footer{text-align:center;font-family:var(--caps);font-size:10px;letter-spacing:.
   <a class="node" href="story-button.html" aria-label="단편 서른네 번째"><svg viewBox="0 0 80 80"><circle cx="40" cy="40" r="20"/><circle cx="34" cy="34" r="2.5"/><circle cx="46" cy="34" r="2.5"/><circle cx="34" cy="46" r="2.5"/><circle cx="46" cy="46" r="2.5"/><path d="M58 58 l8 8"/></svg></a>
   <div class="item"><a href="story-button.html"><span class="no">단편</span><span class="tt">서른네 번째</span></a></div>
 </li>
+<li class="">
+  <span class="date">어느 일요일 · 100분</span>
+  <a class="node" href="story-ten.html" aria-label="단편 10센티"><svg viewBox="0 0 80 80"><circle cx="24" cy="58" r="8"/><circle cx="44" cy="62" r="8"/><path d="M29 52 L58 14 M39 55 L54 16"/><path d="M14 30 h52" stroke-dasharray="3 4"/></svg></a>
+  <div class="item"><a href="story-ten.html"><span class="no">단편</span><span class="tt">10센티</span></a></div>
+</li>
       </ol>
     </section>
 
@@ -453,4 +487,26 @@ if(!still)requestAnimationFrame(f)}requestAnimationFrame(f)})();
 })();
 </script>
 <script src="livemap.js?v=h8" defer></script>
+<script>
+(()=>{const ol=document.querySelector('ol.chron'),box=document.getElementById('clist');if(!ol||!box)return;
+ let n=0;
+ ol.querySelectorAll(':scope > li').forEach(li=>{
+   if(li.classList.contains('mrow')){const m=document.createElement('div');m.className='cl-mk';m.textContent=li.textContent.trim();box.append(m);return;}
+   const a=li.querySelector('.item a');if(!a)return;n++;
+   const r=document.createElement('a');r.className='row';r.href=a.getAttribute('href');
+   const no=(li.querySelector('.no')||{}).textContent||'';
+   r.innerHTML='<span class="cl-n"></span><span class="cl-k"></span><span class="cl-t"></span><span class="cl-d"></span>';
+   r.children[0].textContent=n;r.children[1].textContent=no.split(' · ')[0];if(/^No\./.test(no))r.children[1].classList.add('cl-main');
+   r.children[2].textContent=(li.querySelector('.tt')||{}).textContent||'';
+   r.children[3].textContent=(li.querySelector('.date')||{}).textContent||'';
+   box.append(r);});
+ const btns=document.querySelectorAll('.cview button');
+ function set(v,save){const ls=v==='ls';ol.hidden=ls;box.hidden=!ls;
+   btns.forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.v===v)));
+   if(save)try{localStorage.setItem('heluka-chron-view',v)}catch(e){}}
+ btns.forEach(b=>b.addEventListener('click',()=>set(b.dataset.v,true)));
+ let v='tl';try{v=localStorage.getItem('heluka-chron-view')||'tl'}catch(e){}
+ set(v,false);
+})();
+</script>
 <!--bgm--><script>window.BGM={"ids": ["rOcWd2jRPJU", "vw2vg6zvBaM"], "title": "Gymnopédie No.1 · Satie"};</script><script src="bgm.js" defer></script><!--/bgm-->

@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>10센티</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Pinyon+Script&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Nanum+Myeongjo:wght@400;700;800&display=swap">
+<style>
+:root{color-scheme:dark;--night:#17110c;--gold:#c4a676;--gold-hi:#e6d6b2;--line:rgba(196,166,118,.42);--parch:#ece2cd;--text:#ddd2bd;--muted:#a39580;
+  --caps:"Cinzel","Times New Roman",serif;--script:"Pinyon Script","Times New Roman",cursive;--ko:"Nanum Myeongjo","AppleMyungjo","Batang",serif}
+*{box-sizing:border-box}
+html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;background-color:var(--night);color:var(--text);font-family:var(--ko);font-size:17px;line-height:2;
+  background-image:radial-gradient(ellipse 70% 40% at 50% 0%,rgba(214,180,120,.12),transparent 70%);background-repeat:no-repeat;
+  padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px));padding-block:24px 80px}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;opacity:.5;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .9  0 0 0 0 .8  0 0 0 0 .6  0 0 0 .05 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+.wrap{max-width:620px;margin:0 auto}
+.back{display:inline-block;font-family:var(--caps);font-size:11px;letter-spacing:.2em;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:2px}
+.back:hover,.back:focus-visible{color:var(--gold-hi);outline:none}
+header{text-align:center;margin:56px 0 48px;display:grid;gap:6px;justify-items:center}
+header .lat{font-family:var(--script);font-size:44px;line-height:1;color:var(--gold)}
+header h1{margin:0;font-family:var(--ko);font-weight:800;font-size:clamp(28px,6vw,36px);color:var(--parch);letter-spacing:.08em}
+header .when{font-family:var(--caps);font-size:11px;letter-spacing:.28em;color:var(--muted)}
+header svg{width:160px;height:16px;margin-top:10px}
+article p{margin:0 0 1.1em;word-break:keep-all}
+.talk{margin:0 0 1.1em;padding-left:14px;border-left:1px solid var(--line)}
+.talk p{margin:0;color:var(--parch)}
+h2{margin:2.6em 0 1.4em;text-align:center;font-family:var(--ko);font-weight:700;font-size:16px;letter-spacing:.12em;color:var(--gold)}
+h2 span{padding:0 14px;background:var(--night);position:relative}
+h2::before{content:"";display:block;height:1px;background:var(--line);transform:translateY(1em)}
+.end{text-align:center;margin-top:56px;display:grid;gap:18px;justify-items:center}
+.end .mark{font-family:var(--caps);font-size:11px;letter-spacing:.3em;color:var(--muted)}
+.end a{font-family:var(--ko);font-size:15px;color:var(--gold-hi);text-decoration:none;border:1px solid var(--line);border-radius:40px 40px 10px 10px;padding:8px 22px}
+.end a:hover,.end a:focus-visible{background:rgba(196,166,118,.15);outline:none}
+
+.part{text-align:center;margin:84px 0 40px;display:grid;gap:4px;justify-items:center}
+.part.first{margin-top:0}
+.part .eyebrow{font-family:var(--script);font-size:32px;line-height:1.1;color:var(--gold)}
+.part h2{margin:0;font-family:var(--ko);font-weight:800;font-size:24px;color:var(--parch);letter-spacing:.06em}
+.part h2::before{display:none}
+.part .sub{font-family:var(--caps);font-size:11px;letter-spacing:.24em;color:var(--muted)}
+.orn2{color:var(--gold);margin-bottom:22px}
+.scene{display:flex;align-items:center;gap:12px;margin:56px 0 26px;color:var(--muted);font-size:14px;letter-spacing:.1em}
+.scene::before,.scene::after{content:"";flex:1;height:1px;background:var(--line)}
+.scene b{font-family:var(--caps);font-weight:600;color:var(--gold);letter-spacing:.12em}
+.list{margin:4px 0 1.4em;padding:14px 20px;border:1px solid var(--line);border-radius:6px;background:rgba(236,226,205,.05);font-size:15.5px;line-height:1.9;color:var(--parch)}
+.list ol{margin:0;padding-left:1.4em}
+.list .note{color:var(--muted);font-size:14px}
+.chat{margin:4px 0 1.6em;display:flex;flex-direction:column;gap:6px}
+.chat .who{font-size:12.5px;color:var(--muted);margin:4px 0 -2px}
+.chat .msg{align-self:flex-start;max-width:86%;background:rgba(236,226,205,.08);border:1px solid var(--line);color:var(--parch);padding:6px 13px;border-radius:14px 14px 14px 4px;font-size:15px;line-height:1.6}
+.chat .msg.me{align-self:flex-end;border-radius:14px 14px 4px 14px;background:rgba(217,130,106,.18);border-color:rgba(217,130,106,.45)}
+.chat .room{align-self:center;font-family:var(--ko);font-size:12px;color:var(--gold);letter-spacing:.06em;margin-bottom:4px}
+.quiet{color:var(--muted)}
+.note-card{margin:4px auto 1.4em;padding:12px 18px;border:1px dashed var(--gold);border-radius:4px;color:var(--parch);font-size:15px;text-align:center;max-width:320px;background:rgba(236,226,205,.04)}
+article b{color:var(--gold-hi)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="index.html#chron" onclick="if(history.length>1){history.back();return false}">← 목록으로</a>
+  <header>
+    <span class="lat">Ten Centimetres</span>
+    <h1>10센티</h1>
+    <span class="when">단편 · 어느 일요일</span>
+    <svg viewBox="0 0 180 18" aria-hidden="true"><g fill="none" stroke="#c4a676" stroke-width="1.2"><path d="M0 9 H70 M110 9 H180"/><path d="M90 3 l6 6 -6 6 -6 -6z" fill="#c4a676"/></g></svg>
+  </header>
+  <article>
+
+<div class="scene"><b>일요일 아침</b> 소파</div>
+
+<p>일요일 아침. 붓도 핀셋도 메일도 금지인 날이었다.</p>
+<p>루카스는 소파에 앉은 그의 뒤에서 땋은 머리를 풀다가 손을 멈췄다. 끝에서부터 조금씩, 위로. 늘 하던 순서였는데, 오늘은 맨 끝에서 더 올라가지 않았다.</p>
+<p>머리카락 끝을 손바닥에 올려 빛에 비춰 봤다. 한 가닥이 두 갈래로, 어떤 건 세 갈래로 갈라져 있었다.</p>
+<p>&quot;……갈라졌어.&quot;</p>
+<p>&quot;아, 그렇죠ㅎㅎ 오래 안 잘랐으니까요. 미용실 한번 갈까요?&quot;</p>
+<p>&quot;안 돼.&quot;</p>
+<p>대답이 너무 빨랐다. 루카스 본인도 그걸 알았는지 잠깐 입을 다물었다.</p>
+<p>&quot;……미용실은 습도 관리가 안 돼.&quot;</p>
+<p>&quot;머리카락이 습도 관리가 필요해요?&quot;</p>
+<p>&quot;……가위도 안 닦아. 남이 쓰던 거로 자르고.&quot;</p>
+<p>그는 고개를 뒤로 젖혀 루카스를 올려다봤다. 거꾸로 보이는 루카스 얼굴에 이미 결심이 서 있었다.</p>
+<p>&quot;루카가 잘라 줄 거예요?&quot;</p>
+<p>&quot;……가위는 금지 목록에 없어.&quot;</p>
+<p>&quot;핀셋이랑 비슷한데요ㅎㅎ&quot;</p>
+<p>&quot;핀셋 아니야.&quot;</p>
+<p>그는 웃으면서 다시 앞을 봤다. 어차피 머리로 뭘 하든 상관없는 사람이었다. 자르든 땋든 묶든. 다만 이 사람이 그걸 한다는 게 좋았다.</p>
+<p>&quot;얼마나 잘라요?&quot;</p>
+<p>루카스가 한참 머리카락 끝을 들여다봤다. 갈라진 데가 어디서 끝나는지, 한 가닥씩.</p>
+<p>&quot;……10센티.&quot;</p>
+
+<div class="scene"><b>욕실</b> </div>
+
+<p>먼저 욕실이었다.</p>
+<p>&quot;머리 복잡할 때 자르면 삐뚤어져.&quot;</p>
+<p>루카스는 그를 욕조 가장자리에 앉히고 샤워기를 틀었다. 물 온도를 손목 안쪽으로 두 번 확인했다. 미지근하게. 종이 씻을 때와 같은 온도였다.</p>
+<p>샴푸. 린스. 린스는 오 분 동안 그대로 뒀다. 그동안 루카스는 타이머를 맞추고 수건 세 장을 반듯하게 개어 놓았다.</p>
+<p>그는 눈을 감고 있었다. 물소리 사이로 루카스의 손가락이 두피를 천천히 지나가는 게 느껴졌다. 미용실보다 훨씬 꼼꼼했다. 미용실에서 이렇게 해 주면 아마 돈을 세 배는 받을 거였다.</p>
+<p>&quot;루카, 이거 미용실보다 좋은데요ㅎㅎ&quot;</p>
+<p>&quot;……미용실 가지 마.&quot;</p>
+<p>&quot;안 가요.&quot;</p>
+
+<div class="scene"><b>거실</b> 북향 창가</div>
+
+<p>헹구고, 수건으로 눌러서 물기를 빼고, 거실로 나왔다. 이젤 앞 의자를 창가로 옮겨 놓았다. 북향 창, 빛이 제일 고른 자리였다. 바닥에는 신문지 대신 중성지가 깔려 있었다.</p>
+<p>그는 의자에 앉았다. 붉은 머리가 젖은 채 등 뒤로 바닥까지 쏟아졌다.</p>
+<p>루카스가 나무 빗을 들었다. 살이 넓은 것. 끝에서부터, 조금씩, 위로. 엉킨 데가 하나도 없을 때까지. 이십 분이 걸렸다.</p>
+<p>그러고 나서야 가위를 들었다. 새것이었다. 알코올 솜으로 날을 두 번 닦았다.</p>
+<p>첫 1센티에 10분이 걸렸다.</p>
+<p>루카스는 머리카락 한 갈래를 손가락 사이에 끼우고, 자를 대고, 가위 날을 수평으로 맞추고, 다시 자를 대고, 날을 조금 내렸다가 다시 올렸다. 미간에 주름이 깊게 팼다. 복원실에서 금박을 다룰 때와 같은 얼굴이었다.</p>
+<p>싹.</p>
+<p>1센티가 중성지 위로 떨어졌다. 루카스는 그걸 내려다보고, 다시 남은 머리를 봤다.</p>
+<p>&quot;……일어나 봐.&quot;</p>
+<p>그는 일어났다.</p>
+<p>&quot;돌아.&quot;</p>
+<p>돌았다.</p>
+<p>&quot;……다시 앉아.&quot;</p>
+<p>앉았다.</p>
+<p>&quot;거울 봐. 왼쪽이랑 오른쪽 같아?&quot;</p>
+<p>&quot;같은 것 같아요ㅎㅎ&quot;</p>
+<p>&quot;같은 것 같은 거 말고.&quot;</p>
+<p>그는 웃음을 참으며 거울을 들여다봤다. 1센티 차이를 알아볼 수 있는 사람이 세상에 몇이나 될까 싶었다. 그중 하나가 지금 등 뒤에서 자를 들고 있었다.</p>
+<p>그날 그는 열 번 넘게 일어났다 앉았고, 일곱 번 돌았고, 거울을 스무 번쯤 봤다. 루카스가 시키는 대로 다 했다. 한 번도 귀찮다는 얼굴을 하지 않았다. 귀찮지 않았다. 기분이 너무 좋았다.</p>
+<p>60분쯤 지났을 때였다.</p>
+<p>루카스의 미간 주름이 한 번도 풀리지 않았다는 걸 그는 거울로 보고 있었다. 한 시간 내내 그 얼굴이었다. 가위를 들 때도, 자를 댈 때도, &quot;다시 앉아.&quot; 할 때도.</p>
+<p>그는 의자에 앉은 채 손을 뒤로 뻗었다. 검지로 루카스 미간을 살살 눌렀다. 주름진 자리를, 펴 주듯이.</p>
+<p>&quot;……뭐 해.&quot;</p>
+<p>&quot;루카 주름 안 돼요ㅎㅎ&quot;</p>
+<p>&quot;……자르는 중이야.&quot;</p>
+<p>&quot;그러니까요. 자르는 동안 계속 이러고 있으면 여기 줄 생겨요.&quot;</p>
+<p>루카스는 가위를 든 채 굳었다. 미간 위의 손가락은 치우지 않았다. 3초 동안 그대로 있다가, 아주 조금, 미간이 풀렸다.</p>
+<p>그리고 그가 손을 떼자마자 다시 찌푸렸다. 다음 갈래를 집으면서.</p>
+<p>그는 의자에 기대 웃었다. 결국 그날 그는 미간을 다섯 번 눌렀다. 다섯 번 다 3초 동안만 풀렸다.</p>
+
+<div class="scene"><b>100분째</b> </div>
+
+<p>100분째.</p>
+<p>마지막 갈래가 중성지 위에 떨어졌다. 루카스는 자를 대고 전체를 한 번 훑었다. 왼쪽, 오른쪽, 가운데. 다시 왼쪽.</p>
+<p>&quot;……됐어.&quot;</p>
+<p>10센티. 정확히. 끝이 일직선이었다. 젖은 머리가 마르면서 끝이 조금씩 돌아왔는데, 어디 하나 삐져나온 데가 없었다.</p>
+<p>그는 일어나서 거울 앞에 섰다. 그리고 돌아서서, 루카스에게 물었다.</p>
+<p>&quot;어때요?&quot;</p>
+<p>루카스가 그를 봤다. 아래에서 위로. 머리끝에서 정수리까지.</p>
+<p>&quot;……단정해.&quot;</p>
+<p>목소리가 아주 정확했다. 그런데 입꼬리가 올라가 있었다. 본인은 모르는 것 같았다. 아니, 알면서 못 내리는 것 같았다.</p>
+<p>그는 그걸 보고 웃음이 터졌다.</p>
+<p>&quot;루카, 기분 좋아서 그렇죠?&quot;</p>
+<p>&quot;……아니야.&quot;</p>
+<p>그런데 루카스는 그 자리에서 그의 주변을 한 바퀴 돌았다. 천천히. 뒤에서 머리끝을 확인하고, 옆에서 확인하고, 다시 앞으로 왔다. 그리고 또 한 바퀴.</p>
+<p>&quot;루카, 지금 저 두 바퀴 돌았어요.&quot;</p>
+<p>&quot;……확인하는 거야.&quot;</p>
+<p>세 바퀴째를 돌면서 루카스가 말했다. 이번엔 머리를 본 게 아니라 그냥 돌았다. 뿌듯해서 어쩔 줄 모르는 사람처럼.</p>
+<p>그는 그 자리에 가만히 서서 돌아가는 루카스를 눈으로 따라갔다. 오늘 하루 중에 이게 제일 좋았다.</p>
+<p>중성지 위의 붉은 머리카락은 버리지 않았다. 루카스가 핀셋 대신 손으로 모아서(오늘은 핀셋 금지였다) 봉투에 넣었다. 그는 그 봉투가 어디로 가는지 묻지 않았다. 상자 쪽이었다.</p>
+<p>말린 머리를 다시 땋았다. 끝에서부터, 조금씩, 위로. 세 갈래. 루카스의 손이 마지막 매듭을 짓고 땋은 끝을 그의 어깨 너머로 넘겨 줬다.</p>
+<p>그는 그걸 손에 들고 내려다봤다.</p>
+<p>&quot;……근데 루카. 이거 잘랐는데도 오금까지 오는데요.&quot;</p>
+<p>무릎 뒤였다. 10센티를 잘랐는데도.</p>
+<p>&quot;……원래 길었어.&quot;</p>
+
+<div class="scene"><b>저녁</b> 소파</div>
+
+<p>그가 노트북으로 영화를 틀었다. 탑에 갇힌, 머리가 아주 긴 공주가 나오는 애니메이션이었다. 일부러 고른 거였다.</p>
+<p>루카스는 소파 끝에 반듯하게 앉아 화면을 봤다. 화면 속 공주의 금발이 탑 아래로 쏟아졌다. 루카스의 눈이 화면에서 옆으로 한 번 갔다. 그의 땋은 머리 쪽으로. 그리고 다시 화면으로.</p>
+<p>공주가 머리카락으로 의자를 휘감았다. 흘끔.</p>
+<p>공주가 머리카락을 줄처럼 타고 내려왔다. 흘끔.</p>
+<p>공주의 머리가 프라이팬에 엉켰다. 흘끔. 이번엔 미간이 조금 찌푸려졌다. 엉킨 머리를 견디지 못하는 얼굴이었다.</p>
+<p>그는 처음부터 다 보고 있었다.</p>
+<p>&quot;루카.&quot;</p>
+<p>&quot;……응.&quot;</p>
+<p>&quot;그럼 루카가 유진이에요?&quot;</p>
+<p>&quot;……무슨 소리야.&quot;</p>
+<p>&quot;루카가 계단 52개 위에 있는 저 구하러 오는 거 아니에요?&quot;</p>
+<p>루카스가 그를 봤다. 화면 속 남자 주인공이 탑을 기어오르고 있었다. 루카스는 그걸 한 번, 그를 한 번 봤다.</p>
+<p>&quot;……너 구해 줘야 돼?&quot;</p>
+<p>&quot;그럼요.&quot;</p>
+<p>그는 소파에 비스듬히 기대며 아주 진지한 얼굴을 했다.</p>
+<p>&quot;다나라는 무시무시한 매니저한테 그림을 갈취당하고 있잖아요. 루카가 저를 구해 주지 않으면 저 연애도 못 해 보고 그림만 그리다 말 거예요…….&quot;</p>
+<p>&quot;…….&quot;</p>
+<p>&quot;탑에 갇혀서요. 3층에.&quot;</p>
+<p>&quot;……너 이거 다나 씨한테 이를 거야.&quot;</p>
+<p>&quot;그러니까 구하러 와요. 응?&quot;</p>
+<p>그는 땋은 머리 끝을 집어 루카스 손에 쥐여 줬다. 오늘 아침 루카스가 100분 걸려 단정하게 자르고 다시 땋은 그 끝을.</p>
+<p>루카스는 손 안의 머리끝을 내려다봤다. 화면 속 남자가 공주의 머리카락을 타고 탑에 오르고 있었다. 루카스는 그걸 보지 않았다.</p>
+<p>귀 끝이 붉어졌다.</p>
+<p>&quot;……나 퇴근 시간 여섯 시야.&quot;</p>
+<p>그 말 한마디였다. 구하러 가는 시간.</p>
+<p>그는 소리 내어 웃었다.</p>
+<p>&quot;전 그거보다 더 있을게요, 그럼.&quot;</p>
+<p>루카스는 머리끝을 놓지 않았다. 손가락으로 끝을 한 번 쓸어 봤다. 자기가 자른 일직선을.</p>
+<p>화면 속에서 두 주인공이 마침내 입을 맞췄다. 아주 가볍게, 짧게. 애니메이션답게.</p>
+<p>그가 옆으로 고개를 돌렸다. 루카스도 돌렸다.</p>
+<p>쪽.</p>
+<p>화면 속이랑 똑같이 가벼웠다. 둘 다 그걸 알아서 조금 웃었다. 루카스는 웃은 걸 인정하지 않았지만.</p>
+<p>영화가 끝나고 노트북을 닫았다. 그가 기지개를 켜며 말했다.</p>
+<p>&quot;오늘은 왕자님 품에 안겨 자야겠다ㅎㅎ&quot;</p>
+<p>자기가 공주라는 데 아무런 망설임이 없는 목소리였다. 키가 루카스보다 머리 하나는 더 큰 공주였다.</p>
+<p>루카스는 대답하지 않았다. 대신 몸을 기울여 다시 입을 맞췄다. 쪽. 쪽. 한 번 더.</p>
+<p>&quot;……그래.&quot;</p>
+<p>그날 밤 그는 공주 역할을 끝까지 다 했다. 루카스 품에 파고들었고, 머리를 루카스 가슴에 얹었고, 오금까지 오는 땋은 머리가 이불 밖으로 흘러내렸다.</p>
+<p>루카스는 별말 없이 그 머리끝을 손에 쥐고 있었다. 자기가 왕자인 건 그냥 그런가 보다 하는 얼굴로.</p>
+
+<div class="scene"><b>새벽 세 시</b> </div>
+
+<p>새벽 세 시. 그가 돌아누워 루카스 허리에 팔을 감았다. 루카스는 깨어 있었다. 그 팔 위에 손을 얹었다. 다른 손에는 아직 그의 머리끝이 쥐어져 있었다.</p>
+<p>일직선이었다.</p>
+  </article>
+  <div class="end"><span class="mark">— FIN —</span><a href="index.html#chron" onclick="if(history.length>1){history.back();return false}">목록으로 돌아가기</a></div>
+</div>
+<!--bgm--><script>window.BGM={"ids": ["e8jN1-HC-Vc", "GRbwRW0NUlE", "V7ADUA4jMJ0"], "title": "I See the Light · Tangled (piano)"};</script><script src="bgm.js" defer></script><!--/bgm-->
+</body>
+</html>
