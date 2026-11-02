@@ -254,7 +254,7 @@ footer{text-align:center;font-family:var(--caps);font-size:10px;letter-spacing:.
     <svg class="emblem" viewBox="0 0 120 120" aria-hidden="true"><g fill="none" stroke="#c4a676" stroke-width="1.3" opacity=".9"><circle cx="60" cy="60" r="56"/><circle cx="60" cy="60" r="48" stroke-width="1"/><path d="M16 74 H104"/><path d="M22 74 v-8 a10 10 0 0 1 20 0 v8 M44 74 v-8 a10 10 0 0 1 20 0 v8 M66 74 v-8 a10 10 0 0 1 20 0 v8 M88 74 v-6"/><path d="M28 74 V40 l5 -8 5 8 V74 M82 74 V40 l5 -8 5 8 V74"/><path d="M20 88 q10 -4 20 0 t20 0 20 0 20 0" stroke-width="1.2"/><path d="M60 22 l3 6 6 1 -5 4 1 6 -5 -3 -5 3 1 -6 -5 -4 6 -1z" fill="#c4a676" stroke="none"/></g></svg>
     <div class="name">Alte Brücke</div>
     <div class="sub">HEIDELBERG · 7:55</div>
-    <nav class="tabs"><a class="tab" href="#window"><svg viewBox="0 0 24 24"><path d="M12 2 C6 4 4 8 4 12 v10 h16 V12 c0-4-2-8-8-10z M12 6 v16 M4 14 h16"/></svg><span>다리</span></a><a class="tab" href="#easels"><svg viewBox="0 0 24 24"><path d="M12 3 L6 21 M12 3 l6 18 M12 3 v15 M5 15 h14"/><rect x="7" y="4" width="10" height="8"/></svg><span>초상</span></a><a class="tab" href="#chron"><svg viewBox="0 0 24 24"><path d="M12 2 v20 M8 6 h8 M8 12 h8 M8 18 h8"/></svg><span>연대기</span></a><a class="tab" href="#box"><svg viewBox="0 0 24 24"><path d="M3 7 h18 v12 H3z M3 7 l9 7 9-7"/></svg><span>편지</span></a><a class="tab" href="#others"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><circle cx="16" cy="9" r="2.5"/><path d="M3 20 c0-4 3-6 6-6 s6 2 6 6 M14 14 c3 0 6 2 6 6"/></svg><span>이웃</span></a><a class="tab" href="#ledger"><svg viewBox="0 0 24 24"><path d="M6 3 h12 v18 H6z"/><path d="M9 8 l1.5 1.5 L13 7 M9 13 l1.5 1.5 L13 12 M15 8 h1 M15 13 h1 M9 18 h7"/></svg><span>기록</span></a><a class="tab" href="#vault"><svg viewBox="0 0 24 24"><path d="M4 8 h16 v13 H4z M3 4 h18 v4 H3z M9 12 h6"/></svg><span>수장고</span></a></nav>
+    <nav class="tabs"><a class="tab" href="#window"><svg viewBox="0 0 24 24"><path d="M12 2 C6 4 4 8 4 12 v10 h16 V12 c0-4-2-8-8-10z M12 6 v16 M4 14 h16"/></svg><span>다리</span></a><a class="tab" href="#easels"><svg viewBox="0 0 24 24"><path d="M12 3 L6 21 M12 3 l6 18 M12 3 v15 M5 15 h14"/><rect x="7" y="4" width="10" height="8"/></svg><span>초상</span></a><a class="tab" href="#chron"><svg viewBox="0 0 24 24"><path d="M12 2 v20 M8 6 h8 M8 12 h8 M8 18 h8"/></svg><span>연대기</span></a><a class="tab" href="#box"><svg viewBox="0 0 24 24"><path d="M3 7 h18 v12 H3z M3 7 l9 7 9-7"/></svg><span>편지</span></a><a class="tab" href="#hygro"><svg viewBox="0 0 24 24"><path d="M4 16 a8 8 0 0 1 16 0"/><path d="M12 16 L15.5 10"/><circle cx="12" cy="16" r="1.4"/><path d="M4 20 h16"/></svg><span>습도계</span></a><a class="tab" href="#others"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><circle cx="16" cy="9" r="2.5"/><path d="M3 20 c0-4 3-6 6-6 s6 2 6 6 M14 14 c3 0 6 2 6 6"/></svg><span>이웃</span></a><a class="tab" href="#ledger"><svg viewBox="0 0 24 24"><path d="M6 3 h12 v18 H6z"/><path d="M9 8 l1.5 1.5 L13 7 M9 13 l1.5 1.5 L13 12 M15 8 h1 M15 13 h1 M9 18 h7"/></svg><span>기록</span></a><a class="tab" href="#vault"><svg viewBox="0 0 24 24"><path d="M4 8 h16 v13 H4z M3 4 h18 v4 H3z M9 12 h6"/></svg><span>수장고</span></a></nav>
     <div class="foot">MDCCLXXXVIII</div>
   </aside>
 
@@ -441,6 +441,10 @@ footer{text-align:center;font-family:var(--caps);font-size:10px;letter-spacing:.
       <a href="letters.html"><figure class="pic"><img src="box.jpg" alt="편지가 비죽 나온 호두나무 상자" width="1600" height="726" loading="lazy"></figure><span class="tt">루카스의 편지 61통</span><span class="sub">JANUARY 9 — MARCH 2 · OPEN</span></a>
     </section>
 
+    <section id="hygro" data-panel="hygro" aria-labelledby="hygro-h" style="display:grid;gap:30px">
+      <div class="sec"><span class="k">the Hygrometers</span><h2 id="hygro-h">습도계 여덟 개</h2><p style="margin:6px 0 0;color:var(--muted);font-size:14px;text-align:center">다리 건너 3층, 계단 52개 위의 집. 동그라미를 누르면 그 습도계가 무엇을 지키는지 나온다.</p></div>
+      <iframe id="hygro-frame" src="hygro.html?embed" title="습도계 여덟 개 지도" loading="lazy" style="width:100%;height:900px;border:0;display:block;background:transparent" allowtransparency="true"></iframe>
+    </section>
     <section id="others" data-panel="others" class="ledger" aria-labelledby="others-h">
       <div class="sec"><span class="k">the Neighbours</span><h2 id="others-h">주변 인물</h2></div>
       <div class="cards">
@@ -491,6 +495,7 @@ if(!still)requestAnimationFrame(f)}requestAnimationFrame(f)})();
  show(location.hash.slice(1),false); scrollTo(0,0); addEventListener('load',function(){scrollTo(0,0)});
 })();
 </script>
+<script>addEventListener('message',function(e){if(e.data&&e.data.hygroH){var f=document.getElementById('hygro-frame');if(f)f.style.height=(e.data.hygroH+4)+'px'}});</script>
 <script src="livemap.js?v=h8" defer></script>
 <script>
 (()=>{const ol=document.querySelector('ol.chron'),box=document.getElementById('clist');if(!ol||!box)return;
