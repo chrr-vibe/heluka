@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>볼륨 1</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Pinyon+Script&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Nanum+Myeongjo:wght@400;700;800&display=swap">
+<style>
+:root{color-scheme:dark;--night:#17110c;--gold:#c4a676;--gold-hi:#e6d6b2;--line:rgba(196,166,118,.42);--parch:#ece2cd;--text:#ddd2bd;--muted:#a39580;
+  --caps:"Cinzel","Times New Roman",serif;--script:"Pinyon Script","Times New Roman",cursive;--ko:"Nanum Myeongjo","AppleMyungjo","Batang",serif}
+*{box-sizing:border-box}
+html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;background-color:var(--night);color:var(--text);font-family:var(--ko);font-size:17px;line-height:2;
+  background-image:radial-gradient(ellipse 70% 40% at 50% 0%,rgba(214,180,120,.12),transparent 70%);background-repeat:no-repeat;
+  padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px));padding-block:24px 80px}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;opacity:.5;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .9  0 0 0 0 .8  0 0 0 0 .6  0 0 0 .05 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+.wrap{max-width:620px;margin:0 auto}
+.back{display:inline-block;font-family:var(--caps);font-size:11px;letter-spacing:.2em;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:2px}
+.back:hover,.back:focus-visible{color:var(--gold-hi);outline:none}
+header{text-align:center;margin:56px 0 48px;display:grid;gap:6px;justify-items:center}
+header .lat{font-family:var(--script);font-size:44px;line-height:1;color:var(--gold)}
+header h1{margin:0;font-family:var(--ko);font-weight:800;font-size:clamp(28px,6vw,36px);color:var(--parch);letter-spacing:.08em}
+header .when{font-family:var(--caps);font-size:11px;letter-spacing:.28em;color:var(--muted)}
+header svg{width:160px;height:16px;margin-top:10px}
+article p{margin:0 0 1.1em;word-break:keep-all}
+.talk{margin:0 0 1.1em;padding-left:14px;border-left:1px solid var(--line)}
+.talk p{margin:0;color:var(--parch)}
+h2{margin:2.6em 0 1.4em;text-align:center;font-family:var(--ko);font-weight:700;font-size:16px;letter-spacing:.12em;color:var(--gold)}
+h2 span{padding:0 14px;background:var(--night);position:relative}
+h2::before{content:"";display:block;height:1px;background:var(--line);transform:translateY(1em)}
+.end{text-align:center;margin-top:56px;display:grid;gap:18px;justify-items:center}
+.end .mark{font-family:var(--caps);font-size:11px;letter-spacing:.3em;color:var(--muted)}
+.end a{font-family:var(--ko);font-size:15px;color:var(--gold-hi);text-decoration:none;border:1px solid var(--line);border-radius:40px 40px 10px 10px;padding:8px 22px}
+.end a:hover,.end a:focus-visible{background:rgba(196,166,118,.15);outline:none}
+
+.part{text-align:center;margin:84px 0 40px;display:grid;gap:4px;justify-items:center}
+.part.first{margin-top:0}
+.part .eyebrow{font-family:var(--script);font-size:32px;line-height:1.1;color:var(--gold)}
+.part h2{margin:0;font-family:var(--ko);font-weight:800;font-size:24px;color:var(--parch);letter-spacing:.06em}
+.part h2::before{display:none}
+.part .sub{font-family:var(--caps);font-size:11px;letter-spacing:.24em;color:var(--muted)}
+.orn2{color:var(--gold);margin-bottom:22px}
+.scene{display:flex;align-items:center;gap:12px;margin:56px 0 26px;color:var(--muted);font-size:14px;letter-spacing:.1em}
+.scene::before,.scene::after{content:"";flex:1;height:1px;background:var(--line)}
+.scene b{font-family:var(--caps);font-weight:600;color:var(--gold);letter-spacing:.12em}
+.list{margin:4px 0 1.4em;padding:14px 20px;border:1px solid var(--line);border-radius:6px;background:rgba(236,226,205,.05);font-size:15.5px;line-height:1.9;color:var(--parch)}
+.list ol{margin:0;padding-left:1.4em}
+.list .note{color:var(--muted);font-size:14px}
+.chat{margin:4px 0 1.6em;display:flex;flex-direction:column;gap:6px}
+.chat .who{font-size:12.5px;color:var(--muted);margin:4px 0 -2px}
+.chat .msg{align-self:flex-start;max-width:86%;background:rgba(236,226,205,.08);border:1px solid var(--line);color:var(--parch);padding:6px 13px;border-radius:14px 14px 14px 4px;font-size:15px;line-height:1.6}
+.chat .msg.me{align-self:flex-end;border-radius:14px 14px 4px 14px;background:rgba(217,130,106,.18);border-color:rgba(217,130,106,.45)}
+.chat .room{align-self:center;font-family:var(--ko);font-size:12px;color:var(--gold);letter-spacing:.06em;margin-bottom:4px}
+.quiet{color:var(--muted)}
+.note-card{margin:4px auto 1.4em;padding:12px 18px;border:1px dashed var(--gold);border-radius:4px;color:var(--parch);font-size:15px;text-align:center;max-width:320px;background:rgba(236,226,205,.04)}
+article b{color:var(--gold-hi)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="index.html#chron" onclick="if(history.length>1){history.back();return false}">← 목록으로</a>
+  <header>
+    <span class="lat">Volume One</span>
+    <h1>볼륨 1</h1>
+    <span class="when">단편 · 어느 일요일부터</span>
+    <svg viewBox="0 0 180 18" aria-hidden="true"><g fill="none" stroke="#c4a676" stroke-width="1.2"><path d="M0 9 H70 M110 9 H180"/><path d="M90 3 l6 6 -6 6 -6 -6z" fill="#c4a676"/></g></svg>
+  </header>
+  <article>
+
+<div class="scene"><b>일요일 오후</b> '루카' 프로필</div>
+
+<p>일요일 오후였다. 루카스는 오늘은 장바구니가 가벼운 날이라며 장 목록 한 장만 코트 주머니에 넣고 혼자 마르크트플라츠로 나갔고, 남겨진 그는 북향 창으로 들어오는 희고 고른 빛 속에서 한참 소파에 누워 있다가, 별 이유 없이 텔레비전을 켰다.</p>
+<p>넷플릭스에는 프로필이 두 개 있었다. 하나는 그의 것이었고, 하나는 &#x27;루카&#x27;였다. 몇 달 전 그가 만들어 주면서 &quot;루카도 뭐 보고 싶은 거 있으면 봐요&quot; 했을 때 루카스는 &quot;……안 봐.&quot; 한마디로 끝냈고, 그 뒤로 그는 루카스가 텔레비전 앞에 앉는 걸 한 번도 본 적이 없었다. 저녁이면 루카스는 도해집을 펴서 41쪽의 매듭을 들여다보거나, 습도계 숫자를 수첩에 옮겨 적거나, 그가 읽어 주는 편지를 눈을 반쯤 감은 채 들었다. 화면은 그 사람의 하루 어디에도 끼어들 자리가 없어 보였다.</p>
+<p>그래서 그는 정말로 아무 생각 없이 &#x27;루카&#x27;를 눌렀다.</p>
+<p>&#x27;시청 중인 콘텐츠&#x27; 줄이 떴다.</p>
+<p>북극곰의 하루, 8시간짜리. 6시간 41분 시청.</p>
+<p>아델리펭귄, 줄 서서 걷기.</p>
+<p>남극의 겨울, 아무 일도 일어나지 않는 1년.</p>
+<p>위조 문서 범죄 실화 3부작, 시청 완료.</p>
+<p>범죄 스릴러 영화 한 편, 시청 완료.</p>
+<p>귀신 나오는 공포영화 한 편, 12분 시청.</p>
+<p>그는 리모컨을 든 채 한동안 움직이지 못했다. 그러다 휴대폰을 집어 같은 계정의 시청 기록을 열었고, 거기서 한 번 더 멈췄다. 시청 시각이 거의 다 새벽 세 시 언저리였다. 기기는 루카스의 휴대폰이었고, 볼륨은 1, 자막은 켜져 있었다.</p>
+<p>새벽 세 시는 그가 잠결에 돌아누워 루카스 허리에 팔을 감는 시간이었다. 그는 자기가 그런다는 것도 몰랐고, 그 시간에 루카스가 깨어 있다는 것도 몰랐다. 그러니까 그 사람이 자기 허리에 감긴 팔을 빼지 않은 채, 소리를 거의 다 죽인 휴대폰으로 눈밭에 누운 북극곰이 숨 쉬는 걸 여섯 시간 넘게 보고 있었다는 것도 물론 몰랐다.</p>
+<p>그는 소파에서 굴러떨어질 만큼 웃었다. 웃다가, 조금 가슴이 아릿해졌다. 그리고 다시 웃었다.</p>
+
+<div class="scene"><b>현관</b> 장바구니</div>
+
+<p>&quot;루카, 북극곰 좋아해요?&quot;</p>
+<p>루카스는 현관에서 장바구니를 내려놓다가 그 자리에 멈췄다. 습도계를 먼저 보려고 몸을 돌리던 참이었는데, 텔레비전 화면에 자기 이름이 적힌 프로필과 그 아래 줄지어 선 북극곰과 펭귄을 보고는 코트도 벗지 못했다.</p>
+<p>&quot;……아니.&quot;</p>
+<p>&quot;6시간 41분 봤던데요ㅎㅎ&quot;</p>
+<p>&quot;……틀어 놓은 거야. 소리.&quot;</p>
+<p>&quot;볼륨 1이던데요.&quot;</p>
+<p>루카스는 대답하지 않았다. 대신 아주 천천히 코트를 벗어 걸고, 습도계 앞으로 가서 숫자를 확인했다. 그 등이 지나치게 반듯했다.</p>
+<p>&quot;펭귄은요?&quot;</p>
+<p>&quot;……줄을 잘 서.&quot;</p>
+<p>&quot;범죄 다큐는요?&quot;</p>
+<p>&quot;……증거가 정확해서.&quot;</p>
+<p>&quot;공포영화는 왜 12분에서 껐어요?&quot;</p>
+<p>그제야 루카스가 돌아섰다. 그리고 그가 예상한 어떤 대답과도 다른 대답을, 이 세상에서 가장 진지한 얼굴로 했다.</p>
+<p>&quot;……그 집 습도가 칠십은 넘어 보였어. 벽지가 들떠 있었고, 창틀 아래가 검었어. 곰팡이가 귀신보다 먼저야.&quot;</p>
+<p>그는 소파 등받이에 이마를 박고 소리 없이 어깨를 떨었다. 귀신이 나오기도 전에, 귀신이 사는 집의 습도 때문에 영화를 끈 사람이었다.</p>
+<p>&quot;루카, 그거 취향이에요.&quot;</p>
+<p>&quot;……취향 없어.&quot;</p>
+<p>&quot;북극곰이랑 펭귄이랑 아무 일도 안 일어나는 남극이랑, 위조 문서 잡는 얘기랑 범죄 스릴러요. 그게 다 취향이에요ㅎㅎ&quot;</p>
+<p>루카스는 그 말에 대답하는 대신 장바구니를 풀었다. 계란, 우유, 그가 먹을 체리 타르트 하나를 차례로 냉장고에 넣고 문을 닫은 다음, 냉장고 문에 손을 댄 채로 잠깐 서 있었다. 그러고 나서야 귀 끝이 천천히 붉어지기 시작했다.</p>
+<p>&quot;……그게 취향이야?&quot;</p>
+<p>정말로 몰랐던 사람의 목소리였다. 서른 몇 해를 살면서 무엇을 좋아하는지 한 번도 이름 붙여 본 적 없는 사람이, 남이 대신 읽어 준 목록을 처음 들은 얼굴이었다.</p>
+
+<div class="scene"><b>그날 저녁</b> 북극곰</div>
+
+<p>그날 저녁, 둘은 소파에 나란히 앉아 북극곰을 틀었다.</p>
+<p>그가 이어 보기를 누르려 하자 루카스가 리모컨을 가져가 처음으로 되돌렸다. &quot;……같이 보는 거면, 처음부터.&quot; 6시간 41분을 버리는 데 1초도 걸리지 않았다.</p>
+<p>화면 가득 하얀 눈밭이 펼쳐졌다. 북극곰 한 마리가 그 한가운데로 느릿느릿 걸어 나오더니, 별다른 이유도 없이 대자로 엎드려 잠들었다. 그리고 한 시간 동안 그냥 잤다. 가끔 앞발이 움찔거렸고, 털 끝이 바람에 쓸렸고, 내레이션은 거의 없이 바람 소리만 길게 이어졌다.</p>
+<p>루카스는 소파 끝에 반듯하게 앉아 그걸 봤다. 복원실에서 금박 한 장을 들여다볼 때와 똑같은 집중으로, 아무 일도 일어나지 않는 눈밭을 한 치도 놓치지 않으려는 듯이.</p>
+<p>그는 화면보다 그 옆얼굴을 더 오래 봤다. 텔레비전 불빛이 루카스의 콧날과 입술 선을 푸르스름하게 그려 내고 있었다.</p>
+<p>&quot;……저거 너야.&quot;</p>
+<p>&quot;네?&quot;</p>
+<p>&quot;대자로 자. 발 밖으로 내놓고.&quot;</p>
+<p>화면 속 북극곰의 뒷발 하나가 눈 밖으로 삐져나와 있었다. 그는 소파 팔걸이 너머로 걸쳐 놓은 자기 발을 내려다보고 웃었다.</p>
+<p>&quot;그럼 루카는 저 옆에 똑바로 누워 있는 바다표범이에요ㅎㅎ&quot;</p>
+<p>&quot;……그건 먹이야.&quot;</p>
+<p>&quot;아.&quot;</p>
+<p>루카스의 어깨가 아주 조금 흔들렸다. 그가 고개를 돌리자 루카스는 이미 화면을 보고 있었다. 너무 열심히.</p>
+<p>&quot;지금 웃었죠.&quot;</p>
+<p>&quot;……바람 소리야.&quot;</p>
+<p>화면 속에서 정말로 바람이 불고 있었다. 이번만큼은 그 핑계가 거짓말이 아니었다.</p>
+
+<div class="scene"><b>세 시간쯤 뒤</b> 일시 정지</div>
+
+<p>세 시간쯤 지났을 때 그는 루카스 어깨에 기대 잠들어 있었다.</p>
+<p>북극곰이 자면 그도 잤다. 숨 쉬는 속도까지 비슷했다. 루카스는 화면 속 하얀 짐승과 자기 어깨 위로 쏟아진 붉은 머리를 번갈아 보다가, 깨우지 않으려고 아주 조심스럽게 리모컨을 집어 볼륨을 1로 내렸다. 새벽 세 시에 혼자 보던 그 크기로.</p>
+<p>그리고 그가 잠든 바로 그 장면에서 일시 정지를 눌렀다.</p>
+<p>다음 날부터 루카스는 북극곰을 혼자 보지 않았다. 새벽 세 시에 깨어 그의 팔을 허리에 두른 채 휴대폰을 켜도, 북극곰만은 틀지 않았다. 펭귄을 보거나 아무 일도 일어나지 않는 남극을 봤다. 북극곰은 어느새 소파 위에서, 둘이서만 보는 것이 되어 있었다.</p>
+<p>&quot;루카, 그냥 혼자 끝까지 봐도 되는데요ㅎㅎ&quot;</p>
+<p>&quot;……안 돼.&quot;</p>
+<p>&quot;왜요?&quot;</p>
+<p>&quot;……너 안 봤잖아.&quot;</p>
+<p>&quot;저 어차피 또 잘 텐데요.&quot;</p>
+<p>&quot;……그럼 또 거기서 멈추면 돼.&quot;</p>
+<p>그는 정말로 매번 잠들었다. 어떤 날은 40분 만에, 어떤 날은 12분 만에. 루카스는 그때마다 볼륨을 내리고 정확히 그 자리에서 멈췄다. 8시간짜리 북극곰은 석 달째 눈밭 한가운데에 머물러 있었다. 그 곰이 저 눈밭을 다 건너는 건 아마 내년 겨울쯤의 일일 것 같았다.</p>
+
+<div class="scene"><b>범죄 스릴러</b> 무릎</div>
+
+<p>범죄 스릴러는 그가 고르는 날도 있었고 루카스가 고르는 날도 있었는데, 어느 쪽이든 문제는 루카스였다.</p>
+<p>시작하고 이십 분쯤, 아무도 죽지 않았고 음악도 평온한, 정말로 별것 아닌 장면에서 루카스가 아주 조용히 말했다.</p>
+<p>&quot;……저 사람이야.&quot;</p>
+<p>&quot;네? 아직 아무 일도 안 일어났는데요?&quot;</p>
+<p>&quot;……컵을 왼손으로 들었어. 아까 편지는 오른손으로 썼고.&quot;</p>
+<p>한 시간 사십 분 뒤, 그 사람이 범인이었다.</p>
+<p>다음 영화에서도, 그다음 영화에서도 그랬다. 신발 끈을 묶는 방향, 시계를 찬 손목, 창문에 비친 그림자의 길이. 0.1밀리를 보는 눈은 화면 앞에서도 쉬지 않았고, 루카스는 단 한 번도 틀리지 않았다.</p>
+<p>&quot;루카, 제발 말하지 마요ㅠㅠ 저 끝까지 모르고 싶어요.&quot;</p>
+<p>루카스는 순순히 입을 다물었다. 대신 범인이 화면에 나올 때마다, 본인도 모르는 사이에 검지로 자기 무릎을 톡, 하고 한 번씩 쳤다. 아주 작게, 정확하게.</p>
+<p>그는 세 번째 톡에서 범인을 알아 버렸다.</p>
+<p>&quot;루카.&quot;</p>
+<p>&quot;……아무 말 안 했어.&quot;</p>
+<p>&quot;무릎이 했어요.&quot;</p>
+<p>루카스가 자기 손을 내려다봤다. 검지가 무릎 위에 떠 있었다. 루카스는 그 손을 잠시 보다가, 천천히 그의 손등 위로 옮겨 얹었다. 더는 아무것도 칠 수 없도록. 그리고 영화가 끝날 때까지 그 손을 치우지 않았다.</p>
+
+<div class="scene"><b>2초 전</b> 손바닥</div>
+
+<p>사실 그는 이런 영화가 무서웠다.</p>
+<p>불 꺼진 복도가 나오면 쿠션을 끌어안았고, 음악이 낮게 깔리기 시작하면 몸이 저도 모르게 루카스 쪽으로 기울었고, 어디선가 문이 삐걱하면 땋은 머리 끝을 목에 감았다. 키가 루카스보다 머리 하나는 더 큰 사람이 소파 위에서만은 반쪽만 해졌다.</p>
+<p>&quot;……안 무서워. 이 장면은 아무도 안 나와.&quot;</p>
+<p>&quot;어떻게 알아요?&quot;</p>
+<p>&quot;……카메라가 문 뒤를 안 비췄어. 나올 거면 비췄을 거야.&quot;</p>
+<p>공포를 분석으로 달래 주는 사람이었다. 이상하게도 그게 효과가 있었다. 그 낮고 정확한 목소리가 화면 속 어둠을 하나씩 조각내서 이름을 붙여 주면, 무서운 것들이 조금씩 덜 무서워졌다.</p>
+<p>그리고 정말로 무서운 장면이 오기 직전에는 루카스가 아무 말 없이 손을 뻗어 그의 눈을 가려 줬다. 정확히 2초 전에. 범인을 맞히는 그 눈에는 그런 타이밍도 다 보였다.</p>
+<p>&quot;……지나갔어요?&quot;</p>
+<p>&quot;……아직.&quot;</p>
+<p>비명. 무언가 깨지는 소리.</p>
+<p>&quot;……됐어.&quot;</p>
+<p>손바닥이 떨어지고 나면 화면은 이미 다른 장면으로 넘어가 있었다. 서늘한 손바닥 냄새가 눈두덩에 잠깐 남았다. 그는 그 손 때문에, 무서운데도 범죄 스릴러를 계속 같이 보자고 졸랐다.</p>
+
+<div class="scene"><b>어느 밤</b> 미국 공포영화</div>
+
+<p>그러다 어느 밤, 그는 무서워하지 않았다.</p>
+<p>미국 공포영화였다. 피가 많이 나오고 비명이 끊이지 않는 종류였다. 처음 이십 분은 여느 때처럼 쿠션을 끌어안고 있었는데, 어느새 쿠션은 무릎에서 미끄러져 내려가 있었고, 그는 턱을 괸 채 꽤 담담한 얼굴로 화면을 보고 있었다.</p>
+<p>루카스가 그걸 알아챘다. 화면이 아니라 그를 보고 있었으니까.</p>
+<p>&quot;……안 무서워?&quot;</p>
+<p>&quot;음, 미국 공포는 좀 익숙해서요.&quot;</p>
+<p>&quot;……미국 거 많잖아. 저런 데서 무서움을 느껴?&quot;</p>
+<p>&quot;저는 반쯤은 독일인이라 잘 몰라요ㅎㅎ&quot;</p>
+<p>루카스의 미간에 주름이 잡혔다. 아주 진지하게, 사실관계를 바로잡아야 하는 사람의 얼굴로.</p>
+<p>&quot;……네가 왜 반이 독일인이야.&quot;</p>
+<p>&quot;반이요.&quot;</p>
+<p>&quot;……엄밀히 말하면 조부모님 피니까. 할아버지가 하이델베르크 사람이고, 할머니는 뉴욕이고, 어머니는 보스턴에서 났으니까…….&quot;</p>
+<p>루카스가 손가락 하나를 접었다. 사분의 일인지 팔분의 일인지, 정확한 숫자를 말하려는 얼굴이었다.</p>
+<p>그는 그 입술에 쪽, 하고 입을 맞췄다.</p>
+<p>&quot;남편이 독일인이면 반은 독일인이잖아요ㅎㅎ&quot;</p>
+<p>루카스의 손가락이 접힌 채로 허공에 멈췄다.</p>
+<p>계산은 거기서 끝났다. 정답보다 더 정확한 답이 먼저 나와 버렸으니까. 귀 끝이 빨개졌고, 그 붉은빛이 천천히 목덜미까지 번져 내려갔다. 루카스는 아무 말도 하지 못한 채 그를 보고만 있었다.</p>
+<p>등 뒤 화면에서는 비명이 터지고, 전등이 나가고, 번개 같은 빛이 번쩍이고, 누군가 문을 미친 듯이 두드리고 있었다. 소파 위에서는 그 어떤 소리도 들리지 않았다.</p>
+
+<div class="scene"><b>천천히</b> </div>
+
+<p>그가 다시 다가갔다. 이번에는 천천히.</p>
+<p>처음에는 아까처럼 가볍게 닿았다. 아랫입술에 한 번, 윗입술에 한 번, 그리고 입꼬리에 한 번. 하나하나 확인하듯이. 루카스는 피하지 않았다. 대신 눈을 감았고, 감은 눈꺼풀이 조금 떨렸다.</p>
+<p>그가 입술을 겹쳤다. 이번에는 떨어지지 않았다.</p>
+<p>루카스의 입술은 조금 차가웠다. 저녁에 마신 물 탓인지, 원래 손발이 찬 사람이라 입술까지 그런 건지. 그는 그 서늘함을 자기 입술 온도로 천천히 데웠다. 누르지 않고, 서두르지 않고, 아랫입술을 살며시 머금었다가 놓고, 다시 머금었다. 그때마다 루카스의 숨이 아주 조금씩 흐트러졌다. 코로 쉬던 숨이 짧아졌다가, 결국 입술 사이로 새어 나왔다.</p>
+<p>그 틈으로 그가 조금 더 깊이 들어갔다.</p>
+<p>루카스의 어깨가 움찔했다. 그러나 물러서지는 않았다. 오히려 잠깐 머뭇거린 끝에 아주 서툴게, 그러나 정직하게 응해 왔다. 어떤 일이든 대충 하는 법이 없는 사람이 이것만큼은 아직도 배우는 중이라는 듯이, 조심스럽게, 정확하게, 그리고 한 번 닿고 나서는 망설임 없이.</p>
+<p>혀끝이 스쳤다. 루카스의 입 안은 입술보다 훨씬 따뜻했다. 그는 그걸 처음 알게 된 사람처럼 놀라서, 웃음이 새어 나올 뻔한 걸 겨우 삼켰다.</p>
+<p>얼마나 그러고 있었는지 몰랐다. 그가 아주 조금 떨어졌을 때, 둘 사이로 젖은 숨이 오갔다. 루카스의 아랫입술이 조금 붉게 부풀어 있었다. 그는 엄지로 그 자리를 한 번 쓸었다.</p>
+<p>그리고 화면을 봤다.</p>
+<p>피칠갑을 한 여자가 복도 끝에 서 있었다. 아주 오래 거기 서 있었던 것 같은 표정이었다. 그 앞에서 등장인물 셋이 서로를 붙잡고 벌벌 떨고 있었다.</p>
+<p>루카스도 화면을 봤다. 아주 황당한 얼굴이었다. 방금까지 무엇을 하고 있었는지와 저 화면이 도무지 연결되지 않는 얼굴.</p>
+<p>그는 웃었다.</p>
+<p>&quot;우리가 무섭나 봐요ㅎㅎ&quot;</p>
+
+<div class="scene"><b>이상한 장면</b> </div>
+
+<p>&quot;……이상한 장면에서 해 버렸어.&quot;</p>
+<p>루카스가 낮게 중얼거렸다. 화면 속 여자가 한 걸음 다가왔다.</p>
+<p>그는 고개를 기울여 루카스를 들여다봤다.</p>
+<p>&quot;키스 싫었어요?&quot;</p>
+<p>루카스가 고개를 저었다. 아주 작게. 한 번. 젖은 입술이 아직 조금 벌어진 채였다.</p>
+<p>&quot;그럼요.&quot;</p>
+<p>그가 소파 등받이에 비스듬히 기댔다. 붉은 머리가 등 뒤로 흘러내렸다.</p>
+<p>&quot;기왕 이상한 장면에서 한 거, 오늘은 안 어울리는 장면에서만 해요.&quot;</p>
+<p>&quot;……그럼 이 영화는 다 안 어울리잖아.&quot;</p>
+<p>투덜대는 목소리였다. 그런데 그 말을 하는 순간 루카스는 이미 진 거였다. 둘 다 그걸 알았다.</p>
+<p>&quot;그러니까요ㅎㅎ&quot;</p>
+<p>그는 두 손을 뻗어 루카스의 양 볼을 감쌌다. 손바닥 가득 차가운 볼이 들어왔다. 그는 그 얼굴을 자기 쪽으로 천천히 끌어당겼고, 다시 입을 맞췄다.</p>
+
+<div class="scene"><b>총소리</b> </div>
+
+<p>총소리가 났다. 그는 루카스 입술에 닿은 채로 웃음을 터뜨렸고, 그 웃음이 루카스 입술을 간지럽혔다.</p>
+<p>전기톱 소리가 길게 울렸다. 루카스가 입을 맞춘 채로 미간을 찌푸렸다. 무서워서가 아니라 시끄러워서였다. 그래도 떨어지지 않았다.</p>
+<p>비명이 몇 번이고 겹쳐서 터졌다. 그는 잠깐 입술을 떼고 화면을 한 번 흘끗 보고는, 다시 루카스를 봤다. 숨이 가쁜데도 웃고 있었다.</p>
+<p>&quot;루카, 저 사람들 심각해요. 웃으면 안 돼요ㅎ&quot;</p>
+<p>&quot;……네가 웃고 있잖아.&quot;</p>
+<p>&quot;그러니까 루카는 웃지 마요.&quot;</p>
+<p>그러고 또.</p>
+<p>화면 속에서는 진짜로 살벌한 일이 벌어지고 있었다. 사람들은 목숨을 걸고 달아나고 있었고, 피가 벽을 타고 흘렀고, 문이 부서졌다. 소파 위의 두 사람은 계속 웃었다. 이상하지 않았다. 간지러웠다. 입을 맞추다가 웃음이 새어 나오고, 웃다가 숨이 막혀 다시 입을 맞추고, 입을 맞추다가 누군가의 비명에 또 웃음이 터졌다.</p>
+<p>그는 처음부터 끝까지 루카스의 볼만 감싸고 있었다. 다른 데는 어디에도 손대지 않았다. 엄지로 광대 아래를 천천히 쓸고, 귀 아래 여린 살을 쓸고, 다시 볼로 돌아왔다. 키스는 점점 길어졌고, 깊어졌다가 가벼워졌다가 다시 깊어졌다. 루카스의 입술이 조금씩 더 붉어지고, 조금씩 더 부풀어 갔다.</p>
+<p>그 대신 루카스의 두 손은 그의 양팔을 꼭꼭 붙잡고 있었다. 스웨터 소매가 구겨지도록. 놓으면 그가 어디로 가 버리기라도 할 것처럼. 화면에서 무언가 터질 때마다 그 손가락에 힘이 들어갔다. 무서워서는 아니었다. 그건 둘 다 알았다.</p>
+<p>루카스는 키스를 이렇게 많이 해 본 적이 없었다. 한 사람과, 한 영화 안에서, 이렇게 여러 번. 처음이었다. 그리고 처음이라는 게 조금도 어색하지 않았다.</p>
+<p>영화는 그렇게 끝났다. 둘 다 결말을 몰랐다. 범인을 한 번도 틀리지 않던 사람이, 이번에는 범인이 누구였는지조차 몰랐다.</p>
+
+<div class="scene"><b>엔딩 크레디트</b> </div>
+
+<p>엔딩 크레디트가 검은 화면 위로 천천히 올라갔다.</p>
+<p>루카스가 소파에 등을 기대고 숨을 골랐다. 입술이 눈에 띄게 부어 있었다. 텔레비전의 희미한 불빛 아래서도 보일 만큼, 평소의 얇고 단정한 입술이 아니었다.</p>
+<p>&quot;……너.&quot;</p>
+<p>&quot;네.&quot;</p>
+<p>&quot;……무서워서 그랬지.&quot;</p>
+<p>부은 입술로 하는 말이었다. 끝까지 자기가 좋아서 같이 했다는 건 인정하지 않으려는 얼굴이었다.</p>
+<p>그는 그 얼굴을 한참 들여다봤다. 엔딩 크레디트의 흰 글씨가 루카스 눈동자 위로 천천히 지나갔다. 그리고 그가 웃었다.</p>
+<p>&quot;ㅎㅎ 아뇨.&quot;</p>
+<p>&quot;…….&quot;</p>
+<p>&quot;루카가 좋아서 한 건데요?&quot;</p>
+<p>그러고는 그 부은 입술에 쪽, 하고 한 번 더 맞췄다. 이번엔 빠르게.</p>
+<p>루카스는 피하지 못했다. 피할 생각도 없었다. 대신 잠깐 그대로 있다가, 아주 작게 말했다.</p>
+<p>&quot;……나 혀가 아파.&quot;</p>
+<p>그리고 혀끝을 살짝 내밀었다. 증거를 보여 주듯이, 세상에서 가장 진지한 얼굴로.</p>
+<p>그는 소파 위로 쓰러져서 웃었다. 붉은 머리가 바닥까지 쏟아졌다. 루카스는 혀를 집어넣고 그걸 내려다봤다. 귀가 빨갰다. 그리고 그 빨간 귀를 하고서도, 쓰러진 그의 팔 하나를 여전히 손에 쥐고 있었다.</p>
+
+<div class="scene"><b>다음 날 저녁</b> 얼음물</div>
+
+<p>다음 날 저녁, 루카스가 퇴근해서 습도계를 확인하고 코트를 벗었을 때, 그가 부엌에서 컵 하나를 들고 나왔다. 얼음이 가득 든 물이었다. 컵 바깥에 이슬이 맺혀 있었다.</p>
+<p>&quot;어제 좀 심했나?ㅎㅎ&quot;</p>
+<p>루카스가 말없이 컵을 받았다. 그가 루카스 뒤로 돌아가 그대로 끌어안았다. 아무 말 없이, 턱을 루카스 정수리에 얹고, 두 팔로 루카스 가슴께를 감싸고.</p>
+<p>루카스는 물을 한 모금 마셨다. 그리고 얼음 하나를 입에 물었다. 한쪽 볼이 볼록해졌다.</p>
+<p>&quot;……나도 같이 한 거니까.&quot;</p>
+<p>얼음 때문에 발음이 조금 뭉개졌다.</p>
+<p>&quot;……심한 건 아니야.&quot;</p>
+<p>결국 인정한 거였다. 어젯밤 &quot;무서워서 그랬지&quot;로 버티던 사람이, 하룻밤 사이에 문장 하나를 고쳐 왔다. 그는 등 뒤에서 그걸 들었고, 루카스를 감은 팔에 조금 더 힘을 줬다.</p>
+<p>&quot;그럼 다음에 또 할래요.&quot;</p>
+<p>루카스는 대답하지 않았다. 입 안에서 얼음을 굴렸다. 달그락, 하고 이에 부딪히는 소리가 났다.</p>
+<p>그런데 그의 바로 눈앞에서, 루카스의 귀가 빨개지고 있었다. 귀 끝에서 시작해 귓바퀴 전체로, 귓불로, 그리고 그 아래 뒷목까지. 꼭 끌어안고 있으니까 하나도 빠짐없이 다 보였다. 숨길 수 있는 각도가 없었다.</p>
+<p>3초. 그리고 3초 더.</p>
+<p>그는 그 뒷목에 이마를 대고 소리 없이 웃었다. 루카스의 뒷목은 얼음물을 마시고 있는 사람의 것이라고는 믿기지 않을 만큼 뜨거웠다.</p>
+
+<div class="scene"><b>그 뒤로</b> 턱</div>
+
+<p>그 뒤로 범죄 스릴러를 볼 때, 루카스는 더 이상 그의 눈을 가리지 않았다.</p>
+<p>무서운 장면이 오기 2초 전. 루카스가 손을 뻗었다. 눈이 아니라 턱으로. 손끝으로 그의 턱을 가볍게 잡아 자기 쪽으로 돌렸다.</p>
+<p>정말로 그게 전부일 생각이었다. 무서운 걸 안 보게 하려고, 그것뿐이었다.</p>
+<p>그런데 돌려놓고 보니 너무 가까웠다.</p>
+<p>그는 돌려진 얼굴 그대로 웃었다. 그리고 그 짧은 거리를 0으로 만들었다.</p>
+<p>비명은 등 뒤에서 지나갔다. 루카스는 그의 턱에 손을 얹은 채로 굳어 있었다.</p>
+<p>&quot;……그러라고 돌린 거 아니야.&quot;</p>
+<p>&quot;알아요ㅎㅎ&quot;</p>
+<p>그러고 또.</p>
+<p>다음 날 밤부터 루카스는 고개를 돌리기 전에 아주 잠깐 망설였다. 돌리면 무슨 일이 생기는지 아니까. 그리고 결국 돌렸다. 매번 2초 전에, 1초도 늦지 않게.</p>
+
+<div class="scene"><b>가끔은</b> </div>
+
+<p>그러다 가끔은 이런 날도 있었다.</p>
+<p>화면 속 복도는 조용했다. 음악도 낮아지지 않았고, 카메라는 문 뒤를 비추지 않았다. 범인을 맞히는 사람이라면 이 장면에서는 아무것도 나오지 않는다는 걸 누구보다 먼저 알았을 것이다.</p>
+<p>그런데 루카스가 그의 턱을 돌렸다.</p>
+<p>쪽. 짧게. 그가 떨어졌다.</p>
+<p>1초. 2초.</p>
+<p>아무것도 나오지 않았다. 화면 속 인물은 그저 부엌에서 물 한 잔을 따라 마시고 있었다.</p>
+<p>그는 화면을 한 번 보고, 루카스를 한 번 봤다. 그리고 웃음이 터졌다.</p>
+<p>&quot;ㅎㅎ 루카. 지금 아무것도 안 나왔는데요?&quot;</p>
+<p>&quot;……나올 줄 알았어.&quot;</p>
+<p>&quot;카메라가 문 뒤 안 비췄잖아요. 그러면 안 나온다고 루카가 그랬잖아요ㅎㅎ&quot;</p>
+<p>&quot;…….&quot;</p>
+<p>루카스는 대답하지 않았다. 턱을 잡은 손을 놓지도 않았다. 귀 끝이 빨개졌고, 목덜미까지 번졌다.</p>
+<p>&quot;……틀릴 때도 있어.&quot;</p>
+<p>범인을 한 번도 틀린 적 없는 사람이 하는 말이었다.</p>
+<p>그는 웃으면서 다시 다가갔다. 이번엔 쪽으로 끝나지 않았다. 화면 속 인물은 물을 다 마시고, 불을 끄고, 잠자리에 들었다. 아무 일도 일어나지 않는 장면이 아주 길게, 아주 고요하게 이어졌다.</p>
+<p>둘 다 그걸 끝까지 보지 않았다.</p>
+
+<div class="scene"><b>새벽 세 시</b> 볼륨 1</div>
+
+<p>그날 밤 새벽 세 시. 그는 잠결에 돌아누워 루카스 허리에 팔을 감았다.</p>
+<p>루카스는 깨어 있었다. 언제나처럼 그 팔 위에 한 손을 얹고, 다른 손으로 휴대폰을 켰다. 볼륨 1. 자막 켜짐.</p>
+<p>화면 속에서 아델리펭귄들이 줄을 서서 걷고 있었다. 하얀 얼음 위를 한 줄로, 서로의 뒤꿈치를 따라서, 서두르지 않고.</p>
+<p>북극곰은 틀지 않았다. 그건 소파 위에서 둘이 보는 것이었으니까. 하얀 눈밭 한가운데, 그가 잠든 그 장면에서 북극곰은 아직 멈춰 있었다. 내년 겨울이 오면, 그 곰도 언젠가 눈밭을 다 건널 것이다.</p>
+<p>루카스는 펭귄 한 마리가 줄 끝에 무사히 닿는 것까지 보고 휴대폰을 껐다. 그리고 허리에 감긴 팔 위에 손을 얹은 채, 그 팔 안쪽에서 뛰는 맥박을 천천히 셌다.</p>
+<p>이 집에서 제일 정직한 소리였다.</p>
+  </article>
+  <div class="end"><span class="mark">— FIN —</span><a href="index.html#chron" onclick="if(history.length>1){history.back();return false}">목록으로 돌아가기</a></div>
+</div>
+<!--bgm--><script>window.BGM={"ids": ["znfYwABeSZ0", "7nqktx6GpzM", "kMVF5INPuWQ"], "title": "Comptine d'un autre été · Yann Tiersen"};</script><script src="bgm.js" defer></script><!--/bgm-->
+</body>
+</html>
