@@ -137,9 +137,9 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:2;opac
 
 /* box */
 .box{display:grid;justify-items:center;gap:14px;text-align:center}
-.box a{display:grid;justify-items:center;gap:10px;text-decoration:none;position:relative}
+.box a{display:grid;width:100%;justify-items:center;gap:10px;text-decoration:none;position:relative}
 .box a::before{content:"";position:absolute;top:-10%;left:50%;width:120%;height:90%;transform:translateX(-50%);background:radial-gradient(ellipse at center,rgba(230,190,130,.14),transparent 65%);z-index:-1}
-.box .pic{margin:0;width:min(100%,720px);position:relative;padding:10px;border:1px solid var(--line);border-radius:6px;background:rgba(196,166,118,.05);box-shadow:0 0 0 6px rgba(196,166,118,.04),0 24px 50px rgba(0,0,0,.45);transition:transform .35s,box-shadow .35s}
+.box .pic{margin:0;width:min(66.7%,480px);position:relative;padding:10px;border:1px solid var(--line);border-radius:6px;background:rgba(196,166,118,.05);box-shadow:0 0 0 6px rgba(196,166,118,.04),0 24px 50px rgba(0,0,0,.45);transition:transform .35s,box-shadow .35s}
 .box .pic img{display:block;width:100%;height:auto;border-radius:3px}
 .box .pic::before,.box .pic::after{content:"";position:absolute;inset:10px;border-radius:3px;pointer-events:none}
 .box .pic::before{background:#c9a26a;mix-blend-mode:soft-light;opacity:.4}
