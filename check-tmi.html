@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>커플 TMI 체크리스트</title>
+<style>html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}*{box-sizing:border-box}</style>
+</head>
+<body>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Cinzel:wght@400;600&display=swap">
+<style>
+:root{
+  --paper:#17110c; --sheet:#21180f; --ink:#ece2cd; --muted:#a39580; --rule:rgba(196,166,118,.26);
+  --luka:#d4b27a; --him:#d9826a; --lukaSoft:rgba(212,178,122,.13); --himSoft:rgba(217,130,106,.15);
+  --f-display:"Nanum Myeongjo","Noto Serif KR",serif;
+  --f-mono:"Cinzel","Times New Roman",serif;
+  color-scheme:dark;
+}
+body{background:radial-gradient(ellipse 80% 40% at 50% 0%,rgba(214,180,120,.12),transparent 70%) no-repeat var(--paper);color:var(--ink);font-family:var(--f-display);line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 40px}
+.wrap{max-width:980px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+.back{display:inline-block;align-self:flex-start;padding:4px 14px;border:1px solid rgba(196,166,118,.5);border-radius:20px;color:#e6d6b2;font:700 13px/1.4 var(--f-display);text-decoration:none}
+.back:hover,.back:focus-visible{background:rgba(196,166,118,.15);outline:none}
+
+.card{background:var(--sheet);border:1px solid var(--rule);border-radius:6px;padding:26px clamp(16px,4vw,36px);display:flex;flex-direction:column;gap:22px;
+  box-shadow:0 0 0 5px rgba(196,166,118,.04),0 20px 40px rgba(0,0,0,.35)}
+.title{text-align:center;display:flex;flex-direction:column;gap:4px}
+.title small{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.2em;color:var(--muted)}
+.title h1{margin:0;font-weight:800;font-size:clamp(1.5rem,5vw,2.1rem);letter-spacing:.02em;text-wrap:balance}
+.pair{display:flex;justify-content:center;align-items:center;gap:clamp(10px,4vw,28px);flex-wrap:wrap}
+.pair .nm{min-width:7.5em;text-align:center;padding:8px 20px;border:1.5px solid var(--c);border-radius:999px;font-weight:800;font-size:1.15rem;color:var(--c);background:var(--s)}
+.pair .x{font-family:var(--f-mono);color:var(--muted);font-size:1.1rem}
+.l{--c:var(--luka);--s:var(--lukaSoft)} .h{--c:var(--him);--s:var(--himSoft)}
+.legend{display:flex;justify-content:center;gap:18px;font-size:.8rem;color:var(--muted);flex-wrap:wrap}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+
+.block{border-top:2px solid var(--ink);padding-top:6px;display:grid;grid-template-columns:1fr 1fr;gap:0 36px}
+.block ol{list-style:none;margin:0;padding:0;min-width:0}
+li{display:grid;grid-template-columns:1fr auto;gap:2px 10px;padding:9px 0;border-bottom:1px solid var(--rule);align-items:center}
+li .q{font-size:.93rem;min-width:0}
+li .q i{font-style:normal;font-family:var(--f-mono);font-size:.7rem;color:var(--muted);margin-right:6px;font-variant-numeric:tabular-nums}
+.dots{display:flex;gap:7px}
+.dot{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--rule);display:block}
+.dot.on{background:var(--c);border-color:var(--c)}
+.memo{grid-column:1/-1;display:flex;flex-direction:column;gap:1px;font-size:.8rem;padding-left:22px}
+.memo span{color:var(--c)}
+.memo span b{font-weight:700;margin-right:4px;opacity:.75;font-size:.72rem;font-family:var(--f-mono)}
+
+.note{margin:0;padding:12px 14px;background:rgba(196,166,118,.08);border-radius:4px;font-size:.92rem;line-height:1.7;text-align:center}
+footer{font-family:var(--f-mono);font-size:.72rem;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px}
+@media (max-width:700px){.block{grid-template-columns:1fr}}
+</style>
+
+<div class="wrap">
+  <a class="back" href="index.html#ledger">← 목록으로</a>
+  <main class="card">
+    <div class="title"><small>COUPLE TMI CHECKLIST</small><h1>커플 TMI 체크리스트</h1></div>
+    <div class="pair"><span class="nm l">루카</span><span class="x">×</span><span class="nm h">그</span></div>
+    <div class="legend"><span><i class="dot on l"></i>루카</span><span><i class="dot on h"></i>그</span><span><i class="dot"></i>해당 없음</span></div>
+    <div id="blocks"></div>
+    <p class="note">둘 다 처음이고, 둘 다 서로뿐이라 아래쪽 절반은 빈칸이 많다.</p>
+  </main>
+  <footer><span>원본 체크리스트 · @apple990707</span><span>체크는 세계관 B에 맞춰 채움</span></footer>
+</div>
+
+<script>
+/* [문항, 루카, 그, 루카 메모, 그 메모] */
+const Q=[
+ // 위 · 왼쪽
+ ["소유욕이나 집착이 심한 사람",1,0,"아끼는 건 전부 습도계 붙은 상자에","질투는 함. 장바구니 한 사람 몫 앞에서"],
+ ["감수성이 풍부한 사람",0,1,"…바람 소리야","붉은 연작, Mostly 서른두 점"],
+ ["과거를 후회하는 사람",1,0,"열아홉 살, 반쪽만 읽은 편지",""],
+ ["이별할 때 붙잡는 사람",0,0,"먼저 끊는 쪽이었음. 이제는 안 끊음","\"싫다는 사람 붙잡으면 안 돼요\"… 였는데"],
+ ["다음 생에서도 상대를 만나고 싶어 하는 사람",1,1,"…7시 55분. 다리 위.","당연하죠ㅎㅎ"],
+ ["벌레를 무서워하는 사람",0,1,"좀벌레는 핀셋으로 잡음","거미 나오면 루카 불러요"],
+ ["매너가 좋은 사람",1,1,"\"여긴 희귀본 코너입니다.\"","팬 사인도 끝까지"],
+ ["매운 걸 잘 먹는 사람",0,1,"담백한 것, 구운 아몬드","잘 먹어요. 탄 데까지"],
+ ["체력이 강한 사람",0,1,"52계단은 됨. 어깨 빌려줄 만큼은","한번 자면 안 깸"],
+ ["운동을 즐기는 사람",0,0,"걷기만. 다리까지","이젤 드는 게 운동이에요ㅎㅎ"],
+ // 위 · 오른쪽
+ ["주량이 강한 사람",0,1,"맥주 두 잔이면 귀 끝","덩치만큼"],
+ ["성욕이 강한 사람",0,1,"…묻지 마.","루카 한정이에요ㅎㅎ"],
+ ["승부욕이 강한 사람",1,0,"범인은 한 번도 안 틀림",""],
+ ["욕 잘하는 사람",0,0,"\"곰팡이 3주\"가 욕",""],
+ ["말싸움을 잘 하는 사람",1,0,"화나면 목소리가 더 정확해짐","우리 안 싸우는데요ㅎㅎ"],
+ ["몸싸움을 잘 하는 사람",0,0,"핀셋보다 무거운 건 안 듦","덩치만 커요"],
+ ["철벽이 심한 사람",1,1,"한 학기 커피에 \"고맙습니다\"만","고백은 웃으며 넘김. 루카 전까지"],
+ ["머리가 좋은 사람",1,1,"판본 연도, 0.1밀리","습도를 사흘 만에 읽음"],
+ ["노래를 잘 하는 사람",1,0,"성가대 출신. 2절만","1절은 목이 쉬어서요"],
+ ["춤을 잘 추는 사람",0,0,"",""],
+ // 아래 · 왼쪽
+ ["목소리가 낮은 사람",0,1,"작고 정확한 쪽","Stille Nacht 1절"],
+ ["잔근육이 많은 사람",1,0,"핀셋 15년, 손목과 팔뚝",""],
+ ["피부가 하얀 사람",1,0,"복원실 형광등 15년","다리 위 햇볕"],
+ ["복근이 선명한 사람",0,0,"밥을 거르니까 안 생김","단 걸 좋아해서요ㅎㅎ"],
+ ["겁이 많은 사람",0,1,"귀신보다 세트 습도가 먼저 보임","무서운 영화엔 쿠션, 땋은 머리"],
+ ["웃음이 많은 사람",0,1,"웃은 거 아니야. 국화 바람","ㅎㅎ"],
+ ["인형을 잘 뽑는 사람",1,0,"손이 정확해서",""],
+ ["슬픈 영화를 보고 우는 사람",0,1,"","잘 울어요ㅎㅎ"],
+ ["도발에 약한 사람",1,0,"\"……손목은, 반칙이야.\"",""],
+ ["운전면허가 있는 사람",1,1,"있음. 다리까지 걸어감","미국 면허"],
+ // 아래 · 오른쪽
+ ["이성을 대하는데 능숙한 사람",0,1,"남들한테는 차가움","팬 응대는 잘함"],
+ ["사교성이 좋은 사람",0,1,"단톡방 알림 꺼 둠","다나랑 요나스 담당"],
+ ["섹스가 능숙한 사람",0,0,"배우는 중이야.","둘 다 처음이었어요ㅎㅎ"],
+ ["스킨십을 좋아하는 사람",1,1,"\"안 해도 돼\" 하면서 손은 안 뺌","새벽 세 시 팔"],
+ ["섹스 취향이 하드한 사람",0,0,"",""],
+ ["체모가 없는 사람 (19)",0,0,"",""],
+ ["동성과의 경험이 있는 사람 (서로 제외)",0,0,"서로가 처음","서로가 처음"],
+ ["이성과의 경험이 있는 사람",0,0,"",""],
+ ["S성향이 있는 사람",1,0,"\"……다시 앉아.\" \"돌아.\"",""],
+ ["M성향이 있는 사람",0,1,"","시키면 다 해요ㅎㅎ"]
+];
+function row(r,i){
+  const [q,a,b,ma,mb]=r;
+  const memo=(ma||mb)?`<div class="memo">${ma?`<span class="l"><b>L</b>${ma}</span>`:''}${mb?`<span class="h"><b>H</b>${mb}</span>`:''}</div>`:'';
+  return `<li><span class="q"><i>${String(i+1).padStart(2,'0')}</i>${q}</span><span class="dots"><span class="dot l ${a?'on':''}" aria-label="루카 ${a?'해당':'해당 없음'}"></span><span class="dot h ${b?'on':''}" aria-label="그 ${b?'해당':'해당 없음'}"></span></span>${memo}</li>`;
+}
+const col=(s)=>`<ol>${Q.slice(s,s+10).map((r,k)=>row(r,s+k)).join('')}</ol>`;
+document.getElementById('blocks').innerHTML=
+ `<div style="display:flex;flex-direction:column;gap:26px"><div class="block">${col(0)}${col(10)}</div><div class="block">${col(20)}${col(30)}</div></div>`;
+</script>
+
+</body></html>
