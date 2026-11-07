@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>간격 7초</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Pinyon+Script&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Nanum+Myeongjo:wght@400;700;800&display=swap">
+<style>
+:root{color-scheme:dark;--night:#17110c;--gold:#c4a676;--gold-hi:#e6d6b2;--line:rgba(196,166,118,.42);--parch:#ece2cd;--text:#ddd2bd;--muted:#a39580;
+  --caps:"Cinzel","Times New Roman",serif;--script:"Pinyon Script","Times New Roman",cursive;--ko:"Nanum Myeongjo","AppleMyungjo","Batang",serif}
+*{box-sizing:border-box}
+html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;background-color:var(--night);color:var(--text);font-family:var(--ko);font-size:17px;line-height:2;
+  background-image:radial-gradient(ellipse 70% 40% at 50% 0%,rgba(214,180,120,.12),transparent 70%);background-repeat:no-repeat;
+  padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px));padding-block:24px 80px}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;opacity:.5;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .9  0 0 0 0 .8  0 0 0 0 .6  0 0 0 .05 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+.wrap{max-width:620px;margin:0 auto}
+.back{display:inline-block;font-family:var(--caps);font-size:11px;letter-spacing:.2em;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:2px}
+.back:hover,.back:focus-visible{color:var(--gold-hi);outline:none}
+header{text-align:center;margin:56px 0 48px;display:grid;gap:6px;justify-items:center}
+header .lat{font-family:var(--script);font-size:44px;line-height:1;color:var(--gold)}
+header h1{margin:0;font-family:var(--ko);font-weight:800;font-size:clamp(28px,6vw,36px);color:var(--parch);letter-spacing:.08em}
+header .when{font-family:var(--caps);font-size:11px;letter-spacing:.28em;color:var(--muted)}
+header svg{width:160px;height:16px;margin-top:10px}
+article p{margin:0 0 1.1em;word-break:keep-all}
+.talk{margin:0 0 1.1em;padding-left:14px;border-left:1px solid var(--line)}
+.talk p{margin:0;color:var(--parch)}
+h2{margin:2.6em 0 1.4em;text-align:center;font-family:var(--ko);font-weight:700;font-size:16px;letter-spacing:.12em;color:var(--gold)}
+h2 span{padding:0 14px;background:var(--night);position:relative}
+h2::before{content:"";display:block;height:1px;background:var(--line);transform:translateY(1em)}
+.end{text-align:center;margin-top:56px;display:grid;gap:18px;justify-items:center}
+.end .mark{font-family:var(--caps);font-size:11px;letter-spacing:.3em;color:var(--muted)}
+.end a{font-family:var(--ko);font-size:15px;color:var(--gold-hi);text-decoration:none;border:1px solid var(--line);border-radius:40px 40px 10px 10px;padding:8px 22px}
+.end a:hover,.end a:focus-visible{background:rgba(196,166,118,.15);outline:none}
+
+.part{text-align:center;margin:84px 0 40px;display:grid;gap:4px;justify-items:center}
+.part.first{margin-top:0}
+.part .eyebrow{font-family:var(--script);font-size:32px;line-height:1.1;color:var(--gold)}
+.part h2{margin:0;font-family:var(--ko);font-weight:800;font-size:24px;color:var(--parch);letter-spacing:.06em}
+.part h2::before{display:none}
+.part .sub{font-family:var(--caps);font-size:11px;letter-spacing:.24em;color:var(--muted)}
+.orn2{color:var(--gold);margin-bottom:22px}
+.scene{display:flex;align-items:center;gap:12px;margin:56px 0 26px;color:var(--muted);font-size:14px;letter-spacing:.1em}
+.scene::before,.scene::after{content:"";flex:1;height:1px;background:var(--line)}
+.scene b{font-family:var(--caps);font-weight:600;color:var(--gold);letter-spacing:.12em}
+.list{margin:4px 0 1.4em;padding:14px 20px;border:1px solid var(--line);border-radius:6px;background:rgba(236,226,205,.05);font-size:15.5px;line-height:1.9;color:var(--parch)}
+.list ol{margin:0;padding-left:1.4em}
+.list .note{color:var(--muted);font-size:14px}
+.chat{margin:4px 0 1.6em;display:flex;flex-direction:column;gap:6px}
+.chat .who{font-size:12.5px;color:var(--muted);margin:4px 0 -2px}
+.chat .msg{align-self:flex-start;max-width:86%;background:rgba(236,226,205,.08);border:1px solid var(--line);color:var(--parch);padding:6px 13px;border-radius:14px 14px 14px 4px;font-size:15px;line-height:1.6}
+.chat .msg.me{align-self:flex-end;border-radius:14px 14px 4px 14px;background:rgba(217,130,106,.18);border-color:rgba(217,130,106,.45)}
+.chat .room{align-self:center;font-family:var(--ko);font-size:12px;color:var(--gold);letter-spacing:.06em;margin-bottom:4px}
+.quiet{color:var(--muted)}
+.note-card{margin:4px auto 1.4em;padding:12px 18px;border:1px dashed var(--gold);border-radius:4px;color:var(--parch);font-size:15px;text-align:center;max-width:320px;background:rgba(236,226,205,.04)}
+article b{color:var(--gold-hi)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="index.html#chron" onclick="if(history.length>1){history.back();return false}">← 목록으로</a>
+  <header>
+    <span class="lat">Seven Seconds</span>
+    <h1>간격 7초</h1>
+    <span class="when">단편 · 어느 일요일 점심</span>
+    <svg viewBox="0 0 180 18" aria-hidden="true"><g fill="none" stroke="#c4a676" stroke-width="1.2"><path d="M0 9 H70 M110 9 H180"/><path d="M90 3 l6 6 -6 6 -6 -6z" fill="#c4a676"/></g></svg>
+  </header>
+  <article>
+
+<div class="scene"><b>일요일 점심</b> 감자 수프</div>
+
+<p>일요일 점심. 그가 끓인 감자 수프를 루카스가 평소보다 빨리 먹었다. 맛있어서라고는 절대 말하지 않았지만, 숟가락이 쉬지 않았다. 마지막 한 숟가락을 삼킨 순간.</p>
+<p>&quot;……힉.&quot;</p>
+<p>그가 고개를 들었다. 루카스는 아무 일도 없다는 얼굴로 냅킨을 반듯하게 접고 있었다.</p>
+<p>&quot;루카, 방금……&quot;</p>
+<p>&quot;……아무 일도 없어.&quot;</p>
+<p>&quot;……힉.&quot;</p>
+<p>&quot;딸꾹질하잖아요ㅎㅎ&quot;</p>
+<p>&quot;……안 해.&quot;</p>
+<p>7초 뒤에 또 했다. 루카스는 말없이 일어나 서재로 가더니 수첩과 손목시계를 들고 돌아왔다.</p>
+<p>&quot;……간격 재는 거예요?&quot;</p>
+<p>&quot;……7초. 일정해.&quot;</p>
+<p>&quot;그게 중요해요?&quot;</p>
+<p>&quot;……불규칙하면 원인이 다른 거야.&quot;</p>
+
+<div class="scene"><b>시도 1~3</b> 숨, 물, 단체방</div>
+
+<p>첫 번째 시도. 숨 참기. 루카스는 손목시계를 보며 정확히 30초를 참았다. 그는 옆에서 같이 참다가 18초에 포기했다. 31초째.</p>
+<p>&quot;……힉.&quot;</p>
+<p>두 번째 시도. 물 마시기. 그가 컵 반대편으로 고개를 숙이고 마시는 시범을 보이다가 물을 스웨터에 쏟았다. 루카스는 그걸 닦아 주느라 물을 못 마셨다. 딸꾹질은 그대로였다.</p>
+<p>세 번째 시도. 그가 휴대폰으로 단체방에 물었다.</p>
+<div class="chat">
+  <span class="room">🔍 서른네 번째 단추 수색대</span>
+  <div class="msg me">루카 딸꾹질 멈추는 법 아시는 분ㅠㅠ</div>
+  <span class="who">요나스</span>
+  <div class="msg">놀래키면 돼요!!</div>
+  <span class="who">다나</span>
+  <div class="msg">그 사람을 놀래킨다고? 공포영화 보면서 습도 계산하는 사람을?</div>
+  <span class="who">루스</span>
+  <div class="msg">아버지는 각설탕에 식초를 떨어뜨려 주셨어요.</div>
+</div>
+<p>루카스가 화면을 들여다보았다.</p>
+<p>&quot;……식초는 산이야. 위에 안 좋아.&quot;</p>
+<p>&quot;할아버지 레시피인데요?&quot;</p>
+<p>&quot;……할아버지는 운이 좋으셨던 거야.&quot;</p>
+<p>&quot;……힉.&quot;</p>
+
+<div class="scene"><b>시도 4~10</b> 왁</div>
+
+<p>결국 요나스 방법. 그는 루카스가 수첩에 &#x27;시도 3: 실패&#x27;라고 적는 동안 뒤로 살금살금 돌아가서 어깨를 덥석 잡았다.</p>
+<p>&quot;왁!&quot;</p>
+<p>루카스는 고개도 돌리지 않았다.</p>
+<p>&quot;……발소리 다 들렸어. 마룻바닥 세 번째 판자.&quot;</p>
+<p>&quot;…….&quot;</p>
+<p>&quot;……힉.&quot;</p>
+<p>그 뒤로 그는 여섯 번을 더 놀래켰다. 문 뒤에서, 소파 뒤에서, 커튼 뒤에서. 커튼 밑으로 붉은 머리카락이 바닥까지 다 나와 있었다. 루카스는 커튼 앞에 서서 머리카락 끝을 주워 들고, 커튼 주름 사이에 반듯하게 끼워 줬다. 전부 실패. 수첩에는 정자로 이렇게 적혔다.</p>
+<div class="note-card">시도 10: 실패. 원인: 은폐 불가(머리)</div>
+<p>딸꾹질은 여전히 7초였다.</p>
+
+<div class="scene"><b>시도 11</b> 귀 밑까지</div>
+
+<p>그가 소파에 털썩 앉았다. 지친 척 한숨을 쉬고, 땋은 머리를 앞으로 끌어와 끝을 만지작거렸다. 그리고 아무렇지도 않은 목소리로.</p>
+<p>&quot;아, 저 그냥 이번 겨울에 머리 단발로 자를까 봐요.&quot;</p>
+<p>루카스의 펜이 멈췄다.</p>
+<p>&quot;……뭐?&quot;</p>
+<p>&quot;관리도 힘들고, 루카 아침마다 7분씩 땋는 것도 힘들 거고. 시원하게 귀 밑까지요ㅎㅎ&quot;</p>
+<p>&quot;…….&quot;</p>
+<p>루카스가 수첩을 내려놓았다. 소파 쪽으로 걸어왔다. 한 걸음, 두 걸음. 그리고 그의 앞에 서서, 땋은 머리를 두 손으로 잡았다. 빼앗듯이. 아니, 지키듯이.</p>
+<p>&quot;……안 돼.&quot;</p>
+<p>&quot;ㅎㅎ&quot;</p>
+<p>&quot;……내가 땋는 거야. 힘든 거 아니야. 6분 12초야. 그게 왜 힘들어.&quot;</p>
+<p>&quot;루카.&quot;</p>
+<p>&quot;……10센티도 백 분 걸렸어. 귀 밑까지면 몇 센티인지 알아? 계산해 봤어? 나는 지금 했어. 그건……&quot;</p>
+<p>&quot;루카.&quot;</p>
+<p>&quot;……뭐.&quot;</p>
+<p>&quot;딸꾹질이요.&quot;</p>
+<p>루카스가 멈췄다. 손목시계를 봤다. 10초, 15초, 30초. 아무것도 없었다.</p>
+<p>&quot;…….&quot;</p>
+<p>&quot;멈췄네요ㅎㅎ&quot;</p>
+<p>&quot;……장난이었어?&quot;</p>
+<p>&quot;네ㅎㅎ&quot;</p>
+<p>루카스는 한참 그를 내려다봤다. 귀 끝이 붉어지고, 목덜미까지 붉어지고, 3초가 지나도 돌아오지 않았다. 땋은 머리는 끝까지 놓지 않았다.</p>
+<p>&quot;……반칙이야.&quot;</p>
+<p>&quot;놀래키면 된다고 했잖아요. 요나스가.&quot;</p>
+<p>&quot;……그건 놀란 게 아니야.&quot;</p>
+<p>&quot;그럼 뭐예요?&quot;</p>
+<p>&quot;…….&quot;</p>
+<p>루카스는 대답하지 않았다. 대신 땋은 머리 끝을 들어 자기 손목에 한 바퀴 감았다. 오른손목, 흉터 있는 쪽에.</p>
+<p>&quot;……오늘은 이렇게 있어.&quot;</p>
+<p>&quot;하루 종일요?&quot;</p>
+<p>&quot;……딸꾹질 재발 방지야.&quot;</p>
+
+<div class="scene"><b>그날 저녁</b> 수첩</div>
+
+<div class="list">
+딸꾹질. 간격 7초. 지속 41분.<br>
+시도 1~10 실패.<br>
+시도 11: 성공. 방법: <span class="note">　</span>
+</div>
+<p>그 칸은 비어 있었다. 루카스는 펜을 세 번 들었다가 세 번 내려놓고, 결국 아무것도 적지 않았다.</p>
+<p>그날 밤, 그가 잠든 뒤 루카스는 땋은 머리 끝을 다시 손목에 감고 잤다. 딸꾹질은 하지 않았다. 재발 방지는 원래 오래 해야 하는 거니까.</p>
+  </article>
+  <div class="end"><span class="mark">— FIN —</span><a href="index.html#chron" onclick="if(history.length>1){history.back();return false}">목록으로 돌아가기</a></div>
+</div>
+</body>
+</html>
