@@ -1424,7 +1424,12 @@ P "네, 알아요. 그래도 구독할게요."
     [["P","메뉴판 맨 아랫줄, 문의드립니다."],["L","……영업 종료."],["P","내일은요?"],["L","……별도 문의."]],
     [["P","눈 와요!"],["L","봤어. ……창가 칸으로 와."]],
     [["P","오늘 쪽지 몇 장째예요?"],["L","열세 장."],["P","열두 장인데요?"],["L","……이것까지."]],
-    [["P","쪽지에도 소인 찍어 주세요"],["N","답장에는 글씨 없이 연필 동그라미 하나만 그려져 있었어요. 예외 1호예요."]]
+    [["P","쪽지에도 소인 찍어 주세요"],["N","답장에는 글씨 없이 연필 동그라미 하나만 그려져 있었어요. 예외 1호예요."]],
+    [["P","루카 어디예요?"],["L","서재 칸."],["P","멀어요"],["L","……네 걸음이야."],["N","30초 뒤, 서재 칸 인원은 2명이 됐어요."]],
+    [["P","루카 지금 웃었죠"],["L","……바람 소리야."],["P","동굴 안인데요?"],["L","……환기구."]],
+    [["P","오늘 저 뭐 달라진 거 없어요?"],["L","……땋은 거 내가 했어."],["P","맞아요, 그거예요ㅎㅎ"]],
+    [["P","곰굴 정원 3명으로 늘려도 돼요?"],["L","……누구."],["P","쿠션이요"],["L","……이름 지어 와."]],
+    [["P","자요?"],["L","……자."],["P","자는 사람이 답장을 해요?"],["L","……잠꼬대야."]]
   ];
   var LETTERS=[
     {t:"동굴에 살고 있어요",day:"월요일",time:"21:05",st:[["bridge",55],["moss",52],["candy",7]],
@@ -1472,6 +1477,26 @@ P "네, 알아요. 그래도 구독할게요."
     {t:"한 칸만 남기면 안 돼요?",day:"일요일",time:"23:00",st:[["cave",2]],
      body:"루카에게.\n내일 철거 싫어요.\n한 칸만 남기면 안 돼요? 제일 작은 칸이라도요.",
      reply:"……처음 칸.\n……그건 안 줄여."},
+    {t:"머리가 의자에 걸렸어요",day:"화요일",time:"16:10",st:[["braid",3]],
+     body:"루카에게.\n복도 지나가다가 땋은 머리가 의자 다리에 걸렸어요.\n안 당겼어요. 루카가 풀어 줄 때까지 가만히 있었어요.\n4분 걸렸는데, 좋았어요.",
+     reply:"……다음엔 주머니에 넣어.",back:"동굴에선 코트 안 입는데요ㅎㅎ",
+     aside:"다음 날 복도 의자 다리마다 중성지가 매끈하게 감겨 있었어요. 걸릴 데가 없어졌어요. 그는 조금 아쉬워했어요."},
+    {t:"베개가 건너갔어요",day:"수요일",time:"07:30",st:[["pillow",2]],
+     body:"루카에게.\n아침에 보니까 제 베개 하나가 루카 쪽에 가 있어요.\n제가 보낸 거 아니에요.",
+     reply:"……굴러왔어.",
+     aside:"베개는 굴러가지 않아요. 그날 밤 그는 처음부터 베개 하나를 루카 쪽에 놓아 뒀어요. 아침엔 그 베개가 둘 사이 한가운데에 있었어요."},
+    {t:"단추 채울 일이 없어요",day:"목요일",time:"09:30",st:[["button",34]],
+     body:"루카에게.\n휴가라 스웨터만 입었더니 단추 채울 일이 없어요.\n아침에 루카 손이 심심해 보였어요.\n그래서 지금 리넨 셔츠 입고 있어요. 하나도 안 채웠어요.\n나갈 데는 없어요.",
+     reply:"……3분 21초.",
+     aside:"그날 그는 갈 데도 없이 단추 서른네 개를 다 채운 채로 하루 종일 동굴에 있었어요. 빨간 실 한 땀까지요."},
+    {t:"아몬드를 세어 봤어요",day:"금요일",time:"11:20",st:[["almond",12]],
+     body:"루카에게.\n줄로 온 아몬드를 세어 봤어요.\n그제는 여덟 알, 어제는 열 알, 오늘은 열두 알이에요.\n왜 늘어나요?",
+     reply:"……오차야.",back:"내일 오차는 몇 알이에요?ㅎㅎ",
+     aside:"다음 날은 열네 알이 건너왔어요. 오차치고는 간격이 정확했어요."},
+    {t:"연필 얘기예요",day:"토요일",time:"14:05",st:[["pencil",1]],
+     body:"루카에게.\n고백할게요. 연필 제가 갖고 있어요.\n우표 그릴 때 써요. 루카 연필이 제일 잘 그려져요.\n안 돌려줄 거예요.",
+     reply:"……깎아서 써.\n……뭉툭해.",
+     aside:"한 시간 뒤 줄에 매단 상자로 연필깎이가 건너왔어요. 쪽지는 없었어요."},
     {t:"감자 일곱 개",from:"L",day:"월요일",time:"06:40",st:[["blank",null]],
      body:"수프. 감자 일곱 개.\n맞았어.\n\n— L. A.",
      aside:"루카가 보낸 단 한 통이에요. 우표를 못 그려서 우표 자리에 연필로 네모만 그리고 '우표 없음'이라고 적었어요. 소인은 정확하게 찍혀 있었어요. 그는 그날 저녁 그 빈 네모 안에 감자 일곱 개를 그려 넣었어요."}
@@ -1492,6 +1517,11 @@ P "네, 알아요. 그래도 구독할게요."
     string:[bg("#efe6d0")+'<path d="M8 20 Q30 44 54 24" fill="none" stroke="#8e2f25" stroke-width="2" stroke-dasharray="4 2"/><line x1="30" y1="34" x2="30" y2="42" stroke="#75624a"/><rect x="22" y="42" width="16" height="12" fill="#fbf6e9" stroke="#3a2c1c" stroke-width="1.5"/>',"#3a2c1c"],
     box:[bg("#74825a")+'<rect x="15" y="30" width="32" height="24" fill="#e2d6b8" stroke="#3a2c1c" stroke-width="1.5"/><rect x="13" y="24" width="36" height="8" fill="#fbf6e9" stroke="#3a2c1c" stroke-width="1.5"/><circle cx="40" cy="28" r="3" fill="#fbf6e9" stroke="#3a2c1c"/>',"#fbf6e9"],
     cave:[bg("#34405c")+'<path d="M10 60 C12 34 22 26 31 26 C40 26 50 34 52 60 Z" fill="#74825a" stroke="#3a2c1c" stroke-width="1.5"/><path d="M23 60 C24 46 28 42 31 42 C34 42 38 46 39 60 Z" fill="#f3d98a" stroke="#3a2c1c"/>',"#fbf6e9"],
+    braid:[bg("#efe6d0")+'<path d="M31 12 C22 20 40 26 31 34 C22 42 40 48 31 56" fill="none" stroke="#c0392b" stroke-width="5" stroke-linecap="round"/><path d="M31 12 C40 20 22 26 31 34 C40 42 22 48 31 56" fill="none" stroke="#8e2f25" stroke-width="5" stroke-linecap="round"/><path d="M27 57 h8" stroke="#3a2c1c" stroke-width="2"/>',"#3a2c1c"],
+    pillow:[bg("#74825a")+'<path d="M13 28 Q31 22 49 28 Q52 38 49 48 Q31 54 13 48 Q10 38 13 28 Z" fill="#fbf6e9" stroke="#3a2c1c" stroke-width="1.5"/><path d="M22 34 q4 3 0 7 M40 34 q-4 3 0 7" fill="none" stroke="#c9bfa4" stroke-width="1.2"/>',"#fbf6e9"],
+    button:[bg("#efe6d0")+'<circle cx="31" cy="34" r="15" fill="#fbf6e9" stroke="#3a2c1c" stroke-width="1.5"/><circle cx="31" cy="34" r="10" fill="none" stroke="#c9bfa4"/><g fill="#3a2c1c"><circle cx="27" cy="30" r="1.6"/><circle cx="35" cy="30" r="1.6"/><circle cx="27" cy="38" r="1.6"/><circle cx="35" cy="38" r="1.6"/></g><path d="M27 38 L35 30" stroke="#c0392b" stroke-width="1.6"/>',"#3a2c1c"],
+    almond:[bg("#c9a44a")+'<g fill="#8a5a2b" stroke="#3a2c1c"><path d="M20 22 Q28 30 20 42 Q12 30 20 22 Z"/><path d="M34 18 Q42 26 34 38 Q26 26 34 18 Z" transform="rotate(20 34 28)"/><path d="M40 36 Q48 44 40 56 Q32 44 40 36 Z" transform="rotate(-15 40 46)"/></g>',"#3a2c1c"],
+    pencil:[bg("#34405c")+'<g transform="rotate(35 31 36)"><rect x="27" y="14" width="8" height="34" fill="#e0a92e" stroke="#3a2c1c"/><path d="M27 48 L31 58 L35 48 Z" fill="#fbf6e9" stroke="#3a2c1c"/><rect x="27" y="10" width="8" height="5" fill="#d9a09c" stroke="#3a2c1c"/></g>',"#fbf6e9"],
     blank:['<rect x="10" y="10" width="42" height="58" fill="none" stroke="#5f5a52" stroke-width="1.2" stroke-dasharray="3 3"/><text x="31" y="36" text-anchor="middle" font-size="9" fill="#5f5a52">우표</text><text x="31" y="48" text-anchor="middle" font-size="9" fill="#5f5a52">없음</text>',"#5f5a52"]
   };
   function stamp(type,num){
