@@ -1,0 +1,1245 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Bärenhöhle 곰굴 그림책</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Nanum+Myeongjo:wght@400;700;800&family=Gaegu:wght@400;700&display=swap">
+<style>
+/* Layout: one picture book lying on a dark candlelit desk. Ribbon bookmarks stick out of the top edge; one parchment leaf is shown at a time and turns on its spine. */
+:root{
+  color-scheme:dark;
+  --night:#17110c;
+  --desk:#221911;
+  --paper:#efe6d0;
+  --paper-lo:#e2d6b8;
+  --ink:#3a2c1c;
+  --ink-soft:#75624a;
+  --gold:#c4a676;
+  --gold-hi:#e6d6b2;
+  --wine:#8e2f25;
+  --moss:#74825a;
+  --mustard:#c9a44a;
+  --pink:#d9a09c;
+  --navy:#34405c;
+  --white:#fbf6e9;
+  --pencil:#5f5a52;
+  --script:"Pinyon Script","Times New Roman",cursive;
+  --latin:"Cormorant Garamond","Times New Roman",serif;
+  --ko:"Nanum Myeongjo","AppleMyungjo","Batang",serif;
+  --hand:"Gaegu","Nanum Pen Script","Apple SD Gothic Neo",cursive;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{
+  background:var(--night);color:var(--gold-hi);font-family:var(--ko);font-size:16px;line-height:1.85;
+  background-image:radial-gradient(ellipse 70% 420px at 50% 0,rgba(214,180,120,.16),transparent 70%);
+  background-repeat:no-repeat;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:22px 56px;overflow-x:hidden;
+}
+button{font:inherit;color:inherit;cursor:pointer}
+.stage{max-width:720px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr);gap:0}
+.book,.leaf{min-width:0}
+.shelf{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:14px}
+.shelf .t{font-family:var(--script);font-size:30px;line-height:1;color:var(--gold-hi)}
+.shelf .s{font-size:12px;color:var(--gold);letter-spacing:.08em}
+
+/* ribbons */
+.marks{display:flex;gap:6px;padding:0 14px;position:relative;z-index:2}
+.mark{flex:1 1 0;min-width:0;white-space:nowrap;border:0;padding:8px 2px 16px;font-family:var(--hand);font-weight:700;font-size:16px;line-height:1.1;color:var(--white);
+  clip-path:polygon(0 0,100% 0,100% 100%,50% calc(100% - 9px),0 100%);margin-bottom:-12px;transition:transform .2s}
+.mark:nth-child(5n+1){background:var(--navy)}
+.mark:nth-child(5n+2){background:var(--moss)}
+.mark:nth-child(5n+3){background:var(--mustard);color:var(--ink)}
+.mark:nth-child(5n+4){background:var(--pink);color:var(--ink)}
+.mark:nth-child(5n+5){background:var(--ink-soft)}
+.mark:hover,.mark:focus-visible{transform:translateY(-4px);outline:none}
+.mark[aria-current="true"]{background:var(--wine);color:var(--white);transform:translateY(-6px)}
+
+/* book */
+.book{position:relative;perspective:1800px}
+.leaf{position:relative;background:var(--paper);color:var(--ink);border-radius:4px 10px 10px 4px;min-height:560px;
+  padding:44px 34px 70px 46px;
+  box-shadow:0 22px 50px rgba(0,0,0,.55),inset 14px 0 18px -10px rgba(58,44,28,.35),inset 0 0 60px rgba(196,166,118,.25);
+  background-image:linear-gradient(90deg,rgba(58,44,28,.16),transparent 26px)}
+.ghost{position:absolute;inset:0;overflow:hidden;z-index:3;pointer-events:none;backface-visibility:hidden}
+.ghost.fwd{transform-origin:left center;animation:turnF .55s ease-in forwards}
+.ghost.back{transform-origin:left center;animation:turnB .5s ease-out forwards}
+@keyframes turnF{to{transform:rotateY(-100deg);opacity:.15}}
+@keyframes turnB{from{transform:rotateY(-100deg);opacity:.15}to{transform:rotateY(0);opacity:1}}
+@media (prefers-reduced-motion:reduce){.ghost{animation:none!important;display:none}}
+.runhead{position:absolute;top:14px;left:46px;right:34px;display:flex;justify-content:space-between;font-family:var(--latin);font-style:italic;font-size:13px;color:var(--ink-soft)}
+.folio{position:absolute;bottom:22px;left:0;right:0;pointer-events:none;text-align:center;font-family:var(--latin);font-size:14px;color:var(--ink-soft)}
+.turn{position:absolute;bottom:12px;border:0;background:none;font-family:var(--hand);font-weight:700;font-size:18px;color:var(--wine);padding:8px 12px;border-radius:8px}
+.turn:hover,.turn:focus-visible{background:var(--paper-lo);outline:none}
+.turn.prev{left:36px}.turn.next{right:22px}
+.turn[disabled]{visibility:hidden}
+
+/* cover */
+.cover{text-align:center;display:grid;gap:10px;justify-items:center;padding-top:8px}
+.cover .eyebrow{font-family:var(--hand);font-size:18px;color:var(--ink-soft)}
+.cover h1{margin:0;font-family:var(--script);font-weight:400;font-size:clamp(56px,15vw,92px);line-height:1;color:var(--wine)}
+.cover .ko{font-weight:800;font-size:22px;letter-spacing:.04em}
+.cover svg{width:min(100%,460px);height:auto}
+.cover p{margin:0;max-width:30em;color:var(--ink)}
+.cover .by{font-family:var(--hand);font-size:17px;color:var(--ink-soft)}
+.open{border:2px solid var(--wine);background:none;color:var(--wine);font-family:var(--hand);font-weight:700;font-size:20px;padding:6px 22px;border-radius:30px}
+.open:hover,.open:focus-visible{background:var(--wine);color:var(--white);outline:none}
+
+/* chapter */
+.ch-head{display:grid;gap:2px;margin-bottom:18px;border-bottom:1px dashed var(--ink-soft);padding-bottom:14px}
+.ch-kicker{font-family:var(--hand);font-size:18px;color:var(--moss);font-weight:700}
+.ch-head h2{margin:0;font-weight:800;font-size:clamp(22px,5.4vw,28px);line-height:1.35;text-wrap:balance;color:var(--ink)}
+.prose{max-width:34em}
+.prose p{margin:0 0 .95em}
+.prose p:first-child::first-letter{font-size:2.5em;font-weight:800;color:var(--wine);float:left;line-height:.95;padding:.08em .1em 0 0}
+.prose p.say{padding-left:1.1em;text-indent:-.55em;margin-bottom:.5em;font-weight:700}
+.prose p.say.l{color:var(--navy)}
+.note{font-family:var(--hand);font-size:20px;line-height:1.4;background:var(--white);color:var(--ink);border:1px solid var(--paper-lo);
+  padding:10px 16px;margin:4px 0 16px;display:inline-block;transform:rotate(-1.2deg);box-shadow:2px 3px 0 rgba(58,44,28,.18)}
+.note:nth-of-type(even){transform:rotate(1deg)}
+.endmark{text-align:center;color:var(--wine);font-size:18px;letter-spacing:.6em;margin-top:8px}
+
+/* map */
+.map-wrap{overflow-x:auto;margin:0 -10px 6px;padding:0 10px;-webkit-overflow-scrolling:touch}
+.map-wrap svg{display:block;width:100%;min-width:780px;height:auto}
+.hint{font-family:var(--hand);font-size:17px;color:var(--ink-soft);margin:0 0 8px}
+.hot{cursor:pointer;outline:none}
+.hot circle.dot{fill:var(--wine);stroke:var(--white);stroke-width:2;transition:r .15s}
+.hot text{fill:var(--white);font-family:var(--ko);font-weight:800;font-size:17px;text-anchor:middle;dominant-baseline:central;pointer-events:none}
+.hot:hover circle.dot,.hot:focus-visible circle.dot{fill:var(--navy)}
+.hot circle.ring{fill:none;stroke:var(--wine);stroke-width:1.5;opacity:.55;animation:ping 2.6s ease-out infinite}
+@keyframes ping{0%{r:17;opacity:.55}70%,100%{r:30;opacity:0}}
+@media (prefers-reduced-motion:reduce){.hot circle.ring{animation:none;opacity:0}}
+.lbl{font-family:var(--hand);font-size:21px;fill:var(--ink-soft)}
+.lbl.b{font-weight:700;fill:var(--ink);font-size:25px}
+.legend{list-style:none;margin:14px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px 10px}
+.legend button{width:100%;text-align:left;border:0;background:none;padding:4px 6px;border-radius:6px;font-family:var(--hand);font-size:18px;color:var(--ink);display:flex;gap:8px;align-items:center}
+.legend button:hover,.legend button:focus-visible{background:var(--paper-lo);outline:none}
+.legend b{flex:none;width:22px;height:22px;border-radius:50%;background:var(--wine);color:var(--white);font-family:var(--ko);font-size:11px;display:grid;place-items:center}
+
+/* contents */
+.toc{display:grid;gap:18px}
+.toc h3{margin:0 0 4px;font-family:var(--hand);font-size:21px;color:var(--moss)}
+.toc ol{list-style:none;margin:0;padding:0;display:grid;gap:0}
+.toc button{width:100%;border:0;background:none;display:flex;align-items:baseline;gap:8px;padding:5px 4px;border-radius:6px;text-align:left;color:var(--ink);font-size:16px}
+.toc button:hover,.toc button:focus-visible{background:var(--paper-lo);outline:none}
+.toc .dots{flex:1;border-bottom:1px dotted var(--ink-soft);transform:translateY(-4px);min-width:16px}
+.toc .pg{font-family:var(--latin);color:var(--ink-soft)}
+
+
+/* post box under the book */
+.post{margin-top:38px;background:var(--paper-lo);color:var(--ink);border-radius:10px;padding:18px 18px 24px;border-top:12px solid var(--moss);box-shadow:0 18px 40px rgba(0,0,0,.5);min-width:0}
+.post-head{width:100%;border:0;background:none;padding:0;text-align:left;color:inherit;display:flex;justify-content:space-between;align-items:center;gap:6px 14px}
+.post-head .ph-t{display:flex;align-items:baseline;gap:4px 14px;flex-wrap:wrap;min-width:0}
+.post-head .ph-c{flex:none;font-family:var(--hand);font-weight:700;font-size:19px;color:var(--wine);border:1.5px solid var(--wine);border-radius:20px;padding:2px 12px}
+.post-head:hover .ph-c,.post-head:focus-visible .ph-c{background:var(--wine);color:var(--white)}
+.post-head:focus-visible{outline:none}
+#postBody{margin-top:2px}
+.post-head h2{margin:0;font-family:var(--hand);font-weight:700;font-size:28px;line-height:1.2;color:var(--ink)}
+.post-head p{margin:0;font-family:var(--hand);font-size:17px;color:var(--ink-soft)}
+.slots{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0 16px}
+.slot{border:2px solid var(--ink);background:var(--paper);color:var(--ink);border-radius:8px;padding:8px 10px 10px;font-family:var(--hand);font-weight:700;font-size:21px;line-height:1.2;display:grid;gap:6px;justify-items:center}
+.slot::before{content:"";width:70%;height:7px;border-radius:4px;background:var(--ink)}
+.slot small{font-weight:400;font-size:15px;color:var(--ink-soft)}
+.slot[aria-pressed="true"]{background:var(--wine);color:var(--white);border-color:var(--wine)}
+.slot[aria-pressed="true"] small{color:var(--gold-hi)}
+.slot[aria-pressed="true"]::before{background:var(--white)}
+.slot:focus-visible{outline:3px solid var(--mustard);outline-offset:2px}
+.ex{display:flex;flex-direction:column;gap:7px;padding:14px 0;border-bottom:1px dashed var(--ink-soft)}
+.ex:last-child{border-bottom:0}
+.sl{font-family:var(--hand);font-size:20px;line-height:1.35;background:var(--white);color:var(--ink);padding:6px 14px;max-width:82%;align-self:flex-start;transform:rotate(-.8deg);box-shadow:2px 3px 0 rgba(58,44,28,.18)}
+.sl.l{align-self:flex-end;transform:rotate(.7deg);background:var(--paper);color:var(--pencil)}
+.sl.n{align-self:center;background:none;box-shadow:none;transform:none;font-family:var(--ko);font-size:13.5px;color:var(--ink-soft);max-width:100%;text-align:center;padding:0 6px}
+.letters{display:grid;gap:10px}
+.env{width:100%;display:flex;align-items:center;gap:12px;text-align:left;border:1.5px solid var(--ink-soft);background:var(--paper);color:var(--ink);border-radius:6px;padding:8px 12px;min-width:0}
+.env:hover,.env:focus-visible{border-color:var(--wine);outline:none}
+.env .stamps{display:flex;flex:none;align-items:center}
+.env .stamps svg{display:block}
+.env .stamps .pm{margin-left:-16px}
+.env .who{flex:1;min-width:0;display:grid;gap:0}
+.env .who b{font-family:var(--hand);font-size:20px;line-height:1.25;overflow-wrap:anywhere}
+.env .who span{font-family:var(--latin);font-style:italic;font-size:13.5px;color:var(--ink-soft)}
+.env .chev{flex:none;font-family:var(--hand);font-size:22px;color:var(--wine);transition:transform .2s}
+.env[aria-expanded="true"] .chev{transform:rotate(90deg)}
+.lt{background:var(--white);color:var(--ink);margin:-4px 6px 6px;padding:18px 18px 16px;box-shadow:2px 3px 0 rgba(58,44,28,.18);display:grid;gap:12px}
+.lt .body{font-family:var(--hand);font-size:20.5px;line-height:1.5;white-space:pre-line;margin:0}
+.lt .reply{justify-self:end;max-width:86%;border:1.5px dashed var(--pencil);color:var(--pencil);font-family:var(--hand);font-size:20px;line-height:1.4;padding:6px 14px;transform:rotate(1deg);white-space:pre-line}
+.lt .reply small{display:block;font-size:14px;opacity:.8}
+.lt .back{font-family:var(--hand);font-size:20px;line-height:1.4;white-space:pre-line;margin:0}
+.lt .aside{font-family:var(--ko);font-size:13.5px;line-height:1.7;color:var(--ink-soft);margin:0;border-top:1px dashed var(--paper-lo);padding-top:10px}
+@media (max-width:520px){.post{padding:14px 12px 18px}.env{gap:8px;padding:8px}.env .stamps svg.st{width:40px;height:50px}.env .stamps svg.pm{width:50px;height:50px}.sl{font-size:19px;max-width:90%}}
+/* slip (hotspot detail) */
+.veil{position:fixed;inset:0;z-index:20;background:rgba(15,10,6,.72);display:grid;place-items:center;
+  padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.slip{background:var(--white);color:var(--ink);max-width:420px;width:100%;max-height:100%;overflow:auto;padding:22px 22px 18px;border-radius:4px;transform:rotate(-.8deg);
+  box-shadow:0 18px 40px rgba(0,0,0,.5);border-top:10px solid var(--mustard)}
+.slip .n{font-family:var(--hand);font-weight:700;color:var(--wine);font-size:18px}
+.slip h3{margin:0 0 8px;font-weight:800;font-size:20px;line-height:1.4}
+.slip p{margin:0 0 .8em;font-size:15.5px;line-height:1.8}
+.slip .row{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;margin-top:6px}
+.slip button{border:1.5px solid var(--ink-soft);background:none;color:var(--ink);font-family:var(--hand);font-weight:700;font-size:18px;padding:4px 14px;border-radius:24px}
+.slip button.go{border-color:var(--wine);background:var(--wine);color:var(--white)}
+.slip button:hover,.slip button:focus-visible{outline:2px solid var(--mustard);outline-offset:2px}
+.colophon{margin-top:18px;text-align:center;font-size:12px;color:var(--gold);letter-spacing:.06em}
+
+@media (max-width:520px){
+  body{font-size:15.5px}
+  .leaf{padding:40px 18px 66px 26px;min-height:480px}
+  .runhead{left:26px;right:18px}
+  .turn.prev{left:18px}.turn.next{right:8px}
+  .marks{padding:0 8px;gap:4px}
+  .mark{font-size:14px}
+  .shelf .s{display:none}
+}
+</style>
+<style>html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+.vback{display:inline-block;margin:0 auto 14px;font-family:"Cinzel","Times New Roman",serif;font-size:11px;letter-spacing:.2em;color:var(--gold);text-decoration:none;border-bottom:1px solid var(--gold);padding-bottom:2px}
+.vback:hover,.vback:focus-visible{color:var(--gold-hi);outline:none}
+.stage>.vback{justify-self:start}</style>
+</head>
+<body>
+
+
+<div class="stage">
+  <a class="vback" href="index.html#others" onclick="if(history.length>1){history.back();return false}">← 수장고로</a>
+  <div class="shelf"><span class="t">Alte Brücke</span><span class="s">수장고 · 3층 거실의 동굴 이야기</span></div>
+  <nav class="marks" id="marks" aria-label="책갈피"></nav>
+  <div class="book" id="book">
+    <article class="leaf" id="leaf" aria-live="polite"></article>
+  </div>
+
+  <section class="post" id="post" aria-labelledby="postT">
+    <button type="button" class="post-head" id="postToggle" aria-expanded="false" aria-controls="postBody"><span class="ph-t"><h2 id="postT">곰굴 우편함</h2><p>쪽지는 즉시, 편지는 익일. 소인은 편지에만.</p></span><span class="ph-c" id="postCue">열기 ▾</span></button>
+    <div id="postBody" hidden>
+    <div class="slots">
+      <button type="button" class="slot" id="slotNotes" aria-pressed="true" data-slot="notes">쪽지 칸<small>줄로 건너간 것</small></button>
+      <button type="button" class="slot" id="slotLetters" aria-pressed="false" data-slot="letters">편지 칸<small>우표와 소인</small></button>
+    </div>
+    <div id="paneNotes"></div>
+    <div id="paneLetters" class="letters" hidden></div>
+    </div>
+  </section>
+  <div class="colophon">꿈이나 썰처럼 가볍게 읽는 책이에요 · 정사 아님 · @ㅊㄹ</div>
+</div>
+
+<div class="veil" id="veil" hidden>
+  <div class="slip" role="dialog" aria-modal="true" aria-labelledby="slipT">
+    <div class="n" id="slipN"></div>
+    <h3 id="slipT"></h3>
+    <div id="slipB"></div>
+    <div class="row"><button type="button" id="slipX">닫기</button><button type="button" class="go" id="slipGo">이 이야기 읽기 →</button></div>
+  </div>
+</div>
+
+<template id="tplCover">
+<div class="cover">
+  <div class="eyebrow">3층 거실에서 일주일 동안 자란</div>
+  <h1>Bärenhöhle</h1>
+  <div class="ko">곰굴 · 정원 2명</div>
+  <svg viewBox="0 0 440 250" role="img" aria-label="의자와 이불로 지은 동굴. 안에서 불빛이 새어 나오고 발 두 개가 밖으로 나와 있다.">
+    <rect x="0" y="0" width="440" height="250" fill="#efe6d0"/>
+    <g fill="#34405c"><circle cx="40" cy="30" r="1.6"/><circle cx="92" cy="18" r="1.2"/><circle cx="370" cy="26" r="1.6"/><circle cx="410" cy="60" r="1.2"/><circle cx="300" cy="14" r="1.2"/></g>
+    <path d="M22 44 Q120 78 196 62" fill="none" stroke="#75624a" stroke-width="2" stroke-dasharray="5 3"/>
+    <rect x="96" y="66" width="20" height="14" fill="#fbf6e9" stroke="#3a2c1c" stroke-width="1.5"/>
+    <line x1="106" y1="58" x2="106" y2="66" stroke="#75624a" stroke-width="1.5"/>
+    <line x1="10" y1="214" x2="430" y2="214" stroke="#3a2c1c" stroke-width="2"/>
+    <g stroke="#3a2c1c" stroke-width="3" fill="none"><path d="M70 214 V110 M70 150 H100 V214"/><path d="M372 214 V104 M372 150 H342 V214"/></g>
+    <path d="M52 214 C56 120 90 92 150 84 C210 60 300 62 330 90 C372 100 388 150 392 214 Z" fill="#74825a" stroke="#3a2c1c" stroke-width="2.5"/>
+    <path d="M150 84 C190 96 204 150 196 214 H120 C118 150 126 106 150 84 Z" fill="#c9a44a" stroke="#3a2c1c" stroke-width="2"/>
+    <path d="M330 90 C300 120 296 170 302 214 H392 C388 150 372 100 330 90 Z" fill="#d9a09c" stroke="#3a2c1c" stroke-width="2"/>
+    <path d="M196 214 C196 160 220 132 250 132 C282 132 302 162 302 214 Z" fill="#f3d98a" stroke="#3a2c1c" stroke-width="2.5"/>
+    <path d="M214 214 C216 176 232 154 250 154 C270 154 284 178 286 214 Z" fill="#fbf6e9" opacity=".7"/>
+    <g fill="#fbf6e9" stroke="#3a2c1c" stroke-width="2"><ellipse cx="318" cy="205" rx="8" ry="12" transform="rotate(18 318 205)"/><ellipse cx="338" cy="207" rx="8" ry="12" transform="rotate(-10 338 207)"/></g>
+    <path d="M262 214 q30 6 44 -4" fill="none" stroke="#8e2f25" stroke-width="5" stroke-linecap="round"/>
+    <g><line x1="160" y1="214" x2="160" y2="186" stroke="#3a2c1c" stroke-width="2.5"/><rect x="128" y="168" width="64" height="22" rx="2" fill="#fbf6e9" stroke="#3a2c1c" stroke-width="2"/>
+    <text x="160" y="183" text-anchor="middle" font-family="Gaegu, cursive" font-weight="700" font-size="12" fill="#3a2c1c">Bärenhöhle</text></g>
+    <g fill="none" stroke="#3a2c1c" stroke-width="1.5" stroke-dasharray="3 4"><path d="M80 150 C120 120 180 100 240 96"/><path d="M260 92 C310 96 350 120 372 160"/></g>
+  </svg>
+  <p>거실 한가운데 이불 더미가 있어요. 불빛이 새어 나오고, 발 두 개가 삐져나와 있어요. 말이 짧은 복원가와 붉은 머리 화가가 일주일 휴가 동안 하루에 한 칸씩 늘린 동굴이에요.</p>
+  <button class="open" type="button" data-go="map">책장 넘기기 →</button>
+  <div class="by">지은이 둘 · 그린이 한 명 · 습도 담당 한 명</div>
+</div>
+</template>
+
+<template id="tplMap">
+<div class="ch-head"><div class="ch-kicker">도면</div><h2>집 도면과 동굴 지도</h2></div>
+<p class="hint">빨간 번호를 누르면 쪽지가 나와요. 휴대폰에서는 도면을 옆으로 밀 수 있어요.</p>
+<div class="map-wrap">
+<svg viewBox="0 0 1000 700" role="group" aria-label="다리 건너 3층 집 도면. 거실에 이불 동굴이 있다.">
+  <rect x="0" y="0" width="1000" height="700" fill="#efe6d0"/>
+  <g stroke="#e2d6b8" stroke-width="1"><path d="M40 130H600M40 200H600M40 270H600M40 340H600M600 130H960M600 200H960M600 270H960"/></g>
+  <!-- rooms -->
+  <g fill="none" stroke="#3a2c1c" stroke-width="4" stroke-linejoin="round">
+    <path d="M40 60H960V640H570M500 640H40V60"/>
+    <path d="M600 60V80M600 280V440M600 510V640"/>
+    <path d="M600 300H960"/>
+    <path d="M40 420H490M580 420H600"/>
+    <path d="M310 420V440M310 500V640"/>
+    <path d="M470 420V560M470 620V640"/>
+  </g>
+  <line x1="600" y1="80" x2="600" y2="280" stroke="#75624a" stroke-width="1.5" stroke-dasharray="5 6"/>
+  <path d="M500 640 a70 70 0 0 1 70 -70" fill="none" stroke="#75624a" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <!-- north windows -->
+  <rect x="390" y="54" width="190" height="12" fill="#fbf6e9" stroke="#34405c" stroke-width="2"/>
+  <rect x="680" y="54" width="200" height="12" fill="#fbf6e9" stroke="#34405c" stroke-width="2"/>
+  <!-- living furniture -->
+  <rect x="48" y="66" width="110" height="26" fill="#e2d6b8" stroke="#3a2c1c" stroke-width="2"/>
+  <rect x="200" y="66" width="150" height="10" fill="#e2d6b8" stroke="#3a2c1c" stroke-width="2"/>
+  <path d="M465 95 l20 70 M505 95 l-20 70 M465 115 h40" fill="none" stroke="#3a2c1c" stroke-width="3"/>
+  <rect x="474" y="100" width="22" height="26" fill="#8e2f25" stroke="#3a2c1c" stroke-width="1.5"/>
+  <rect x="170" y="300" width="270" height="56" rx="12" fill="#e2d6b8" stroke="#3a2c1c" stroke-width="2"/>
+  <rect x="230" y="404" width="150" height="10" fill="#e2d6b8" stroke="#3a2c1c" stroke-width="2"/>
+  <!-- kitchen -->
+  <rect x="608" y="70" width="290" height="34" fill="#e2d6b8" stroke="#3a2c1c" stroke-width="2"/>
+  <rect x="612" y="96" width="26" height="8" fill="#fbf6e9" stroke="#3a2c1c" stroke-width="1.5"/>
+  <circle cx="820" cy="87" r="9" fill="none" stroke="#3a2c1c" stroke-width="1.5"/><circle cx="820" cy="87" r="3.5" fill="#c9a44a"/>
+  <rect x="904" y="70" width="48" height="70" fill="#fbf6e9" stroke="#3a2c1c" stroke-width="2"/>
+  <rect x="680" y="160" width="190" height="56" rx="6" fill="#fbf6e9" stroke="#3a2c1c" stroke-width="2"/>
+  <g fill="#e2d6b8" stroke="#3a2c1c" stroke-width="2"><circle cx="710" cy="238" r="10"/><circle cx="775" cy="238" r="10"/><circle cx="840" cy="238" r="10"/></g>
+  <rect x="668" y="148" width="214" height="112" rx="14" fill="none" stroke="#d9a09c" stroke-width="4" stroke-dasharray="9 6"/>
+  <!-- bedroom -->
+  <rect x="730" y="360" width="200" height="230" rx="8" fill="#fbf6e9" stroke="#3a2c1c" stroke-width="2"/>
+  <rect x="745" y="368" width="78" height="38" rx="8" fill="#e2d6b8" stroke="#75624a"/><rect x="837" y="368" width="78" height="38" rx="8" fill="#e2d6b8" stroke="#75624a"/>
+  <rect x="680" y="366" width="40" height="40" fill="#e2d6b8" stroke="#3a2c1c" stroke-width="2"/>
+  <!-- study / storage -->
+  <rect x="52" y="430" width="150" height="40" fill="#e2d6b8" stroke="#3a2c1c" stroke-width="2"/>
+  <rect x="60" y="570" width="120" height="58" fill="#e2d6b8" stroke="#3a2c1c" stroke-width="2"/>
+  <rect x="230" y="470" width="70" height="160" fill="#e2d6b8" stroke="#3a2c1c" stroke-width="2"/>
+  <!-- bath -->
+  <rect x="320" y="560" width="140" height="70" rx="22" fill="#fbf6e9" stroke="#3a2c1c" stroke-width="2"/>
+  <rect x="330" y="430" width="70" height="30" rx="6" fill="#fbf6e9" stroke="#3a2c1c" stroke-width="2"/>
+  <!-- cave -->
+  <g stroke="#3a2c1c" stroke-width="3" stroke-linejoin="round">
+    <rect x="58" y="150" width="136" height="146" rx="26" fill="#74825a"/>
+    <rect x="58" y="304" width="104" height="82" rx="20" fill="#e2d6b8"/>
+    <rect x="200" y="196" width="200" height="98" rx="26" fill="#d9a09c"/>
+    <rect x="408" y="186" width="164" height="106" rx="26" fill="#34405c"/>
+    <rect x="452" y="286" width="54" height="100" rx="12" fill="#c9a44a"/>
+  </g>
+  <g fill="none" stroke="#fbf6e9" stroke-width="1.5" stroke-dasharray="4 5" opacity=".8">
+    <rect x="66" y="158" width="120" height="130" rx="20"/><rect x="208" y="204" width="184" height="82" rx="20"/><rect x="416" y="194" width="148" height="90" rx="20"/>
+  </g>
+  <g fill="#f3d98a"><circle cx="430" cy="212" r="3"/><circle cx="448" cy="204" r="2.4"/><circle cx="462" cy="218" r="3"/><circle cx="446" cy="262" r="2.4"/><circle cx="432" cy="274" r="3"/><circle cx="524" cy="206" r="2.4"/><circle cx="538" cy="222" r="3"/><circle cx="552" cy="204" r="2.4"/><circle cx="556" cy="250" r="3"/><circle cx="540" cy="272" r="2.4"/></g>
+  <!-- chairs at the entrance -->
+  <rect x="430" y="372" width="20" height="20" fill="#e2d6b8" stroke="#3a2c1c" stroke-width="2"/><rect x="508" y="372" width="20" height="20" fill="#e2d6b8" stroke="#3a2c1c" stroke-width="2"/>
+  <!-- feet -->
+  <g fill="#fbf6e9" stroke="#3a2c1c" stroke-width="2"><ellipse cx="232" cy="186" rx="7" ry="11"/><ellipse cx="250" cy="185" rx="7" ry="11"/></g>
+  <!-- string mail -->
+  <path d="M625 106 Q610 290 518 380" fill="none" stroke="#8e2f25" stroke-width="3" stroke-dasharray="7 4"/>
+  <line x1="592" y1="262" x2="592" y2="276" stroke="#75624a" stroke-width="1.5"/><rect x="581" y="276" width="22" height="16" fill="#fbf6e9" stroke="#3a2c1c" stroke-width="1.5"/>
+  <!-- creaky board -->
+  <rect x="624" y="246" width="46" height="12" fill="#e2d6b8" stroke="#75624a" stroke-width="1.5"/><path d="M618 240 l-8 -6 M616 252 h-10 M618 264 l-8 6" stroke="#8e2f25" stroke-width="1.5" fill="none"/>
+  <!-- sign + mailbox -->
+  <rect x="458" y="392" width="46" height="16" fill="#fbf6e9" stroke="#3a2c1c" stroke-width="1.5"/>
+  <rect x="536" y="388" width="26" height="20" fill="#fbf6e9" stroke="#3a2c1c" stroke-width="1.5"/><path d="M536 388 l13 10 l13 -10" fill="none" stroke="#3a2c1c" stroke-width="1.2"/>
+  <!-- labels -->
+  <text class="lbl" x="103" y="114" text-anchor="middle">책장</text>
+  <text class="lbl" x="275" y="100" text-anchor="middle">장갑 그림 · 선반</text>
+  <text class="lbl" x="485" y="46" text-anchor="middle">북향 창 · 옛 다리가 보임</text>
+  <text class="lbl" x="536" y="170">이젤</text>
+  <text class="lbl" x="184" y="378">소파</text>
+  <text class="lbl" x="305" y="398" text-anchor="middle">TV</text>
+  <text class="lbl b" x="330" y="150">거실</text>
+  <text class="lbl" x="753" y="130" text-anchor="middle">조리대 · 개수대</text>
+  <text class="lbl" x="606" y="46">찬장</text>
+  <text class="lbl" x="928" y="160" text-anchor="middle">냉장고</text>
+  <text class="lbl" x="790" y="284" text-anchor="middle">아일랜드 식탁</text>
+  <text class="lbl" x="626" y="288">삐걱</text>
+  <text class="lbl b" x="940" y="288" text-anchor="end">주방</text>
+  <text class="lbl" x="830" y="500" text-anchor="middle">큰 침대 하나</text>
+  <text class="lbl b" x="625" y="620">침실</text>
+  <text class="lbl" x="127" y="492" text-anchor="middle">서랍장</text>
+  <text class="lbl" x="120" y="606" text-anchor="middle">책상</text>
+  <text class="lbl b" x="56" y="540">서재 · 창고</text>
+  <text class="lbl b" x="425" y="530" text-anchor="middle">욕실</text>
+  <text class="lbl b" x="535" y="470" text-anchor="middle">현관</text>
+  <text class="lbl" x="535" y="682" text-anchor="middle">↓ 계단 52개</text>
+  <g id="hots"></g>
+</svg>
+</div>
+<ul class="legend" id="legend"></ul>
+</template>
+
+<script type="text/plain" id="src">
+# name | 일주일 | 동굴에 이름이 생긴 날 | 팻말
+그가 어느 아침 동굴에 이름이 없다는 걸 깨달아요. 이름 없는 비밀기지는 비밀기지가 아니라면서요. 후보를 종이에 적어 와요. '붉은 성', '3층 요새', 그리고 반년 배운 독일어로 하나 더요.
+
+> Bärenhöhle (곰굴)
+
+L "……곰 없어."
+
+P "저 있잖아요. 대자로 자는ㅎㅎ"
+
+루카는 반박할 말을 찾다가 못 찾아요. 그래서 팻말을 써요. 정확한 글씨로 이름을 쓰고, 그 밑에 작게 한 줄을 더 써요.
+
+> 정원 2명
+
+그가 '2명' 옆에 조그만 곰 한 마리를 그려 넣어요. 루카는 지우지 않아요.
+
+# mon | 일주일 | 월요일, 복도 | 첫 공사
+시연회 다음 날이에요. 그는 늦잠을 자고, 루카는 평소처럼 6시 30분에 눈을 떠요. 동굴 안인데도 일어나자마자 습도계부터 찾아요.
+
+7시 55분 다리는 잠깐만 다녀와요. 돌아와서 그가 눈을 비비며 말해요.
+
+P "루카, 동굴 늘려요."
+
+첫 공사는 복도예요. 의자 두 개를 세워서 담요를 걸치면 입구에서 안쪽까지 터널이 생겨요. 루카는 터널 길이를 팔 길이로 재요.
+
+L "……세 배."
+
+그다음엔 환기구예요. 복도 끝 담요를 손가락 한 마디만큼 들어서 틈을 만들어 둬요. 입구에는 팻말이 하나 붙어요.
+
+> 노크 두 번
+
+# tue | 일주일 | 화요일, 이불 세 겹을 깐 방 | 침실 칸
+복도 끝에 방이 하나 생겨요. 깔기 전에 루카가 이불을 한 장씩 만져 봐요. 첫 번째 겹은 제일 두꺼운 겨울 이불이에요.
+
+L "……단열."
+
+두 번째 겹은 부드러운 담요예요. 세 번째를 고르는 데 걸린 시간이 세 장을 다 까는 시간보다 길어요. 손끝으로 비교하다가 제일 보드라운 걸 맨 위로 보내요. 다 깔고 나서는 모서리를 평행하게 맞춰요.
+
+베개는 그의 쪽에 둘, 루카 쪽에 하나예요. 머리맡엔 습도계 둘과 도해집이 놓여요. 41쪽에 책갈피를 꽂은 채로요.
+
+문제는 천장이에요. 그가 앉으면 머리가 담요 천장을 밀어서 무너져요. 루카가 줄자를 들고 와요.
+
+L "……205."
+
+의자를 15센티 옮기고 천장을 다시 걸어요. 그가 새 천장 아래 앉아 보고 말해요.
+
+P "와, 안 부딪혀요ㅎㅎ"
+
+루카 귀 끝이 3초 동안 붉어요. 천장 높이를 그 사람 키로 정했으니까요.
+
+그날 밤 루카는 도해집을 펴고 두 쪽도 못 읽어요. 이불 세 겹이 너무 따뜻하고 옆이 너무 가까워서요.
+
+P "루카, 졸려요?"
+
+L "……아니야."
+
+5분 뒤에 루카가 먼저 잠들어요. 새벽 세 시가 되기 전에요. 처음 있는 일이에요.
+
+# wed | 일주일 | 수요일, 식탁 밑 주방 | 주방 칸
+주방 칸은 진짜 주방에 생겨요. 아일랜드 식탁에 담요를 두르고 의자 세 개를 안으로 들이면 식탁 밑이 방이 돼요. 그는 의자 하나에 쿠션을 올려놓고 "카운터예요" 하고 선언해요. 루카는 그 쿠션 가장자리를 평행하게 맞춰 줘요.
+
+진짜 불은 못 쓰니까 보온병에 감자 수프를 담아 와요. 뚜껑이 컵이에요. 김이 올라가서 담요 천장에 닿으면 루카가 습도계를 슬쩍 봐요.
+
+L "……58. ……괜찮아."
+
+수프 때문에 오른 습도는 용서가 돼요. 그가 종이에 메뉴판을 그려요.
+
+> 감자 수프 · 샌드위치 · 계란(탄 것) · 디저트: 키스(별도 문의)
+
+P "주문은요?"
+
+L "……계란."
+
+P "어떻게요?"
+
+L "……탄 데까지."
+
+루카가 메뉴판 맨 아랫줄을 한참 읽어요.
+
+L "……별도 문의."
+
+P "네, 문의하세요ㅎㅎ"
+
+루카는 손가락으로 그 줄을 가려요. 귀 끝은 안 가려져요. 그러다 메뉴판을 접어서 주머니에 넣어요. 상자에 들어갈 물건이라는 뜻이에요.
+
+P "계산은요?"
+
+L "……내일도 와."
+
+계산은 그걸로 끝나요.
+
+# thu | 일주일 | 목요일, 비 | 우편함
+비가 와요. 루카가 조금 예민해져요. 습도가 오르고, 오른손목이 욱신거리고, 창밖 소리가 커지니까요.
+
+그가 말없이 이불 한 겹을 더 가져와서 입구를 막아요.
+
+P "자, 이제 비 안 와요ㅎㅎ"
+
+거짓말이에요. 루카는 반박하지 않고 안으로 들어가요. 담요가 빗소리를 한 겹 걸러서 후두둑이 도닥도닥이 돼요.
+
+습도계가 오르자 루카가 수첩을 펴려고 해요. 그가 땋은 머리 끝을 쥐고 먼저 말해요.
+
+P "66이에요. 아니, 66.5요."
+
+습도계는 66.5예요.
+
+L "……반칙이야."
+
+이날 입구 옆에 우편함이 생겨요. 중성지로 접은 상자예요. 그가 쪽지를 넣고 두 걸음 걸어가 앉으면, 루카가 꺼내 읽고 답장을 넣어요.
+
+> 루카, 보고 싶어요
+
+> ……여기 있어
+
+둘은 한 걸음 거리에 앉아 있어요. 그래도 오전 내내 쪽지가 오가요.
+
+오후에 그가 루카의 오른손을 잡고 엄지로 흉터를 천천히 쓸어요. 루카가 41쪽 매듭을 연습하는데, 비가 오는데도 1밀리가 안 틀어져요.
+
+L "……되네. ……비 오는 날, 나쁘지 않네."
+
+비가 좋아졌다는 말이 아니에요. 그는 거기까지 알아듣고 땋은 머리 끝을 루카 무릎에 올려놔요.
+
+# fri | 일주일 | 금요일, 별 천장 | 창가 칸
+목요일 비가 그친 금요일 밤이에요. 그가 창가 칸에 누워 북향 창을 올려다봐요. 구름이 걷혔는데도 별이 안 보여요. 구시가지 불빛이 너무 밝아요.
+
+그가 한숨을 쉬어요. 루카가 돌아봐요.
+
+L "……끝까지 말해."
+
+P "별 보고 싶어서요. 이 천장에 구멍 몇 개만 내면 별 같을 텐데ㅎㅎ"
+
+그는 반쯤 농담이었어요. 루카는 농담으로 듣지 않아요.
+
+L "……이불에 구멍 내면 안 돼. 섬유는 섬유야."
+
+P "알아요ㅎㅎ 그냥 해 본 말이에요."
+
+L "……종이는 돼."
+
+루카가 그를 작업실에 보내요. 걸어서 7분 거리예요. 그는 그림 배경으로 쓰던 검은 도화지 두 장을 들고 돌아와요.
+
+루카는 도화지를 상자 모양으로 접어요. 중성지로 붓 보관함 열두 칸을 접던 손이라 모서리가 반듯해요. 그다음 휴대폰에서 별자리 사진을 찾아 자로 재고, 연필로 점을 찍어요.
+
+구멍은 바늘로 내요. 땋기 연습하던 사람이라 집에 바늘이 여러 개 있어요. 굵기도 세 가지예요.
+
+L "……밝은 별은 굵은 거. 어두운 별은 가는 거."
+
+P "별마다 밝기를 다르게 해요?"
+
+L "……원래 다 달라."
+
+상자 안에 손전등을 넣고 불을 끄면, 바늘구멍으로 나간 빛이 남색 이불 천장에 별로 떠요. 이불에는 구멍이 하나도 없어요.
+
+오리온은 설계도처럼 정확해요. 그가 천장을 올려다보고 말해요.
+
+P "루카, 이건 별이 아니라 설계도예요ㅎㅎ"
+
+루카는 대답 없이 상자 다른 면을 뚫어요. 그런데 카시오페이아는 일부러 조금 삐뚤게 뚫어요. 별이 너무 반듯하면 이상하니까요.
+
+그는 그걸 알아채요. 말하지 않아요. 그날 밤 둘은 삐뚠 별 다섯 개 아래에 누워요. 손전등이 데워지면 루카가 한 번씩 꺼서 식혀요. 종이는 뜨거운 걸 싫어하니까요.
+
+# sat | 일주일 | 토요일, 출입 허가 | 손님
+요나스가 택배를 들고 와요. 현관에서부터 헤헤 웃어요.
+
+O "선배님, 동굴 있다면서요?"
+
+누가 자랑했는지는 뻔해요. 루카는 한참 침묵하다가 말해요.
+
+L "……10분."
+
+임시 출입증이 나와요. 휴대폰은 입구에 맡겨야 해요. 국화 전시 이후로는 당연한 조건이에요.
+
+> 임시 출입 허가. 10분. 촬영 금지. 발급: L. A.
+
+요나스는 무릎으로 복도를 기어가다가 침실 칸 앞에서 멈춰요.
+
+O "선배님…… 이거 어린이집 아니에요?"
+
+L "……나가."
+
+O "칭찬이에요, 칭찬!"
+
+10분 뒤에 요나스가 나가요. 그는 문 앞에서 배웅하고, 루카는 동굴 안에서 손만 흔들어요. 아주 작게요.
+
+# sun | 일주일 | 일요일, 제일 작은 칸 | 쉬는 날
+일주일 공사가 끝났어요. 복도, 침실, 주방, 우편함, 별 천장이 다 있어요. 루카가 칸마다 돌며 점검하고 그가 뒤따라 기어가요.
+
+L "……이상 없음."
+
+일곱 번 말하고 나서야 멈춰요.
+
+P "내일 출근인데, 철거해야겠죠?"
+
+L "……철거 안 해. ……줄여."
+
+월요일 퇴근하고 한 칸씩 줄이기로 해요.
+
+그런데 그날 밤 둘은 제일 처음 칸에서 자요. 소파 앞, 맨 처음 그 자리요. 일주일 동안 그렇게 키워 놓고 결국 제일 작은 곳에 누워요.
+
+L "……여기가 제일 정확해."
+
+새벽 세 시에 그가 돌아누워 팔을 감아요. 루카는 그 팔 위에 손을 얹어요.
+
+# knock | 살림살이 | 노크는 두 번 | 서재 칸
+동굴에는 사무실도 있어요. 침실 칸 옆 작은 칸이 루카의 서재 칸이에요. 들어가려면 담요를 두 번 두드려야 해요. 담요라서 소리는 안 나요. 그래도 두 번이에요.
+
+그는 점심때 도시락을 들고 가서 담요를 톡톡 두드려요.
+
+P "배달 왔어요ㅎㅎ"
+
+L "……들어와."
+
+출입증도 있어요. 루카가 정확한 글씨로 써 줬어요.
+
+> 동굴 출입 허가. 유효 기간: 일요일. 발급: L. A.
+
+일요일마다 만료돼요. 그래서 그는 일요일마다 새로 받으러 가요. 루카는 매번 새로 써 줘요.
+
+저녁이 되면 루카가 서재 칸에서 나와 세 걸음을 기어서 침실 칸으로 와요.
+
+L "……다녀왔어."
+
+# tin | 살림살이 | 비상식량 통 | 양철통
+동굴에는 비상식량이 있어야 해요. 그가 그렇게 정했어요. 양철통 하나에 구운 아몬드, 체리 사탕, 브레첼 과자를 담아서 침실 칸 구석에 둬요. 루카가 뚜껑 안쪽에 재고표를 붙여요.
+
+> 아몬드 40 · 사탕 12 · 과자 20
+
+사흘째에 루카가 통을 열어 봐요.
+
+L "……사탕 세 알 비어."
+
+P "비상이었어요ㅎㅎ"
+
+L "……무슨 비상."
+
+P "루카가 서재 칸에 간 지 20분 됐었거든요."
+
+루카는 재고표의 12를 9로 고쳐요. 다음 날 사탕은 15알이 돼 있어요. 누가 채웠는지는 재고표에 없어요.
+
+# string | 살림살이 | 줄 우편 | 아마실 세 가닥
+주방에서 동굴까지는 열두 걸음이에요. 그 열두 걸음이 아까워서 그가 줄을 달자고 해요.
+
+루카가 아마실 세 가닥을 땋아요. 주방 찬장 손잡이에서 동굴 입구 의자까지 걸고, 중성지로 접은 작은 상자를 매달아요. 줄을 당기면 상자가 흔들흔들 건너와요.
+
+첫 우편은 주방에서 와요.
+
+> 계란 됐어. 탔어.
+
+> 탄 데가 맛있어요ㅎㅎ
+
+그다음엔 쪽지 대신 구운 아몬드 두 알이 건너와요. 그다음엔 체리 사탕 한 알이 건너가요. 계란은 그동안 식어요. 둘 다 알면서 줄을 당겨요.
+
+# crossed | 살림살이 | 줄로 건너간 것들 | 목록
+일주일 동안 아마실 줄로 건너간 것들을 그가 다 적어 뒀어요. 루카가 적으라고 한 건 아니에요. 그런데 다 적고 나니까 루카가 와서 확인하고 갔어요.
+
+> 쪽지 열아홉 장 · 구운 아몬드 스물두 알 · 체리 사탕 일곱 알 · 손난로 하나 · 연필 한 자루(돌아오지 않음) · 머리끈 하나
+
+손난로는 루카가 주방에서 설거지를 하다가 손이 찼던 날 건너갔어요. 쪽지는 없었어요. 그래도 루카는 누가 보낸 건지 알았어요.
+
+머리끈은 그가 보낸 거예요. 오후에 땋은 머리가 반쯤 풀려서 끈만 상자에 넣어 보냈어요. 쪽지는 없었어요. 3분 뒤에 루카가 나무 빗을 들고 동굴로 왔어요. 그런 뜻이었으니까요.
+
+건너가지 못한 것도 있어요. 수프 한 그릇이에요. 그가 상자에 그릇을 넣으려 하자 루카가 줄을 한 번 튕겨 보고 말했어요.
+
+L "……하중 초과."
+
+그래서 수프는 그가 직접 들고 왔어요. 열두 걸음을 걸어서요. 루카는 그게 더 좋았지만 말하지 않았어요.
+
+# letters | 살림살이 | 동굴 우편, 정식 편지 | 우표와 소인
+쪽지는 쪽지고 편지는 편지예요. 그가 그렇게 정했어요. 편지에는 우표가 있어야 하고, 우표는 그가 그려요. 손톱만 한 종이에 옛 다리, 이끼색 이불, 체리 사탕을 그렸어요.
+
+루카는 소인을 맡아요. 도장이 없어서 연필로 날짜를 써요. 복원실에서 서류에 날짜를 적는 것과 똑같은 글씨로요.
+
+그의 편지는 세 장이에요. 동굴이 얼마나 좋은지, 별 천장의 카시오페이아가 왜 좋은지, 오늘 수프에 감자를 몇 개 넣었는지가 적혀 있어요. 마지막 줄은 이거예요.
+
+> 답장 기다릴게요ㅎㅎ
+
+루카의 답장은 한 줄이에요.
+
+> 답장은 내일 아침 7시 55분에.
+
+그가 편지를 들고 물어요.
+
+P "이거 예순두 번째 편지예요?"
+
+L "……번호 안 붙여. 이건 동굴 우편이야."
+
+다음 날 아침 7시 55분, 다리 위에서 루카가 말로 답장을 해요. 세 장짜리 편지에 대한 답장인데 문장은 네 개예요. 그래도 그는 그 네 문장을 오래 기억해요. 무슨 말이었는지는 둘만 알아요.
+
+# lamp | 살림살이 | 손전등 신호 | 깜빡
+밤에는 손전등으로 말해요. 그가 신호를 정해요. 한 번 깜빡이면 '여기 있어요', 두 번은 '이리 와요'예요.
+
+P "세 번은요?"
+
+L "……안 정해."
+
+밤에 루카가 서재 칸에서 도해집을 보고 있으면 침실 칸에서 불빛이 두 번 깜빡여요. 루카는 책갈피를 꽂고 가요. 어떤 밤엔 한 번만 깜빡여요. 그러면 루카도 한 번 깜빡여 줘요. 담요 벽 하나 사이에서요.
+
+세 번은 일주일이 다 가도록 아무도 안 써요. 마지막 밤, 불 끈 동굴에서 루카 쪽 손전등이 세 번 깜빡여요.
+
+P "세 번은 무슨 뜻이에요?"
+
+L "……안 정했어."
+
+안 정한 것치고는 간격이 아주 정확한 세 번이었어요.
+
+# battery | 살림살이 | 건전지가 다 된 밤 | 한 번 반
+목요일 밤에 그의 손전등이 꺼졌어요. 건전지가 다 됐어요. 두 번 깜빡이려고 했는데 한 번 반쯤 깜빡이고 끝났어요.
+
+서재 칸에서 루카가 그 반쪽짜리 불빛을 봤어요. 반쪽만 보고 판결하지 않기로 한 사람이라, 끝까지 기다렸어요. 아무 불빛도 안 왔어요.
+
+그래서 루카가 자기 손전등을 들고 침실 칸으로 갔어요. 그가 어둠 속에서 꺼진 손전등을 흔들고 있었어요.
+
+L "……뭐라고 한 거야."
+
+P "두 번이요. 근데 한 번 반에서 꺼졌어요ㅎㅎ"
+
+L "……반쪽이었네."
+
+그날 밤부터 손전등 말고 다른 신호가 하나 생겨요. 불이 없을 때는 손등을 톡톡 두 번 두드리는 거예요. 담요 벽 너머에서는 못 쓰는 신호라서, 바로 옆에 있을 때만 쓸 수 있어요. 그래서 둘 다 이 신호를 더 좋아하게 돼요.
+
+다음 날 루카는 건전지를 여덟 개 사 와요. 그리고 그의 손전등 옆에 쪽지를 붙여요.
+
+> 교체: 목요일
+
+건전지는 서랍에 넣어 두고 쓰지 않아요. 손등 신호가 더 좋으니까요.
+
+# box | 살림살이 | 보물 상자 | 달그락
+비밀기지에는 보물이 있어야 한대요. 이것도 그가 정했어요. 신발 상자 하나에 각자 보물을 넣기로 해요. 서로 뭘 넣는지는 안 보기로 하고요.
+
+그는 다리 밑에서 주운 납작한 강돌, 빵집 브레첼을 묶었던 끈, 다 쓴 빨강 물감 튜브를 넣어요. 루카는 한참 서재에 있다가 와서 뭔가를 넣고 뚜껑을 닫아요. 뚜껑에는 당연히 습도계가 붙어요.
+
+그는 약속대로 안 열어 봐요. 그런데 상자를 들 때마다 안에서 아주 작게 달그락 소리가 나요. 단추 소리 같기도 해요.
+
+연습 천에 달았던 단추 스물두 개 중 하나가 없어진 건 한참 뒤에 알게 돼요.
+
+# raid | 살림살이 | 한밤의 원정 | 냉장고까지
+밤 열한 시에 그가 속삭여요.
+
+P "루카, 원정 가요."
+
+목적지는 냉장고예요. 열두 걸음인데 원정이에요. 불을 켜면 안 되고, 삐걱거리는 마루판을 밟으면 안 돼요. 어느 판인지는 루카가 알아요.
+
+L "……왼쪽에서 세 번째. 밟지 마."
+
+그가 땋은 머리를 한 손에 쥐고 살금살금 가요. 루카가 손전등을 아래로 비추며 따라가요. 수확물은 수프 한 그릇과 숟가락 두 개예요.
+
+동굴로 돌아와 이불 세 겹 위에서 나눠 먹어요. 흘리면 큰일이라 루카가 중성지를 깔아요. 그는 수프가 평소보다 맛있다고 하고, 루카는 같은 수프라고 해요. 그릇은 평소보다 빨리 비어요.
+
+# cinema | 살림살이 | 동굴 극장 | 볼륨 1
+아이패드는 쿠션 하나에 기대 세워 놓아요. 둘이 그 앞에 나란히 엎드려요. 이불 하나를 같이 덮고요. 그는 발이 동굴 밖으로 나가 있고, 루카는 턱을 베개에 괴고 반듯하게 엎드려요. 어깨는 처음부터 끝까지 붙어 있어요. 동굴이 좁다는 핑계가 있으니까요.
+
+보는 건 북극곰이에요. 8시간짜리요.
+
+L "……오늘은 자지 마."
+
+P "네ㅎㅎ"
+
+그는 40분 뒤에 자요. 동굴이 아늑해서 평소보다 빨리 자요. 루카는 볼륨을 1로 내리고 그 장면에서 또 멈춰요. 북극곰은 이번에도 눈밭을 못 벗어났어요.
+
+그러고 나서 루카는 혼자 펭귄을 봐요. 자막을 켜고요. 옆에서 팔이 감겨 오면 화면 밝기를 한 칸 내려요.
+
+밖에서 보면 거실 한가운데 이불 더미에서 불빛만 새어 나오고, 발 두 개가 삐져나와 있어요.
+
+# shop | 이불 | 이불 사러 간 날 | 동굴용입니다
+시간은 루카가 정해요. 평일 오전 열 시, 사람이 제일 적을 때예요. 수첩에 목록이 있어요.
+
+> 이불 두 장, 담요 한 장, 베개 커버 둘
+
+침구점에서 루카는 이불을 보지 않고 만져요. 라벨을 뒤집어 읽고, 손가락 두 개로 집어서 짜임을 봐요. 점원이 다가와요.
+
+O "어떤 용도로 쓰실 거예요?"
+
+L "……집에서 씁니다."
+
+P "동굴이요ㅎㅎ"
+
+루카 귀 끝이 빨개져요. 3초 뒤에는 목덜미까지요.
+
+L "……거실 정리용입니다."
+
+그는 색을 골라 와요. 겨자색, 분홍, 이끼색이에요.
+
+L "……왜 이렇게 요란해."
+
+그런데 이끼색 앞에서 루카가 멈춰요. 겨울 네카어 강 색이에요. 말없이 장바구니 쪽으로 밀어 넣어요. 그가 겨자색을 내려놓으려 하자 한마디 해요.
+
+L "……그것도 가져가."
+
+돌아오는 길에 그는 큰 이불 포장 두 개를 안고 걸어요. 앞이 안 보여서 루카가 옆에서 길을 알려 줘요.
+
+L "……왼쪽. ……한 걸음."
+
+# wash | 이불 | 이불 빨래와 세탁소 면접 | 점검표
+동굴 이불은 일곱 장이에요. 루카는 이불을 세탁기에 그냥 넣지 않아요. 라벨을 읽고, 수온을 재고, 욕조에 담가서 눌러 빨아요. 한 장에 한 시간이에요.
+
+거실에는 건조대 두 개가 서고, 그 사이에 습도계 둘이 놓여요. 수첩에는 이렇게 적혀요.
+
+> 이끼 62 → 58 → 54
+
+자정이 넘어도 루카는 이불 모서리를 맞추고 있어요. 그가 조심스럽게 말해요.
+
+P "루카, 이불 빨래는…… 보내면 안 될까요?"
+
+L "……남이 하면 습도를 몰라."
+
+P "그럼 세탁소 주인한테 설명해 주면 되잖아요ㅎㅎ"
+
+루카가 수첩 새 쪽에 쓰기 시작해요. '세탁소 점검표.' 항목이 열두 개가 돼요.
+
+P "루카, 그건 면접이에요."
+
+L "……맞아. 면접이야."
+
+다음 날 세탁소 주인은 열한 번째 항목까지 끄덕이다가 마지막 줄에서 멈춰요. '건조 중 습도 50퍼센트 유지 가능 여부.' 이불 세 장은 맡기기로 하고, 한 장은 집에서 빨기로 해요.
+
+L "……이끼는 우리가 해."
+
+# moss | 이불 | 이끼색 이불 | 아끼는 것
+루카는 '아끼는 이불'이라고 말하지 않아요. 그런데 매일 아침 제일 먼저 가서 모서리를 확인하는 이불이 하나 있어요.
+
+그가 그 위에 엎드려 스케치북을 펴면 루카가 중성지 한 장을 밑에 깔아 줘요.
+
+L "……번져."
+
+비 오는 날 그 이불을 덮고 있으면 루카 미간의 한 줄이 풀려 있어요. 그가 몰래 보다가 눈이 마주쳐요.
+
+L "……뭘 봐."
+
+P "이불 색이 루카한테 어울려서요ㅎㅎ"
+
+루카는 이불을 코 밑까지 끌어올려요. 귀 끝을 가리려는 건데, 이불 위로 다 보여요.
+
+이끼색은 겨울 네카어 강 색이에요. 그 강을 다리에서 같이 본 사람이 옆에 있어요. 루카는 그걸 말로 하지 않고 손빨래로 해요. 한 시간씩, 눌러서, 미지근한 물로요.
+
+# nomoss | 이불 | 이끼 없는 날 | 한 줄이면 충분해
+이끼색 이불을 빨던 날이에요. 이불은 욕조에서 한 시간, 건조대에서 하루 종일이에요. 그날 밤 동굴 침실 칸에는 이불이 두 겹뿐이에요.
+
+루카가 누웠다가 일어나고, 다시 누웠다가 일어나요. 습도계는 정상이에요. 이불 두 겹도 충분히 따뜻해요. 그런데 뭔가 정확하지 않아요.
+
+그가 한참 보다가 일어나서 옷장에 가요. 돌아올 때 들고 온 건 어글리 스웨터예요. 남색, 이끼색, 겨자색, 분홍 지그재그, 빨강 한 줄이요. 그걸 루카 위에 덮어 줘요.
+
+P "이끼색 들어 있어요ㅎㅎ"
+
+L "……한 줄이잖아."
+
+P "한 줄이면 충분하잖아요. 빨강도 한 줄인데요."
+
+루카는 반박하지 않아요. 스웨터 소매를 손에 쥐고 잠들어요. 자기가 뜬 스웨터를 덮고, 그 스웨터를 매일 입는 사람 옆에서요.
+
+# sleep | 이불 | 침대보다 잘 자는 곳 | 겨울 한정
+일주일째 아침에 루카가 수첩에 표를 그려요. 제목은 '수면 비교'예요. 그가 옆에서 들여다보려 하자 수첩을 반쯤 가리는데, 가린 손가락 사이로 다 보여요.
+
+> 새벽 세 시에 깨는 횟수: 침대 거의 매일 · 동굴 이틀에 한 번
+
+> 깨고 나서 다시 잠드는 시간: 침대 40분 · 동굴 10분
+
+그가 표를 읽고 묻어요.
+
+P "루카, 동굴에서 더 잘 자요?"
+
+L "……통계상으로는."
+
+이유는 루카가 항목별로 적어 뒀어요. 소음이 첫 번째예요. 담요 벽이 소리를 한 겹 걸러서, 아래층 문 닫는 소리도 보일러 도는 소리도 창밖 바람 소리도 작아져요. 두 번째는 외풍이에요. 북향 침실은 겨울에 창가 쪽이 서늘한데, 동굴은 담요가 여러 겹이라 바람이 들어올 틈이 없어요. 습도계도 한 칸만 봐도 되니까 한 번 보고 누우면 끝이에요.
+
+세 번째는 포근함이에요. 이끼색 이불은 습도 52에서 제일 보드라워요. 네 번째는 색이에요. 눈을 감기 전에 보이는 게 이끼색 이불과 남색 천장이면 이상하게 마음이 놓여요. 루카는 이걸 "……시야 정리."라고 적어 놨어요.
+
+다섯 번째가 제일 길어요. 침대에서는 그의 발이 매트리스 밖으로 나가 있어요. 키가 너무 커서 그렇죠. 루카는 새벽에 깼다가 그 발이 이불 밖에 있는 걸 보면 다시 잠들기 전에 덮어 줘야 했어요. 한 번도 말한 적은 없어요. 그런데 동굴 침실 칸은 루카가 줄자로 길이를 220에 맞췄어요. 천장 205에 이어 바닥 길이까지 그 사람 키로 쟀어요.
+
+첫날 아침에 그가 이불 속에서 발끝을 움직여 보다가 놀라요.
+
+P "루카, 발이 안 나가요!"
+
+L "……정확하게 쟀어."
+
+P "이게 제일 좋아요ㅎㅎ"
+
+L "……나도."
+
+둘 다 같은 이유로 좋았던 거예요. 발이 따뜻하면 그도 잘 자고, 그가 잘 자면 루카도 새벽에 안 깨니까요.
+
+표 맨 아래에 줄이 하나 더 있어요. 그가 몰래 읽어요.
+
+> 겨울 한정. 3월 철거 예정.
+
+그가 조용히 물어요.
+
+P "봄엔 침대에서 자요?"
+
+L "……여름엔 더워."
+
+P "그럼 봄엔요?"
+
+L "……철거는 봄에. 다시는 가을에."
+
+그는 대답 대신 땋은 머리 끝으로 루카 손등을 건드려요. 그날 밤 루카가 수첩 맨 아랫줄에 아주 작게 한 글자를 덧붙여요.
+
+> 매년.
+
+# survey | 동굴 조사 | 가장 포근한 자리, 가장 외로운 자리 | 조사 수첩
+금요일에 그가 동굴 조사를 해요. 수첩을 하나 들고 칸마다 기어 다니면서요. 조사 항목은 세 가지예요.
+
+> 가장 포근한 자리 · 가장 외로운 자리 · 가장 좋아하는 것
+
+가장 포근한 자리는 금방 정해져요. 침실 칸 이끼색 이불의 왼쪽 모서리예요. 습도계 바로 옆이고, 그가 누우면 땋은 머리 끝이 닿는 자리예요. 루카가 매일 아침 제일 먼저 확인하는 모서리이기도 해요. 그가 거기를 가리켜요.
+
+L "……아니야."
+
+3초 뒤에요.
+
+L "……맞아."
+
+가장 외로운 자리는 오래 걸려요. 그는 복도 끝 환기구라고 해요. 혼자 바깥바람을 맞는 자리니까요. 루카는 서재 칸이라고 해요. 담요 벽 하나 때문에 그가 안 보이는 자리니까요. 그런데 그 말을 하고 나서 루카가 입을 다물어요. 자기 사무실을 외로운 자리라고 해 버렸으니까요.
+
+결국 둘 다 틀렸어요. 가장 외로운 자리는 동굴 밖에 있었어요. 소파예요. 일주일 동안 아무도 안 앉았어요. 동굴 기둥 노릇만 하고, 쿠션은 전부 동굴로 가져갔어요.
+
+그날 밤 그가 쿠션 하나를 소파에 다시 앉혀 줘요. 루카는 아무 말 없이 담요 한 장을 소파에 덮어 줘요. 모서리를 평행하게 맞춰서요.
+
+# favorite | 동굴 조사 | 가장 좋아하는 것 | 한 단어
+세 번째 항목은 제일 어려워요. 그가 먼저 대답해요.
+
+P "저는요, 두 번 깜빡이면 루카가 책갈피 꽂는 소리요ㅎㅎ"
+
+책갈피를 꽂는 소리는 아주 작아요. 종이 한 장이 스치는 소리예요. 그런데 그 소리가 나면 3초 뒤에 루카가 와요. 그래서 그는 그 소리를 좋아해요.
+
+루카는 대답하지 않아요. 수첩에 뭔가를 적고 덮어요. 그가 아무리 물어봐도 같은 대답이에요.
+
+L "……적었어."
+
+일요일 밤에 그가 그 수첩 쪽을 우연히 봐요. 루카가 펼쳐 놓고 잠들었거든요. 거기엔 한 단어만 적혀 있어요.
+
+> 발.
+
+동굴 밖으로 삐져나온 그의 발이요. 거실 어디에서 봐도 그 발이 보이면, 그 사람이 동굴 안에 있다는 뜻이니까요.
+
+그는 수첩을 조용히 덮어 줘요. 그리고 그날 밤엔 일부러 발을 조금 더 밖으로 내놓고 자요.
+
+# news | 동굴 조사 | 곰굴 소식 제1호 | 신문
+토요일 아침에 그가 신문을 만들어요. 종이 한 장짜리예요. 제목은 '곰굴 소식'이에요.
+
+> 오늘의 날씨: 동굴 안 맑음. 습도 52 (담당 기자 L. A.)
+
+> 사건: 사탕 세 알 실종. 범인 미상. 다음 날 15알로 복구.
+
+> 공사 소식: 별 천장 완공. 카시오페이아는 일부러 삐뚤어짐 (취재원 보호)
+
+> 광고: 수프 배달합니다. 계산은 "내일도 와"로 받습니다.
+
+루카가 신문을 읽다가 연필을 들어요. 바로잡을 게 있대요. 날씨 칸의 52를 51.5로 고쳐요. 그리고 '취재원 보호' 옆에 아주 작게 적어요.
+
+> ……보호 감사.
+
+제2호는 나오지 않아요. 제1호는 냉장고 문에 일주일 붙어 있다가 상자로 가요.
+
+# news2 | 동굴 조사 | 곰굴 소식 제2호 | 비공개
+제1호 끝에 '제2호는 나오지 않아요'라고 썼지만, 그건 공식 발표예요. 사실은 한 부만 나와요. 인쇄는 안 하고 루카가 손으로 한 부 써서 일요일 밤 상자에 넣어요.
+
+> 곰굴 소식 제2호 (비공개, 1부 한정)
+
+> 오늘의 날씨: 동굴 안 맑음. 습도 51.5. 어제와 같음. 같다는 건 좋은 일임.
+
+> 사건: 사탕 15알 중 4알 실종. 범인 미상. 단, 용의자의 땋은 머리에 체리 사탕 포장지가 붙어 있었음.
+
+> 공사 소식: 월요일 퇴근 후 축소 공사 예정. 축소 대상 미정. 축소하고 싶지 않다는 의견이 접수됨. 의견 제출자는 본 기자.
+
+> 독자 투고: 소파로부터. 쿠션 한 개 복귀 감사. 담요 모서리가 평행해서 감사.
+
+> 정정: 제1호의 '취재원 보호'를 '취재원 감사'로 정정함. 담당 기자 L. A.
+
+> 광고: 수프 배달합니다. 계산은 "내일도 와". 단, 이번 호부터 유효 기간 없음.
+
+그가 일요일 밤에 이걸 발견해요. 상자에 넣을 게 있나 싶어서 열었다가 접힌 종이를 보고 한참 말없이 읽어요. 마지막 줄에서 오래 멈춰요. 일요일마다 새로 받아야 했던 출입증이 이제 만료되지 않는다는 뜻이니까요.
+
+그는 그 종이를 루카에게 가져가지 않아요. 대신 다음 날 아침 7시 55분 다리 위에서 아무 말 없이 루카의 손을 잡고 엄지로 손목 흉터를 쓸어요.
+
+L "……뭐야."
+
+P "구독 신청이요ㅎㅎ"
+
+L "……제3호는 안 나와."
+
+P "네, 알아요. 그래도 구독할게요."
+
+루카 귀 끝이 3초 붉어져요. 그다음 주에 제3호는 안 나오는데, 냉장고 문에 쪽지가 하나 붙어 있어요.
+
+> 취재 중
+</script>
+
+<script>
+(function(){
+  var HOTS=[
+    {n:1,x:444,y:412,t:"팻말",go:"name",b:["정확한 글씨로 'Bärenhöhle', 그 밑에 작게 '정원 2명'. 옆에 조그만 곰 한 마리가 그려져 있어요.","그 아래에는 팻말이 하나 더 있어요. '노크 두 번.'"]},
+    {n:2,x:479,y:338,t:"복도",go:"mon",b:["의자 두 개에 담요를 걸친 터널이에요. 길이는 루카 팔 길이의 세 배예요.","무릎으로 기어서 지나가야 해요. 요나스도 그렇게 지나갔어요."]},
+    {n:3,x:506,y:298,t:"환기구",go:"mon",b:["복도 끝 담요를 손가락 한 마디만큼 들어 둔 틈이에요.","루카가 \"……환기구.\" 한마디로 만들었어요. 매일 아침 틈의 너비를 확인해요."]},
+    {n:4,x:126,y:222,t:"이불 세 겹을 깐 방",go:"tue",b:["맨 아래는 단열용 겨울 이불, 가운데는 담요, 맨 위는 제일 보드라운 이불이에요.","천장 높이는 205, 바닥 길이는 220이에요. 그 사람이 앉아도 머리가 안 닿고, 누워도 발이 안 나가요.","동굴에서 자면 루카는 새벽 세 시에 거의 안 깨요. 겨울 한정이에요."]},
+    {n:5,x:170,y:172,t:"동굴 습도계",b:["머리맡에 둘이 있어요. 동굴 안인데도 루카는 일어나자마자 이것부터 봐요.","수프 김으로 58까지 오른 날은 \"……괜찮아.\"였고, 비 오는 목요일엔 66.5였어요. 그 숫자는 그가 머리카락으로 먼저 읽었어요."]},
+    {n:6,x:170,y:274,t:"도해집 41쪽",go:"thu",b:["『18세기 직물 매듭 기법 도해』예요. 41쪽에 책갈피가 꽂혀 있어요.","동굴에서는 이상하게 매듭이 1밀리도 안 틀어져요."]},
+    {n:7,x:82,y:274,t:"비상식량 통",go:"tin",b:["구운 아몬드 40, 체리 사탕 12, 브레첼 과자 20. 뚜껑 안쪽에 재고표가 붙어 있어요.","사탕은 자꾸 줄었다가, 누가 채웠는지 모르게 늘어요."]},
+    {n:8,x:126,y:274,t:"손전등",go:"lamp",b:["한 번 깜빡이면 '여기 있어요', 두 번은 '이리 와요'예요. 세 번의 뜻은 안 정했어요.","옆에 '교체: 목요일' 쪽지가 붙어 있어요. 불이 없을 땐 손등을 톡톡 두 번 두드려요."]},
+    {n:9,x:300,y:244,t:"제일 처음 칸",go:"sun",b:["소파 앞 탁자 자리, 시연회 날 밤에 처음 만든 칸이에요. 이 동굴에서 제일 작아요.","\"……여기가 제일 정확해.\" 일주일의 마지막 밤은 여기서 자요."]},
+    {n:10,x:240,y:266,t:"동굴 극장",go:"cinema",b:["쿠션에 기대 세운 아이패드예요. 볼륨은 1, 자막은 켬.","북극곰은 이번에도 눈밭 한가운데에서 멈춰 있어요."]},
+    {n:11,x:284,y:180,t:"발 두 개",go:"cinema",b:["키가 아주 큰 사람이 엎드리면 발이 동굴 밖으로 나가요.","루카는 밤마다 담요 끝을 끌어다 그 발을 덮어 줘요. 아침이면 또 나와 있어요."]},
+    {n:12,x:368,y:220,t:"보물 상자",go:"box",b:["신발 상자예요. 뚜껑에 습도계가 붙어 있어요.","서로 뭘 넣었는지 안 보기로 했어요. 들면 안에서 아주 작게 달그락 소리가 나요."]},
+    {n:13,x:490,y:240,t:"별 천장",go:"fri",b:["검은 도화지를 접은 상자 안에 손전등이 들어 있어요. 바늘구멍으로 나간 빛이 남색 이불 천장에 별로 떠요. 이불에는 구멍이 하나도 없어요.","밝은 별은 굵은 바늘, 어두운 별은 가는 바늘로 뚫었어요. 오리온은 설계도처럼 정확하고, 카시오페이아는 일부러 조금 삐뚤어요."]},
+    {n:14,x:110,y:346,t:"서재 칸",go:"knock",b:["루카의 사무실이에요. 들어가려면 담요를 두 번 두드려야 해요.","퇴근하면 세 걸음을 기어서 와요. \"……다녀왔어.\""]},
+    {n:15,x:578,y:400,t:"우편함",go:"letters",b:["중성지로 접은 상자예요. 비 오는 목요일에 생겼어요.","정식 편지엔 그가 그린 우표와 루카가 연필로 쓴 소인이 붙어요. 번호는 안 붙여요. 동굴 우편이니까요."]},
+    {n:16,x:740,y:188,t:"식탁 밑 주방",go:"wed",b:["아일랜드 식탁에 담요를 둘렀어요. 식탁이 기둥이고 쿠션이 카운터예요. 불은 못 써서 보온병 감자 수프가 주메뉴예요.","계산은 \"……내일도 와.\"로 해요."]},
+    {n:17,x:812,y:188,t:"메뉴판",go:"wed",b:["감자 수프, 샌드위치, 계란(탄 것). 맨 아래에 '디저트: 키스(별도 문의)'.","지금은 여기 없어요. 루카가 접어서 주머니에 넣었고, 그 뒤로 상자에 들어갔어요."]},
+    {n:18,x:634,y:180,t:"아마실 줄 우편",go:"string",b:["세 가닥으로 땋은 아마실이에요. 주방 찬장 손잡이에서 동굴 입구 의자까지 걸려 있어요.","매달린 건 중성지 상자예요. 쪽지, 아몬드 두 알, 체리 사탕 한 알이 건너다녀요."]},
+    {n:19,x:647,y:252,t:"삐걱거리는 마루판",go:"raid",b:["왼쪽에서 세 번째 판이에요. 밟으면 원정이 들켜요.","누구한테 들키는지는 아무도 몰라요. 그래도 밟으면 안 돼요."]},
+    {n:20,x:372,y:60,t:"북향 창",b:["옛 다리가 보이는 창이에요. 별 천장 칸에 누우면 이 창이 올려다보여요.","휴가 중에도 7시 55분에는 잠깐 다리에 다녀와요. 돌아오면 공사가 시작돼요."]},
+    {n:21,x:520,y:128,t:"이젤",b:["거실의 이젤은 일주일 동안 쉬어요. 대신 메뉴판, 팻말의 곰, 동굴 이름 후보 종이가 그려졌어요.","이젤 다리 하나는 목요일에 잠깐 빨래 건조대 노릇을 했어요."]},
+    {n:22,x:535,y:596,t:"현관",go:"sat",b:["계단 52개를 올라오면 이 문이에요. 토요일에 요나스가 택배를 들고 왔어요.","휴대폰은 여기 맡겨야 해요. 임시 출입은 10분이에요."]},
+    {n:23,x:305,y:328,t:"가장 외로운 자리",go:"survey",b:["소파예요. 일주일 동안 아무도 안 앉았어요. 동굴 기둥 노릇만 했어요.","조사가 끝난 밤, 쿠션 하나가 돌아오고 담요 한 장이 덮였어요. 모서리는 평행해요."]},
+    {n:24,x:82,y:172,t:"가장 포근한 자리",go:"survey",b:["침실 칸 이끼색 이불의 왼쪽 모서리예요. 습도계 바로 옆이고, 그의 땋은 머리 끝이 닿는 자리예요.","\"……아니야.\" 3초 뒤에 \"……맞아.\""]},
+    {n:27,x:390,y:596,t:"욕조",go:"wash",b:["이끼색 이불을 빠는 곳이에요. 미지근한 물에 중성 세제, 눌러서, 한 장에 한 시간이에요.","다른 이불 세 장은 면접을 통과한 세탁소로 가요."]},
+    {n:25,x:928,y:104,t:"곰굴 소식",go:"news",b:["냉장고 문에 일주일 붙어 있던 신문이에요. 날씨 칸의 52는 연필로 51.5로 고쳐져 있어요.","제2호는 공식적으로 나오지 않았어요. 한 부만 손으로 써서 상자에 들어 있어요."]},
+    {n:26,x:560,y:300,t:"줄로 건너간 것들",go:"crossed",b:["쪽지 열아홉 장, 아몬드 스물두 알, 사탕 일곱 알, 손난로 하나, 연필 한 자루, 머리끈 하나.","수프 한 그릇은 하중 초과로 못 건넜어요."]}
+  ];
+  HOTS.sort(function(a,b){return a.n-b.n});
+  var TABS=[["cover","표지"],["map","도면"],["toc","차례"],["name","한 주"],["knock","살림"],["shop","이불"],["survey","조사"]];
+
+  // ---- parse chapters
+  var chapters=[];
+  document.getElementById("src").textContent.split(/^# /m).forEach(function(chunk){
+    chunk=chunk.trim(); if(!chunk) return;
+    var nl=chunk.indexOf("\n"), head=chunk.slice(0,nl).split("|").map(function(s){return s.trim()});
+    chapters.push({id:head[0],group:head[1],title:head[2],kick:head[3],paras:chunk.slice(nl+1).trim().split(/\n\s*\n/)});
+  });
+  var pages=[{id:"cover",label:"표지"},{id:"map",label:"도면"},{id:"toc",label:"차례"}].concat(chapters.map(function(c){return {id:c.id,label:c.title,ch:c}}));
+  var idx={}; pages.forEach(function(p,i){idx[p.id]=i});
+
+  var leaf=document.getElementById("leaf"), book=document.getElementById("book"), marks=document.getElementById("marks");
+  var cur=-1;
+
+  function el(tag,cls,txt){var e=document.createElement(tag); if(cls) e.className=cls; if(txt!=null) e.textContent=txt; return e}
+
+  TABS.forEach(function(t){var b=el("button","mark",t[1]); b.type="button"; b.dataset.go=t[0]; marks.appendChild(b)});
+
+  function renderChapter(c){
+    var f=document.createDocumentFragment();
+    var h=el("div","ch-head"); h.appendChild(el("div","ch-kicker",c.group+" · "+c.kick)); h.appendChild(el("h2",null,c.title)); f.appendChild(h);
+    var pr=el("div","prose");
+    c.paras.forEach(function(p){
+      p=p.trim();
+      if(p.indexOf("> ")===0){pr.appendChild(el("div","note",p.slice(2))); pr.appendChild(document.createElement("br")); return}
+      var m=/^([LPO]) (.*)$/.exec(p);
+      if(m){pr.appendChild(el("p","say "+m[1].toLowerCase(),m[2])); return}
+      pr.appendChild(el("p",null,p));
+    });
+    f.appendChild(pr); f.appendChild(el("div","endmark","· · ·"));
+    return f;
+  }
+  function renderToc(){
+    var f=document.createDocumentFragment();
+    var h=el("div","ch-head"); h.appendChild(el("div","ch-kicker","차례")); h.appendChild(el("h2",null,"이 책에 든 이야기")); f.appendChild(h);
+    var wrap=el("div","toc"), groups={};
+    chapters.forEach(function(c){
+      if(!groups[c.group]){var s=el("section"); s.appendChild(el("h3",null,c.group)); var ol=el("ol"); s.appendChild(ol); wrap.appendChild(s); groups[c.group]=ol}
+      var li=el("li"), b=el("button"); b.type="button"; b.dataset.go=c.id;
+      b.appendChild(el("span",null,c.title)); b.appendChild(el("span","dots")); b.appendChild(el("span","pg",String(idx[c.id]+1)));
+      li.appendChild(b); groups[c.group].appendChild(li);
+    });
+    f.appendChild(wrap); return f;
+  }
+  function renderMap(){
+    var f=document.getElementById("tplMap").content.cloneNode(true);
+    var g=f.querySelector("#hots"), lg=f.querySelector("#legend"), NS="http://www.w3.org/2000/svg";
+    HOTS.forEach(function(h){
+      var a=document.createElementNS(NS,"g"); a.setAttribute("class","hot"); a.setAttribute("tabindex","0"); a.setAttribute("role","button");
+      a.setAttribute("aria-label",h.n+". "+h.t); a.dataset.hot=h.n;
+      var r=document.createElementNS(NS,"circle"); r.setAttribute("class","ring"); r.setAttribute("cx",h.x); r.setAttribute("cy",h.y); r.setAttribute("r",17);
+      var c=document.createElementNS(NS,"circle"); c.setAttribute("class","dot"); c.setAttribute("cx",h.x); c.setAttribute("cy",h.y); c.setAttribute("r",17);
+      var t=document.createElementNS(NS,"text"); t.setAttribute("x",h.x); t.setAttribute("y",h.y); t.textContent=h.n;
+      a.appendChild(r); a.appendChild(c); a.appendChild(t); g.appendChild(a);
+      var li=el("li"), b=el("button"); b.type="button"; b.dataset.hot=h.n; b.appendChild(el("b",null,String(h.n))); b.appendChild(el("span",null,h.t)); li.appendChild(b); lg.appendChild(li);
+    });
+    return f;
+  }
+  function build(i){
+    var p=pages[i], f=document.createDocumentFragment();
+    if(p.id!=="cover"){var rh=el("div","runhead"); rh.appendChild(el("span",null,"Bärenhöhle")); rh.appendChild(el("span",null,p.ch?p.ch.group:p.label)); f.appendChild(rh)}
+    if(p.id==="cover") f.appendChild(document.getElementById("tplCover").content.cloneNode(true));
+    else if(p.id==="map") f.appendChild(renderMap());
+    else if(p.id==="toc") f.appendChild(renderToc());
+    else f.appendChild(renderChapter(p.ch));
+    var pv=el("button","turn prev","← 앞 장"); pv.type="button"; pv.dataset.step="-1"; if(i===0) pv.disabled=true;
+    var nx=el("button","turn next",i===0?"":"다음 장 →"); nx.type="button"; nx.dataset.step="1"; if(i===pages.length-1||i===0) nx.disabled=true;
+    f.appendChild(pv); f.appendChild(el("div","folio","— "+(i+1)+" —")); f.appendChild(nx);
+    return f;
+  }
+  function tabFor(i){var best=0; TABS.forEach(function(t,k){if(idx[t[0]]<=i) best=k}); return best}
+  function show(i,animate){
+    if(i<0||i>=pages.length||i===cur) return;
+    var dir=i>cur?"fwd":"back", ghost=null;
+    var reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if(animate&&cur>=0&&!reduce){
+      ghost=leaf.cloneNode(true); ghost.removeAttribute("id"); ghost.classList.add("ghost");
+      if(dir==="back"){ghost.innerHTML=""; ghost.appendChild(build(i))}
+      ghost.classList.add(dir); book.appendChild(ghost);
+      ghost.addEventListener("animationend",function(){ghost.remove()});
+      setTimeout(function(){if(ghost.parentNode) ghost.remove()},900);
+    }
+    leaf.innerHTML=""; leaf.appendChild(build(i)); cur=i;
+    var tb=tabFor(i); Array.prototype.forEach.call(marks.children,function(b,k){b.setAttribute("aria-current",k===tb?"true":"false")});
+    try{localStorage.setItem("hoehle-page",pages[i].id)}catch(e){}
+    if(location.hash.slice(1)!==pages[i].id){try{history.replaceState(null,"","#"+pages[i].id)}catch(e){location.hash=pages[i].id}}
+    if(animate){var top=book.getBoundingClientRect().top+window.scrollY-70; if(window.scrollY>top) window.scrollTo({top:Math.max(0,top),behavior:reduce?"auto":"smooth"})}
+  }
+  function go(id,animate){if(id in idx) show(idx[id],animate!==false)}
+
+  // ---- slip
+  var veil=document.getElementById("veil"), slipGo=document.getElementById("slipGo"), lastFocus=null, slipTarget=null;
+  function openSlip(n){
+    var h=HOTS[n-1]; if(!h) return;
+    document.getElementById("slipN").textContent="쪽지 "+h.n;
+    document.getElementById("slipT").textContent=h.t;
+    var b=document.getElementById("slipB"); b.innerHTML=""; h.b.forEach(function(s){b.appendChild(el("p",null,s))});
+    slipTarget=h.go||null; slipGo.hidden=!slipTarget;
+    if(slipTarget) slipGo.textContent="「"+pages[idx[slipTarget]].label+"」 읽기 →";
+    lastFocus=document.activeElement; veil.hidden=false; document.getElementById("slipX").focus();
+  }
+  function closeSlip(){veil.hidden=true; if(lastFocus&&lastFocus.focus) try{lastFocus.focus()}catch(e){}}
+  document.getElementById("slipX").addEventListener("click",closeSlip);
+  slipGo.addEventListener("click",function(){var t=slipTarget; veil.hidden=true; if(t) go(t)});
+  veil.addEventListener("click",function(e){if(e.target===veil) closeSlip()});
+
+  document.addEventListener("click",function(e){
+    var t=e.target.closest("[data-go],[data-step],[data-hot]"); if(!t) return;
+    if(t.dataset.go) go(t.dataset.go);
+    else if(t.dataset.step) show(cur+Number(t.dataset.step),true);
+    else if(t.dataset.hot) openSlip(Number(t.dataset.hot));
+  });
+  document.addEventListener("keydown",function(e){
+    if(!veil.hidden){if(e.key==="Escape") closeSlip(); return}
+    var h=e.target.closest&&e.target.closest(".hot");
+    if(h&&(e.key==="Enter"||e.key===" ")){e.preventDefault(); openSlip(Number(h.dataset.hot)); return}
+    if(e.key==="ArrowRight") show(cur+1,true); else if(e.key==="ArrowLeft") show(cur-1,true);
+  });
+  // swipe (not on the map, which scrolls sideways)
+  var sx=null,sy=null;
+  leaf.addEventListener("touchstart",function(e){if(e.target.closest(".map-wrap")){sx=null;return} sx=e.touches[0].clientX; sy=e.touches[0].clientY},{passive:true});
+  leaf.addEventListener("touchend",function(e){if(sx==null) return; var dx=e.changedTouches[0].clientX-sx, dy=e.changedTouches[0].clientY-sy; sx=null;
+    if(Math.abs(dx)>70&&Math.abs(dx)>Math.abs(dy)*1.8) show(cur+(dx<0?1:-1),true)},{passive:true});
+  window.addEventListener("hashchange",function(){go(location.hash.slice(1))});
+
+  var start=location.hash.slice(1);
+  if(!(start in idx)){start="cover"; try{var s=localStorage.getItem("hoehle-page"); if(s&&s in idx) start=s}catch(e){}}
+  show(idx[start],false);
+})();
+</script>
+
+<script>
+(function(){
+  var NOTES=[
+    [["L","계란 됐어. 탔어."],["P","탄 데가 맛있어요ㅎㅎ"]],
+    [["P","루카, 보고 싶어요"],["L","……여기 있어"],["N","둘은 한 걸음 거리에 앉아 있었어요."]],
+    [["P","지금 뭐 해요?"],["L","41쪽."],["P","저는 루카 생각이요ㅎㅎ"],["L","……41쪽 틀렸어. 너 때문에."]],
+    [["P","수프 다 됐어요. 줄로 보낼까요?"],["L","……하중 초과. 걸어와."]],
+    [["N","쪽지 없이 머리끈 하나가 건너감."],["N","3분 뒤, 나무 빗을 든 사람이 동굴에 도착함."]],
+    [["P","습도 몇이에요?"],["L","52. ……왜."],["P","그냥요ㅎㅎ 목소리 듣고 싶어서요"],["L","……쪽지엔 목소리 없어."],["P","그럼 와서 말해 주세요"],["N","왔어요."]],
+    [["L","연필 어디 갔어."],["P","무슨 연필이요?ㅎㅎ"],["N","연필 한 자루는 끝내 돌아오지 않았어요."]],
+    [["P","사탕 드실래요?"],["L","……한 알."],["N","두 알이 건너감."],["L","……한 알이라고 했어."],["P","하나는 내일 거예요ㅎㅎ"]],
+    [["L","발 나왔어."],["P","넣었어요!"],["L","……왼발."]],
+    [["P","점심 뭐 먹어요?"],["L","계란."],["P","또요?"],["L","……탄 거."]],
+    [["P","세 번은 무슨 뜻이에요?"],["L","……안 정했어."]],
+    [["N","쪽지 없이 손난로 하나가 주방으로 건너감."],["N","답장은 없었어요. 5분 뒤 손난로는 설거지하던 사람 주머니에 들어가 있었어요."]],
+    [["P","메뉴판 맨 아랫줄, 문의드립니다."],["L","……영업 종료."],["P","내일은요?"],["L","……별도 문의."]],
+    [["P","눈 와요!"],["L","봤어. ……창가 칸으로 와."]],
+    [["P","오늘 쪽지 몇 장째예요?"],["L","열세 장."],["P","열두 장인데요?"],["L","……이것까지."]],
+    [["P","쪽지에도 소인 찍어 주세요"],["N","답장에는 글씨 없이 연필 동그라미 하나만 그려져 있었어요. 예외 1호예요."]]
+  ];
+  var LETTERS=[
+    {t:"동굴에 살고 있어요",day:"월요일",time:"21:05",st:[["bridge",55],["moss",52],["candy",7]],
+     body:"루카에게.\n동굴에 살고 있어요. 곰굴 정원은 2명인데 오늘은 1.5명이었어요. 루카가 서재 칸에 가 있어서요ㅎㅎ\n\n동굴이 좋은 점을 적어 볼게요.\n하나, 아침에 눈을 뜨면 이끼색이 제일 먼저 보여요.\n둘, 루카가 습도계 보는 소리가 담요 너머로 들려요.\n셋, 쪽지가 오면 열두 걸음이 한 걸음이 돼요.\n넷, 루카가 새벽 세 시에 안 깨요. 제가 몰래 알고 있어요.\n\n오늘 수프에는 감자를 여섯 개 넣었어요. 내일은 일곱 개 넣을게요.\n답장 기다릴게요ㅎㅎ\n— 곰굴 첫 번째 주민",
+     reply:"답장은 내일 아침 7시 55분에.",
+     aside:"이 한 줄 옆에도 아주 작은 소인이 찍혀 있었어요. 요일 칸에는 연필로 '오늘'이라고 적혀 있었어요. 다음 날 다리 위의 답장은 문장 네 개였어요. 무슨 말이었는지는 둘만 알아요."},
+    {t:"타지 않은 후라이",day:"화요일",time:"08:20",st:[["egg",1]],
+     body:"루카에게.\n오늘은 타지 않은 후라이. 조금 서운해요...\n맛있긴 했는데요, 가장자리 바삭한 데가 없었어요.",
+     reply:"……내일 태울게.",
+     aside:"다음 날 계란은 진짜로 탔어요. 그는 편지 없이 두 개를 먹었어요."},
+    {t:"사탕이 세 알 없어졌어요",day:"화요일",time:"22:40",st:[["candy",3]],
+     body:"루카에게.\n사탕이 세 알 없어졌어요. 제가 안 먹었어요.\n진짜예요. (두 알만 먹었어요.)",
+     reply:"……한 알은?",back:"잠결이었어요ㅎㅎ"},
+    {t:"발이 차요",day:"수요일",time:"23:10",st:[["sock",2]],
+     body:"루카에게.\n발이 차요.\n아니, 밖으로 안 나갔는데요, 그냥 차요.",
+     aside:"답장은 오지 않았어요. 대신 줄에 매단 상자로 양말 한 켤레가 건너왔어요. 쪽지는 없었어요."},
+    {t:"바람 때문에 못 들었어요",day:"목요일",time:"09:02",st:[["bridge",55]],
+     body:"루카에게.\n오늘 7시 55분에 루카가 다리에서 한마디 했는데요, 바람 때문에 못 들었어요.\n뭐라고 했어요?",
+     reply:"……바람 소리야.",
+     aside:"그는 이 답장을 한참 봤어요. 바람 소리가 아니라는 걸 알아서요."},
+    {t:"줄이 2센티 처졌어요",day:"목요일",time:"15:30",st:[["string",22]],
+     body:"루카에게.\n아마실 줄이 가운데가 2센티 처졌어요.\n아몬드를 너무 많이 보냈나 봐요.\n이제 그만 보낼까요?",
+     reply:"……장력 조정했어.\n……아몬드는 계속 보내."},
+    {t:"오리온 허리띠가 어두워요",day:"금요일",time:"22:15",st:[["star",3]],
+     body:"루카에게.\n별 천장 오리온 허리띠 별 하나가 어두워요.\n건전지 문제 아니에요. 손전등 위치가 0.3 밀렸어요.\n이건 제가 잰 거예요. 루카 따라 해 봤어요ㅎㅎ",
+     reply:"……맞아. 0.3.\n……수정할게."},
+    {t:"쓸 얘기가 없어요",day:"토요일",time:"10:00",st:[["candy2",7]],
+     body:"루카에게.\n오늘은 편지 쓸 얘기가 없어요.\n그냥 쓰고 싶어서 썼어요.\n우표만 보세요. 오늘 우표 진짜 잘 나왔어요.",
+     reply:"비대칭. 합격.",
+     aside:"사탕 포장지 날개가 처음으로 좌우 대칭이 아니었어요. 루카는 소인을 찍으려다 연필을 멈추고 한참 봤어요."},
+    {t:"어깨가 평행해서 좋았어요",day:"토요일",time:"19:45",st:[["soup",1]],
+     body:"루카에게.\n아까 주방에서 설거지하는 루카 뒷모습 봤어요.\n어깨가 평행해서 좋았어요.\n이게 다예요.",
+     reply:"……그게 다야?",back:"네ㅎㅎ 이게 다예요.",reply2:"……나도 그게 다야.",
+     aside:"그는 이 답장을 읽고 이불 속에서 한참 못 나왔어요."},
+    {t:"손이 처음부터 따뜻했어요",day:"일요일",time:"08:10",st:[["hand",1]],
+     body:"루카에게.\n오늘 아침엔 루카 손이 처음부터 따뜻했어요.\n주무를 게 없어서 조금 심심했어요.",
+     reply:"……그래도 해."},
+    {t:"달그락 소리가 나요",day:"일요일",time:"14:20",st:[["box",2]],
+     body:"루카에게.\n보물 상자에서 달그락 소리가 나요.\n약속대로 안 열어 봤어요. 근데 궁금해요.\n이건 고백이에요. 궁금하다는 고백이요.",
+     reply:"……봄에 열어.\n……철거하는 날."},
+    {t:"눈이 와도요?",day:"일요일",time:"21:30",st:[["snow",55]],
+     body:"루카에게.\n내일 7시 55분에 다리 나가요?\n안 나가도 돼요. 눈이 오면 안 나가도 되잖아요.",
+     reply:"……나가.\n……눈 와도.",back:"네ㅎㅎ 그럼 나갈게요.",
+     aside:"다음 날 눈이 왔고, 둘 다 다리에 나와 있었어요."},
+    {t:"한 칸만 남기면 안 돼요?",day:"일요일",time:"23:00",st:[["cave",2]],
+     body:"루카에게.\n내일 철거 싫어요.\n한 칸만 남기면 안 돼요? 제일 작은 칸이라도요.",
+     reply:"……처음 칸.\n……그건 안 줄여."},
+    {t:"감자 일곱 개",from:"L",day:"월요일",time:"06:40",st:[["blank",null]],
+     body:"수프. 감자 일곱 개.\n맞았어.\n\n— L. A.",
+     aside:"루카가 보낸 단 한 통이에요. 우표를 못 그려서 우표 자리에 연필로 네모만 그리고 '우표 없음'이라고 적었어요. 소인은 정확하게 찍혀 있었어요. 그는 그날 저녁 그 빈 네모 안에 감자 일곱 개를 그려 넣었어요."}
+  ];
+  var F='<rect x="1" y="1" width="60" height="76" fill="#fbf6e9" stroke="#8e2f25" stroke-width="2" stroke-dasharray="2 3"/>';
+  function bg(c){return '<rect x="8" y="8" width="46" height="62" fill="'+c+'"/>'}
+  var ART={
+    bridge:[bg("#34405c")+'<g fill="#f3d98a"><circle cx="18" cy="18" r="1.4"/><circle cx="42" cy="16" r="1.2"/><circle cx="34" cy="26" r="1"/></g><path d="M8 56 Q31 32 54 56" fill="none" stroke="#efe6d0" stroke-width="3"/><rect x="8" y="56" width="46" height="14" fill="#efe6d0"/><circle cx="31" cy="43" r="2.4" fill="#c0392b"/>',"#34405c"],
+    moss:[bg("#74825a")+'<path d="M12 26 Q21 20 30 26 T50 26 M12 38 Q21 32 30 38 T50 38 M12 50 Q21 44 30 50 T50 50" fill="none" stroke="#c9d6a8" stroke-width="1.6"/>',"#fbf6e9"],
+    candy:[bg("#d9a09c")+'<path d="M19 36 L9 29 L9 43 Z M43 36 L53 29 L53 43 Z" fill="#fbf6e9" stroke="#8e2f25"/><circle cx="31" cy="36" r="12" fill="#c0392b"/><path d="M24 30 Q28 26 32 28" fill="none" stroke="#f4c0bd" stroke-width="2"/>',"#72243e"],
+    candy2:[bg("#d9a09c")+'<path d="M19 36 L9 27 L10 45 Z M43 36 L52 31 L52 40 Z" fill="#fbf6e9" stroke="#8e2f25"/><circle cx="31" cy="36" r="12" fill="#c0392b"/><path d="M24 30 Q28 26 32 28" fill="none" stroke="#f4c0bd" stroke-width="2"/>',"#72243e"],
+    egg:[bg("#34405c")+'<path d="M16 38 Q14 24 30 24 Q48 22 47 38 Q48 52 31 51 Q15 52 16 38 Z" fill="#fbf6e9" stroke="#6b4a2a" stroke-width="2" stroke-dasharray="4 2"/><circle cx="31" cy="37" r="7" fill="#e0a92e"/>',"#fbf6e9"],
+    sock:[bg("#74825a")+'<path d="M18 16 h9 v22 l8 8 q3 5 -3 6 h-7 q-7 -1 -7 -9 Z" fill="#fbf6e9" stroke="#3a2c1c"/><path d="M34 18 h9 v22 l6 7 q2 5 -3 6 h-6 q-6 -1 -6 -8 Z" fill="#e2d6b8" stroke="#3a2c1c"/>',"#fbf6e9"],
+    star:[bg("#34405c")+'<path d="M18 18 L24 34 L31 38 L38 42 L44 58 M24 34 L40 22 M38 42 L20 56" fill="none" stroke="#8fa0c4" stroke-width=".8"/><g fill="#f3d98a"><circle cx="18" cy="18" r="2.2"/><circle cx="40" cy="22" r="1.6"/><circle cx="24" cy="34" r="1.6"/><circle cx="31" cy="38" r="1.6"/><circle cx="38" cy="42" r="1.6"/><circle cx="20" cy="56" r="1.8"/><circle cx="44" cy="58" r="2.2"/></g>',"#fbf6e9"],
+    soup:[bg("#c9a44a")+'<path d="M14 38 h34 q0 18 -17 18 q-17 0 -17 -18 Z" fill="#fbf6e9" stroke="#3a2c1c" stroke-width="1.5"/><path d="M24 30 q-3 -5 0 -9 M31 30 q-3 -5 0 -9 M38 30 q-3 -5 0 -9" fill="none" stroke="#fbf6e9" stroke-width="1.8"/>',"#3a2c1c"],
+    snow:[bg("#34405c")+'<g fill="#fbf6e9"><circle cx="16" cy="16" r="1.8"/><circle cx="30" cy="22" r="1.4"/><circle cx="44" cy="14" r="1.8"/><circle cx="22" cy="34" r="1.4"/><circle cx="40" cy="32" r="1.8"/><circle cx="48" cy="44" r="1.4"/><circle cx="14" cy="46" r="1.8"/></g><path d="M8 58 Q31 42 54 58" fill="none" stroke="#efe6d0" stroke-width="3"/><circle cx="29" cy="49" r="2" fill="#c0392b"/><circle cx="34" cy="49" r="2" fill="#efe6d0"/>',"#fbf6e9"],
+    hand:[bg("#d9a09c")+'<rect x="18" y="28" width="26" height="30" rx="5" fill="#fbf6e9" stroke="#3a2c1c" stroke-width="1.5"/><path d="M24 22 q-3 -4 0 -8 M31 22 q-3 -4 0 -8 M38 22 q-3 -4 0 -8" fill="none" stroke="#8e2f25" stroke-width="1.6"/>',"#72243e"],
+    string:[bg("#efe6d0")+'<path d="M8 20 Q30 44 54 24" fill="none" stroke="#8e2f25" stroke-width="2" stroke-dasharray="4 2"/><line x1="30" y1="34" x2="30" y2="42" stroke="#75624a"/><rect x="22" y="42" width="16" height="12" fill="#fbf6e9" stroke="#3a2c1c" stroke-width="1.5"/>',"#3a2c1c"],
+    box:[bg("#74825a")+'<rect x="15" y="30" width="32" height="24" fill="#e2d6b8" stroke="#3a2c1c" stroke-width="1.5"/><rect x="13" y="24" width="36" height="8" fill="#fbf6e9" stroke="#3a2c1c" stroke-width="1.5"/><circle cx="40" cy="28" r="3" fill="#fbf6e9" stroke="#3a2c1c"/>',"#fbf6e9"],
+    cave:[bg("#34405c")+'<path d="M10 60 C12 34 22 26 31 26 C40 26 50 34 52 60 Z" fill="#74825a" stroke="#3a2c1c" stroke-width="1.5"/><path d="M23 60 C24 46 28 42 31 42 C34 42 38 46 39 60 Z" fill="#f3d98a" stroke="#3a2c1c"/>',"#fbf6e9"],
+    blank:['<rect x="10" y="10" width="42" height="58" fill="none" stroke="#5f5a52" stroke-width="1.2" stroke-dasharray="3 3"/><text x="31" y="36" text-anchor="middle" font-size="9" fill="#5f5a52">우표</text><text x="31" y="48" text-anchor="middle" font-size="9" fill="#5f5a52">없음</text>',"#5f5a52"]
+  };
+  function stamp(type,num){
+    var a=ART[type];
+    return '<svg class="st" viewBox="0 0 62 78" width="50" height="63" aria-hidden="true" font-family="Gaegu, cursive">'+(type==="blank"?"":F)+a[0]+(num!=null?'<text x="31" y="68" text-anchor="middle" font-size="10" font-weight="700" fill="'+a[1]+'">'+num+'</text>':'')+'</svg>';
+  }
+  function postmark(day,time){
+    return '<svg class="pm" viewBox="0 0 64 64" width="62" height="62" aria-hidden="true" font-family="Gaegu, cursive"><g fill="none" stroke="#5f5a52" stroke-width="1.2"><circle cx="32" cy="32" r="29"/><circle cx="32" cy="32" r="24" stroke-dasharray="2 3"/></g><text x="32" y="21" text-anchor="middle" font-size="8.5" fill="#5f5a52">곰굴 우편</text><text x="32" y="36" text-anchor="middle" font-size="13" font-weight="700" fill="#5f5a52">'+day+'</text><text x="32" y="48" text-anchor="middle" font-size="9" fill="#5f5a52">'+time+'</text></svg>';
+  }
+  function el(tag,cls,txt){var e=document.createElement(tag); if(cls) e.className=cls; if(txt!=null) e.textContent=txt; return e}
+  var pn=document.getElementById("paneNotes"), pl=document.getElementById("paneLetters");
+  NOTES.forEach(function(ex){
+    var d=el("div","ex");
+    ex.forEach(function(m){d.appendChild(el("div","sl "+m[0].toLowerCase(),m[1]))});
+    pn.appendChild(d);
+  });
+  LETTERS.forEach(function(L,i){
+    var wrap=el("div"), b=el("button","env"); b.type="button"; b.id="env"+i; b.setAttribute("aria-expanded",i===0?"true":"false"); b.setAttribute("aria-controls","lt"+i);
+    var s=el("span","stamps"); s.innerHTML=L.st.map(function(x){return stamp(x[0],x[1])}).join("")+postmark(L.day,L.time); b.appendChild(s);
+    var w=el("span","who"); w.appendChild(el("b",null,L.t)); w.appendChild(el("span",null,(L.from==="L"?"루카가 그에게":"그가 루카에게")+" · "+L.day+" "+L.time)); b.appendChild(w);
+    b.appendChild(el("span","chev","›"));
+    var lt=el("div","lt"); lt.id="lt"+i; lt.hidden=i!==0;
+    var body=el("p","body",L.body); if(L.from==="L") body.style.color="var(--pencil)"; lt.appendChild(body);
+    function rep(t){var r=el("div","reply"); r.appendChild(el("small",null,"소인 칸 · 연필")); r.appendChild(document.createTextNode(t)); lt.appendChild(r)}
+    if(L.reply) rep(L.reply);
+    if(L.back) lt.appendChild(el("p","back",L.back));
+    if(L.reply2) rep(L.reply2);
+    if(L.aside) lt.appendChild(el("p","aside",L.aside));
+    b.addEventListener("click",function(){var open=b.getAttribute("aria-expanded")==="true"; b.setAttribute("aria-expanded",open?"false":"true"); lt.hidden=open});
+    wrap.appendChild(b); wrap.appendChild(lt); pl.appendChild(wrap);
+  });
+  var sn=document.getElementById("slotNotes"), sL=document.getElementById("slotLetters");
+  function pick(which){
+    var n=which==="notes"; sn.setAttribute("aria-pressed",n?"true":"false"); sL.setAttribute("aria-pressed",n?"false":"true"); pn.hidden=!n; pl.hidden=n;
+    try{localStorage.setItem("hoehle-slot",which)}catch(e){}
+  }
+  var pt=document.getElementById("postToggle"), pb=document.getElementById("postBody"), pc=document.getElementById("postCue");
+  pt.addEventListener("click",function(){var open=pt.getAttribute("aria-expanded")==="true"; pt.setAttribute("aria-expanded",open?"false":"true"); pb.hidden=open; pc.textContent=open?"열기 ▾":"접기 ▴"});
+  sn.addEventListener("click",function(){pick("notes")}); sL.addEventListener("click",function(){pick("letters")});
+  try{if(localStorage.getItem("hoehle-slot")==="letters") pick("letters")}catch(e){}
+})();
+</script>
+</body>
+</html>
