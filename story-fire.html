@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>벽난로</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Pinyon+Script&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Nanum+Myeongjo:wght@400;700;800&display=swap">
+<style>
+:root{color-scheme:dark;--night:#17110c;--gold:#c4a676;--gold-hi:#e6d6b2;--line:rgba(196,166,118,.42);--parch:#ece2cd;--text:#ddd2bd;--muted:#a39580;
+  --caps:"Cinzel","Times New Roman",serif;--script:"Pinyon Script","Times New Roman",cursive;--ko:"Nanum Myeongjo","AppleMyungjo","Batang",serif}
+*{box-sizing:border-box}
+html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;background-color:var(--night);color:var(--text);font-family:var(--ko);font-size:17px;line-height:2;
+  background-image:radial-gradient(ellipse 70% 40% at 50% 0%,rgba(214,180,120,.12),transparent 70%);background-repeat:no-repeat;
+  padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px));padding-block:24px 80px}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;opacity:.5;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .9  0 0 0 0 .8  0 0 0 0 .6  0 0 0 .05 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+.wrap{max-width:620px;margin:0 auto}
+.back{display:inline-block;font-family:var(--caps);font-size:11px;letter-spacing:.2em;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:2px}
+.back:hover,.back:focus-visible{color:var(--gold-hi);outline:none}
+header{text-align:center;margin:56px 0 48px;display:grid;gap:6px;justify-items:center}
+header .lat{font-family:var(--script);font-size:44px;line-height:1;color:var(--gold)}
+header h1{margin:0;font-family:var(--ko);font-weight:800;font-size:clamp(28px,6vw,36px);color:var(--parch);letter-spacing:.08em}
+header .when{font-family:var(--caps);font-size:11px;letter-spacing:.28em;color:var(--muted)}
+header svg{width:160px;height:16px;margin-top:10px}
+article p{margin:0 0 1.1em;word-break:keep-all}
+.talk{margin:0 0 1.1em;padding-left:14px;border-left:1px solid var(--line)}
+.talk p{margin:0;color:var(--parch)}
+h2{margin:2.6em 0 1.4em;text-align:center;font-family:var(--ko);font-weight:700;font-size:16px;letter-spacing:.12em;color:var(--gold)}
+h2 span{padding:0 14px;background:var(--night);position:relative}
+h2::before{content:"";display:block;height:1px;background:var(--line);transform:translateY(1em)}
+.end{text-align:center;margin-top:56px;display:grid;gap:18px;justify-items:center}
+.end .mark{font-family:var(--caps);font-size:11px;letter-spacing:.3em;color:var(--muted)}
+.end a{font-family:var(--ko);font-size:15px;color:var(--gold-hi);text-decoration:none;border:1px solid var(--line);border-radius:40px 40px 10px 10px;padding:8px 22px}
+.end a:hover,.end a:focus-visible{background:rgba(196,166,118,.15);outline:none}
+
+.part{text-align:center;margin:84px 0 40px;display:grid;gap:4px;justify-items:center}
+.part.first{margin-top:0}
+.part .eyebrow{font-family:var(--script);font-size:32px;line-height:1.1;color:var(--gold)}
+.part h2{margin:0;font-family:var(--ko);font-weight:800;font-size:24px;color:var(--parch);letter-spacing:.06em}
+.part h2::before{display:none}
+.part .sub{font-family:var(--caps);font-size:11px;letter-spacing:.24em;color:var(--muted)}
+.orn2{color:var(--gold);margin-bottom:22px}
+.scene{display:flex;align-items:center;gap:12px;margin:56px 0 26px;color:var(--muted);font-size:14px;letter-spacing:.1em}
+.scene::before,.scene::after{content:"";flex:1;height:1px;background:var(--line)}
+.scene b{font-family:var(--caps);font-weight:600;color:var(--gold);letter-spacing:.12em}
+.list{margin:4px 0 1.4em;padding:14px 20px;border:1px solid var(--line);border-radius:6px;background:rgba(236,226,205,.05);font-size:15.5px;line-height:1.9;color:var(--parch)}
+.list ol{margin:0;padding-left:1.4em}
+.list .note{color:var(--muted);font-size:14px}
+.chat{margin:4px 0 1.6em;display:flex;flex-direction:column;gap:6px}
+.chat .who{font-size:12.5px;color:var(--muted);margin:4px 0 -2px}
+.chat .msg{align-self:flex-start;max-width:86%;background:rgba(236,226,205,.08);border:1px solid var(--line);color:var(--parch);padding:6px 13px;border-radius:14px 14px 14px 4px;font-size:15px;line-height:1.6}
+.chat .msg.me{align-self:flex-end;border-radius:14px 14px 4px 14px;background:rgba(217,130,106,.18);border-color:rgba(217,130,106,.45)}
+.chat .room{align-self:center;font-family:var(--ko);font-size:12px;color:var(--gold);letter-spacing:.06em;margin-bottom:4px}
+.quiet{color:var(--muted)}
+.note-card{margin:4px auto 1.4em;padding:12px 18px;border:1px dashed var(--gold);border-radius:4px;color:var(--parch);font-size:15px;text-align:center;max-width:320px;background:rgba(236,226,205,.04)}
+article b{color:var(--gold-hi)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="index.html#chron" onclick="if(history.length>1){history.back();return false}">← 목록으로</a>
+  <header>
+    <span class="lat">Cedar &amp; Fire</span>
+    <h1>벽난로</h1>
+    <span class="when">단편 · 어느 늦가을 · 수요일부터 월요일</span>
+    <svg viewBox="0 0 180 18" aria-hidden="true"><g fill="none" stroke="#c4a676" stroke-width="1.2"><path d="M0 9 H70 M110 9 H180"/><path d="M90 3 l6 6 -6 6 -6 -6z" fill="#c4a676"/></g></svg>
+  </header>
+  <article>
+
+<div class="scene"><b>수요일, 현관</b></div>
+<p>저녁 여섯 시 반이었다. 3층 층계참으로 올라오는 발소리가 들리자 그는 북향 창 앞 이젤에서 붓을 내려놓았다. 종일 테레빈과 아마인유 냄새 속에 있었다. 소매에는 군청색 물감이 묻어 있었고, 부엌에서는 감자 수프가 낮은 불에 끓고 있었다.</p>
+<p>문이 열리자마자 그는 손부터 뻗었다.</p>
+<p>&quot;루카, 왔어요!&quot;</p>
+<p>코트를 벗길 틈도 주지 않고 끌어안았다. 큰 몸이 현관을 반쯤 막았다. 그는 루카스의 목덜미에 코를 묻고 길게 숨을 들이쉬었다.</p>
+<p>&quot;……으음. 아직 남아 있어요. 아침보다 산뜻해졌어요ㅎㅎ&quot;</p>
+<p>&quot;……향수 같은 건 안 뿌린다니까.&quot;</p>
+<p>말은 퉁명스러웠지만 루카스는 그가 안은 팔을 풀지 않았다. 집에 오면 코트보다 먼저인 습도계 쪽으로 가려던 발이 현관에 그대로 붙어 있었다.</p>
+<p>&quot;알아요, 안 뿌리는 거. 그래서 더 신기한 건데요.&quot;</p>
+<p>그는 팔을 풀기는커녕 조금 더 끌어당겼다. 코끝이 옷깃 바로 위, 목 뒤에 닿았다.</p>
+<p>&quot;복원실 냄새예요. 중성지랑 마른 나무요. 그게 루카 살에서 한 번 더 따뜻해지면 백향목 같아요. 오래된 책장 서랍을 열었을 때 나는 거요. 뿌린 게 아니라, 루카가 그냥 그런 사람인 거죠.&quot;</p>
+<p>&quot;…….&quot;</p>
+<p>&quot;저 오늘 종일 유화 냄새만 맡았거든요. 그래서 낮에 이상한 생각을 했어요. 이 냄새를 병에 담으면 무슨 이름이 붙을까, 하고요.&quot;</p>
+<p>&quot;……나도 그 생각 했어.&quot;</p>
+<p>그의 어깨가 아주 조금 굳었다. 루카스는 말을 뱉어 놓고 가만히 머물러 있다가, 조용히 그의 몸에 팔을 둘렀다. 품에 안긴 채였다. 가슴이 가득 차도록 숨을 들이마시는 것이 그의 몸에 그대로 전해졌다.</p>
+<p>&quot;……루카도요?&quot;</p>
+<p>&quot;…….&quot;</p>
+<p>&quot;그럼 저한테서는 무슨 냄새가 나요? 테레빈 말고요. 그건 저도 아니까.&quot;</p>
+<p>&quot;……생각 중이야. 이름 붙이는 거.&quot;</p>
+<p>루카스는 가만히 생각했다. 그에게서는 늘 달콤한 냄새가 났다. 단것을 사양하는 루카스로서는 이것이 왜 기꺼운지 알 수 없었다. 입에 차는 달콤함이 아니라 코끝을 맴도는 잔잔한 향이라 그런 걸까. 게다가 자신과도, 자신의 직업과도 상극인 불 냄새까지 배어 있는 듯했다. 정확히는, 향긋한 나무를 태우는 냄새.</p>
+<p>&quot;……벽난로.&quot;</p>
+<p>그의 숨이 한 번 걸렸다. 그는 고개를 들어 루카스의 얼굴을 보려다가, 루카스가 품에서 나올 생각이 없다는 걸 알고 다시 이마를 내려놓았다. 웃음이 새어 나왔다. 숨겨지지 않는 웃음이었다.</p>
+<p>&quot;루카가 제일 싫어하는 게 불인데요. 복원실에선 성냥 하나도 금지잖아요.&quot;</p>
+<p>&quot;…….&quot;</p>
+<p>&quot;그런데 저한테서 그런 냄새가 난다는 거죠. 그것도 루카 코가 찾은 거고요.&quot;</p>
+<p>그는 땋은 머리 끝이 루카스의 손등 위로 미끄러지게 두었다. 그리고 아주 작게 말했다.</p>
+<p>&quot;……방금 그거, 사랑한다는 말보다 크게 들렸어요.&quot;</p>
+<p>루카스는 대답하지 않았다. 귀 끝만 붉었다. 그는 대답을 재촉하지 않고 부엌에서 수프가 끓는 소리를 들었다.</p>
+<p>한참 뒤, 그가 어깨에 얼굴을 묻은 채 웃음기를 섞어 말했다.</p>
+<p>&quot;저 하나 생각났어요. 이 냄새랑 비슷한 걸 찾을 수 있는 데가 있을지도 몰라요. 이번 일요일이 가게들 문 여는 일요일이래요. 같이 가 볼래요? 쉬는 날이니까, 코만 쓰는 거예요.&quot;</p>
+<p>루카스가 고개를 끄덕였다. 하루 종일 상대의 냄새가 그리웠던 건 그 혼자가 아니었다.</p>
+<p>그는 그 끄덕임을 보지 못하고도 알았다. 닿아 있는 몸으로 먼저 알았다.</p>
+<p>&quot;저는요, 오늘 작업하다가 세 번이나 소매에 코를 댔어요. 아침에 다리에서 루카가 목도리 둘러 줬잖아요. 그게 남아 있을까 봐요. 근데 테레빈에 다 묻혀서 하나도 안 났어요.&quot;</p>
+<p>&quot;…….&quot;</p>
+<p>&quot;그래서 지금이 제일 좋아요. 종일 못 맡은 걸 한 번에 맡는 거라서요.&quot;</p>
+<p>부엌에서 수프가 작게 끓어올랐다. 그가 그쪽을 한 번 흘끔 보고 다시 돌아왔다.</p>
+<p>&quot;……이제 코트 벗을까요? 아니면 오 분만 더요?&quot;</p>
+<p>&quot;……벗고 오 분 더.&quot;</p>
+<p>그는 한 박자 늦게 알아듣고 소리 없이 웃었다. 팔을 풀었다. 코트 단추가 풀릴 만큼만.</p>
+<p>코트를 받아 옷걸이에 걸기 전에, 그는 칼라 안쪽에 코를 한 번 댔다. 들키지 않았다고 생각하는 얼굴이었다.</p>
+<p>&quot;……오늘은 중성지 많이 만졌죠?&quot;</p>
+<p>&quot;……맡지 마. 그건 옷이야.&quot;</p>
+<p>&quot;네ㅎㅎ&quot;</p>
+<p>그는 돌아서서 두 팔을 벌렸다. 아까보다 조금 느리게.</p>
+<p>&quot;자, 오 분이요. 이번엔 루카가 세요.&quot;</p>
+<p>루카스는 세지 않았다. 그의 턱이 검은 머리 위에 얹혔고, 붉은 땋은 머리가 둘 사이로 늘어져 루카스의 팔에 닿았다.</p>
+<p>&quot;수프는 불 줄여 놨어요. 식어도 데우면 되니까요. 이건 데운다고 되는 게 아니라서요.&quot;</p>
+<p>그날 밤 루카스는 중성지를 손바닥만 하게 잘라 연필로 한 단어를 적고, 모서리를 맞춰 반으로 접었다. 찾을 물건의 이름은 적어 가야 했다. 그게 순서였다.</p>
+<div class="scene"><b>일요일, 첫 가게</b></div>
+<p>일 년에 몇 번 없는, 가게들이 문을 여는 일요일이었다. 오전 열한 시 십 분, 비스마르크 광장의 백화점 1층은 생각보다 조용했다. 그는 루카스보다 반 걸음 앞에서 사람이 적은 쪽으로 길을 텄다. 코트 뒤로 길게 늘어진 붉은 땋은 머리를 지나가는 사람들이 한 번씩 돌아봤다. 그는 모른 척했다.</p>
+<p>루카스의 손에는 반으로 접은 쪽지가 쥐여 있었다. 구겨질 만큼은 아니었지만 손끝이 하얘질 만큼은 꼭.</p>
+<p>&quot;루카, 그렇게 쥐면 글씨 번져요ㅎㅎ&quot;</p>
+<p>&quot;……연필이야. 안 번져.&quot;</p>
+<p>&quot;규칙은 하나예요. 시향지는 한 번에 세 장까지만요. 그 이상은 코가 헷갈린대요. 점원분이 말 걸면 제가 대답할게요. 루카는 제 뒤에 서 있어요. 두 걸음도 되고, 한 걸음도 되고요.&quot;</p>
+<p>&quot;……한 걸음.&quot;</p>
+<p>첫 번째 매장이었다. 유리 진열대 위에 작은 병들이 조명 아래 가지런히 서 있었다. 인사하려는 점원을 그가 가볍게 고개 숙여 먼저 막아 주었다.</p>
+<p>그러다 그의 눈이 한곳에서 멈췄다. 진열대 맨 앞줄, 병 앞에 세워 둔 작은 카드였다. 그는 눈을 한 번 깜빡이고 루카스의 소매를 아주 살짝 당겼다.</p>
+<p>&quot;……루카. 저기요.&quot;</p>
+<p>손가락으로 가리키지는 않았다. 눈짓으로만.</p>
+<p>&quot;쪽지 한 번만 펴 봐요. 저 카드랑 같은지.&quot;</p>
+<p>쪽지에는 루카스의 반듯한 글씨로 한 단어가 적혀 있었다. 카드에는 영어로, 벽난로 곁에서, 라고 적혀 있었다.</p>
+<p>루카스는 고개를 끄덕였다. 수첩을 꺼내지도 않았다. 그래도 뜻은 전해졌으리라 믿었다. 그는 늘 그랬으니까.</p>
+<p>&quot;……네. 알았어요.&quot;</p>
+<p>그는 점원에게 들리지 않을 만큼만 목소리를 낮췄다.</p>
+<p>&quot;수첩은 나중에 제가 대신 적을게요. 오늘은 코 쓰는 날이니까 손은 쉬어요.&quot;</p>
+<p>그가 한 걸음 나섰다. 영어 억양이 조금 남은 정중한 독일어였다.</p>
+<p>&quot;안녕하세요. 저기 앞줄에 있는 거, 시향지 두 장만 받을 수 있을까요?&quot;</p>
+<p>시향지가 건너왔다. 그는 바로 맡지 않고 루카스를 돌아봤다.</p>
+<p>&quot;가까이서 맡을래요, 아니면 제가 흔들어서 가져갈까요? 루카 편한 대로요.&quot;</p>
+<p>루카스는 잠시 고민하는 눈치였다. 가까이서도, 멀리서도 맡고 싶었으니까. 평소에도 그랬다. 가장 가까이에서 그의 냄새를 들이켜는 것도 좋았고, 그가 지나간 자리에 불씨처럼 남은 것을 좇는 것도 좋았다.</p>
+<p>&quot;……둘 다 하고 싶은 거죠?&quot;</p>
+<p>그가 작게 웃었다. 놀리는 웃음이 아니라 들켰다는 걸 알려 주는 웃음이었다.</p>
+<p>&quot;그럼 둘 다 해요. 순서만 정하면 되니까요. 먼저 종이요. 그다음엔 제 손목이요. 종이랑 사람 살은 다르게 나거든요. 마지막은 집에 가는 길이에요. 제가 지나간 자리에 남는 거요.&quot;</p>
+<p>&quot;……좋아.&quot;</p>
+<p>이번만큼은 말로 했다. 정말로 좋았으니까.</p>
+<p>그리고 그가 내민 첫 시향지는, 좋았다. 과일의 신 향이 물씬 밀려드는 듯하다가 금세 한 번 구워진 단 향이 들어왔다. 입으로 씹어 삼키기엔 버거운 그 단맛이 아니라, 불에 한 번 걸러져서 나쁘지 않은.</p>
+<p>&quot;……말로 했네요.&quot;</p>
+<p>그의 목소리가 작았다. 웃음을 섞으려다 반쯤 실패했다.</p>
+<p>&quot;루카 단 거 못 먹잖아요. 케이크도 한 입이면 끝이고요. 근데 그 얼굴은 안 싫다는 얼굴이에요.&quot;</p>
+<p>그가 코트 소매를 걷어 올렸다.</p>
+<p>&quot;다음은 제 손목이에요. ……여기서 하면 사람들이 볼 텐데, 괜찮아요? 싫으면 집에서 해도 돼요.&quot;</p>
+<p>&quot;봐도 돼. ……너만 보면 되니까.&quot;</p>
+<p>루카스의 귀가 금세 붉어졌다.</p>
+<p>그는 점원도, 지나가는 사람들도, 유리에 비친 자기 얼굴도 잊었다. 손목을 내민 채 숨만 한 번 삼켰다. 푸른 핏줄이 비치는 안쪽, 붓을 쥐는 손이었다. 향이 내려앉았다. 그는 그 손목을 루카스 쪽으로 반 뼘 더 내밀었다.</p>
+<p>&quot;……맡아 봐요.&quot;</p>
+<p>과연, 살갗에 닿은 향은 종이 위에서와는 사뭇 달랐다.</p>
+<p>루카스는 조금 우스웠다. 평생 가장 가깝게 지냈고 앞으로도 그러리라 여겼던 건 눈앞의 붉은 사람이 아니라 종이였다. 쓰면 쓰는 대로, 묻히면 묻히는 대로, 정직하게 그 흔적을 받아 남기는 것. 그런데 이제는 종이보다 가까운 존재가 있었다. 그 사람도 쓰면 쓰는 대로, 묻히면 묻히는 대로, 제 키만큼이나 커다란 흔적을 받아 남겼다. 루카스는 지금 그 둘을 견주고 있었다. 살은 종이만큼 정직하게 향을 남기지 않았다. 대신 남들보다 1도쯤은 높은 듯한 그 체온 위로 향이 오르자, 그의 머리카락만큼이나 새빨간 불꽃이 느껴졌다.</p>
+<p>&quot;어때요? 종이랑 달라요?&quot;</p>
+<p>&quot;……달라.&quot;</p>
+<p>&quot;어떻게요?&quot;</p>
+<p>&quot;……불이 붙었어.&quot;</p>
+<p>그는 손목을 빼지 않았다. 루카스가 얼마나 오래 맡든, 팔이 저려도 그대로 있을 사람이었다. 한참 뒤에야 그가 아주 작게 웃었다.</p>
+<p>&quot;루카, 지금 눈 감고 있는 거 알아요? 핀셋 들 때 얼굴이에요.&quot;</p>
+<p>&quot;…….&quot;</p>
+<p>&quot;이제 루카 차례예요. 루카 것도 찾아야죠.&quot;</p>
+<p>그는 나무 이름이 붙은 병을 세 개 골라 시향지 세 장을 받았다. 규칙대로였다. 한 장씩 코에 대 보고는 한 장씩 고개를 저었다.</p>
+<p>&quot;이건 숲이에요. 루카는 숲이 아니라 서랍인데요.&quot;</p>
+<p>&quot;…….&quot;</p>
+<p>&quot;이건 나무는 있는데 종이가 없어요.&quot;</p>
+<p>&quot;…….&quot;</p>
+<p>&quot;이건…… 비슷한데, 안 따뜻해요.&quot;</p>
+<p>네 번째 병을 돌아보던 그의 소매를 루카스가 잡았다.</p>
+<p>&quot;……세 장까지랬어.&quot;</p>
+<p>&quot;네ㅎㅎ 없네요. 루카는 병에 없어요.&quot;</p>
+<p>그는 이상하게 기뻐 보였다.</p>
+<p>계산은 루카스가 했다. 지폐를 반듯하게 펴서 내고, 영수증을 받아 반으로 접었다. 쇼핑백은 그가 들었다. 루카스는 내가 들겠다고 하려다가 말았다. 그가 한 손으로 쇼핑백을, 다른 손으로 루카스의 손을 잡았기 때문이다.</p>
+<p>옛 다리를 건너는 동안 루카스는 평소와 달리 그의 반 걸음 뒤에서 걸었다.</p>
+<p>&quot;왜 뒤에 있어요?&quot;</p>
+<p>&quot;……세 번째야.&quot;</p>
+<p>바람이 그의 쪽에서 불어오고 있었다.</p>
+<div class="scene"><b>실험은 무효</b></div>
+<p>쇼핑백은 현관 서랍장 위에 놓였다. 실험을 제안한 건 그였다.</p>
+<p>&quot;우리 비교해 봐요. 제가 뿌린 날이랑 안 뿌린 날, 루카가 퇴근해서 맡고 기록하는 거예요. 일주일이면 결과 나오겠죠? 표본이 좀 적긴 한데ㅎㅎ&quot;</p>
+<p>루카스는 대답하지 않았다. 코트를 벗어 옷걸이에 걸고, 습도계 쪽으로 가려다가 거실 한가운데서 멈췄다. 등을 돌린 채였다.</p>
+<p>&quot;……루카?&quot;</p>
+<p>&quot;실험은.&quot;</p>
+<p>&quot;네?&quot;</p>
+<p>&quot;……필요 없어.&quot;</p>
+<p>그는 눈을 깜빡였다. 그리고 가만히 기다렸다. 두 걸음 떨어진 자리에서, 이 사람이 반쪽에서 멈추지 않도록.</p>
+<p>루카스의 어깨가 한 번 올라갔다가 내려갔다. 귀 끝이 붉은 게 뒤에서도 보였다. 목덜미까지 번지는 데 3초쯤 걸렸다.</p>
+<p>&quot;……비교하려고 산 게 아니야.&quot;</p>
+<p>&quot;…….&quot;</p>
+<p>&quot;네가 없을 때.&quot;</p>
+<p>목소리가 점점 작아졌다. 그래도 끝까지 말했다.</p>
+<p>&quot;네가 없을 때도, 맡고 싶어서 산 거야. 네가 작업실에서 밤을 새우는 날. 뉴욕에 가 있는 주. 그런 때에.&quot;</p>
+<p>그는 숨 쉬는 걸 잊었다. 한 걸음 다가가려다 아직은 아니라고 생각했다. 이 사람이 마지막 문장을 끝낼 때까지는.</p>
+<p>&quot;그러니까 네가 뿌리든 안 뿌리든 상관없어. 병은 내 거야. 내 서랍에 둘 거야. ……실험은 무효야.&quot;</p>
+<p>말을 끝낸 루카스가 그제야 돌아섰다. 얼굴은 평소처럼 단정했다. 귀만 아니었다면.</p>
+<p>&quot;……웃지 마.&quot;</p>
+<p>&quot;안 웃어요.&quot;</p>
+<p>&quot;웃고 있잖아.&quot;</p>
+<p>&quot;이건 웃는 게 아니라ㅎㅎ 그냥 좋은 거예요.&quot;</p>
+<p>그는 한 걸음, 또 한 걸음 다가가 루카스를 안았다. 루카스는 그의 가슴에 이마를 대고 한 번 길게 숨을 내쉬었다.</p>
+<p>&quot;……용기 낸 거야. 이거.&quot;</p>
+<p>&quot;알아요. 제가 제일 잘 알아요.&quot;</p>
+<p>&quot;……기록하지 마.&quot;</p>
+<p>&quot;안 해요. 이건 수첩에 안 적고 제가 외울게요.&quot;</p>
+<p>그는 잠깐 말을 고르다가 덧붙였다.</p>
+<p>&quot;근데 루카, 저는 병이 없잖아요. 루카는 어느 가게에도 없었어요. 그러니까 저는 루카가 있어야 돼요. 루카가 없을 때는 방법이 없어요.&quot;</p>
+<p>&quot;……그건 원래 그래.&quot;</p>
+<p>&quot;ㅎㅎ 네. 원래 그래요.&quot;</p>
+<p>&quot;…….&quot;</p>
+<p>&quot;병이 루카 서랍에 있으면, 제가 뿌리고 싶은 날엔 어떻게 해요?&quot;</p>
+<p>루카스는 한참 가만히 있었다. 그러다 그의 스웨터 앞섶을 쥐고, 이마를 댄 채로 말했다.</p>
+<p>&quot;……빌려줄게. 대신.&quot;</p>
+<p>&quot;대신요?&quot;</p>
+<p>&quot;……돌려줄 땐 네 냄새 묻혀서 돌려줘.&quot;</p>
+<p>그는 한동안 아무 말도 하지 못했다.</p>
+<div class="scene"><b>씻지 마</b></div>
+<p>저녁은 그가 끓인 수프였다. 그 뒤로는 소파였다. 루카스는 무릎에 도해집 41쪽을 펴 놓았지만 한 줄도 읽지 않았다. 읽을 수가 없었다. 옆에 앉은 사람의 어깨에 머리를 기댄다는 것이 어느새 그 목에 얼굴을 묻고 있었기 때문이다.</p>
+<p>손목에 올린 향은 여섯 시간이 지나 가벼워져 있었다. 가벼워진 그것이 그 아래에 있던 원래의 냄새와 섞여서, 어디까지가 병이고 어디부터가 이 사람인지 알 수 없었다. 루카스는 그걸 가려내고 싶었다. 가려내는 건 직업이었다. 손목. 팔 안쪽. 어깨. 목.</p>
+<p>목에는 뿌린 적이 없었다. 그런데 거기가 가장 짙었다.</p>
+<p>&quot;……여긴 안 뿌렸잖아.&quot;</p>
+<p>&quot;네. 손목만요.&quot;</p>
+<p>&quot;……그런데 나.&quot;</p>
+<p>&quot;ㅎㅎ 루카, 간지러워요.&quot;</p>
+<p>&quot;……여기가 제일 많이 나.&quot;</p>
+<p>병이 이 사람을 닮은 것이었다. 이 사람이 병을 닮은 게 아니라. 루카스는 그 결론을 한 번 더 확인하려고 숨을 들이쉬었고, 한 번 더 들이쉬었고, 그러는 사이 숨이 제 간격을 잃었다는 걸 알았다. 들이쉬는 숨이 길어지고 내쉬는 숨이 짧아졌다. 도해집이 무릎에서 미끄러졌다. 책갈피는 끼우지 않은 채였다.</p>
+<p>간지럽다고 웃던 그가 웃음을 멈췄다. 목에 닿는 숨의 온도가 달라졌다는 걸, 그는 닿아 있는 살로 먼저 알았다. 내려다보니 귀 끝이 아니라 목덜미까지 붉었다. 스웨터 소매를 쥔 손에 힘이 들어가 있었다.</p>
+<p>&quot;……루카.&quot;</p>
+<p>&quot;……묻지 마.&quot;</p>
+<p>루카스가 고개를 들었다. 그리고 그 말을 하려고 했다. 수프를 반만 남기는 날의 말을. 그의 손에서 숟가락을 떨어뜨리게 하는 그 말을.</p>
+<p>&quot;……먼저,&quot;</p>
+<p>거기서 멈췄다. 씻으면 지워진다. 방금 겨우 찾아낸 것이.</p>
+<p>&quot;……씻지 마. 오늘은.&quot;</p>
+<p>그는 손에 아무것도 들고 있지 않았는데도 무언가를 떨어뜨린 사람 같은 얼굴이 됐다.</p>
+<p>&quot;……네.&quot;</p>
+<p>루카스의 손이 그의 땋은 머리 끝으로 갔다. 아침에 자기가 묶은 아마실 매듭이었다. 그걸 풀었다. 언제나 그가 반을 풀고 루카스가 나머지 반을 풀었는데, 오늘은 그에게 반을 남겨 주지 않았다.</p>
+<p>&quot;……오늘은 내가 다 풀어.&quot;</p>
+<p>세 갈래가 한 마디씩 헐거워질 때마다 머리카락 사이에 갇혀 있던 냄새가 풀려났다. 테레빈이 먼저, 그 밑에서 단 것이, 맨 나중에 나무 타는 것이. 다 풀린 머리가 소파 위로, 바닥으로 붉게 쏟아졌다. 루카스는 그 한 줌을 쥐고 일어섰다.</p>
+<p>침실의 불은 켜지 않았다. 북향 창으로 들어온 가로등 빛이 윤곽만 겨우 남겨 놓았다. 루카스는 머리맡의 습도계들을 보지 않았다.</p>
+<p>그날 밤 먼저 손을 뻗은 건 루카스였다. 그의 스웨터를 머리 위로 벗겨 내고, 개지 않고, 바닥에 떨어뜨렸다. 그리고 다시 목으로 돌아갔다. 목에서 쇄골로, 쇄골에서 어깨로, 어깨에서 가슴 한가운데로. 입술이 닿는 것인지 숨이 닿는 것인지 그로서는 구분할 수 없었다. 0.1밀리를 다루는 사람이 그 정확함을 전부 코끝과 입술로 옮겨 놓고, 그의 몸을 한 칸씩 읽어 내려가고 있었다.</p>
+<p>그는 가만히 누워서 그걸 견뎠다. 기다리는 건 잘하는 사람이었는데, 오늘 밤만큼은 그게 세상에서 제일 어려운 일이었다.</p>
+<p>&quot;……루카. 저 지금 조사당하는 거예요?&quot;</p>
+<p>&quot;……기록 안 해.&quot;</p>
+<p>&quot;그럼요?&quot;</p>
+<p>&quot;……외울 거야.&quot;</p>
+<p>그는 웃으려다가 숨을 삼켰다. 루카스의 숨이 갈비뼈 아래를 지나가고 있었다.</p>
+<p>살이 데워질수록 향이 올라왔다. 낮에 손목에서 일어났던 일이 이번에는 온몸에서 일어났다. 루카스는 그것을 맡았고, 맡을수록 숨이 흐트러졌고, 흐트러진 숨이 다시 그의 살을 데웠다. 누가 누구에게 불을 붙이고 있는지 알 수 없었다.</p>
+<p>더는 견디지 못한 건 그였다. 그가 루카스의 오른손을 찾아 손목을 입술로 가져갔다. 흉터 위에, 천천히.</p>
+<p>&quot;……그건,&quot;</p>
+<p>&quot;반칙이죠. 알아요.&quot;</p>
+<p>손목에서 힘이 빠졌고, 그 힘이 빠진 만큼 루카스의 몸이 그의 위로 내려앉았다. 그가 그 몸을 안고 돌아누웠다. 나머지 옷이 침대 밑으로 내려가는 데는 처음의 그 밤처럼 오래 걸리지 않았다. 풀린 붉은 머리카락이 어깨에서 흘러내려 두 사람 위로 장막처럼 드리워졌다. 그 안은 전부 한 가지 냄새였다. 루카스는 그 안에서 숨을 쉬었다. 쉴 때마다 그 사람이 들어왔다.</p>
+<p>이불 속에서 맨살이 다 닿았다. 손끝과 발끝만 찬 사람과, 어디나 1도쯤 더 뜨거운 사람이었다.</p>
+<p>몸이 하나로 맞춰질 때 루카스는 두 팔로 그의 목을 감았다. 예전처럼 입술을 깨물지 않았다. 깨무는 대신 얼굴을 그의 목에, 가장 짙은 그 자리에 묻었다. 소리는 전부 거기로 갔다. 평생 시끄러운 걸 싫어해 온 사람의 숨이 그의 목덜미에서 뜨겁게 젖었다.</p>
+<p>&quot;……천천히.&quot;</p>
+<p>&quot;네.&quot;</p>
+<p>그는 천천히 했다. 한 번 움직일 때마다 목에 닿은 숨이 한 번씩 끊겼다. 그 끊기는 간격으로 그는 이 사람이 지금 어디쯤 와 있는지를 알았다. 얼굴은 볼 수 없었다. 루카스가 끝까지 그의 목에서 얼굴을 떼지 않았으니까. 그래도 괜찮았다. 등에 닿은 손가락들이, 허리를 조여 오는 무릎이, 자기 이름 대신 불리는 &quot;너&quot;가 다 말해 주었다.</p>
+<p>&quot;……너.&quot;</p>
+<p>&quot;네. 여기 있어요.&quot;</p>
+<p>&quot;……너한테서, 계속 나.&quot;</p>
+<p>&quot;뭐가요.&quot;</p>
+<p>&quot;…….&quot;</p>
+<p>대답은 없었다. 대신 그의 목에 묻힌 숨이 한 번 길게 떨렸고, 감긴 팔에 힘이 들어갔다. 그는 움직임을 멈추고 이마를 맞대려 했다. 늘 그러던 것처럼. 루카스가 고개를 저었다. 이마 대신 목을 내놓으라는 듯 그를 끌어당겼다.</p>
+<p>&quot;……멈추지 마.&quot;</p>
+<p>&quot;괜찮아요?&quot;</p>
+<p>&quot;……괜찮아. 진짜로.&quot;</p>
+<p>그 뒤로는 둘 다 아무것도 세지 않았다. 숨도, 시간도, 습도도. 루카스는 마지막까지 그의 목에 코를 묻고 있었고, 숨은 거기서 다 부서졌다. 그도 오래 버티지 못했다. 이 사람이 자기 냄새 속에서 그렇게 되는 걸 알아 버린 뒤로는.</p>
+<p>얼마나 지났는지 알 수 없었다. 그가 먼저 입을 열었다.</p>
+<p>&quot;……루카.&quot;</p>
+<p>&quot;……응.&quot;</p>
+<p>목소리가 다 갈라져 있었다.</p>
+<p>&quot;목소리 이상해요ㅎㅎ&quot;</p>
+<p>&quot;……너 때문이잖아.&quot;</p>
+<p>그가 웃었다. 웃음에 매트리스가 흔들렸고, 그의 가슴에 얹힌 검은 머리도 같이 흔들렸다. 따뜻한 물에 적신 수건은 그가 가져왔다. 루카스는 순순히 맡겼다. 눈을 감은 채 그의 머리카락 한 줌을 손가락에 감고, 이따금 꼭 쥐었다 놓으면서.</p>
+<p>그러다 루카스가 제 손목을 코로 가져갔다. 미간이 조금 모였다.</p>
+<p>&quot;……나한테서도 나.&quot;</p>
+<p>&quot;뭐가요?&quot;</p>
+<p>&quot;……벽난로.&quot;</p>
+<p>그가 몸을 숙여 루카스의 목덜미에 코를 댔다. 길게 숨을 들이쉬었다.</p>
+<p>&quot;진짜네요. 백향목에 불이 붙었어요ㅎㅎ&quot;</p>
+<p>&quot;……타면 안 되는데.&quot;</p>
+<p>&quot;안 타요. 데워지기만 해요.&quot;</p>
+<p>&quot;…….&quot;</p>
+<p>&quot;이제 씻어도 돼요?&quot;</p>
+<p>&quot;……아침에.&quot;</p>
+<p>새벽 세 시, 그는 늘 하던 대로 돌아누워 루카스의 허리에 팔을 감았다. 손목이 루카스의 코 가까이에 왔다. 열여섯 시간이 지나 거의 남지 않은 향이, 남지 않았다고 하기엔 분명하게 거기 있었다. 루카스는 깨어 있었다. 그 팔 위에 손을 얹었다. 맥박을 세다가, 세는 걸 그만두고, 숨만 쉬었다.</p>
+<div class="scene"><b>월요일</b></div>
+<p>6시 30분, 루카스는 알람을 끄고 수첩을 폈다. 어제 칸에는 그의 글씨가 있었다. 약속대로 대신 적어 둔 것이었다.</p>
+<div class="list">일요일. 벽난로.<br>
+종이: 신 과일 → 구운 단 향.<br>
+손목: 다름. 불이 붙음.<br>
+루카의 말: &quot;좋아.&quot; &quot;봐도 돼. 너만 보면 되니까.&quot;<br>
+백향목: 병에 없음. (세 장 다 아님)<br>
+오차 범위 밖.</div>
+<p>루카스는 맨 아랫줄을 한참 보았다. 그건 자기 말이었다. 베낀 것이었다. 지우지 않았다. 그 밑에 연필로 두 줄을 적었다.</p>
+<div class="list">실험: 무효. 사유: 병은 내 것.<br>
+잔향: 열여섯 시간 뒤에도 확인됨. (병 아님. 본인.)</div>
+<p>그날 아침 단추는 4분이 넘게 걸렸다. 루카스는 서른네 번째를 채울 때까지 그의 얼굴을 올려다보지 않았다. 셔츠 깃을 여며 주다가 손이 멈췄다. 목에, 어젯밤 가장 짙었던 그 자리에, 자국이 하나 남아 있었다.</p>
+<p>&quot;……깃 세워.&quot;</p>
+<p>&quot;왜요?&quot;</p>
+<p>&quot;……묻지 마.&quot;</p>
+<p>&quot;루카가 한 건데요ㅎㅎ&quot;</p>
+<p>&quot;……그러니까 묻지 마.&quot;</p>
+<p>병은 루카스의 서재 서랍으로 들어갔다. 모서리에 평행하게, 습도계 붙은 상자 옆 칸이었다. 복원실에는 향이 있는 건 아무것도 들일 수 없었다. 그래서 루카스는 어제의 시향지 한 장을 중성지 봉투에 넣어 코트 안주머니에 넣었다. 작업대에는 가져가지 않았다. 코트는 옷걸이에 걸렸고, 점심때 한 번, 퇴근 전에 한 번, 옷걸이 앞에 서 있다 갈 뿐이었다.</p>
+<p>요나스는 그날 오후 옷걸이 옆을 지나가다 코를 킁킁거렸다.</p>
+<p>&quot;선배님, 어디서 군밤 냄새 안 나요? 누가 뭐 구웠나?&quot;</p>
+<p>&quot;……지하 3층.&quot;</p>
+<p>&quot;네? 저 아직 아무 말도 안 했는데요?&quot;</p>
+<p>&quot;……했어.&quot;</p>
+<p>여섯 시 반, 3층 층계참에 발소리가 올라왔다. 문이 열리기도 전에 그가 손을 뻗었다. 루카스는 코트를 벗지 않았다. 습도계 쪽도 보지 않았다. 그의 목에 코를 묻고, 종일 종이로만 맡았던 것을 한 번에 들이쉬었다.</p>
+<p>&quot;……오 분.&quot;</p>
+<p>&quot;세요?&quot;</p>
+<p>&quot;……안 세.&quot;</p>
+  </article>
+  <div class="end"><span class="mark">— FIN —</span><a href="index.html#chron" onclick="if(history.length>1){history.back();return false}">목록으로 돌아가기</a></div>
+</div>
+</body>
+</html>
