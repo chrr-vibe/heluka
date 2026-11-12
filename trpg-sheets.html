@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>그와 루카 탐사자 기록지</title>
+<style>
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;font-family:system-ui,-apple-system,sans-serif;font-size:14px}
+img{max-width:100%}[hidden]{display:none!important}
+.trpg-back{position:relative;z-index:5;display:inline-block;margin:12px 0 0 max(16px,env(safe-area-inset-left,0px));
+  font:600 11px/1 "IBM Plex Mono",monospace;letter-spacing:.12em;text-decoration:none;color:#e9e1d0;background:rgba(20,15,25,.78);
+  border:1px solid rgba(233,225,208,.35);border-radius:20px;padding:7px 12px;backdrop-filter:blur(4px)}
+.trpg-back:hover,.trpg-back:focus-visible{background:rgba(60,45,75,.92);outline:none}
+</style>
+</head>
+<body>
+<a class="trpg-back" href="trpg.html">← TRPG</a>
+
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700&family=Noto+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+:root{
+  --bg:#ebe5d8; --paper:#f7f2e7; --paper2:#efe8d9; --ink:#2b2620; --mute:#7a6f60; --line:#d3c8b4;
+  --accent:#3f4f6b; --accent-soft:#dde2ea; --red:#9a2f2a; --hi:#f1e3c4;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#141210; --paper:#1f1c18; --paper2:#28241f; --ink:#ece4d4; --mute:#a3988a; --line:#3a342c;
+  --accent:#a9b8d4; --accent-soft:#2a313d; --red:#e0776f; --hi:#3a3122; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#141210; --paper:#1f1c18; --paper2:#28241f; --ink:#ece4d4; --mute:#a3988a; --line:#3a342c;
+  --accent:#a9b8d4; --accent-soft:#2a313d; --red:#e0776f; --hi:#3a3122; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:"Noto Sans KR",system-ui,sans-serif;font-size:14px;line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 60px}
+.wrap{max-width:980px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+header{display:flex;flex-direction:column;gap:6px}
+.kicker{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;color:var(--mute);text-transform:uppercase}
+h1{font-family:"Noto Serif KR",serif;font-size:clamp(22px,4vw,30px);margin:0;text-wrap:balance}
+.sub{color:var(--mute);margin:0;max-width:62ch}
+.tabs{display:flex;gap:8px;flex-wrap:wrap}
+.tab{font:inherit;font-weight:700;border:1px solid var(--line);background:var(--paper);color:var(--ink);padding:9px 16px;border-radius:999px;cursor:pointer}
+.tab[aria-selected="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.sheet{background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:22px clamp(16px,3vw,30px) 28px;display:flex;flex-direction:column;gap:22px;position:relative;
+  box-shadow:0 1px 0 var(--line),0 12px 30px -20px rgba(0,0,0,.35)}
+.top{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:start}
+.name{font-family:"Noto Serif KR",serif;font-size:26px;font-weight:700;margin:0}
+.role{display:inline-block;margin-top:4px;font-size:12px;font-weight:700;padding:3px 10px;border-radius:4px;background:var(--accent-soft);color:var(--accent)}
+.quote{margin:8px 0 0;color:var(--mute);font-style:italic}
+.stamp{font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:600;letter-spacing:.1em;color:var(--red);border:2px solid var(--red);padding:6px 10px;border-radius:4px;transform:rotate(-4deg);white-space:nowrap;opacity:.85}
+.prof{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.prof div{background:var(--paper2);padding:7px 10px;min-width:0}
+.prof b{display:block;font-size:11px;color:var(--mute);font-weight:500}
+h2{font-family:"Noto Serif KR",serif;font-size:16px;margin:0 0 10px;display:flex;align-items:baseline;gap:10px}
+h2 small{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--mute);font-weight:400;letter-spacing:.06em}
+.stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.stat{border:1px solid var(--line);border-radius:4px;padding:8px 10px;display:grid;grid-template-columns:1fr auto;gap:2px 8px;background:var(--paper)}
+.stat .k{font-weight:700}
+.stat .k i{font-style:normal;font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--mute);margin-left:4px}
+.stat .v{font-family:"IBM Plex Mono",monospace;font-size:22px;font-weight:600;grid-row:span 2;align-self:center}
+.stat .hf{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--mute)}
+.stat .why{grid-column:1/-1;font-size:12px;color:var(--mute);border-top:1px dashed var(--line);margin-top:4px;padding-top:4px}
+.derived{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px}
+.der{background:var(--paper2);border-radius:4px;padding:8px 10px}
+.der b{display:block;font-size:11px;color:var(--mute);font-weight:500}
+.der span{font-family:"IBM Plex Mono",monospace;font-size:18px;font-weight:600}
+.pts{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--mute);display:flex;gap:14px;flex-wrap:wrap;margin-bottom:8px}
+.tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:4px}
+table{width:100%;border-collapse:collapse;min-width:520px}
+th,td{padding:7px 10px;text-align:left;border-bottom:1px solid var(--line)}
+th{font-size:11px;color:var(--mute);font-weight:500;background:var(--paper2)}
+td.n{font-family:"IBM Plex Mono",monospace;text-align:right;white-space:nowrap}
+td.big{font-weight:600}
+tr.up td:first-child{font-weight:700}
+tr.up{background:color-mix(in srgb,var(--hi) 55%,transparent)}
+.tag{font-size:10px;font-family:"IBM Plex Mono",monospace;padding:1px 6px;border-radius:3px;border:1px solid var(--line);color:var(--mute);margin-left:6px}
+.tag.occ{border-color:var(--accent);color:var(--accent)}
+td.note{color:var(--mute);font-size:12px}
+.toggle{font:inherit;font-size:12px;background:none;border:1px solid var(--line);color:var(--ink);padding:5px 12px;border-radius:999px;cursor:pointer;margin-top:10px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.box{border:1px solid var(--line);border-radius:4px;padding:12px 14px;background:var(--paper);min-width:0}
+.box h3{font-size:13px;margin:0 0 6px}
+.box ul{margin:0;padding-left:18px}
+.box li{margin:2px 0}
+.special{border-left:3px solid var(--accent);background:var(--paper2);border-radius:0 4px 4px 0;padding:10px 14px}
+.special b{display:block}
+.special p{margin:2px 0 0;color:var(--mute);font-size:13px}
+.specials{display:flex;flex-direction:column;gap:8px}
+details{border:1px dashed var(--line);border-radius:4px;padding:10px 14px}
+summary{cursor:pointer;font-weight:700}
+details p{margin:8px 0 0;color:var(--mute);font-size:13px}
+.foot{color:var(--mute);font-size:12px}
+@media (max-width:520px){.top{grid-template-columns:1fr}.stamp{justify-self:start}}
+</style>
+
+<div class="wrap">
+  <header>
+    <span class="kicker">Call of Cthulhu 7th · Investigator Record</span>
+    <h1>탐사자 기록지 — 그와 루카</h1>
+    <p class="sub">세계관 B의 두 사람을 크툴루의 부름 7판 시트로 옮겼어요. 특성치는 설정에 맞춰 직접 골랐고, 기능 점수는 룰 그대로(직업 기능 + 관심 기능) 맞췄어요. 맨 아래 오리지널 특수기능은 하우스룰이에요.</p>
+  </header>
+
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" data-k="him" aria-selected="true">그 · 화가</button>
+    <button class="tab" role="tab" data-k="luka" aria-selected="false">루카 · 복원가</button>
+  </div>
+
+  <article class="sheet" id="sheet"></article>
+
+  <p class="foot">기본치 규칙: 회피 = 민첩 ÷ 2, 모국어 = 교육. 체력 = (건강+크기) ÷ 10, 마력 = 정신력 ÷ 5, 이성 = 정신력. 판정은 보통 / 어려움(½) / 대단함(⅕) 세 단계예요.</p>
+</div>
+
+<script>
+const BASE={"회계":5,"인류학":1,"감정":5,"고고학":1,"예술/공예":5,"매혹":15,"오르기":20,"재력":0,"크툴루 신화":0,"변장":5,"자동차 운전":20,"전기 수리":10,"말재주":5,"근접전(격투)":25,"사격(권총)":20,"사격(소총/산탄총)":25,"응급처치":30,"역사":5,"위협":15,"도약":20,"언어(외국어)":1,"법률":5,"자료조사":20,"듣기":20,"열쇠공":1,"기계 수리":10,"의료":1,"자연":10,"항법":10,"오컬트":5,"중장비 조작":1,"설득":10,"조종":1,"정신분석":1,"심리학":10,"승마":5,"과학":1,"손놀림":10,"관찰력":25,"은밀행동":20,"생존술":10,"수영":20,"투척":20,"추적":10};
+
+const DATA={
+ him:{
+  name:"그",role:"탐사자 (플레이어 캐릭터)",stamp:"RED · ONE PLACE",
+  quote:"“루카, 습도계는 내일 봐요ㅎㅎ 이리 와요.”",
+  prof:[["직업","화가 (붉은 연작, 'Mostly' 연작)"],["성별","남"],["나이","30대 (설정상 비공개)"],["국적","미국 (보스턴 출생)"],["거주","하이델베르크, 옛 다리 건너 3층"],["키","아주 큼 · 머리는 오금까지"]],
+  stats:[["근력","STR",65,"큰 캔버스를 혼자 나르고, 52계단을 장바구니 들고 오름"],["건강","CON",70,"한번 자면 안 깸. 단 것도 탄 것도 잘 먹음"],["크기","SIZ",80,"문틀이 낮은 집에 사는 키 큰 사람"],["민첩","DEX",60,"붓질은 정확하지만 붓을 자주 떨어뜨림"],["외모","APP",85,"무릎까지 오던 붉은 머리, 길에서 알아보는 사람이 많음"],["지능","INT",70,"머리카락으로 습도 읽는 법을 사흘 만에 익힘"],["정신력","POW",75,"기다리는 걸 잘함. 쉽게 꺾이지 않음"],["교육","EDU",65,"미술 학교, 독일어는 반년 몰래 독학"],["행운","LUK",70,"빵집 주인이 단추를 찾아 줌"]],
+  move:7,db:"+1D4",build:1,
+  occ:"화가 · 직업 기능 = 교육×2 + 정신력×2 = 280",occTotal:280,intTotal:140,
+  skills:[
+   ["예술/공예(회화)",5,80,0,"occ","붉은색·금색 큰 추상화. 쉬는 손"],
+   ["관찰력",25,35,10,"occ","색과 빛의 기울기로 습도를 읽음"],
+   ["심리학",10,35,0,"occ","루카의 귀 끝 붉어지는 시간을 초 단위로 앎"],
+   ["매혹",15,40,0,"occ","말로 다 하는 사람. “좋아서요.”"],
+   ["언어(독일어)",1,39,10,"occ","매일 밤 편지 61통을 읽어 줌. 발음은 아직 교정 중"],
+   ["역사",5,20,0,"occ","아우구스트 하르트만과 1935년의 하이델베르크"],
+   ["재력",0,36,0,"occ","그림 값은 다나가 관리함"],
+   ["예술/공예(요리)",5,0,50,"int","감자 수프, 요일 이름 붙은 수프 통"],
+   ["듣기",20,0,25,"int","새벽 세 시엔 못 들음(자고 있음)"],
+   ["응급처치",30,0,15,"int","계단에서 떨어지는 루카를 받아 냄"],
+   ["근접전(격투)",25,0,15,"int","키와 팔 길이"],
+   ["설득",10,0,15,"int","“다음엔 물어요.”"],
+  ],
+  native:["언어(영어·모국어)",65],
+  gear:["손가락 끝이 트인 뜨개 장갑(구멍 여섯 개)","스케치북과 연필","세 갈래로 땋은 머리, 머리끈 하나","코트 안주머니의 오선지 한 장"],
+  belief:["Ich bleibe — 나는 머문다.","싫다는 사람 붙잡으면 안 된다… 고 믿었었다."],
+  people:["루카 — 남편. 매일 아침 단추 서른네 개를 채워 주는 사람","루스 — 어머니","아우구스트와 마거릿 — 조부모","다나 — 매니저고, 가끔 엄마고"],
+  traits:["어디서나 눈에 띔(은밀행동·변장은 사실상 불가)","무서운 영화를 무서워함(미국 공포영화는 예외)","자기 고민은 숨기는 버릇","잠결에 새벽 세 시면 돌아누워 팔을 감음"],
+  specials:[
+   ["읽어 주는 사람","물·습기·공기와 관련된 관찰력과 듣기 판정에 보너스 주사위 1개. 머리카락이 먼저 알아요."],
+   ["탄 데가 맛있어요","세션당 한 번, 같이 있는 사람이 실패한 판정 하나를 웃음으로 받아 다시 굴리게 해요."],
+   ["붉은 머리","은밀행동·변장 판정은 자동 실패. 대신 멀리 있는 아군이 반드시 그를 찾아내요."],
+  ],
+  scen:"이번 시나리오에서 그는 수조 속에서 눈을 뜨는 탐사자예요. 기억나는 건 이름과 나이, 그리고 칼을 든 낯선 사람이 집에 들어온 것뿐이에요. 독일어 판정이 꽤 자주 나올 거예요(수기와 책갈피가 루카의 글씨니까요)."
+ },
+ luka:{
+  name:"루카스 아스카니엔",role:"NPC · 수호자가 운용",stamp:"HUMIDITY 50%",
+  quote:"“……불 끈다. 습도계 보고, 이상 없음.”",
+  prof:[["직업","고문헌 복원가 (대학 도서관 복원실)"],["성별","남"],["나이","30대 후반"],["국적","독일"],["거주","하이델베르크, 옛 다리 건너 3층"],["키","그의 턱께"]],
+  stats:[["근력","STR",45,"업는 건 안 됨. 어깨만 빌려줄 수 있음"],["건강","CON",50,"손발이 차고, 오른손목에 나사 하나"],["크기","SIZ",50,"그보다 작음"],["민첩","DEX",85,"핀셋으로 0.1밀리. 단추 서른네 개에 3분 21초"],["외모","APP",75,"단정함. 사진과 시선을 싫어함"],["지능","INT",85,"범죄 스릴러 범인을 한 번도 안 틀림"],["정신력","POW",80,"15년, 61통, 매일 7시 55분"],["교육","EDU",85,"석사, 열아홉 살부터 엘제 선생님 밑에서 15년"],["행운","LUK",45,"빙판에서 넘어지고, 계단에서 미끄러짐"]],
+  move:8,db:"0",build:0,
+  occ:"골동품 연구가(고문헌 복원가) · 직업 기능 = 교육×4 = 340",occTotal:340,intTotal:170,
+  skills:[
+   ["예술/공예(고문헌 복원)",5,80,0,"occ","“대부분은 됩니다.”"],
+   ["관찰력",25,30,20,"occ","손·시계·그림자"],
+   ["자료조사",20,45,0,"occ","도서관이 일터"],
+   ["감정",5,50,0,"occ","판본 연도, 종이, 잉크"],
+   ["역사",5,45,0,"occ","1935년 옛 다리까지"],
+   ["언어(라틴어)",1,34,0,"occ","시편집과 고문헌"],
+   ["위협",15,20,0,"occ","“지하 3층 4주.”"],
+   ["재력",0,36,0,"occ","커피머신 없음, 습도계는 계속 늘어남"],
+   ["손놀림",10,0,60,"int","핀셋, 메스, 단추, 땋기"],
+   ["언어(영어)",1,0,39,"int","뉴욕 복원실에서 일한 적 있음"],
+   ["예술/공예(뜨개질)",5,0,31,"int","손가락 구멍 장갑, 출전 자격 없는 스웨터"],
+   ["듣기",20,0,20,"int","잠이 얕음. 새벽 세 시엔 깨어 있음"],
+  ],
+  native:["언어(독일어·모국어)",85],
+  gear:["수첩(습도 기록, 오차 평균 칸 지움)","핀셋 — 엘제 선생님이 쪽지 없이 둔 것","작은 휴대용 습도계","손난로"],
+  belief:["대부분이 아니라, 전부.","틀려도 괜찮은 건 하나도 없어."],
+  people:["그 — 남편. 이 집에서 제일 정직한 소리의 주인","엘제 선생님 — 15년 스승","요나스 — 막내, 지하 3층 단골","루스 — “엄마”"],
+  traits:["반쪽만 듣고 판결함","아파도 말 안 함","집에 오면 코트보다 습도계가 먼저","부끄러우면 귀 끝부터 목덜미까지 붉어짐(대개 3초)"],
+  specials:[
+   ["0.1밀리","손놀림과 예술/공예(복원) 판정에서 대성공 범위가 01–05로 넓어져요."],
+   ["반쪽 듣기 (약점)","듣기·심리학이 성공해도 정보의 절반만 듣고 결론을 내려요. 나머지 반쪽이 공개되면 이성 0/1."],
+   ["코트보다 습도계","새 방에 들어가면 행동을 쓰지 않고 공기·습도에 관찰력 판정을 한 번 해요."],
+  ],
+  scen:"이번 시나리오에서 루카스는 검은 상자를 쓴 조력자, 오브젝트 헤드예요. 상자에는 짧은 문장만 떠요. 원래도 말이 짧은 사람이라 잘 어울려요."
+ }
+};
+
+const OB={
+ luka:`<details><summary>시나리오 배역 수치 (스포일러 · 오브젝트 헤드 버전)</summary>
+ <p>정신력 80 → 60 (니알라토텝의 화신에게 20을 바침). 마력 최대 12, 현재 7 (주문 ‘흐릿한 기억’ 2회로 5 소모). 이성 최대 60, 현재 57. 지능 85+9 (생체 컴퓨터 링크). 신체재생(50% 확률로 체력 1 회복). 주문: 흐릿한 기억 · 요그 소토스의 주먹. 사격(전기총) 55, 크툴루 신화 25.</p>
+ <p>맨얼굴을 보면 이성 1/1D5를 잃어요. 상자 출력문은 짧게. 처음 출력은 “HELLO, MY DEAR.”</p></details>`,
+ him:`<details><summary>시나리오 배역 메모 (스포일러)</summary>
+ <p>시작할 때 소지품은 없어요(장갑도 스케치북도 없음, 환자복 한 벌). 머리는 땋여 있지 않아요. 기억은 이름·나이·칼을 든 낯선 사람까지. 추천 기능은 관찰력·듣기·근접전(격투)·회피이고, 과학(천문학)은 기본치예요.</p></details>`
+};
+
+const el=document.getElementById('sheet');
+let showAll=false,cur='him';
+const h=v=>Math.floor(v/2), f=v=>Math.floor(v/5);
+
+function render(k){
+ const d=DATA[k], S=Object.fromEntries(d.stats.map(s=>[s[1],s[2]]));
+ const hp=Math.floor((S.CON+S.SIZ)/10), mp=Math.floor(S.POW/5), dodge=h(S.DEX);
+ const raised={}; d.skills.forEach(s=>raised[s[0]]=s);
+ let rows=d.skills.map(s=>{const v=s[1]+s[2]+s[3];
+   return `<tr class="up"><td>${s[0]}<span class="tag ${s[4]}">${s[4]==='occ'?'직업':'관심'}</span></td><td class="n big">${v}</td><td class="n">${h(v)}</td><td class="n">${f(v)}</td><td class="note">${s[5]}</td></tr>`}).join('');
+ rows+=`<tr class="up"><td>${d.native[0]}<span class="tag">교육</span></td><td class="n big">${d.native[1]}</td><td class="n">${h(d.native[1])}</td><td class="n">${f(d.native[1])}</td><td class="note">모국어 기본치 = 교육</td></tr>`;
+ rows+=`<tr class="up"><td>회피<span class="tag">민첩½</span></td><td class="n big">${dodge}</td><td class="n">${h(dodge)}</td><td class="n">${f(dodge)}</td><td class="note">${k==='him'?'키가 커서 피하는 쪽보다 받는 쪽':'작고 빠름'}</td></tr>`;
+ if(showAll){
+   const base=Object.keys(BASE).filter(n=>!Object.keys(raised).some(r=>r.startsWith(n.replace(/\(.*\)/,''))&&r===n)).sort((a,b)=>a.localeCompare(b,'ko'));
+   rows+=base.map(n=>{const v=BASE[n];return `<tr><td>${n}</td><td class="n">${v}</td><td class="n">${h(v)}</td><td class="n">${f(v)}</td><td class="note">기본치</td></tr>`}).join('');
+ }
+ const occUsed=d.skills.reduce((a,s)=>a+s[2],0), intUsed=d.skills.reduce((a,s)=>a+s[3],0);
+ el.innerHTML=`
+ <div class="top"><div><p class="name">${d.name}</p><span class="role">${d.role}</span><p class="quote">${d.quote}</p></div><span class="stamp">${d.stamp}</span></div>
+ <div class="prof">${d.prof.map(p=>`<div><b>${p[0]}</b>${p[1]}</div>`).join('')}</div>
+ <section><h2>특성치 <small>보통 / 어려움 / 대단함</small></h2>
+  <div class="stats">${d.stats.map(s=>`<div class="stat"><span class="k">${s[0]}<i>${s[1]}</i></span><span class="v">${s[2]}</span><span class="hf">${h(s[2])} · ${f(s[2])}</span><span class="why">${s[3]}</span></div>`).join('')}</div></section>
+ <section><h2>파생 수치</h2>
+  <div class="derived">
+   <div class="der"><b>체력</b><span>${hp}</span></div>
+   <div class="der"><b>마력</b><span>${mp}</span></div>
+   <div class="der"><b>이성</b><span>${S.POW}</span></div>
+   <div class="der"><b>행운</b><span>${S.LUK}</span></div>
+   <div class="der"><b>이동력</b><span>${d.move}</span></div>
+   <div class="der"><b>피해 보너스 · 체구</b><span>${d.db} · ${d.build}</span></div>
+   <div class="der"><b>회피</b><span>${dodge}</span></div>
+  </div></section>
+ <section><h2>기능</h2>
+  <div class="pts"><span>${d.occ}</span><span>직업 ${occUsed}/${d.occTotal}</span><span>관심(지능×2) ${intUsed}/${d.intTotal}</span><span>남은 점수 0</span></div>
+  <div class="tblwrap"><table><thead><tr><th>기능</th><th>보통</th><th>½</th><th>⅕</th><th>메모</th></tr></thead><tbody>${rows}</tbody></table></div>
+  <button class="toggle" id="tg">${showAll?'올린 기능만 보기':'기본치까지 전체 보기'}</button></section>
+ <section><h2>무기</h2>
+  <div class="tblwrap"><table><thead><tr><th>무기</th><th>보통</th><th>½</th><th>⅕</th><th>피해</th></tr></thead><tbody>
+   <tr><td>맨손</td><td class="n">${raised['근접전(격투)']?25+raised['근접전(격투)'][3]:25}</td><td class="n">${h(raised['근접전(격투)']?40:25)}</td><td class="n">${f(raised['근접전(격투)']?40:25)}</td><td>1D3${d.db==='0'?'':' + '+d.db}</td></tr>
+  </tbody></table></div></section>
+ <div class="two">
+  <div class="box"><h3>소지품</h3><ul>${d.gear.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+  <div class="box"><h3>신념</h3><ul>${d.belief.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+  <div class="box"><h3>중요한 사람</h3><ul>${d.people.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+  <div class="box"><h3>특징</h3><ul>${d.traits.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+ </div>
+ <section><h2>오리지널 특수기능 <small>하우스룰</small></h2>
+  <div class="specials">${d.specials.map(s=>`<div class="special"><b>${s[0]}</b><p>${s[1]}</p></div>`).join('')}</div></section>
+ <section><h2>이번 배역 — 〈네게 헬리오트로프를〉</h2><p style="margin:0 0 10px">${d.scen}</p>${OB[k]}</section>`;
+ document.getElementById('tg').onclick=()=>{showAll=!showAll;render(cur)};
+}
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{
+ document.querySelectorAll('.tab').forEach(x=>x.setAttribute('aria-selected',x===b));
+ cur=b.dataset.k;render(cur);
+});
+render('him');
+</script>
+
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>TRPG</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Pinyon+Script&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Nanum+Myeongjo:wght@400;700;800&display=swap">
+<style>
+:root{color-scheme:dark;--night:#17110c;--gold:#c4a676;--gold-hi:#e6d6b2;--line:rgba(196,166,118,.42);--parch:#ece2cd;--text:#ddd2bd;--muted:#a39580;
+  --caps:"Cinzel","Times New Roman",serif;--script:"Pinyon Script","Times New Roman",cursive;--ko:"Nanum Myeongjo","AppleMyungjo","Batang",serif}
+*{box-sizing:border-box}
+html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;background-color:var(--night);color:var(--text);font-family:var(--ko);font-size:17px;line-height:2;
+  background-image:radial-gradient(ellipse 70% 40% at 50% 0%,rgba(214,180,120,.12),transparent 70%);background-repeat:no-repeat;
+  padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px));padding-block:24px 80px}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;opacity:.5;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .9  0 0 0 0 .8  0 0 0 0 .6  0 0 0 .05 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+.wrap{max-width:620px;margin:0 auto}
+.back{display:inline-block;font-family:var(--caps);font-size:11px;letter-spacing:.2em;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:2px}
+.back:hover,.back:focus-visible{color:var(--gold-hi);outline:none}
+header{text-align:center;margin:56px 0 48px;display:grid;gap:6px;justify-items:center}
+header .lat{font-family:var(--script);font-size:44px;line-height:1;color:var(--gold)}
+header h1{margin:0;font-family:var(--ko);font-weight:800;font-size:clamp(28px,6vw,36px);color:var(--parch);letter-spacing:.08em}
+header .when{font-family:var(--caps);font-size:11px;letter-spacing:.28em;color:var(--muted)}
+header svg{width:160px;height:16px;margin-top:10px}
+article p{margin:0 0 1.1em;word-break:keep-all}
+.talk{margin:0 0 1.1em;padding-left:14px;border-left:1px solid var(--line)}
+.talk p{margin:0;color:var(--parch)}
+h2{margin:2.6em 0 1.4em;text-align:center;font-family:var(--ko);font-weight:700;font-size:16px;letter-spacing:.12em;color:var(--gold)}
+h2 span{padding:0 14px;background:var(--night);position:relative}
+h2::before{content:"";display:block;height:1px;background:var(--line);transform:translateY(1em)}
+.end{text-align:center;margin-top:56px;display:grid;gap:18px;justify-items:center}
+.end .mark{font-family:var(--caps);font-size:11px;letter-spacing:.3em;color:var(--muted)}
+.end a{font-family:var(--ko);font-size:15px;color:var(--gold-hi);text-decoration:none;border:1px solid var(--line);border-radius:40px 40px 10px 10px;padding:8px 22px}
+.end a:hover,.end a:focus-visible{background:rgba(196,166,118,.15);outline:none}
+
+.part{text-align:center;margin:84px 0 40px;display:grid;gap:4px;justify-items:center}
+.part.first{margin-top:0}
+.part .eyebrow{font-family:var(--script);font-size:32px;line-height:1.1;color:var(--gold)}
+.part h2{margin:0;font-family:var(--ko);font-weight:800;font-size:24px;color:var(--parch);letter-spacing:.06em}
+.part h2::before{display:none}
+.part .sub{font-family:var(--caps);font-size:11px;letter-spacing:.24em;color:var(--muted)}
+.orn2{color:var(--gold);margin-bottom:22px}
+.scene{display:flex;align-items:center;gap:12px;margin:56px 0 26px;color:var(--muted);font-size:14px;letter-spacing:.1em}
+.scene::before,.scene::after{content:"";flex:1;height:1px;background:var(--line)}
+.scene b{font-family:var(--caps);font-weight:600;color:var(--gold);letter-spacing:.12em}
+.list{margin:4px 0 1.4em;padding:14px 20px;border:1px solid var(--line);border-radius:6px;background:rgba(236,226,205,.05);font-size:15.5px;line-height:1.9;color:var(--parch)}
+.list ol{margin:0;padding-left:1.4em}
+.list .note{color:var(--muted);font-size:14px}
+.chat{margin:4px 0 1.6em;display:flex;flex-direction:column;gap:6px}
+.chat .who{font-size:12.5px;color:var(--muted);margin:4px 0 -2px}
+.chat .msg{align-self:flex-start;max-width:86%;background:rgba(236,226,205,.08);border:1px solid var(--line);color:var(--parch);padding:6px 13px;border-radius:14px 14px 14px 4px;font-size:15px;line-height:1.6}
+.chat .msg.me{align-self:flex-end;border-radius:14px 14px 4px 14px;background:rgba(217,130,106,.18);border-color:rgba(217,130,106,.45)}
+.chat .room{align-self:center;font-family:var(--ko);font-size:12px;color:var(--gold);letter-spacing:.06em;margin-bottom:4px}
+.quiet{color:var(--muted)}
+.note-card{margin:4px auto 1.4em;padding:12px 18px;border:1px dashed var(--gold);border-radius:4px;color:var(--parch);font-size:15px;text-align:center;max-width:320px;background:rgba(236,226,205,.04)}
+article b{color:var(--gold-hi)}
+</style>
+<style>
+.cards{display:grid;gap:16px;margin:0 0 48px}
+.card{display:grid;gap:4px;text-decoration:none;color:var(--text);border:1px solid var(--line);border-radius:6px;padding:18px 20px;background:rgba(236,226,205,.04);position:relative}
+.card:hover,.card:focus-visible{background:rgba(196,166,118,.10);outline:none;border-color:var(--gold)}
+.card .k{font-family:var(--caps);font-size:10px;letter-spacing:.28em;color:var(--muted)}
+.card .lat2{font-family:var(--script);font-size:24px;line-height:1.2;color:var(--gold)}
+.card .t{font-family:var(--ko);font-weight:800;font-size:19px;color:var(--parch);letter-spacing:.04em}
+.card .d{font-size:14px;line-height:1.7;color:var(--muted)}
+.card::after{content:"→";position:absolute;right:20px;top:50%;transform:translateY(-50%);font-family:var(--caps);color:var(--gold)}
+.intro{text-align:center;font-size:15px;line-height:1.9;color:var(--text);margin:0 0 36px;word-break:keep-all}
+.credit{text-align:center;font-size:12.5px;line-height:1.8;color:var(--muted);margin:0;word-break:keep-all}
+</style></head>
+<body>
+<div class="wrap">
+  <a class="back" href="index.html#vault" onclick="if(history.length>1){history.back();return false}">← 수장고로</a>
+  <header>
+    <span class="lat">Spieltisch</span>
+    <h1>TRPG</h1>
+    <span class="when">THE VAULT · Call of Cthulhu 7th</span>
+    <svg viewBox="0 0 180 18" aria-hidden="true"><g fill="none" stroke="#c4a676" stroke-width="1.2"><path d="M0 9 H70 M110 9 H180"/><path d="M90 3 l6 6 -6 6 -6 -6z" fill="#c4a676"/></g></svg>
+  </header>
+  <p class="intro">그와 루카가 탐사자로 앉은 테이블이에요.<br>본편과 따로 이어지는 이야기라 수장고에 둡니다.</p>
+  <nav class="cards">
+    <a class="card" href="trpg-sheets.html">
+      <span class="k">CHARACTER</span>
+      <span class="lat2">Investigator Sheets</span>
+      <span class="t">탐사자 기록지</span>
+      <span class="d">그와 루카의 능력치와 기능, 하우스룰 특수기능</span>
+    </a>
+    <a class="card" href="trpg-heliotrope.html">
+      <span class="k">REPLAY</span>
+      <span class="lat2">Scenario I</span>
+      <span class="t">네게 헬리오트로프를</span>
+      <span class="d">메리골드 엔딩 · 체력 11/15 · 이성 72</span>
+    </a>
+    <a class="card" href="trpg-faraway.html">
+      <span class="k">REPLAY</span>
+      <span class="lat2">Scenario II</span>
+      <span class="t">멀리 있는 당신에게</span>
+      <span class="d">루카 구출 · 체력 12/15 · 이성 79 · 정신력 66</span>
+    </a>
+    <a class="card" href="trpg-nine.html">
+      <span class="k">STORY</span>
+      <span class="lat2">Short</span>
+      <span class="t">아홉 번째</span>
+      <span class="d">돌아온 지 2주, 그리고 배양 완료의 날</span>
+    </a>
+  </nav>
+  <p class="credit">원작 시나리오 〈네게 헬리오트로프를〉 〈멀리 있는 당신에게〉 디라스티트(@IG_Eugene)<br>그와 루카에 맞게 각색한 리플레이예요. Call of Cthulhu © Chaosium Inc.</p>
+</div>
+</body>
+</html>
