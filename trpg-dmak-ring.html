@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>빈칸</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Pinyon+Script&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Nanum+Myeongjo:wght@400;700;800&display=swap">
+<style>
+:root{color-scheme:dark;--night:#17110c;--gold:#c4a676;--gold-hi:#e6d6b2;--line:rgba(196,166,118,.42);--parch:#ece2cd;--text:#ddd2bd;--muted:#a39580;
+  --caps:"Cinzel","Times New Roman",serif;--script:"Pinyon Script","Times New Roman",cursive;--ko:"Nanum Myeongjo","AppleMyungjo","Batang",serif}
+*{box-sizing:border-box}
+html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;background-color:var(--night);color:var(--text);font-family:var(--ko);font-size:17px;line-height:2;
+  background-image:radial-gradient(ellipse 70% 40% at 50% 0%,rgba(214,180,120,.12),transparent 70%);background-repeat:no-repeat;
+  padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px));padding-block:24px 80px}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;opacity:.5;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .9  0 0 0 0 .8  0 0 0 0 .6  0 0 0 .05 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+.wrap{max-width:620px;margin:0 auto}
+.back{display:inline-block;font-family:var(--caps);font-size:11px;letter-spacing:.2em;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:2px}
+.back:hover,.back:focus-visible{color:var(--gold-hi);outline:none}
+header{text-align:center;margin:56px 0 48px;display:grid;gap:6px;justify-items:center}
+header .lat{font-family:var(--script);font-size:44px;line-height:1;color:var(--gold)}
+header h1{margin:0;font-family:var(--ko);font-weight:800;font-size:clamp(28px,6vw,36px);color:var(--parch);letter-spacing:.08em}
+header .when{font-family:var(--caps);font-size:11px;letter-spacing:.28em;color:var(--muted)}
+header svg{width:160px;height:16px;margin-top:10px}
+article p{margin:0 0 1.1em;word-break:keep-all}
+.talk{margin:0 0 1.1em;padding-left:14px;border-left:1px solid var(--line)}
+.talk p{margin:0;color:var(--parch)}
+h2{margin:2.6em 0 1.4em;text-align:center;font-family:var(--ko);font-weight:700;font-size:16px;letter-spacing:.12em;color:var(--gold)}
+h2 span{padding:0 14px;background:var(--night);position:relative}
+h2::before{content:"";display:block;height:1px;background:var(--line);transform:translateY(1em)}
+.end{text-align:center;margin-top:56px;display:grid;gap:18px;justify-items:center}
+.end .mark{font-family:var(--caps);font-size:11px;letter-spacing:.3em;color:var(--muted)}
+.end a{font-family:var(--ko);font-size:15px;color:var(--gold-hi);text-decoration:none;border:1px solid var(--line);border-radius:40px 40px 10px 10px;padding:8px 22px}
+.end a:hover,.end a:focus-visible{background:rgba(196,166,118,.15);outline:none}
+
+.part{text-align:center;margin:84px 0 40px;display:grid;gap:4px;justify-items:center}
+.part.first{margin-top:0}
+.part .eyebrow{font-family:var(--script);font-size:32px;line-height:1.1;color:var(--gold)}
+.part h2{margin:0;font-family:var(--ko);font-weight:800;font-size:24px;color:var(--parch);letter-spacing:.06em}
+.part h2::before{display:none}
+.part .sub{font-family:var(--caps);font-size:11px;letter-spacing:.24em;color:var(--muted)}
+.orn2{color:var(--gold);margin-bottom:22px}
+.scene{display:flex;align-items:center;gap:12px;margin:56px 0 26px;color:var(--muted);font-size:14px;letter-spacing:.1em}
+.scene::before,.scene::after{content:"";flex:1;height:1px;background:var(--line)}
+.scene b{font-family:var(--caps);font-weight:600;color:var(--gold);letter-spacing:.12em}
+.list{margin:4px 0 1.4em;padding:14px 20px;border:1px solid var(--line);border-radius:6px;background:rgba(236,226,205,.05);font-size:15.5px;line-height:1.9;color:var(--parch)}
+.list ol{margin:0;padding-left:1.4em}
+.list .note{color:var(--muted);font-size:14px}
+.chat{margin:4px 0 1.6em;display:flex;flex-direction:column;gap:6px}
+.chat .who{font-size:12.5px;color:var(--muted);margin:4px 0 -2px}
+.chat .msg{align-self:flex-start;max-width:86%;background:rgba(236,226,205,.08);border:1px solid var(--line);color:var(--parch);padding:6px 13px;border-radius:14px 14px 14px 4px;font-size:15px;line-height:1.6}
+.chat .msg.me{align-self:flex-end;border-radius:14px 14px 4px 14px;background:rgba(217,130,106,.18);border-color:rgba(217,130,106,.45)}
+.chat .room{align-self:center;font-family:var(--ko);font-size:12px;color:var(--gold);letter-spacing:.06em;margin-bottom:4px}
+.quiet{color:var(--muted)}
+.note-card{margin:4px auto 1.4em;padding:12px 18px;border:1px dashed var(--gold);border-radius:4px;color:var(--parch);font-size:15px;text-align:center;max-width:320px;background:rgba(236,226,205,.04)}
+article b{color:var(--gold-hi)}
+</style>
+<style>
+.trpg-tag{display:inline-block;font-family:var(--caps);font-size:10px;letter-spacing:.24em;color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:3px 10px;margin-top:6px}
+.caveat{margin:0 auto 40px;max-width:480px;text-align:center;font-size:13.5px;line-height:1.8;color:var(--muted)}
+</style></head>
+<body>
+<div class="wrap">
+  <a class="back" href="trpg-dmak-series.html">← 다만악</a>
+  <header>
+    <span class="lat">Mein einziges</span>
+    <h1>빈칸</h1>
+    <span class="when">TRPG 단편 · 〈어찌 나를 버리셨나이까〉 Best End 이후</span>
+    <svg viewBox="0 0 180 18" aria-hidden="true"><g fill="none" stroke="#c4a676" stroke-width="1.2"><path d="M0 9 H70 M110 9 H180"/><path d="M90 3 l6 6 -6 6 -6 -6z" fill="#c4a676"/></g></svg>
+  </header>
+  <p class="caveat">다만악 쪽 이야기예요. 반지는 루카의 심장이 됐고, 그의 손가락은 비어 있어요.</p>
+  <article>
+<div class="part first"><span class="eyebrow">Short</span><h2>빈칸</h2></div>
+<div class="scene"><b>돌아온 지 열흘</b> 빈 손가락</div>
+<p>루카스는 새 몸이 아직 낯설었다. 손은 원래 손과 크기가 같았다. 손가락 길이도, 손톱 모양도 같았다. 다만 너무 매끈했다. 굳은살이 없었다. 핀셋을 쥐면 손끝이 미끄러졌다. 오른손목은 아무리 쓸어도 아무 데도 걸리지 않았다.</p>
+<p>흉터는 그의 손목에 있었다.</p>
+<p>그래서 루카스는 매일 아침 단추를 채우고 나면 그의 오른손을 끌어다 손목을 한 번 뒤집어 보았다. 거기 있는지 확인하듯이. 그는 웃기만 했다.</p>
+<p>"루카 거 맞아요. 잘 있어요ㅎㅎ"</p>
+<p>"……안 물어봤어."</p>
+<p>열흘째 아침, 루카스는 다른 걸 보았다.</p>
+<p>단추를 채우는 동안 그의 왼손이 계속 움직이고 있었다. 엄지가 약지 뿌리를 한 바퀴 돌았다. 다시 한 바퀴. 거기엔 아무것도 없었다. 반지는 루카스의 가슴 안에 있었다.</p>
+<p>"……그거."</p>
+<p>"네?"</p>
+<p>"손."</p>
+<p>그가 자기 손을 내려다보고 그제야 알았다는 얼굴을 했다.</p>
+<p>"아. 습관이에요. 돌릴 게 없는데 계속 돌려요ㅎㅎ"</p>
+<p>"……"</p>
+<p>"괜찮아요. 그거 지금 제일 좋은 데 있잖아요."</p>
+<p>그가 손바닥으로 루카스의 왼쪽 가슴을 톡 쳤다. 쿵, 하고 그 아래가 뛰었다. 루카스의 귀 끝이 붉어졌다. 3초.</p>
+<p>루카스는 서른네 번째 단추를 채우고, 그날 수첩에 한 줄을 적었다.</p>
+<div class="list">왼손 약지. 비어 있음.<br>하루에 몇 번 돌리는지 셀 것.</div>
+<p>저녁에 숫자를 더했다. 마흔한 번이었다.</p>
+<div class="scene"><b>그 주</b> 세 갈래</div>
+<p>새벽 세 시, 루카스는 깨어 있었다.</p>
+<p>새 몸은 잠이 깊었다. 처음 며칠은 눕기만 하면 아침이었다. 그게 무서워서 루카스는 일부러 깼다. 그가 돌아눕고, 팔을 감는 걸 확인하려고. 이번엔 깨어 있는 게 루카스여야 했다.</p>
+<p>팔이 감겼다. 루카스는 그 팔 위에 손을 얹었다. 그리고 다른 손으로 베개 밑에서 아마실 한 가닥을 꺼냈다.</p>
+<p>그의 왼손 약지에 실을 한 바퀴 감았다. 너무 조이지 않게. 너무 헐겁지 않게. 마디를 넘어갈 수 있게. 실이 겹치는 자리를 손톱으로 눌러 표시했다. 0.1밀리까지는 아니어도, 그 근처까지.</p>
+<p>그가 잠결에 중얼거렸다.</p>
+<p>"……루카, 뭐 해요……"</p>
+<p>"……습도."</p>
+<p>"……ㅎㅎ……"</p>
+<p>그는 다시 잠들었다. 루카스는 실을 중성지 봉투에 넣었다. 그리고 자기 왼손 약지에도 실을 감았다. 새 손가락은 처음 재 보는 손가락이었다.</p>
+<div class="scene"><b>그다음 주</b> 늦는 사람</div>
+<p>그다음 주부터 루카스는 저녁마다 늦었다.</p>
+<p>첫날은 사십 분. 둘째 날은 한 시간. 셋째 날엔 저녁을 다 차리고 수프가 식을 때까지 오지 않았다. 돌아온 루카스는 코트보다 손부터 씻었다. 손끝이 붉었다. 몇 군데는 작게 데여 있었다.</p>
+<p>"손 왜 그래요?"</p>
+<p>"……아무 일도 없어."</p>
+<p>그는 수프를 다시 데우면서 그 말을 한 번 더 들었다. 아무 일도 없어. 루카가 그 말을 할 때 아무 일도 없었던 적은 없었다.</p>
+<p>그리고 냄새가 났다. 쇠 냄새. 불 냄새. 뭔가를 태운 냄새.</p>
+<p>그날 밤 그는 잠을 못 잤다. 새벽 세 시에 깨어 있는 사람이 둘이었다. 그는 등을 돌리고 누워 있었다. 팔을 감지 못했다.</p>
+<p>3년 전에도 루카는 말없이 나갔다. 돌아올 주인을 기다리듯 정돈된 방만 두고. 숲속 성을 사고, 지하실에서 주문을 찾고, 손끝에 뭔가를 묻혀 돌아왔을 것이다. 그도 그때 이 냄새를 맡았을까. 그는 몰랐다. 그때 그는 죽어 있었으니까.</p>
+<p>"……안 자?"</p>
+<p>등 뒤에서 루카스가 물었다.</p>
+<p>"……잘 거예요."</p>
+<p>"……팔."</p>
+<p>"네?"</p>
+<p>"……안 감았어."</p>
+<p>그는 한참 있다가 돌아누웠다. 팔을 감았다. 루카스의 손이 그 위에 얹혔다. 손끝이 거칠었다. 열흘 전엔 너무 매끈해서 핀셋이 미끄러지던 손이었다.</p>
+<div class="scene"><b>넷째 날</b> 끝까지</div>
+<p>넷째 날 아침, 그는 단추를 채우는 루카스의 손을 잡았다. 스물두 번째 단추에서.</p>
+<p>"루카."</p>
+<p>"……"</p>
+<p>"저녁에 어디 가요?"</p>
+<p>루카스의 손이 멈췄다. 루카스는 그를 올려다보지 않고 스물두 번째 단추만 보았다.</p>
+<p>"……"</p>
+<p>"저 따라가 보려고 했어요. 어제. 계단 중간까지 갔다가 돌아왔어요."</p>
+<p>"……왜 돌아왔어."</p>
+<p>"안 돌아보기로 했잖아요. 예배당에서요. 그러면 따라가는 것도 안 해야 할 것 같아서요. 뒤에서 확인하는 거랑 돌아보는 거랑 같은 거잖아요."</p>
+<p>루카스가 숨을 한 번 들이쉬었다.</p>
+<p>"근데 저 무서워요, 루카. 쇠 냄새 나요. 손끝이 데였어요. 3년 전에도 이랬어요? 저는 그때를 몰라요. 그래서 더 무서워요."</p>
+<p>"……"</p>
+<p>"끝까지 말해 줘요. 반쪽 말고. 루카가 그랬잖아요."</p>
+<p>루카스는 오래 말하지 않았다. 스물두 번째 단추를 채우고, 스물세 번째를 채웠다. 서른네 번째까지 다 채웠다. 평소보다 조금 오래 걸렸다. 그리고 그의 손을 잡아 손목을 뒤집었다. 흉터를 엄지로 한 번 쓸었다.</p>
+<p>"……사람 죽이는 거 아니야."</p>
+<p>"……"</p>
+<p>"주문 아니야. 성 아니야. 지하실 아니야."</p>
+<p>"……"</p>
+<p>"……금방 끝나. 사흘. 사흘만 묻지 마."</p>
+<p>"사흘 지나면요?"</p>
+<p>"……끝까지 말할게. 반쪽 말고."</p>
+<p>그는 루카스를 오래 보았다. 루카스의 귀 끝이 붉어지고 있었다. 무서운 일을 숨기는 사람의 귀는 붉어지지 않았다. 그는 그걸 알았다.</p>
+<p>"……사흘이요."</p>
+<p>"……응."</p>
+<p>"그럼 저녁마다 수프 데워 놓을게요. 늦어도요."</p>
+<div class="scene"><b>사흘</b> 쇠 냄새</div>
+<p>첫째 날 저녁, 루카스는 손가락에 붕대를 감고 들어왔다. 그는 묻지 않았다. 붕대를 풀어 소독하고 다시 감았다. 루카스는 손을 빼지 않았다.</p>
+<p>둘째 날 저녁, 루카스는 수프를 두 그릇 먹었다. 그는 묻지 않았다. 세 번째 그릇을 떠 줬다. 루카스가 그것도 먹었다.</p>
+<p>셋째 날 저녁, 루카스는 아홉 시가 넘어 들어왔다. 코트 안주머니 한쪽이 불룩했다. 루카스는 손을 씻고, 수프를 먹고, 소파에 앉았다. 코트를 벗지 않았다.</p>
+<p>"……내일 아침."</p>
+<p>"네."</p>
+<p>"……7시 55분."</p>
+<p>그는 그 시간을 들은 순간 숨을 멈췄다.</p>
+<p>이 세계에서 그 시간은 그가 죽은 시간이었다. 다리 위에서. 루카의 앞에서. 손이 아직 따뜻했다고 루카의 일기에 쓰여 있었다. 그는 돌아온 뒤로 한 번도 그 다리에 나가지 않았다. 루카도 가자고 하지 않았다.</p>
+<p>"……다리요?"</p>
+<p>"……응."</p>
+<p>"괜찮아요?"</p>
+<p>"……네가 괜찮으면."</p>
+<p>그는 한참 있다가 고개를 끄덕였다.</p>
+<p>"루카가 같이 있으면요."</p>
+<div class="scene"><b>7시 55분</b> 다리 위</div>
+<p>아침 공기에서 강 냄새가 났다.</p>
+<p>그가 기억하는 마지막 것과 같은 냄새였다. 차가운 돌의 감촉이 뺨에 닿았던 것 같은 기억. 누군가 자기 이름 대신 『너』라고 부르던 소리. 그는 다리 위에 올라서는 순간 무릎이 조금 꺾였다. 루카스가 팔꿈치를 받쳤다. 어깨만 빌려주는 것처럼.</p>
+<p>"……여기야."</p>
+<p>루카스가 난간의 한 자리에 섰다. 정확히 그 자리였다. 루카스는 3년 동안 이 자리를 피해 다녔을 것이다. 아니면 매일 와서 서 있었을 것이다. 그는 어느 쪽인지 묻지 않았다.</p>
+<p>"여기서 끝난 거 아니야."</p>
+<p>루카스가 말했다.</p>
+<p>"여기서 다시 하는 거야."</p>
+<p>루카스가 코트 안주머니에서 작은 봉투를 꺼냈다. 무산성 중성지. 세 갈래로 땋은 아마실로 묶여 있었다. 루카스는 그걸 그에게 내밀지 않고 자기 손바닥 위에서 풀었다.</p>
+<p>반지 두 개가 있었다.</p>
+<p>크기가 달랐다. 하나는 그의 손가락에 맞을 크기. 하나는 루카스의 새 손가락에 맞을 크기. 둘 다 매끈하지 않았다. 표면에 아주 미세한 망치 자국이 일정한 간격으로 나 있었다. 사람 손이 낸 자국이었다.</p>
+<p>"……직접 만들었어요?"</p>
+<p>"……금세공 공방. 강 건너. 저녁에만 빌렸어."</p>
+<p>"그래서 손 데였구나."</p>
+<p>"……처음엔 다 녹였어. 두 번."</p>
+<p>"ㅎㅎ 대부분은 된다면서요."</p>
+<p>"……세 번째에 전부 됐어."</p>
+<p>루카스가 큰 반지를 집어 그에게 안쪽이 보이게 들었다. 글씨가 새겨져 있었다. 루카스의 글씨였다.</p>
+<div class="note-card">Du.</div>
+<p>"……『너』예요?"</p>
+<p>"……응."</p>
+<p>그리고 작은 반지를 들었다. 거기에도 글씨가 있었다.</p>
+<div class="note-card">Mein einziges</div>
+<p>그는 그 두 단어를 한참 보았다. 독일어는 조금 알았다. 루카에게 배운 만큼은.</p>
+<p>"『나의 유일한』…… 그다음이 없어요."</p>
+<p>"……없어. 거기서 끝나."</p>
+<p>"반쪽이에요."</p>
+<p>"……응. 반쪽이야."</p>
+<p>루카스가 숨을 쉬었다. 이번에는 끊지 않았다.</p>
+<p>"……성에, 피아노 옆 책장에, 종이 한 장 붙여 놨었어. 『Mein einziges』 쓰고 빈칸. 거기 채우는 말이 문 여는 암호였어."</p>
+<p>"……"</p>
+<p>"내가 써 놓고 못 채웠어. 3년 동안. 뭘 넣어야 할지 알았는데. 네가 없는데 그걸 쓰면, 그게 거짓말이 될까 봐."</p>
+<p>"……"</p>
+<p>"그 종이, 너는 못 봤어. 그 방까지 못 왔으니까. 내가 먼저 너를……"</p>
+<p>루카스가 말을 멈췄다. 그는 기다렸다. 루카스가 다시 말했다.</p>
+<p>"……그래서 반지를 반쪽씩 만들었어. 하나만 끼면 빈칸이야. 둘이 같이 있어야 문장이 돼."</p>
+<p>"루카."</p>
+<p>"……반쪽만 듣고 판결하는 거, 이제 안 해. 반쪽만 끼고 다니는 것도 안 해. 너도 하지 마."</p>
+<p>그가 웃었다. 울면서.</p>
+<p>"루카 그거 너무 루카 같아요."</p>
+<p>"……무슨 뜻이야."</p>
+<p>"좋다는 뜻이에요."</p>
+<div class="scene"><b>같은 자리</b> 끼워 주기</div>
+<p>루카스가 그의 왼손을 잡았다. 열흘 동안 엄지가 돌던 그 손가락. 마흔한 번, 서른여덟 번, 쉰두 번. 루카스는 매일 세었다.</p>
+<p>반지를 끼웠다. 마디에서 한 번 걸렸다가 넘어갔다. 실로 잰 그대로였다.</p>
+<p>"……맞아요."</p>
+<p>"……재 놨어."</p>
+<p>"언제요?"</p>
+<p>"……새벽 세 시. 습도 잰다고 했잖아."</p>
+<p>"아 그거였어요? ㅎㅎ 루카 진짜……"</p>
+<p>그가 반지를 내려다보았다. 엄지가 습관처럼 움직였다. 이번엔 돌릴 게 있었다. 한 바퀴. 안쪽의 『Du』가 손가락을 한 바퀴 돌았다.</p>
+<p>그리고 그가 작은 반지를 집었다. 루카스의 왼손을 잡았다. 처음 재 보는 손가락, 아무 흉터도 굳은살도 없던 손. 이제는 손끝에 작은 데인 자국이 셋 있는 손.</p>
+<p>"이건 제가 끼워 줄래요."</p>
+<p>"……응."</p>
+<p>반지가 들어갔다. 한 번에. 루카스는 자기 손가락은 처음부터 정확하게 쟀다.</p>
+<p>"Mein einziges."</p>
+<p>그가 루카스의 반지를 읽었다. 발음이 서툴렀다. 루카스가 고쳐 주지 않았다. 그 대신 그의 반지 낀 손을 끌어와, 자기 반지 낀 손 옆에 나란히 놓았다. 난간 위에.</p>
+<p>"……Du."</p>
+<p>루카스가 말했다. 이번엔 빈칸이 없었다.</p>
+<div class="scene"><b>다리 끝</b> 빨간 점</div>
+<p>돌아오는 길에 그가 반지를 빼서 다시 들여다보았다.</p>
+<p>"루카, 여기 끝에 뭐 있어요."</p>
+<p>『Du』 다음에 아주 작은 점이 하나 찍혀 있었다. 빨간색이었다. 법랑을 한 방울 넣어 굳힌 것 같았다.</p>
+<p>"……표시."</p>
+<p>"표시요?"</p>
+<p>"……네가 편지 끝에 늘 찍던 거. 빨간 점 하나. 3년 동안 다시 올 일 없다고 생각했던 거. 그리고."</p>
+<p>루카스가 말을 골랐다.</p>
+<p>"……여기서 한 번 끝났던 거야. 다시 시작한 자리. 원본인 척하면 안 돼."</p>
+<p>그는 그 빨간 점을 엄지로 쓸었다. 손목의 흉터를 쓸 때처럼.</p>
+<p>"그럼 루카 반지엔요?"</p>
+<p>루카스가 대답 대신 자기 반지를 빼서 그에게 건넸다. 『Mein einziges』 다음, 빈칸이 있어야 할 자리. 거기에도 빨간 점이 하나 있었다. 아무 글자도 없이.</p>
+<p>"……빈칸 자리야. 네 반지랑 같이 있을 때만 채워져."</p>
+<p>"루카, 저 오늘 울어도 돼요?"</p>
+<p>"……벌써 울고 있어."</p>
+<p>"그러니까요ㅎㅎ"</p>
+<p>"……바람 소리야."</p>
+<p>그는 웃었다. 루카스도 웃었다. 바람 소리라고 우기면서.</p>
+<div class="scene"><b>새벽 세 시</b> 하나는 안에, 둘은 밖에</div>
+<p>그날 밤 그는 깨어 있었다. 루카스도 깨어 있었다. 둘 다 그걸 알았다.</p>
+<p>그가 돌아누워 루카스의 허리에 팔을 감았다. 루카스가 그 팔 위에 손을 얹었다. 반지 두 개가 부딪혀 아주 작은 소리를 냈다. 틱.</p>
+<p>"……들었어요?"</p>
+<p>"……응."</p>
+<p>그가 손바닥을 루카스의 왼쪽 가슴에 얹었다. 쿵. 쿵. 그 안에 옛 반지가 있었다. 『Bleib』가 거기서 뛰었다.</p>
+<p>"하나는 안에 있고요."</p>
+<p>"……"</p>
+<p>"둘은 밖에 있어요."</p>
+<p>루카스가 그의 손등을 엄지로 쓸었다. 반지 위를, 흉터 쪽으로.</p>
+<p>"……세 개야."</p>
+<p>"네?"</p>
+<p>"……반지. 세 개야. 하나도 안 버렸어."</p>
+<p>그는 얼굴을 루카스의 목덜미에 묻었다. 이 집에서 제일 정직한 소리가 그의 손바닥 아래에서 뛰고 있었다. 그리고 손가락 사이에서, 그보다 작은 소리가 한 번 더 났다.</p>
+<p>틱.</p>
+<p>루카스가 수첩에 그날 적은 마지막 줄은 이랬다.</p>
+<div class="list">왼손 약지. 채워짐.<br>돌린 횟수: 세지 않음.</div>
+  </article>
+  <div class="end"><span class="mark">— FIN —</span><a href="trpg-dmak-series.html">다만악으로 돌아가기</a></div>
+</div>
+<!--bgm--><script>window.BGM={"ids": ["xpZgtFhDbss", "72K7ZAQ4P6M"], "title": "Saman · Ólafur Arnalds"};</script><script src="bgm.js" defer></script><!--/bgm-->
+</body>
+</html>
