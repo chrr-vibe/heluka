@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>숙성 3주</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Pinyon+Script&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Nanum+Myeongjo:wght@400;700;800&display=swap">
+<style>
+:root{color-scheme:dark;--night:#17110c;--gold:#c4a676;--gold-hi:#e6d6b2;--line:rgba(196,166,118,.42);--parch:#ece2cd;--text:#ddd2bd;--muted:#a39580;
+  --caps:"Cinzel","Times New Roman",serif;--script:"Pinyon Script","Times New Roman",cursive;--ko:"Nanum Myeongjo","AppleMyungjo","Batang",serif}
+*{box-sizing:border-box}
+html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;background-color:var(--night);color:var(--text);font-family:var(--ko);font-size:17px;line-height:2;
+  background-image:radial-gradient(ellipse 70% 40% at 50% 0%,rgba(214,180,120,.12),transparent 70%);background-repeat:no-repeat;
+  padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px));padding-block:24px 80px}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;opacity:.5;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .9  0 0 0 0 .8  0 0 0 0 .6  0 0 0 .05 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+.wrap{max-width:620px;margin:0 auto}
+.back{display:inline-block;font-family:var(--caps);font-size:11px;letter-spacing:.2em;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:2px}
+.back:hover,.back:focus-visible{color:var(--gold-hi);outline:none}
+header{text-align:center;margin:56px 0 48px;display:grid;gap:6px;justify-items:center}
+header .lat{font-family:var(--script);font-size:44px;line-height:1;color:var(--gold)}
+header h1{margin:0;font-family:var(--ko);font-weight:800;font-size:clamp(28px,6vw,36px);color:var(--parch);letter-spacing:.08em}
+header .when{font-family:var(--caps);font-size:11px;letter-spacing:.28em;color:var(--muted)}
+header svg{width:160px;height:16px;margin-top:10px}
+article p{margin:0 0 1.1em;word-break:keep-all}
+.talk{margin:0 0 1.1em;padding-left:14px;border-left:1px solid var(--line)}
+.talk p{margin:0;color:var(--parch)}
+h2{margin:2.6em 0 1.4em;text-align:center;font-family:var(--ko);font-weight:700;font-size:16px;letter-spacing:.12em;color:var(--gold)}
+h2 span{padding:0 14px;background:var(--night);position:relative}
+h2::before{content:"";display:block;height:1px;background:var(--line);transform:translateY(1em)}
+.end{text-align:center;margin-top:56px;display:grid;gap:18px;justify-items:center}
+.end .mark{font-family:var(--caps);font-size:11px;letter-spacing:.3em;color:var(--muted)}
+.end a{font-family:var(--ko);font-size:15px;color:var(--gold-hi);text-decoration:none;border:1px solid var(--line);border-radius:40px 40px 10px 10px;padding:8px 22px}
+.end a:hover,.end a:focus-visible{background:rgba(196,166,118,.15);outline:none}
+
+.part{text-align:center;margin:84px 0 40px;display:grid;gap:4px;justify-items:center}
+.part.first{margin-top:0}
+.part .eyebrow{font-family:var(--script);font-size:32px;line-height:1.1;color:var(--gold)}
+.part h2{margin:0;font-family:var(--ko);font-weight:800;font-size:24px;color:var(--parch);letter-spacing:.06em}
+.part h2::before{display:none}
+.part .sub{font-family:var(--caps);font-size:11px;letter-spacing:.24em;color:var(--muted)}
+.orn2{color:var(--gold);margin-bottom:22px}
+.scene{display:flex;align-items:center;gap:12px;margin:56px 0 26px;color:var(--muted);font-size:14px;letter-spacing:.1em}
+.scene::before,.scene::after{content:"";flex:1;height:1px;background:var(--line)}
+.scene b{font-family:var(--caps);font-weight:600;color:var(--gold);letter-spacing:.12em}
+.list{margin:4px 0 1.4em;padding:14px 20px;border:1px solid var(--line);border-radius:6px;background:rgba(236,226,205,.05);font-size:15.5px;line-height:1.9;color:var(--parch)}
+.list ol{margin:0;padding-left:1.4em}
+.list .note{color:var(--muted);font-size:14px}
+.chat{margin:4px 0 1.6em;display:flex;flex-direction:column;gap:6px}
+.chat .who{font-size:12.5px;color:var(--muted);margin:4px 0 -2px}
+.chat .msg{align-self:flex-start;max-width:86%;background:rgba(236,226,205,.08);border:1px solid var(--line);color:var(--parch);padding:6px 13px;border-radius:14px 14px 14px 4px;font-size:15px;line-height:1.6}
+.chat .msg.me{align-self:flex-end;border-radius:14px 14px 4px 14px;background:rgba(217,130,106,.18);border-color:rgba(217,130,106,.45)}
+.chat .room{align-self:center;font-family:var(--ko);font-size:12px;color:var(--gold);letter-spacing:.06em;margin-bottom:4px}
+.quiet{color:var(--muted)}
+.note-card{margin:4px auto 1.4em;padding:12px 18px;border:1px dashed var(--gold);border-radius:4px;color:var(--parch);font-size:15px;text-align:center;max-width:320px;background:rgba(236,226,205,.04)}
+article b{color:var(--gold-hi)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="index.html#chron" onclick="if(history.length>1){history.back();return false}">← 목록으로</a>
+  <header>
+    <span class="lat">Maceration</span>
+    <h1>숙성 3주</h1>
+    <span class="when">단편 · 벽난로 이후 · 조향 공방과 3주</span>
+    <svg viewBox="0 0 180 18" aria-hidden="true"><g fill="none" stroke="#c4a676" stroke-width="1.2"><path d="M0 9 H70 M110 9 H180"/><path d="M90 3 l6 6 -6 6 -6 -6z" fill="#c4a676"/></g></svg>
+  </header>
+  <article>
+
+<div class="scene"><b>쪽지</b></div>
+<p>엘제 선생님은 월요일 아침 루카스의 작업대 위에 반으로 접은 중성지 한 장을 놓고 갔다. 이유는 묻지 않았고, 루카스도 묻지 않았다.</p>
+<div class="list">구시가지, 옛 약국 자리. 문에 십자 자국. 목요일 예약됨.</div>
+<p>루카스는 그걸 한참 보다가 수첩 사이에 끼웠다. 예약됨이라는 말은 엘제 선생님이 이미 자기 이름으로 잡아 놨다는 뜻이었다. 이 사람은 늘 이런 식이었다.</p>
+<p>그날 저녁 요나스가 퇴근하면서 아무 생각 없이 말했다.</p>
+<p>&quot;선배님, 향수 공방 찾으세요? 마렌 씨 병원 근처에 하나 있대요. 마렌 씨가 그러는데요.&quot;</p>
+<p>&quot;……조사는 내가 해.&quot;</p>
+<p>&quot;네? 저는 그냥……&quot;</p>
+<p>&quot;……지하 3층.&quot;</p>
+<p>&quot;아직 아무 말도 안 했는데요?&quot;</p>
+<div class="scene"><b>방문 3회</b></div>
+<p>루카스는 목요일 전에 세 군데를 혼자 돌았다.</p>
+<p>월요일 퇴근길에는 엘제 선생님이 알려 준 곳부터 갔다. 안에 들어가지는 않았다. 문 앞에서 창 너머 선반을 한참 보다가, 가방에서 소형 습도계를 꺼내 문틈에 대 보고 수첩에 숫자를 적고 돌아갔다. 49. 북향이었고 병은 전부 안쪽에 있었다.</p>
+<p>화요일 점심시간에는 마렌이 알려 준 곳에 갔다. 가게는 예뻤고 조향사는 친절했다. 그런데 창가 진열대에 병이 가지런히 놓여 있었고, 오후 햇빛이 그 위로 곧장 들어오고 있었다. 루카스는 문턱에서 멈췄다.</p>
+<p>&quot;……햇빛.&quot;</p>
+<p>&quot;네?&quot;</p>
+<p>&quot;……병이, 햇빛을 받고 있습니다.&quot;</p>
+<p>조향사가 돌아봤을 때 루카스는 이미 정중하게 목례하고 문을 닫는 중이었다. 마렌에게는 그날 저녁 문자로 &quot;고맙습니다.&quot;만 보냈고, 마렌은 그 문자를 한참 보다가 요나스에게 &quot;이 사람 아무래도 갔다 왔어.&quot; 하고 말했다. 요나스는 &quot;어떻게 아세요?&quot; 했고 마렌은 대답하지 않았다.</p>
+<p>수요일 퇴근길에는 직접 찾은 곳에 갔다. 대학에서 11분 거리였다. 재료 목록이 정확했고 가격표가 반듯했다. 그런데 조향사가 처음 본 손님에게 너무 많이 말했다. 루카스는 십오 분을 서 있다가 &quot;……생각해 보겠습니다.&quot;라고 말하고 나왔다.</p>
+<p>수첩에는 이렇게 적혔다.</p>
+<div class="list">월 엘제 추천: 햇빛 없음 / 습도 49 / 판정 후보<br>
+화 마렌 추천: 햇빛 불량 / 말 보통 / 판정 탈락<br>
+수 직접 찾은 곳: 햇빛 양호 / 말 과다 / 판정 보류<br>
+목: 예약됨.</div>
+<div class="scene"><b>목요일, 같이</b></div>
+<p>그는 옛 약국 앞에서 문 위의 십자 자국을 올려다봤다. 간판은 떼어졌는데 자국만 하얗게 남아 있었다.</p>
+<p>&quot;여기가 엘제 선생님이 알려 주신 곳이에요?&quot;</p>
+<p>&quot;……응.&quot;</p>
+<p>&quot;오래돼 보여요. 루카 좋아하겠다.&quot;</p>
+<p>&quot;……습도는 봐야 알아.&quot;</p>
+<p>문을 열기 전에 루카스가 한 번 멈췄다. 그 모습을 보고 그가 작게 웃었다.</p>
+<p>&quot;왜요?&quot;</p>
+<p>&quot;……안 웃었어.&quot;</p>
+<p>안은 갈색 병으로 가득했다. 천장까지 선반이 있었고, 창문은 북향이었고, 병은 전부 햇빛이 닿지 않는 안쪽에 있었다. 루카스의 어깨가 아주 조금 내려갔다. 그는 그걸 봤다.</p>
+<p>은발의 조향사가 카운터 안에서 고개를 들었다.</p>
+<p>&quot;아, 월요일에 습도계 들고 오셨던 분.&quot;</p>
+<p>루카스의 귀가 3초 만에 목덜미까지 붉어졌다. 그는 입술을 깨물고 선반 쪽으로 몸을 돌렸다.</p>
+<p>&quot;……저는, 한 군데만 본 겁니다.&quot;</p>
+<p>&quot;그렇군요.&quot;</p>
+<p>조향사는 아무 일도 없었다는 얼굴로 앞치마 끈을 고쳐 맸다.</p>
+<div class="scene"><b>상담</b></div>
+<p>&quot;누구를 위한 향이에요?&quot;</p>
+<p>루카스가 입을 열기도 전에 그가 손을 들었다.</p>
+<p>&quot;저를 위한 거예요. 근데 제가 아니라 이분 향이에요.&quot;</p>
+<p>조향사가 눈썹을 올렸다. 루카스는 수첩을 펴고 거기에 아무것도 적지 않은 채 한참 있다가 말했다.</p>
+<p>&quot;……나무.&quot;</p>
+<p>&quot;어떤 나무요?&quot;</p>
+<p>&quot;……서랍을 열면 나는.&quot;</p>
+<p>그가 이어 받았다.</p>
+<p>&quot;마른 나무인데, 거기서 한 번 더 따뜻해져요. 책장 서랍이요. 중성지랑 오래된 종이랑요. 그런데 안으로 들어오면 따뜻한 사람이에요.&quot;</p>
+<p>&quot;……그건 내가 한 말이야.&quot;</p>
+<p>&quot;맞아요. 며칠 전에 루카가 한 말이에요. 제가 외웠어요ㅎㅎ&quot;</p>
+<p>조향사가 고개를 끄덕이며 작은 공책에 적었다. 루카스는 그 공책을 한 번 쳐다봤다. 자기 수첩이 아닌 곳에 자기 말이 적히는 건 처음이었다.</p>
+<div class="scene"><b>재료</b></div>
+<p>시향지를 받으며 그는 신이 났다. 조향사가 병을 하나 열 때마다 시향지에 묻혀 흔들어 건넸다. 시더우드, 사이프러스, 베티버, 오래된 책 같은 향, 앰버, 머스크, 마른 이끼.</p>
+<p>&quot;이건 숲이에요. 루카는 숲이 아니라 서랍인데요.&quot;</p>
+<p>&quot;이건 나무는 있는데 종이가 없어요.&quot;</p>
+<p>&quot;이건…… 루카가 아침에 땋을 때 아마실 냄새 같아요.&quot;</p>
+<p>조향사가 그 말에 손을 멈추고 공책에 한 줄을 더 적었다.</p>
+<p>시향지가 세 장을 넘었을 때 루카스가 그의 소매를 잡았다.</p>
+<p>&quot;……세 장까지.&quot;</p>
+<p>&quot;아, 맞다. 죄송해요ㅎㅎ&quot;</p>
+<p>조향사가 커피콩 병을 건네자 그는 받아서 맡았고, 루카스는 &quot;……물이 낫습니다.&quot; 하고 물을 마셨다. 조향사는 처음 보는 풍경이라는 얼굴로 둘을 번갈아 봤다.</p>
+<div class="scene"><b>한 방울의 크기</b></div>
+<p>본격적으로 섞는 순서가 오자 루카스의 진가가 나왔다.</p>
+<p>조향사가 스포이트로 시더를 떨어뜨리는 걸 보다가, 루카스가 조용히 말했다.</p>
+<p>&quot;……한 방울의 크기가 일정하지 않습니다.&quot;</p>
+<p>&quot;그건 감으로 하는 거라……&quot;</p>
+<p>&quot;눈금 피펫 있습니까.&quot;</p>
+<p>조향사가 한참 루카스를 보다가 서랍에서 눈금 피펫을 꺼냈다. 루카스는 손을 씻고 장갑을 끼고 피펫을 들었다. 핀셋 잡을 때와 똑같은 자세였다. 수첩에는 이렇게 적혔다.</p>
+<div class="list">시더 12 / 앰버 3 / 종이 5 / 사이프러스 1</div>
+<p>&quot;……1이 너무 많습니다.&quot;</p>
+<p>&quot;1이 너무 적은 게 아니고요?&quot;</p>
+<p>&quot;……너무 많습니다. 0.8.&quot;</p>
+<p>조향사가 두 번째 피펫을 꺼냈다. 그는 옆에서 조향사에게 낮게 속삭였다.</p>
+<p>&quot;저분이 저렇게 열심히 하는 거 처음 봐요.&quot;</p>
+<p>&quot;저도 처음 봅니다.&quot;</p>
+<div class="scene"><b>비공개 한 방울</b></div>
+<p>세 번째 시제품은 너무 달았고, 네 번째는 너무 서늘했다. 다섯 번째에서 그가 시향지를 코에 대 보고 눈을 감았다.</p>
+<p>&quot;……서랍인데, 아직 열리기 전이에요. 따뜻하지 않아요.&quot;</p>
+<p>조향사가 말없이 베이스 병 선반 쪽으로 손을 뻗으려다 멈췄다.</p>
+<p>루카스가 일어서서 조향사에게 눈짓을 했다. 둘은 한 걸음 떨어진 자리로 가서 낮게 몇 마디를 나눴다. 그는 못 들은 척하고 시향지를 흔들었지만, 마지막에 루카스가 한 말은 들었다.</p>
+<p>&quot;……한 방울만.&quot;</p>
+<p>&quot;그 정도면 균형에 영향은 안 갑니다.&quot;</p>
+<p>&quot;……비공개로 부탁드립니다.&quot;</p>
+<p>여섯 번째 시제품은 아무 설명 없이 나왔다. 그가 시향지를 받아 코에 댔다. 서랍과 종이와 앰버 끝에, 아주 조금 따뜻한 것이 있었다. 누가 일부러 넣지 않았다면 있을 리 없는 것이었다.</p>
+<p>그는 한참 말이 없었다. 루카스가 못 본 척 수첩을 보고 있었다. 그가 아주 작게 말했다.</p>
+<p>&quot;……밤이에요.&quot;</p>
+<p>&quot;……균형 때문입니다.&quot;</p>
+<p>&quot;네, 균형이죠.&quot;</p>
+<div class="scene"><b>숙성</b></div>
+<p>&quot;이건 3주는 둬야 합니다. 그동안 향이 서로 섞이고 자리를 잡아요.&quot;</p>
+<p>&quot;……곰팡이 3주.&quot;</p>
+<p>&quot;그건 요나스예요ㅎㅎ&quot;</p>
+<p>그날 병에는 아직 라벨이 없었다. 조향사가 이름을 물었고, 그가 &quot;서랍이요&quot; 하자 루카스가 &quot;……안 됩니다.&quot; 하고 연필로 종이에 적었다. 백향목. 그 밑에 날짜.</p>
+<div class="scene"><b>3주</b></div>
+<p>그의 달력은 이끼색으로 채워졌다.</p>
+<p>첫 주에는 의연했다. &quot;금방이죠ㅎㅎ&quot;라고 했다. 둘째 주에는 작업실 벽에 달력을 걸고 하루에 한 칸씩 병을 그려 칠했다. 마지막 날 칸만 빨강으로 남겼다. 셋째 주에는 붓을 들고 창밖을 보는 시간이 늘었다.</p>
+<p>&quot;공방에 전화해 볼까요?&quot;</p>
+<p>&quot;……안 돼.&quot;</p>
+<p>&quot;전화는 건드리는 게 아니잖아요.&quot;</p>
+<p>&quot;……기대가 건드리는 거야.&quot;</p>
+<p>그는 반박하지 못하고 그날 밤 베개를 안고 돌아누웠다. 새벽 세 시에는 루카스의 허리에 팔을 감았다. 루카스는 깨어 있었고, 그 팔을 빼지 않았다.</p>
+<p>그 3주 동안 그가 루카스의 목덜미에 코를 대는 횟수는 눈에 띄게 늘었다. 현관에서, 소파에서, 아침 다리 위에서. 루카스는 &quot;……나는 병 아니야.&quot; 하면서도 한 번도 피하지 않았다.</p>
+<div class="scene"><b>목요일 여섯 시 십 분</b></div>
+<p>그날 그는 하루 종일 붓을 못 잡았다. 다섯 시 오십오 분에 복원실 앞에 서 있었고, 요나스가 &quot;선배님 칼퇴하세요!&quot; 외쳤고, 루카스는 코트를 입으며 &quot;……나 퇴근 시간 여섯 시야.&quot; 했다.</p>
+<p>공방에서 조향사가 갈색 상자를 내밀었다.</p>
+<p>&quot;3주 하고 하루입니다. 어제 뚜껑을 한 번 열어 봤어요. 괜찮아요.&quot;</p>
+<p>&quot;……확인은 제가 합니다.&quot;</p>
+<p>&quot;그러실 줄 알았습니다.&quot;</p>
+<p>상자 안에는 50밀리 병 두 개가 있었다. 라벨은 똑같이 &#x27;백향목&#x27;이었고, 하나의 모서리에만 연필 점이 찍혀 있었다.</p>
+<p>루카스가 시향지에 뿌린 한 번을 흔들어 거리를 둔 뒤 맡았다. 서랍이 열렸다. 서늘하고 마른 종이 냄새가 지나간 다음 앰버가 천천히 데워졌고, 맨 끝에 구운 밤이 아주 조금 남았다.</p>
+<p>그는 루카스의 얼굴을 보고 있었다. 핀셋 들 때 얼굴이었다. 루카스가 눈을 뜨고 작게 말했다.</p>
+<p>&quot;……이거야.&quot;</p>
+<div class="scene"><b>다리 위</b></div>
+<p>해가 지는 옛 다리에서 그가 병을 허공에 한 번 뿌렸다. 가로등 불빛 속에서 입자가 올라갔다가 내려앉았다. 둘은 약속도 안 했는데 그 아래로 한 걸음씩 들어갔다.</p>
+<p>&quot;……루카, 이거 루카 냄새예요.&quot;</p>
+<p>&quot;……병 냄새야.&quot;</p>
+<p>&quot;아니에요. 루카가 서랍을 열었을 때 나는 냄새예요.&quot;</p>
+<p>그는 루카스의 목덜미에 코를 댔다. 방금 뿌린 향 밑에 체향이 있었고, 그 밑에 중성지가 있었다. 병과 사람이 구분되지 않았다.</p>
+<p>&quot;……병이 나를 닮은 거야.&quot;</p>
+<p>&quot;네. 맞아요.&quot;</p>
+<p>난간 위에서 손이 나란히 놓였다. 루카스가 먼저 손가락 사이에 손을 끼웠다. 그는 그 손을 주무르지 않고 그냥 잡고 있었다.</p>
+<div class="scene"><b>서랍</b></div>
+<p>집에서 루카스는 코트도 습도계도 먼저 찾지 않았다. 서재로 들어가 병 하나를 서랍에 넣었다. 습도계 붙은 상자 옆 칸이었다. 모서리를 평행하게 맞췄다. 나머지 병은 그에게 건넸다.</p>
+<p>&quot;……네 거야. 작업실 창틀. 5천 원짜리 옆에.&quot;</p>
+<p>&quot;치사해요.&quot;</p>
+<p>&quot;……뭐가.&quot;</p>
+<p>&quot;이제 저한테도 루카가 병으로 생겼잖아요. 이제 억울하지 않잖아요. 치사해요.&quot;</p>
+<p>&quot;……그건 칭찬이야?&quot;</p>
+<p>&quot;네ㅎㅎ&quot;</p>
+<p>수첩 맨 아랫줄에는 그가 대신 이렇게 적었다.</p>
+<div class="list">목요일. 3주 하루. 백향목 수령. 병 2. 균형: 밤 한 방울(비공개→공개됨). 방문 3회→확인됨.</div>
+<p>그 밑에 루카스의 글씨가 한 줄 더 있었다.</p>
+<div class="list">한 군데야.</div>
+  </article>
+  <div class="end"><span class="mark">— FIN —</span><a href="index.html#chron" onclick="if(history.length>1){history.back();return false}">목록으로 돌아가기</a></div>
+</div>
+<!--bgm--><script>window.BGM={"ids": ["wp2GVCZgpPE", "ENrXe6VKD0o", "L1Jiqj5xHw4"], "title": "Cozy Fireplace · 장작 타는 소리"};</script><script src="bgm.js" defer></script><!--/bgm-->
+</body>
+</html>
