@@ -82,6 +82,7 @@ h1 small{display:block;font-family:var(--body);font-size:13px;font-weight:700;le
 <body>
 <div class="wrap">
   <a class="back" href="index.html#chron" onclick="if(history.length>1){history.back();return false}">← 목록으로</a>
+  <div id="views" data-chat="story-sweater.html" data-novel="story-sweater-novel.html" data-cur="chat"></div>
   <h1>출전 자격 없음<small>단편 · 세 번째 겨울 · 21. Dezember</small></h1>
   <div class="win">
     <div class="bar">
@@ -186,5 +187,6 @@ if(!still)requestAnimationFrame(draw)}
 requestAnimationFrame(draw)})();
 </script>
 <!--bgm--><script>window.BGM={"ids": ["YvI_FNrczzQ", "JM6fZmcpMCo", "1TVscZqMwuk"], "title": "Christmas Time Is Here · Vince Guaraldi Trio"};</script><script src="bgm.js" defer></script><!--/bgm-->
+<script src="novel.js" defer></script>
 </body>
 </html>
