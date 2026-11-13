@@ -1,6 +1,6 @@
-/* 소설형 단편: 상단 [전체 복사] 버튼 + 대화형/소설형 전환
+/* 소설형 단편: 대화형/소설형 전환
    - 대화형 페이지와 소설판에는 <div id="views" data-chat="..." data-novel="..." data-cur="chat|novel"></div> 를 둔다
-   - <article> 가 있는 페이지에는 복사 버튼이 붙는다 */
+    */
 (function () {
   var KEY = "heluka-view";
   function getPref() { try { return localStorage.getItem(KEY); } catch (e) { return null; } }
@@ -40,82 +40,8 @@
     bar.appendChild(seg);
   }
 
-  /* 전체 복사 */
-  var art = document.querySelector("article");
-  if (art) {
-    var btn = document.createElement("button");
-    btn.type = "button"; btn.textContent = "전체 복사";
-    btn.addEventListener("click", function () {
-      var text = collect(art);
-      done(copy(text));
-    });
-    bar.appendChild(btn);
-    function done(p) {
-      p.then(function () { btn.textContent = "복사했어요 ✓"; btn.classList.add("done"); },
-             function () { btn.textContent = "복사 실패 · 다시"; })
-       .then(function () { setTimeout(function () { btn.textContent = "전체 복사"; btn.classList.remove("done"); }, 2200); });
-    }
-  }
-
   if (!bar.children.length) return;
   if (v) v.parentNode.insertBefore(bar, v.nextSibling);
   else if (document.querySelector("header")) { var h = document.querySelector("header"); h.parentNode.insertBefore(bar, h.nextSibling); }
-  else if (art) art.parentNode.insertBefore(bar, art);
 
-  function clean(s) { return (s || "").replace(/\s+\n/g, "\n").replace(/[ \t]+/g, " ").trim(); }
-  function collect(root) {
-    var lines = [];
-    var h1 = document.querySelector("header h1") || document.querySelector("h1");
-    var when = document.querySelector("header .when");
-    if (h1) lines.push(clean(h1.textContent));
-    if (when) lines.push(clean(when.textContent));
-    if (lines.length) lines.push("");
-    walk(root, lines);
-    return lines.join("\n").replace(/\n{3,}/g, "\n\n").trim() + "\n";
-  }
-  function walk(el, lines) {
-    Array.prototype.forEach.call(el.children, function (c) {
-      var cl = c.classList, tag = c.tagName;
-      if (tag === "FIGURE" || tag === "SCRIPT" || tag === "STYLE" || tag === "SVG" || tag === "svg") return;
-      if (cl.contains("scene")) {
-        var parts = Array.prototype.map.call(c.childNodes, function (n) { return clean(n.textContent); }).filter(Boolean);
-        lines.push("", "# " + parts.join(" · "), ""); return;
-      }
-      if (cl.contains("part")) { lines.push("", "## " + clean(c.innerText || c.textContent).replace(/\n+/g, " · "), ""); return; }
-      if (tag === "H2" || tag === "H3") { lines.push("", "# " + clean(c.textContent), ""); return; }
-      if (cl.contains("chat")) {
-        var who = "";
-        Array.prototype.forEach.call(c.children, function (m) {
-          if (m.classList.contains("who")) who = clean(m.textContent);
-          else if (m.classList.contains("msg")) { lines.push((who ? who + ": " : "") + clean(m.textContent)); }
-          else if (m.classList.contains("room")) lines.push("[" + clean(m.textContent) + "]");
-        });
-        lines.push(""); return;
-      }
-      if (cl.contains("letter") || cl.contains("talk") || cl.contains("list") || cl.contains("note-card")) {
-        var ps = c.querySelectorAll("p,li");
-        if (ps.length) Array.prototype.forEach.call(ps, function (p) { lines.push((cl.contains("letter") ? "> " : "") + clean(p.textContent)); });
-        else lines.push(clean(c.innerText || c.textContent));
-        lines.push(""); return;
-      }
-      if (tag === "P" || tag === "BLOCKQUOTE" || tag === "LI") { lines.push(clean(c.innerText || c.textContent), ""); return; }
-      if (c.children.length) { walk(c, lines); return; }
-      var t = clean(c.textContent); if (t) lines.push(t, "");
-    });
-  }
-  function copy(text) {
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      return navigator.clipboard.writeText(text).catch(function () { return fallback(text); });
-    }
-    return fallback(text);
-  }
-  function fallback(text) {
-    return new Promise(function (res, rej) {
-      var ta = document.createElement("textarea");
-      ta.value = text; ta.setAttribute("readonly", ""); ta.style.position = "fixed"; ta.style.top = "-1000px";
-      document.body.appendChild(ta); ta.select(); ta.setSelectionRange(0, text.length);
-      var ok = false; try { ok = document.execCommand("copy"); } catch (e) {}
-      document.body.removeChild(ta); ok ? res() : rej();
-    });
-  }
 })();
