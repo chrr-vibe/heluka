@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>평일</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Pinyon+Script&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Nanum+Myeongjo:wght@400;700;800&display=swap">
+<style>
+:root{color-scheme:dark;--night:#17110c;--gold:#c4a676;--gold-hi:#e6d6b2;--line:rgba(196,166,118,.42);--parch:#ece2cd;--text:#ddd2bd;--muted:#a39580;
+  --caps:"Cinzel","Times New Roman",serif;--script:"Pinyon Script","Times New Roman",cursive;--ko:"Nanum Myeongjo","AppleMyungjo","Batang",serif}
+*{box-sizing:border-box}
+html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;background-color:var(--night);color:var(--text);font-family:var(--ko);font-size:17px;line-height:2;
+  background-image:radial-gradient(ellipse 70% 40% at 50% 0%,rgba(214,180,120,.12),transparent 70%);background-repeat:no-repeat;
+  padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px));padding-block:24px 80px}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;opacity:.5;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .9  0 0 0 0 .8  0 0 0 0 .6  0 0 0 .05 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+.wrap{max-width:620px;margin:0 auto}
+.back{display:inline-block;font-family:var(--caps);font-size:11px;letter-spacing:.2em;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:2px}
+.back:hover,.back:focus-visible{color:var(--gold-hi);outline:none}
+header{text-align:center;margin:56px 0 48px;display:grid;gap:6px;justify-items:center}
+header .lat{font-family:var(--script);font-size:44px;line-height:1;color:var(--gold)}
+header h1{margin:0;font-family:var(--ko);font-weight:800;font-size:clamp(28px,6vw,36px);color:var(--parch);letter-spacing:.08em}
+header .when{font-family:var(--caps);font-size:11px;letter-spacing:.28em;color:var(--muted)}
+header svg{width:160px;height:16px;margin-top:10px}
+article p{margin:0 0 1.1em;word-break:keep-all}
+.talk{margin:0 0 1.1em;padding-left:14px;border-left:1px solid var(--line)}
+.talk p{margin:0;color:var(--parch)}
+h2{margin:2.6em 0 1.4em;text-align:center;font-family:var(--ko);font-weight:700;font-size:16px;letter-spacing:.12em;color:var(--gold)}
+h2 span{padding:0 14px;background:var(--night);position:relative}
+h2::before{content:"";display:block;height:1px;background:var(--line);transform:translateY(1em)}
+.end{text-align:center;margin-top:56px;display:grid;gap:18px;justify-items:center}
+.end .mark{font-family:var(--caps);font-size:11px;letter-spacing:.3em;color:var(--muted)}
+.end a{font-family:var(--ko);font-size:15px;color:var(--gold-hi);text-decoration:none;border:1px solid var(--line);border-radius:40px 40px 10px 10px;padding:8px 22px}
+.end a:hover,.end a:focus-visible{background:rgba(196,166,118,.15);outline:none}
+
+.part{text-align:center;margin:84px 0 40px;display:grid;gap:4px;justify-items:center}
+.part.first{margin-top:0}
+.part .eyebrow{font-family:var(--script);font-size:32px;line-height:1.1;color:var(--gold)}
+.part h2{margin:0;font-family:var(--ko);font-weight:800;font-size:24px;color:var(--parch);letter-spacing:.06em}
+.part h2::before{display:none}
+.part .sub{font-family:var(--caps);font-size:11px;letter-spacing:.24em;color:var(--muted)}
+.orn2{color:var(--gold);margin-bottom:22px}
+.scene{display:flex;align-items:center;gap:12px;margin:56px 0 26px;color:var(--muted);font-size:14px;letter-spacing:.1em}
+.scene::before,.scene::after{content:"";flex:1;height:1px;background:var(--line)}
+.scene b{font-family:var(--caps);font-weight:600;color:var(--gold);letter-spacing:.12em}
+.list{margin:4px 0 1.4em;padding:14px 20px;border:1px solid var(--line);border-radius:6px;background:rgba(236,226,205,.05);font-size:15.5px;line-height:1.9;color:var(--parch)}
+.list ol{margin:0;padding-left:1.4em}
+.list .note{color:var(--muted);font-size:14px}
+.chat{margin:4px 0 1.6em;display:flex;flex-direction:column;gap:6px}
+.chat .who{font-size:12.5px;color:var(--muted);margin:4px 0 -2px}
+.chat .msg{align-self:flex-start;max-width:86%;background:rgba(236,226,205,.08);border:1px solid var(--line);color:var(--parch);padding:6px 13px;border-radius:14px 14px 14px 4px;font-size:15px;line-height:1.6}
+.chat .msg.me{align-self:flex-end;border-radius:14px 14px 4px 14px;background:rgba(217,130,106,.18);border-color:rgba(217,130,106,.45)}
+.chat .room{align-self:center;font-family:var(--ko);font-size:12px;color:var(--gold);letter-spacing:.06em;margin-bottom:4px}
+.quiet{color:var(--muted)}
+.note-card{margin:4px auto 1.4em;padding:12px 18px;border:1px dashed var(--gold);border-radius:4px;color:var(--parch);font-size:15px;text-align:center;max-width:320px;background:rgba(236,226,205,.04)}
+article b{color:var(--gold-hi)}
+</style>
+<style>
+.trpg-tag{display:inline-block;font-family:var(--caps);font-size:10px;letter-spacing:.24em;color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:3px 10px;margin-top:6px}
+p.inner{font-style:italic;color:var(--muted);padding-left:14px;border-left:2px solid var(--line)}
+.caveat{margin:0 auto 40px;max-width:480px;text-align:center;font-size:13.5px;line-height:1.8;color:var(--muted)}
+</style></head>
+<body>
+<div class="wrap">
+  <a class="back" href="trpg-dmak-series.html">← 다만악</a>
+  <header>
+    <span class="lat">Alltag</span>
+    <h1>평일</h1>
+    <span class="when">TRPG 단편 · 「나는 머문다」 이후, 일상으로 돌아오기까지</span>
+    <svg viewBox="0 0 180 18" aria-hidden="true"><g fill="none" stroke="#c4a676" stroke-width="1.2"><path d="M0 9 H70 M110 9 H180"/><path d="M90 3 l6 6 -6 6 -6 -6z" fill="#c4a676"/></g></svg>
+  </header>
+  <p class="caveat">다만악 쪽 이야기예요. 두 사람이 서류와 직업과 아침의 다리를 하나씩 되찾는 이야기예요.</p>
+  <article>
+<div class="part first"><span class="eyebrow">Short</span><h2>평일</h2></div>
+<div class="scene"><b>돌아온 지 석 달</b> 이름 칸</div>
+<p>경찰서의 서기는 안경을 이마로 올렸다가 다시 내렸다.</p>
+<p>"……그러니까, 사망으로 처리된 분이 지금 이 창구에 서 계시다는 거군요."</p>
+<p>"네."</p>
+<p>"3년 전에."</p>
+<p>"네. 그런데 살아 있어요."</p>
+<p>"그건 보면 압니다만."</p>
+<p>서기는 서류철을 세 번 뒤졌다. 사망 신고서, 실종 신고서, 숲속 성의 매매 증서, 그리고 지난 계절에 사교도 일당이 체포되면서 쌓인 수사 기록. 그 모든 종이가 한 사람 이야기를 하고 있었다. 사망자 하나, 실종자 하나. 둘이 한 탁자에 앉아 있다는 건 어느 서식에도 없었다.</p>
+<p>루카스는 그의 옆에서 반듯하게 앉아 있었다. 무릎에 두 손을 올리고, 왼손과 오른손의 반지가 부딪히지 않게. 새 손은 굳은살이 아직 얇았다. 서기가 질문할 때마다 루카스는 그에게 한 번씩 눈길을 주었다. 그가 아직 거기 있는지 확인하는 눈길이었다. 서기는 그걸 업무 태도로 이해하는 듯했다.</p>
+<p>"성함을 말씀해 주십시오. 사망 취소 신청서에 적어야 해서요."</p>
+<p>그는 입을 열었다가 닫았다.</p>
+<p>이름. 이 이름을 마지막으로 소리 내어 말한 게 언제였더라. 루카스는 그 이름을 거의 부르지 않았다. 부를 때는 『너』였다. 그는 그 말이 이름보다 좋았다. 그렇다고 서류에 『너』라고 적을 수는 없었다.</p>
+<p>그는 자기 이름을 말했다. 오랜만에 듣는 소리였다. 서기는 받아 적다가 펜을 멈추었다.</p>
+<p>"……돌아가신 분과 같은 성함이군요."</p>
+<p>"네. 같은 사람이에요."</p>
+<p>"……"</p>
+<p>서기가 한참 그를 올려다보았다. 그의 붉은 머리와, 키와, 문틀 아래로 고개를 숙이고 앉은 모양을. 그러고는 말없이 펜을 다시 움직였다. 사망 취소. 서기가 쓴 두 글자가 종이에서 마르는 데 걸린 시간은 길지 않았다.</p>
+<p>"서명을."</p>
+<p>그가 서명했다. 루카스는 그 서명을 곁눈으로 보았다. 그의 글씨는 여전히 삐뚤었다. 루카스가 반지 안쪽에 그대로 두었던 그 글씨였다.</p>
+<p>창구에서 물러나 복도로 나오자 루카스가 문을 닫고 천천히 말했다.</p>
+<p>"……이름."</p>
+<p>"네?"</p>
+<p>"……오랜만에 들었어."</p>
+<p>"ㅎㅎ 저도요."</p>
+<p>"……불러 줄까."</p>
+<p>그가 걸음을 멈췄다. 루카스는 앞을 보고 있었다. 귀 끝이 붉었다.</p>
+<p>"……지금은 말고요."</p>
+<p>"……왜."</p>
+<p>"지금 들으면 울 것 같아서요. 여기 경찰서잖아요."</p>
+<p>"……"</p>
+<p>"집에 가서요. 아무도 없는 데서."</p>
+<p>루카스는 대답 없이 한 걸음 앞서 걸었다. 그러다 복도 모퉁이를 돌기 전, 아무도 보지 않을 때 손을 뒤로 뻗어 그의 소매 끝을 잡았다. 반지가 소매에 닿아 틱 소리가 났다.</p>
+<p>그날 밤 루카스는 정말로 이름을 불렀다. 불 끄기 전에, 한 번만. 이 이야기에서 그 이름은 적지 않는다. 그는 그 한 번을 오래 들었다.</p>
+<div class="scene"><b>그 달</b> 지하</div>
+<p>성은 석 달 동안 닫혀 있었다.</p>
+<p>경찰이 지하를 한 번 훑었다. 철창들은 비어 있었다. 사람이 다시는 갇히지 않게 철창 살 두 개씩을 모조리 빼냈다. 그러고는 성문에 줄을 쳤다. 줄은 비에 바래 느슨해져 있었다.</p>
+<p>그는 루카스에게 말하지 않고 혼자 가려고 했다. 새벽 세 시에, 다리를 한 번 건너는 사람처럼. 현관 앞에서 코트를 입다가 문득 뒤를 돌아보았다. 루카스가 계단 위에 서 있었다. 이미 코트를 입고.</p>
+<p>"……언제 말하나 했어."</p>
+<p>"ㅎㅎ 들켰네요."</p>
+<p>"……너는 숨기는 버릇이 있어."</p>
+<p>"루카도요."</p>
+<p>"……나는 고치는 중이야."</p>
+<p>"저도요."</p>
+<p>마차는 숲 어귀에서 멈추었다. 비가 오지 않는 숲은 처음이었다. 해바라기는 아직 꽃을 달지 않았다. 문 앞의 화단은 잎만 푸르렀다. 손자국이 가득하던 그 문은 이번에는 쉽게 열렸다. 바깥쪽 손잡이가 달려 있었다. 경찰이 떼어 낸 안쪽 빗장 자리에만 구멍이 남아 있었다.</p>
+<p>나무계단은 변함없이 삐걱거렸다. 그는 먼저 내려갔다. 루카스가 한 칸 뒤에서 따라왔다. 그가 기억하는 냄새는 많이 가셔 있었다. 지하 감옥은 그저 서늘하고 축축한 돌방이었다.</p>
+<p>그는 가장 안쪽 철창 앞에서 걸음을 멈추었다.</p>
+<p>그 사람은 철창 가까이에 앉아 있었다. 그림자 속이 아니라 계단 쪽으로 반쯤 나와서. 등을 벽에 기대고, 고개를 조금 든 채로. 오래 기다린 사람의 자세였다. 눈은 감겨 있었다. 반쪽은 그의 얼굴이었고 반쪽은 갈색 머리였다. 숨이 멈춘 지 오래였다. 그림자 속으로 숨던 사람이 마지막에는 계단 쪽으로 나와 앉아 있었다.</p>
+<p>"……와 달라고 했는데."</p>
+<p>그는 철창 앞에서 무릎을 꿇었다.</p>
+<p>"올게요, 꼭 올게요, 했는데."</p>
+<p>"……"</p>
+<p>"저, 그 약속을 못 지켰어요."</p>
+<p>루카스는 그의 뒤에서 아무 말도 하지 않았다. 오래. 그리고 자기 코트를 벗어, 철창 안으로 팔을 뻗어 그 사람의 어깨에 덮었다.</p>
+<p>"……내가 만든 거야."</p>
+<p>그가 고개를 돌렸다. 루카스의 얼굴은 반듯했다. 우는 얼굴이 아니었다. 우는 사람이 무너질 때의 얼굴이었다.</p>
+<p>"……네 얼굴을 이렇게 반으로 쓴 건 나야. 이 사람도, 저쪽 사람들도. 네 약속은 네 게 아니야. 내 거야."</p>
+<p>"루카……"</p>
+<p>"……나는 이름을 새길 수 없었어. 3년 동안. 이건 네가 아니라 재료라고, 그렇게 생각하려고."</p>
+<p>루카스가 손을 뻗어 철창에 이마를 댔다.</p>
+<p>"……이제는 알아. 그렇게 생각하지 않았으면 훨씬 전에 다 놨을 거야."</p>
+<p>그들은 그날 오후 지하를 하나씩 열었다. 경찰이 미처 수습하지 못한 사람들이 아직 거기 있었다. 누구의 것도 아닌 장례가 필요했다. 루카스는 말없이 장갑을 꼈고, 그는 말없이 삽을 들었다. 해가 기울 때까지 성 앞의 이름 없는 묘비 수가 하나씩 늘어났다.</p>
+<p>마지막 묘비 앞에서 루카스는 주머니에서 작은 끌을 꺼냈다. 석공이 쓰는 것이 아니라 복원가가 쓰는 정밀한 끌이었다. 그는 묘비 아래쪽, 흙과 닿는 자리에 글자를 새겼다.</p>
+<div class="note-card">Du warst hier.</div>
+<p>너는 여기 있었다. 이름도, 날짜도 없이.</p>
+<p>묘비마다 한 줄씩, 같은 글씨로. 해가 지고 가스등을 들어야 할 때까지 루카스는 끌을 놓지 않았다. 그는 옆에서 해바라기 씨를 한 알씩 심었다. 손가락 한 마디 깊이로. 이 자리에서 올여름 해바라기가 필 것이다. 그가 돌보기로 했다.</p>
+<p>마지막 묘비는 철창에 기대 있던 사람의 것이었다. 루카스는 거기엔 한 줄을 더 새겼다.</p>
+<div class="note-card">Er hat gewartet.</div>
+<p>그는 기다렸다. 그는 그걸 읽다가, 루카스의 소매를 붙잡고 오래 숨을 골랐다.</p>
+<p>"……너 약속 지켰어."</p>
+<p>"……"</p>
+<p>"왔잖아. 늦었지만. 석 달 늦게. 이 사람은 3년을 기다렸어. 네 석 달은 오차 범위야."</p>
+<p>"루카는 지금 그 말 위로예요?"</p>
+<p>"……습도 오차 같은 거야."</p>
+<p>그가 웃었다. 울면서 웃었다. 루카스가 소매를 잡힌 채 서 있었다.</p>
+<div class="scene"><b>넉 달째</b> 핀셋</div>
+<p>루카스가 복원실에 간 건 넉 달째 되는 월요일이었다.</p>
+<p>엘제 선생님은 3년 동안 루카스의 자리를 치우지 않았다. 다른 사람이 그 작업대를 쓰고 싶다고 할 때마다 "저건 주인이 있어"라고만 했다. 그날 그는 루카스를 배웅하겠다고 따라나섰다가 대학 도서관 정문 앞에서 멈추어 섰다. 루카스가 말했다.</p>
+<p>"……여기까지."</p>
+<p>"네. 여기서 기다릴게요."</p>
+<p>"……퇴근 시간 여섯 시야."</p>
+<p>"알아요. 그래도 여기 서 있을게요."</p>
+<p>"……그건 일이 아니야. 가서 그림 그려."</p>
+<p>"일이 아니에요. 습관이에요ㅎㅎ"</p>
+<p>루카스는 한참 그의 얼굴을 보다가 그의 손목을 쥐었다. 오른쪽 손목. 흉터를 엄지로 한 번 쓸고.</p>
+<p>"……복원실은 지하야. 거기선 네가 안 보여."</p>
+<p>"네."</p>
+<p>"……나는 거기서 안 사라져."</p>
+<p>"알아요."</p>
+<p>"……그러니까 가."</p>
+<p>그는 그 자리에 서 있었다. 루카스가 문 안쪽으로 사라질 때까지. 그리고 루카스가 시야에서 사라지고 나서도, 한 번 더 서 있었다.</p>
+<p>복원실은 지하 2층에 있었다. 계단을 내려가면 공기부터 달랐다. 서늘하고 건조했다. 습도계가 벽마다 걸려 있었다. 루카스는 문 앞에서 코트를 벗기 전에 습도계부터 읽었다. 50. 정확히.</p>
+<p>"왔어?"</p>
+<p>엘제 선생님이 작업대에서 고개를 들었다. 3년 만이었다. 늙어 있었다. 그런데 목소리는 3년 전 그대로였다.</p>
+<p>"……네."</p>
+<p>"3년 만에 와서 인사가 그거야."</p>
+<p>"……죄송합니다."</p>
+<p>"사과는 필요 없고."</p>
+<p>선생님이 턱짓으로 루카스의 작업대를 가리켰다. 거기에 먼지 한 톨 없었다. 매일 닦았던 자리였다. 그리고 작업대 한가운데에 핀셋이 놓여 있었다. 쪽지는 없었다.</p>
+<p>"……그거 쓰는 손이 새 손이니까 새 거 줘야지."</p>
+<p>"……선생님."</p>
+<p>"왜."</p>
+<p>"……제 손이 달라진 걸 어떻게 아세요?"</p>
+<p>선생님은 대답하지 않았다. 대신 루카스의 손을 한 번 보았다. 3년 전보다 마르지 않았고, 굳은살은 아직 얇았다. 그리고 두 손의 반지를.</p>
+<p>"……대부분은 돼."</p>
+<p>루카스의 숨이 멈추었다. 그 말은 이 복원실에서 15년 동안 루카스가 입에 달고 다니던 말이었다.</p>
+<p>"대부분은 되니까 해 봐. 안 되는 건 내가 고쳐 줄 거야. 나도 15년 된 사람이야."</p>
+<p>루카스는 핀셋을 집었다. 손끝이 미끄러졌다. 핀셋이 작업대 위에 한 번 떨어졌다. 딸깍. 소리가 지하 2층에 길게 울렸다.</p>
+<p>엘제 선생님은 아무 말도 하지 않았다. 대신 접이식 의자 하나를 루카스의 작업대 옆에 펴 놓고 거기 앉았다. 두 걸음 떨어진 자리에.</p>
+<p>루카스는 핀셋을 다시 집었다. 이번엔 미끄러지지 않았다. 두 번째에도. 세 번째에 0.1밀리를 넘겼다.</p>
+<p>그날 오후 여섯 시 정각에 그는 대학 도서관 정문 앞에서 루카스를 기다리고 있었다. 한 번도 자리를 뜨지 않은 사람처럼. 루카스가 계단을 올라오는 걸 보고 그가 손을 들었다. 루카스는 그 손을 보고 걸음을 멈추었다. 한참 뒤에 입을 열었다.</p>
+<p>"……너 정말 하루 종일 있었어?"</p>
+<p>"세 시에 마을 빵집에 한 번 갔어요."</p>
+<p>"……"</p>
+<p>"루카 거 하나 샀어요. 아몬드 들어간 거."</p>
+<p>"……"</p>
+<p>"그래서 이만큼 서 있었던 거예요. 반칙 아니에요."</p>
+<p>루카스는 말없이 빵을 받았다. 한 입 먹고, 입을 가렸다. 맛있었다. 구운 아몬드는 3년 전과 똑같은 맛이었다.</p>
+<div class="scene"><b>넉 달째</b> 붉은 연작</div>
+<p>그의 작업실은 3년 동안 다나가 잠가 두었다.</p>
+<p>다나는 문 앞에서 그를 보자마자 아무 말도 하지 않았다. 그리고 가방을 문 앞에 내려놓고, 은발이 흐트러지도록 한 번 크게 그의 뺨을 때렸다. 짝. 소리가 복도 끝까지 갔다.</p>
+<p>"……다나 씨."</p>
+<p>"죽었다며! 장례도 치렀는데! 나 3년 동안 매달 네 무덤에 갔어! 거기엔 네 이름 새겨진 돌도 있어! 근데 뭐? 사망 취소?"</p>
+<p>그는 맞은 뺨을 감싸고 가만히 서 있었다. 다나가 두 번째로 팔을 들었다가, 내리고, 그를 끌어안았다. 하이힐이 바닥에 걸려 비틀거렸다. 목소리가 그의 어깨에서 갈라졌다.</p>
+<p>"……너 진짜 살아 있어?"</p>
+<p>"네. 그림 그릴 수 있어요."</p>
+<p>"그림 얘기가 아니잖아."</p>
+<p>"그림 얘기 맞아요ㅎㅎ"</p>
+<p>다나는 그를 한참 놓지 않았다. 한참 뒤에 코를 풀고는 가방에서 서류를 꺼냈다.</p>
+<p>"그리고 말인데. 네가 죽은 뒤로 붉은 연작 값이 세 배 뛰었어. 그건 알아야 해."</p>
+<p>"……세 배요?"</p>
+<p>"유작이잖아. 이제 어쩔 거야. 살아 돌아온 화가의 유작은 값을 어떻게 매기는지 나도 몰라. 감정사가 소리 지르고 갔어."</p>
+<p>"ㅎㅎㅎ"</p>
+<p>"웃지 마! 네가 웃으니까 더 화나."</p>
+<p>그는 웃음을 멈추지 못했다. 다나가 서류로 그의 팔을 쳤다. 그러다 다나도 웃었다. 우는 얼굴로.</p>
+<p>작업실은 그가 기억하는 그대로였다. 3년 치 먼지만 쌓여 있었다. 이젤은 비어 있었고, 붓들은 물감이 굳은 채로 통 안에 꽂혀 있었다. 다나는 이 방을 건드리지 않았다. 그림을 팔 때도, 이 방에서만은 한 점도 꺼내지 않았다.</p>
+<p>그는 붓 하나를 집었다. 굳은 물감이 부스러졌다. 손이 떨렸다.</p>
+<p>이 몸은 루카스의 몸으로 깨어난 몸이었다. 그림을 그린 적 없는 손이었다. 손가락의 길이도, 손목 각도도 이젠 그의 것이지만, 손이 기억하는 건 아직 어느 쪽인지 알 수 없었다.</p>
+<p>"……못 그리겠어요."</p>
+<p>등 뒤에서 의자가 끌리는 소리가 났다. 루카스가 작업실 구석에 자리를 잡고 있었다. 이젤에서 두 걸음 떨어진 자리에. 일 끝나고 곧장 온 코트 차림으로. 손엔 아직 복원실의 지우개 가루가 묻어 있었다.</p>
+<p>"……쉬는 손만 그려."</p>
+<p>"네?"</p>
+<p>"……처음엔 쉬는 손만. 얼굴 말고. 풍경 말고. 쉬는 손만."</p>
+<p>루카스가 무릎 위에 두 손을 올렸다. 왼손의 『Mein einziges』, 오른손의 『Ich bleibe』. 손가락은 아무것도 쥐지 않고 쉬고 있었다.</p>
+<p>그는 붓을 빨았다. 굳은 물감을 한참 풀었다. 해가 기울어서 북향 창으로 오렌지빛 사선이 들어올 때까지. 팔레트에 붉은색을 한 점 짜고, 금색을 한 점 짜고.</p>
+<p>첫 선은 삐뚤었다. 두 번째 선은 더 삐뚤었다. 세 번째 선에서 손목이 풀렸다. 몸이 기억하고 있었다. 그가 그림을 그린 3년 전의 몸이 아니라, 루카스의 손이 3년 동안 0.1밀리를 다루며 기억한 정확함이 그의 손목에 남아 있었다. 그 정확함에 그의 선이 얹혔다. 반듯하고, 조금 삐뚤어서, 쉬는 손의 선이었다.</p>
+<p>루카스는 한 시간 동안 움직이지 않았다. 중간에 한 번 입을 열었다.</p>
+<p>"……내 손이 그렇게 생겼어?"</p>
+<p>"네. 손가락 마디가 약간 튀어나왔어요. 오른손이 더요."</p>
+<p>"……"</p>
+<p>"반지 하나는 약지 마디에 걸려서 늘 조금 비뚤게 앉아요. 그것도 그릴 거예요."</p>
+<p>"……그건 안 그려도 돼."</p>
+<p>"그려야죠. 원본인 척하면 안 되잖아요."</p>
+<p>루카스의 귀 끝이 붉어졌다. 3초. 그는 그걸 보았지만 그리지 않았다. 붉은 건 이미 그의 팔레트에 있었다.</p>
+<div class="scene"><b>다섯 달째</b> 다리</div>
+<p>7시 55분의 다리는 처음에는 죽은 자리였다.</p>
+<p>루카스는 다섯 달째까지 수첩 한 구석에 작은 숫자를 적었다. 처음 며칠은 일곱, 여덟 번이었다. 다리 위에서 숨이 막힌 횟수. 난간에 손을 올렸다가 땀이 나서 뗀 횟수. 그를 한 번 더 확인한 횟수. 그는 그 수첩을 보지 않기로 했다. 그래도 알았다. 루카스가 아침에 다리에 도착하면 먼저 그를 세 번 보았다. 얼굴, 손, 발. 서 있는 자리가 땅에 닿아 있는지.</p>
+<p>그는 매일 아침 다리에 나왔다. 루카스가 9시에 복원실에 가기 전까지. 이젤은 가져오지 않았다. 처음에는 그냥 서 있기만 했다. 두 번째 주에는 스케치북을 들고 나왔다. 세 번째 주에는 강물을 그렸다. 흐르는 강을, 난간을, 난간 위의 두 손을.</p>
+<p>루카스는 그의 곁에서 습도를 쟀다. 다리 위의 습도는 늘 조금씩 틀렸다. 루카스는 그 오차를 수첩에 적지 않고, 소리 내서 말해 주었다.</p>
+<p>"……오늘은 64."</p>
+<p>"어제는요?"</p>
+<p>"……70."</p>
+<p>"그럼 오늘은 괜찮네요ㅎㅎ"</p>
+<p>"……그게 왜 괜찮아."</p>
+<p>"루카가 기뻐하니까요."</p>
+<p>"……기뻐 안 해."</p>
+<p>"귀 끝이요."</p>
+<p>"……바람이야."</p>
+<p>다리 위의 아침이 한 번 지나갈 때마다 숫자는 조금씩 줄었다. 일곱 번이 다섯 번이 되었고, 다섯 번이 세 번이 되었다. 루카스가 그를 확인하는 횟수도, 그가 루카스를 쳐다보는 횟수도. 장기 광기라고 했던 증상은 천천히 연해졌다. 처음에는 루카스가 방을 나서면 따라 나갔다. 욕실에 오래 있으면 문 앞에 앉았다. 지금은 루카스가 서재에 들어가면 그가 부엌에 남았다. 문 너머로 연필 소리가 들리면 그걸로 충분했다.</p>
+<p>어느 날 아침, 루카스가 습도를 읽다 말고 그에게 물었다.</p>
+<p>"……너 오늘 나 몇 번 봤어."</p>
+<p>"……세 번이요?"</p>
+<p>"……두 번이야. 어제는 다섯 번."</p>
+<p>"세고 계셨어요?"</p>
+<p>"……너도 세고 있었잖아."</p>
+<p>그는 웃었다. 그 웃음 끝에 눈물이 맺히려 했는데 맺히지 않았다. 이상하게도 맺히지 않았다. 그는 그게 이상해서 조용히 있었다.</p>
+<div class="scene"><b>어느 화요일</b> 의견 차이</div>
+<p>일상이 돌아왔다는 건 무슨 큰 사건으로 알게 되는 게 아니었다.</p>
+<p>그날 아침은 평범한 화요일이었다. 비가 올 것 같았다. 그의 오른손목이 욱신거렸다. 루카스는 계란을 부치다 태웠다.</p>
+<p>"……탔어."</p>
+<p>"탄 데가 맛있어요."</p>
+<p>"……안 맛있어."</p>
+<p>"저는 맛있어요."</p>
+<p>그는 탄 데부터 먹었다. 루카스는 흰 부분만 먹고 접시를 밀었다. 그러고는 그가 식탁 한구석에 쏟은 붉은 물감 자국을 보았다. 어젯밤 늦게 작업실에서 가져온 팔레트 한 귀퉁이가 식탁보에 닿았던 것이다.</p>
+<p>"……식탁보."</p>
+<p>"네?"</p>
+<p>"……네가 하면 빨강이 세 군데 있어."</p>
+<p>"세 군데요?"</p>
+<p>"……식탁보에, 소매에, 문손잡이에."</p>
+<p>"문손잡이요?"</p>
+<p>루카스가 문손잡이를 가리켰다. 거기에 정말로 붉은 얼룩이 한 점 묻어 있었다. 그는 자기 소매를 내려다보았다. 소매에도 있었다.</p>
+<p>"아……"</p>
+<p>"……빨강은 한 군데만."</p>
+<p>"그게 규칙이에요?"</p>
+<p>"……규칙이야."</p>
+<p>"언제부터요?"</p>
+<p>"……방금."</p>
+<p>"ㅎㅎ 방금 만든 규칙은 무효예요."</p>
+<p>"……무효 아니야."</p>
+<p>"그럼 저는 어제 만든 규칙으로 맞서요. 『루카는 식탁에서 탄 계란을 남기지 않는다』."</p>
+<p>"……그건 규칙이 아니라 사실이야."</p>
+<p>"그러니까요."</p>
+<p>루카스가 입을 다물었다. 그러더니 무슨 말을 하려다 멈추고 식탁보를 걷어 올렸다. 부엌 수건으로 얼룩을 눌렀다. 문손잡이도 닦았다. 마지막으로 그의 소매 끝을 쥐고 쓱쓱 문질렀다. 붉은 물감은 완전히 지워지지 않았다. 번져서 분홍빛이 되었다.</p>
+<p>"……이건 안 지워져."</p>
+<p>"그럼 이제 저는 분홍색 소매예요."</p>
+<p>"……옷은 내 거야."</p>
+<p>"그러면 루카 소매가 분홍색이에요."</p>
+<p>"……"</p>
+<p>"우리 지금 싸우고 있는 거예요?"</p>
+<p>루카스가 소매를 잡은 채 멈추었다. 그리고 천천히, 정말로 천천히 눈을 깜박였다.</p>
+<p>"……우리 안 싸우는데."</p>
+<p>"의견 차이?"</p>
+<p>"……의견 차이."</p>
+<p>그가 웃음을 터뜨렸다. 루카스도 입꼬리를 올렸다. 아주 조금.</p>
+<p>그러다 둘이 거의 동시에 알았다.</p>
+<p>이게 싸움이었다는 것을. 사소하고, 시시하고, 아무도 상대가 사라질까 봐 두려워하지 않은, 일상의 싸움이었다는 것을. 누가 먼저 지고, 누가 먼저 사과하고, 누가 소매를 닦아 주는지 모른 채로 시작해서 끝난 다툼. 3년 동안, 다섯 주 동안, 몇 달 동안 한 번도 하지 못했던.</p>
+<p>"……너."</p>
+<p>"네."</p>
+<p>"……우리 방금 사소한 걸로 말다툼했어."</p>
+<p>"네ㅎㅎ"</p>
+<p>"……분홍색 소매 때문에."</p>
+<p>"네. 제 빨강 때문에요."</p>
+<p>루카스는 소매를 놓고 두 손으로 얼굴을 덮었다. 귀 끝이 붉었다. 목덜미까지. 3초가 지나도 붉었다. 어깨가 조금 떨렸다. 우는 건지 웃는 건지 그는 구분하지 않았다. 어느 쪽이든 괜찮았다.</p>
+<p>"……복원실 늦겠다."</p>
+<p>"네. 가요."</p>
+<p>"……7시 55분인데."</p>
+<p>"가요, 루카."</p>
+<p>그가 코트를 건넸다. 루카스가 팔을 끼웠다. 단추를 서른네 개 채우는 건 오늘 아침에 이미 끝냈다. 3분 21초. 1초는 그 단추 몫.</p>
+<div class="scene"><b>같은 날</b> 세지 않음</div>
+<p>그날 저녁, 루카스는 수첩을 펼쳤다. 습도 기록 맨 아래, 몇 달 동안 작은 숫자가 적혀 있던 칸이 비어 있었다. 아침에 다리에서 그를 확인한 횟수. 숨이 막힌 횟수. 반지를 확인한 횟수.</p>
+<p>루카스는 그 칸을 한참 보았다. 숫자를 적으려고 연필을 들었다. 그러다 오늘 아침을 떠올렸다. 다리에서 그가 몇 번이나 자기를 보았는지. 자기는 몇 번이나 그를 보았는지.</p>
+<p>기억나지 않았다.</p>
+<p>세지 않았다. 아침 내내 세지 않았다. 계란을 태우고, 빨강을 지적하고, 소매를 문지르고, 다리에 나가서 습도를 말하고, 복원실에 가서 핀셋을 들었다. 그 사이 한 번도 그가 사라질까 확인하지 않았다. 확인했을 수도 있었다. 하지만 세지 않았다.</p>
+<p>루카스는 연필을 내려놓았다. 칸을 비워 둔 채로 수첩을 덮었다.</p>
+<p>식탁 건너편에서 그가 스케치북을 들고 있었다. 오늘 그린 것은 빨강이 세 군데 묻은 식탁보였다. 얼룩 하나는 소매, 하나는 문손잡이. 그림 한가운데에 쉬는 손 둘이 나란히 놓여 있었다.</p>
+<p>"……그거 제목 뭐야."</p>
+<p>"아직 없어요."</p>
+<p>"……『빨강은 한 군데만』."</p>
+<p>"그건 이미 쓴 제목이에요."</p>
+<p>"……그럼."</p>
+<p>"네."</p>
+<p>"……『평일』."</p>
+<p>그가 스케치북을 내려놓았다. 루카스를 오래 보았다. 이 사람이 3년 전 다리 위에서 그의 식은 손을 쥐고 몇 분이나 몰랐다고, 일기에 썼다. 그런데 오늘 이 사람은 계란을 태우고 얼룩에 투덜거렸다.</p>
+<p>"좋아요."</p>
+<p>그가 말했다.</p>
+<p>"『평일』이요."</p>
+<p>루카스가 불을 껐다. 새벽 세 시가 되기 전에 그가 돌아누워 팔을 감았다. 루카스가 그 위에 손을 얹었다. 틱, 틱. 반지 소리가 났다. 그건 이제 소리가 아니었다. 이 집의 평일이 가진 박자였다.</p>
+<p>루카스는 눈을 감았다. 오늘은 세 시를 확인하지 않았다.</p>
+  </article>
+  <div class="end"><span class="mark">— FIN —</span><a href="trpg-dmak-series.html">다만악으로 돌아가기</a></div>
+</div>
+<!--bgm--><script>window.BGM={"ids": ["znfYwABeSZ0", "7nqktx6GpzM", "kMVF5INPuWQ"], "title": "Comptine d'un autre été · Yann Tiersen"};</script><script src="bgm.js" defer></script><!--/bgm-->
+</body>
+</html>
