@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>사유: 둘이서</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Pinyon+Script&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Nanum+Myeongjo:wght@400;700;800&display=swap">
+<style>
+:root{color-scheme:dark;--night:#17110c;--gold:#c4a676;--gold-hi:#e6d6b2;--line:rgba(196,166,118,.42);--parch:#ece2cd;--text:#ddd2bd;--muted:#a39580;
+  --caps:"Cinzel","Times New Roman",serif;--script:"Pinyon Script","Times New Roman",cursive;--ko:"Nanum Myeongjo","AppleMyungjo","Batang",serif}
+*{box-sizing:border-box}
+html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;background-color:var(--night);color:var(--text);font-family:var(--ko);font-size:17px;line-height:2;
+  background-image:radial-gradient(ellipse 70% 40% at 50% 0%,rgba(214,180,120,.12),transparent 70%);background-repeat:no-repeat;
+  padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px));padding-block:24px 80px}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;opacity:.5;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .9  0 0 0 0 .8  0 0 0 0 .6  0 0 0 .05 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+.wrap{max-width:620px;margin:0 auto}
+.back{display:inline-block;font-family:var(--caps);font-size:11px;letter-spacing:.2em;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:2px}
+.back:hover,.back:focus-visible{color:var(--gold-hi);outline:none}
+header{text-align:center;margin:56px 0 48px;display:grid;gap:6px;justify-items:center}
+header .lat{font-family:var(--script);font-size:44px;line-height:1;color:var(--gold)}
+header h1{margin:0;font-family:var(--ko);font-weight:800;font-size:clamp(28px,6vw,36px);color:var(--parch);letter-spacing:.08em}
+header .when{font-family:var(--caps);font-size:11px;letter-spacing:.28em;color:var(--muted)}
+header svg{width:160px;height:16px;margin-top:10px}
+article p{margin:0 0 1.1em;word-break:keep-all}
+.talk{margin:0 0 1.1em;padding-left:14px;border-left:1px solid var(--line)}
+.talk p{margin:0;color:var(--parch)}
+h2{margin:2.6em 0 1.4em;text-align:center;font-family:var(--ko);font-weight:700;font-size:16px;letter-spacing:.12em;color:var(--gold)}
+h2 span{padding:0 14px;background:var(--night);position:relative}
+h2::before{content:"";display:block;height:1px;background:var(--line);transform:translateY(1em)}
+.end{text-align:center;margin-top:56px;display:grid;gap:18px;justify-items:center}
+.end .mark{font-family:var(--caps);font-size:11px;letter-spacing:.3em;color:var(--muted)}
+.end a{font-family:var(--ko);font-size:15px;color:var(--gold-hi);text-decoration:none;border:1px solid var(--line);border-radius:40px 40px 10px 10px;padding:8px 22px}
+.end a:hover,.end a:focus-visible{background:rgba(196,166,118,.15);outline:none}
+
+.part{text-align:center;margin:84px 0 40px;display:grid;gap:4px;justify-items:center}
+.part.first{margin-top:0}
+.part .eyebrow{font-family:var(--script);font-size:32px;line-height:1.1;color:var(--gold)}
+.part h2{margin:0;font-family:var(--ko);font-weight:800;font-size:24px;color:var(--parch);letter-spacing:.06em}
+.part h2::before{display:none}
+.part .sub{font-family:var(--caps);font-size:11px;letter-spacing:.24em;color:var(--muted)}
+.orn2{color:var(--gold);margin-bottom:22px}
+.scene{display:flex;align-items:center;gap:12px;margin:56px 0 26px;color:var(--muted);font-size:14px;letter-spacing:.1em}
+.scene::before,.scene::after{content:"";flex:1;height:1px;background:var(--line)}
+.scene b{font-family:var(--caps);font-weight:600;color:var(--gold);letter-spacing:.12em}
+.list{margin:4px 0 1.4em;padding:14px 20px;border:1px solid var(--line);border-radius:6px;background:rgba(236,226,205,.05);font-size:15.5px;line-height:1.9;color:var(--parch)}
+.list ol{margin:0;padding-left:1.4em}
+.list .note{color:var(--muted);font-size:14px}
+.chat{margin:4px 0 1.6em;display:flex;flex-direction:column;gap:6px}
+.chat .who{font-size:12.5px;color:var(--muted);margin:4px 0 -2px}
+.chat .msg{align-self:flex-start;max-width:86%;background:rgba(236,226,205,.08);border:1px solid var(--line);color:var(--parch);padding:6px 13px;border-radius:14px 14px 14px 4px;font-size:15px;line-height:1.6}
+.chat .msg.me{align-self:flex-end;border-radius:14px 14px 4px 14px;background:rgba(217,130,106,.18);border-color:rgba(217,130,106,.45)}
+.chat .room{align-self:center;font-family:var(--ko);font-size:12px;color:var(--gold);letter-spacing:.06em;margin-bottom:4px}
+.quiet{color:var(--muted)}
+.note-card{margin:4px auto 1.4em;padding:12px 18px;border:1px dashed var(--gold);border-radius:4px;color:var(--parch);font-size:15px;text-align:center;max-width:320px;background:rgba(236,226,205,.04)}
+article b{color:var(--gold-hi)}
+</style>
+<style>
+.trpg-tag{display:inline-block;font-family:var(--caps);font-size:10px;letter-spacing:.24em;color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:3px 10px;margin-top:6px}
+p.inner{font-style:italic;color:var(--muted);padding-left:14px;border-left:2px solid var(--line)}
+.caveat{margin:0 auto 40px;max-width:480px;text-align:center;font-size:13.5px;line-height:1.8;color:var(--muted)}
+</style></head>
+<body>
+<div class="wrap">
+  <a class="back" href="trpg-dmak-series.html">← 다만악</a>
+  <header>
+    <span class="lat">Zu zweit</span>
+    <h1>사유: 둘이서</h1>
+    <span class="when">TRPG 단편 · 이유 없는 불안, 다리 한가운데, 놓지 않은 손</span>
+    <svg viewBox="0 0 180 18" aria-hidden="true"><g fill="none" stroke="#c4a676" stroke-width="1.2"><path d="M0 9 H70 M110 9 H180"/><path d="M90 3 l6 6 -6 6 -6 -6z" fill="#c4a676"/></g></svg>
+  </header>
+  <p class="caveat">다만악 쪽 이야기예요. 다 나은 줄 알았는데 두 사람이 같은 날 같은 불안에 빠지는 하루예요.</p>
+  <article>
+<div class="part first"><span class="eyebrow">Short</span><h2>사유: 둘이서</h2></div>
+<div class="scene"><b>비 오는 저녁</b> 어긋난 마중</div>
+<p>그는 여섯 시에 도서관 정문에 서 있기로 되어 있었다. 석 달째 지켜 온 약속이었고, 기다리는 시간은 이제 한 시간 아래로 줄어 있었다.</p>
+<p>그날은 붉은 천 그림에 금빛이 올라앉는 순간을 놓치기 싫어서 붓을 놓지 못했다. 고개를 든 건 성령 교회 종소리 때문이었다. 여섯 시 십오 분.</p>
+<p>그 순간, 아무 일도 없었는데 가슴 한가운데가 먼저 내려앉았다.</p>
+<p>그는 붓을 놓았다. 손이 떨려서 붓이 팔레트에 한 번 부딪혔다. 외투 소매를 한쪽만 꿰고 계단을 내려갔다. 아직 늦은 건 십오 분이었다. 십오 분은 아무것도 아니었다. 그건 알았다. 알고 있는데도 숨이 얕아졌다.</p>
+<p>정문 앞에는 벤치뿐이었다. 수위가 우산 아래서 말했다.</p>
+<p>"아스카니엔 선생이라면 이십 분 전에 나가셨소. 엘제 선생이 오늘은 일찍 가라고 하셔서."</p>
+<p>이십 분 전.</p>
+<p>정문에 그가 없었는데 루카스는 이십 분 전에 나갔다. 그러면 지금 루카스는 어디에 있나. 그는 3년 전 7시 55분의 다리를 보았다. 보고 싶지 않은데 보였다. 손이 따뜻했던 그 몇 분.</p>
+<p>"……작업실로 갔나."</p>
+<p>소리 내서 말해야 믿을 수 있을 것 같았다. 엄지가 약지의 반지를 한 바퀴 돌렸다. 한 바퀴, 또 한 바퀴. 열 바퀴를 넘기고서야 세는 걸 그만두었다. 그는 우산도 없이 돌아섰다. 뛰지는 않았다. 뛰면 루카스가 놀란다. 그 생각 하나로 걸음을 붙잡고, 그 걸음이 점점 빨라지는 걸 붙잡지 못했다.</p>
+<p>같은 시각, 루카스는 작업실 계단을 내려오고 있었다.</p>
+<p>다섯 시 오십 분에 복원실을 나온 건 엘제 선생님이 말없이 외투를 내밀었기 때문이다. "……가." 이유는 묻지 않았다. 정문에 그가 없었다. 약속은 여섯 시였다. 루카스는 시계를 꺼내 5시 52분을 확인했고, 그 순간부터 시계를 보는 횟수가 늘었다.</p>
+<p>5시 54분. 5시 55분.</p>
+<p>핀셋을 놓은 손이 이상하게 비어 있었다. 오늘은 아침부터 이상했다. 그가 아침에 나갈 때 "다녀올게요, 루카" 하고 웃었는데, 그 웃음을 문이 닫힌 뒤에도 계속 보고 있었다. 이유는 없었다. 이유가 없어서 더 나빴다.</p>
+<p>기다리는 건 그의 일이었다. 오늘은 자기가 가면 됐다. 그렇게 정리하고 걸음을 뗀 게 5시 56분이었다.</p>
+<p>논리는 맞았다. 일찍 나왔고, 그가 없으니, 그가 있는 곳으로 가면 된다. 논리대로 걷기만 하면 되는 일이었다. 그런데 그 논리에 걸맞은 이유가 없었다. 사 분만 더 서 있으면 그가 올 텐데, 그 사 분을 못 서 있을 이유가 어디에도 없었다. 이유 없이 빨라지는 자기 걸음을, 루카스는 제일 못 견뎠다.</p>
+<p>작업실 문은 잠겨 있지 않았다. 이젤 위에 젖은 붉은 그림이 있었고 그는 없었다. 팔레트 위의 붓이 비스듬히 놓여 있었다. 급하게 나간 사람의 놓음이었다.</p>
+<p>아래층 이웃이 문틈으로 고개를 내밀었다.</p>
+<p>"붉은 머리 양반은 방금 나갔소. 도서관 쪽으로."</p>
+<p>"……방금."</p>
+<p>"예, 방금."</p>
+<p>루카스는 계단을 한 번에 두 칸씩 내려갔다. 귀 끝이 붉었다. 비 때문은 아니었다. 손끝이 차가웠다. 원래 차가운 손이었지만 오늘은 그 차가움이 손목까지 올라와 있었다.</p>
+<p>수첩을 꺼낼 시간이 없었다. 그는 속으로 숫자를 셌다. 확인 횟수가 몇 번째인지 알 수 없었다.</p>
+<div class="scene"><b>다리 한가운데</b> 뛰지 않았다</div>
+<p>옛 다리 양쪽 끝에서 가스등지기가 한 개씩 불을 붙이며 오고 있었다.</p>
+<p>그는 북쪽에서, 루카스는 남쪽에서 다리로 들어섰다. 서로를 보지 못한 채 같은 속도로 걸었다. 둘 다 뛰지 않으려고 애쓰고 있어서, 걸음이 빨라질수록 몸이 앞으로 기울었다.</p>
+<p>다리 한가운데, 7시 55분이 아닌 시간에, 그의 구두와 루카스의 구두가 같은 돌 위에서 멈췄다.</p>
+<p>말이 나오지 않았다.</p>
+<p>그는 루카스를 보았다. 젖은 머리, 붉은 귀, 숨이 찬 어깨. 살아 있었다. 거기 서 있었다. 그는 그걸 눈으로 확인하고도 아직 믿지 못해서 한 손을 뻗었다. 손이 떨려서 허공에서 한 번 멈췄다.</p>
+<p>루카스가 그 손을 먼저 잡았다. 아니, 잡았다기보다 붙잡았다. 손가락이 하얗게 되도록. 그리고 반대 손으로 그의 외투 앞섶을 움켜쥐었다. 놓치면 사라질 사람의 옷처럼.</p>
+<p>"……있어."</p>
+<p>"네."</p>
+<p>"……있어, 너."</p>
+<p>"있어요. 저 여기 있어요."</p>
+<p>"……정문에 없었어."</p>
+<p>"저 갔어요. 수위 아저씨가 이십 분 전에 나가셨다고, 저, 저는"</p>
+<p>"……작업실에도 없었어."</p>
+<p>"갔다 왔어요, 방금 나왔어요, 이웃이"</p>
+<p>"……방금."</p>
+<p>"네, 방금이요."</p>
+<p>둘이 동시에 숨을 내쉬었다. 그제야 비가 오고 있다는 게 들렸다.</p>
+<p>그의 손이 아직 떨리고 있었다. 루카스는 그 손을 자기 가슴께로 끌어당겨 감쌌다. 반지 두 개가 부딪혀 틱, 소리가 났다. 루카스의 손도 떨리고 있었다. 둘이 서로의 떨림을 맞대고 있었다.</p>
+<p>"……뛰었어?"</p>
+<p>"안 뛰었어요. 아주 빨리 걸었어요. 저 숨이"</p>
+<p>"……나도."</p>
+<p>그가 몸을 숙여 루카스의 젖은 이마에 이마를 댔다. 루카스는 피하지 않았다. 눈을 감고 있었다.</p>
+<p>"……무서웠어."</p>
+<p>루카스가 처음으로 먼저 말했다. 그는 대답하지 못하고 루카스의 손을 더 꼭 잡았다.</p>
+<p>"저도요. 이유는 없었는데요, 그냥 갑자기."</p>
+<p>"……나도 이유 없었어."</p>
+<p>"……"</p>
+<p>"……그게 더 싫었어."</p>
+<p>그가 웃음 같은 숨을 내쉬었다. 울음이 반쯤 섞여 있었다.</p>
+<p>"저희 둘 다 아직이네요."</p>
+<p>"……응."</p>
+<p>"마중 가는 사람이 둘이어서, 아무도 마중 안 받았어요ㅎㅎ"</p>
+<p>"……웃지 마."</p>
+<p>"안 웃어요. 어깨가 혼자 한 거예요."</p>
+<p>가스등지기가 다리 끝에 불을 붙이고 지나갔다. 둘 다 그를 보지 않았다.</p>
+<div class="list">확인: 다리 한가운데. 서로 마중. (유효: 0회.)<br>불안: 이유 없음. 둘 다.</div>
+<div class="scene"><b>밤</b> 현관</div>
+<p>집에는 불이 없었다. 가정부는 낮에 다녀간 뒤였다.</p>
+<p>현관에서 둘은 코트를 벗다가 손을 놓아야 한다는 사실을 알았다. 아무도 놓지 못했다.</p>
+<p>"……코트."</p>
+<p>"네."</p>
+<p>"……젖었어."</p>
+<p>"네."</p>
+<p>그러고는 각자 한 손으로 코트를 벗었다. 코트 두 벌이 바닥에 겹쳐 떨어졌다. 루카스는 그걸 한 번 보았다. 평소 같으면 걸어 두었을 것이다. 오늘은 보기만 했다.</p>
+<p>식은 밥은 아무도 먹지 않았다. 침실로 가는 동안에도 손은 그대로였다.</p>
+<p>침대에서 루카스는 반듯하게 눕지 않았다. 옆으로 돌아누워 그의 쇄골에 이마를 대었다. 그는 한 팔로 루카스를 감고 다른 팔은 잡은 손 위에 얹었다. 새벽 세 시에 돌아누울 필요가 없었다.</p>
+<p>그의 심장 소리가 크게 들렸다. 루카스는 그걸 셌다. 하나, 둘. 자기 것보다 조금 빨랐다.</p>
+<p>"……너, 빨라."</p>
+<p>"루카도요ㅎㅎ"</p>
+<p>"……천천히 해."</p>
+<p>"저한테 말하는 거예요?"</p>
+<p>"……둘 다."</p>
+<p>그가 대답 대신 루카스의 머리 위에 턱을 얹었다. 둘 다 오래 깨어 있었다. 잠이 먼저 올 때까지, 어느 쪽도 손을 풀지 않았다.</p>
+<div class="scene"><b>아침</b> 사유</div>
+<p>일곱 시 오십오 분에 둘은 다리에 나가지 않았다.</p>
+<p>루카스는 평생 한 번도 지각을 한 적이 없었다. 그는 눈을 뜨고 침대 맡의 시계를 보았다. 7시 41분. 일어날 시간이었다. 그리고 한 번 더 시계를 보았다.</p>
+<p>"……오늘은 대부분 안 돼."</p>
+<p>"저도요ㅎㅎ"</p>
+<p>그는 눈을 감은 채 대답했다. 손이 여전히 잡혀 있었다.</p>
+<p>창밖은 비가 그쳐 있었고, 빛이 커튼 사이로 한 줄 들어와 이불 위에 놓였다. 루카스는 그 빛이 움직이는 걸 한참 보았다. 평소에는 습도계를 보는 시간이었다.</p>
+<p>"……수첩."</p>
+<p>"네?"</p>
+<p>"……결근 사유."</p>
+<p>"음. 적을 거예요?"</p>
+<p>"……안 적어."</p>
+<p>"그럼 '기록하지 않음'이라고 적어요ㅎㅎ"</p>
+<p>루카스가 이마를 그의 쇄골에 한 번 더 눌렀다. 대답이 아니라 동의였다.</p>
+<div class="scene"><b>낮</b> 비어 있는 자리</div>
+<p>도서관 지하 2층에서 엘제 선생님은 루카스의 작업대를 한 번 보았다. 핀셋이 놓인 자리가 그대로였다.</p>
+<p>조수가 조심스럽게 물었다. "선생님, 오늘 아스카니엔 선생이……"</p>
+<p>"저건 주인이 있어."</p>
+<p>엘제 선생님은 그 말만 하고 자기 일을 계속했다.</p>
+<p>그의 작업실 문 앞에서는 다나가 두 번 문을 두드리다가 그만두었다. 문 너머에서 아무 소리도 나지 않았다. 젖은 붉은 그림이 이젤 위에서 마르고 있을 것이다.</p>
+<p>"……사정이 있겠지."</p>
+<p>다나는 중얼거리고 돌아갔다. 그를 때렸다가 안고 울던 사람은 그 사정이 무슨 사정인지 대충 알고 있었다.</p>
+<p>그리고 저택 대문을 가정부가 열었다.</p>
+<p>현관에 코트 두 벌이 바닥에 겹쳐 있었다. 부엌에는 밥 냄새가 없었다. 침실 문 너머는 조용했다. 가정부는 한참 서 있다가, 두고 가려던 바구니에서 빵을 한 덩이 꺼내 문 앞 바닥에 놓았다.</p>
+<p>"……오늘은 이불 빨래 안 하겠네."</p>
+<p>그러고는 조용히 나갔다.</p>
+<div class="scene"><b>부엌</b> 한 손씩</div>
+<p>그는 배가 고프다고 먼저 말했다.</p>
+<p>"저 배고파요."</p>
+<p>루카스는 밥을 거르는 사람이어서 이 말을 들으면 일어나야 했다.</p>
+<p>"……그럼 일어나."</p>
+<p>루카스는 마지못해 팔을 풀었다. 팔이 빈 곳이 어색해서 허공에 한 번 멈췄다.</p>
+<p>"……추워서야."</p>
+<p>말하고는 다시 그의 가슴으로 파고들었다. 그는 대답하지 않고 웃음만 참다가 어깨가 흔들려서 들켰다.</p>
+<p>두 번째에 풀 때는 루카스가 더 조심했다. "……밥, 같이 가." 손은 그대로 잡은 채였다.</p>
+<p>부엌까지 가는 동안 둘 다 말이 없었다. 문턱에서 그가 머리를 숙이는 걸 루카스가 뒤에서 손으로 막아 주었다.</p>
+<p>계란을 깨야 했다. 그는 오른손으로 깨고 왼손은 루카스의 손을 잡고 있었다. 껍데기가 팬에 들어갔다.</p>
+<p>"……각이 안 맞아."</p>
+<p>루카스가 자기 오른손으로 껍데기를 핀셋처럼 집어냈다. 그 손도 한 손뿐이었다. 불 앞에서도 둘 다 손을 놓지 않아서 계란은 평소보다 훨씬 더 탔다. 냄새가 올라왔을 때에야 알았다.</p>
+<p>"탔어요ㅎㅎ"</p>
+<p>"……탄 데가 맛있다며."</p>
+<p>평소에는 그의 대사였다. 그가 눈을 크게 떴다.</p>
+<p>"루카, 그거 제 대사예요."</p>
+<p>"……베꼈어."</p>
+<p>귀 끝이 붉어졌다. 3초.</p>
+<p>계란은 접시에 올려졌고 아무도 먹지 않았다. 식탁에는 문 앞에서 들어온 빵이 있었다. 가정부가 놓고 간 것이었다. 둘은 한 덩이를 손을 잡은 채로 반씩 뜯어서 먹었다.</p>
+<p>"……내일은 한 손으로도 되게 연습해요."</p>
+<p>"……안 해도 돼."</p>
+<p>루카스는 그렇게 말하고 빵을 한 입 더 먹었다.</p>
+<div class="list">조리: 불가. 사유: 손.</div>
+<div class="scene"><b>종일</b> 손</div>
+<p>오후가 되어도 아무도 손을 놓지 않았다.</p>
+<p>책을 읽을 때 루카스는 페이지를 넘기는 손만 빼서 썼다. 그는 그 옆에서 한 손으로 스케치를 끄적였다. 선이 평소보다 삐뚤어졌다.</p>
+<p>"이것도 괜찮아요ㅎㅎ"</p>
+<p>"……원본이야."</p>
+<p>화장실 문 앞에서만 둘 다 어색해졌다. 돌아오면 아무 말 없이 손부터 찾았다. 누가 먼저 찾았는지는 아무도 세지 않았다.</p>
+<p>저녁이 되자 둘 다 알았다. 이제 계란을 해도 되고 풀어도 된다는 걸. 그런데 아무도 "이제 풀어도 돼요"라고 하지 않았다. 루카스가 "……밥은 먹었어" 하자 그는 "네, 빵이요" 하고 대답했다. 그게 끝이었다.</p>
+<p>불은 손이 닿는 쪽에 있는 사람이 껐다. 그날은 그였다.</p>
+<p>어둠 속에서 반지 두 개가 틱 하고 한 번 울렸다.</p>
+<p>새벽 세 시에 그는 돌아누울 필요가 없었다. 이미 손이 잡혀 있었다. 깨어 있던 루카스는 그의 맥박을 세다가 그만두었다. 두 사람의 것이 어느 순간 겹쳐서 어느 게 누구 것인지 알 수 없었기 때문이다.</p>
+<p>이 집에서 제일 정직한 소리는 오늘 하나였다.</p>
+<div class="list">손: 종일. 이상 없음.</div>
+  </article>
+  <div class="end"><span class="mark">— FIN —</span><a href="trpg-dmak-series.html">다만악으로 돌아가기</a></div>
+</div>
+<!--bgm--><script>window.BGM={"ids": ["BKOBlqqYV4A", "RYypmgIYOVQ", "FZe3mXlnfNc"], "title": "Spiegel im Spiegel · Arvo Pärt"};</script><script src="bgm.js" defer></script><!--/bgm-->
+<script src="backnav.js" defer></script>
+</body>
+</html>
