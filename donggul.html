@@ -158,6 +158,43 @@ button{font:inherit;color:inherit;cursor:pointer}
 .sl.l{align-self:flex-end;transform:rotate(.7deg);background:var(--paper);color:var(--pencil)}
 .sl.n{align-self:center;background:none;box-shadow:none;transform:none;font-family:var(--ko);font-size:13.5px;color:var(--ink-soft);max-width:100%;text-align:center;padding:0 6px}
 .letters{display:grid;gap:10px}
+/* 줄 우편 */
+.rope-stage{position:relative;height:150px;margin:4px 0 2px;user-select:none}
+.rope-stage svg.rope{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.rope-stage .end{position:absolute;font-family:var(--hand);font-size:14px;color:var(--ink-soft);line-height:1.1;white-space:nowrap}
+.rope-stage .end.a{left:0;top:4px}
+.rope-stage .end.b{right:0;top:38px;text-align:right}
+.nbox{position:absolute;left:4%;top:44px;width:70px;height:56px;margin-left:-35px;border:0;padding:0;background:none;cursor:pointer;transform-origin:50% -14px}
+.nbox::before{content:"";position:absolute;left:50%;top:-14px;width:1.5px;height:14px;background:var(--ink);transform:translateX(-50%)}
+.nbox .bx{position:absolute;inset:12px 0 0 0;background:#e9dfc6;border:1.5px solid var(--ink);border-radius:3px;box-shadow:2px 3px 0 rgba(58,44,28,.2)}
+.nbox .bx b{position:absolute;inset:auto 0 6px 0;text-align:center;font-family:var(--hand);font-weight:700;font-size:15px;color:var(--wine)}
+.nbox .lid{position:absolute;left:-3px;right:-3px;top:4px;height:12px;background:#f6f0df;border:1.5px solid var(--ink);border-radius:3px;transform-origin:4px 100%;transition:transform .45s cubic-bezier(.3,1.6,.5,1)}
+.nbox .lid i{position:absolute;right:9px;top:1px;width:8px;height:8px;border-radius:50%;background:#fbf6e9;border:1px solid var(--ink)}
+.nbox:focus-visible{outline:3px solid var(--mustard);outline-offset:4px;border-radius:4px}
+.rope-stage[data-s="travel"] .nbox{animation:ride 1.7s cubic-bezier(.45,.05,.35,1) forwards,sway 1.7s ease-in-out}
+.rope-stage[data-s="arrived"] .nbox{left:78%;top:74px;animation:bob 2.4s ease-in-out infinite}
+.rope-stage[data-open="1"] .nbox{left:78%;top:74px;animation:none}
+.rope-stage[data-open="1"] .nbox .lid{transform:rotate(-38deg)}
+@keyframes ride{from{left:4%;top:44px}to{left:78%;top:74px}}
+@keyframes sway{0%{transform:rotate(0)}15%{transform:rotate(7deg)}55%{transform:rotate(3deg)}85%{transform:rotate(-9deg)}100%{transform:rotate(0)}}
+@keyframes bob{0%,100%{transform:rotate(0)}50%{transform:rotate(2.5deg)}}
+.rope-cap{font-family:var(--hand);font-size:17px;color:var(--ink-soft);text-align:center;margin:0 0 10px;min-height:1.4em}
+.ngrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(52px,1fr));gap:12px 10px;padding:6px 2px 4px}
+.nic{position:relative;aspect-ratio:1/1.05;border:0;padding:0;cursor:pointer;background:linear-gradient(225deg,transparent 9px,var(--white) 9px);color:var(--ink);font-family:var(--hand);font-weight:700;font-size:19px;box-shadow:2px 3px 0 rgba(58,44,28,.18);transform:rotate(var(--r,0deg));animation:drop .45s cubic-bezier(.3,1.5,.5,1) backwards;animation-delay:calc(var(--i)*28ms);transition:transform .15s}
+.nic::after{content:"";position:absolute;right:0;top:0;width:9px;height:9px;background:linear-gradient(225deg,var(--paper-lo) 50%,#d8ccb0 50%)}
+.nic s{position:absolute;left:8px;right:12px;bottom:9px;height:2px;background:repeating-linear-gradient(90deg,var(--ink-soft) 0 5px,transparent 5px 8px);opacity:.45;text-decoration:none}
+.nic em{position:absolute;left:6px;top:5px;width:6px;height:6px;border-radius:50%;background:var(--wine)}
+.nic.l em{background:var(--pencil)}
+.nic:hover,.nic:focus-visible{transform:rotate(0) translateY(-3px);outline:none}
+.nic[aria-pressed="true"]{background:var(--wine);color:var(--white);transform:rotate(0) translateY(-3px)}
+.nic[aria-pressed="true"] s{background:repeating-linear-gradient(90deg,var(--white) 0 5px,transparent 5px 8px)}
+@keyframes drop{from{opacity:0;transform:translateY(-18px) rotate(-12deg)}}
+.nview{margin-top:14px;background:var(--paper);border:1.5px dashed var(--ink-soft);border-radius:6px;padding:4px 14px 6px;transform-origin:50% 0;animation:unfold .4s ease-out}
+.nview h4{margin:10px 0 0;font-family:var(--hand);font-size:16px;font-weight:400;color:var(--ink-soft)}
+.nview .ex{border-bottom:0}
+@keyframes unfold{from{opacity:0;transform:scaleY(.6) rotate(-1.5deg)}}
+.nhint{margin-top:14px;text-align:center;font-family:var(--hand);font-size:17px;color:var(--ink-soft)}
+@media (prefers-reduced-motion:reduce){.rope-stage .nbox,.nic,.nview{animation:none!important}.rope-stage[data-s="travel"] .nbox{left:78%;top:74px}.nbox .lid{transition:none}}
 .env{width:100%;display:flex;align-items:center;gap:12px;text-align:left;border:1.5px solid var(--ink-soft);background:var(--paper);color:var(--ink);border-radius:6px;padding:8px 12px;min-width:0}
 .env:hover,.env:focus-visible{border-color:var(--wine);outline:none}
 .env .stamps{display:flex;flex:none;align-items:center}
@@ -4017,10 +4054,47 @@ P "접힌 데가 맛있어요ㅎㅎ"
   }
   function el(tag,cls,txt){var e=document.createElement(tag); if(cls) e.className=cls; if(txt!=null) e.textContent=txt; return e}
   var pn=document.getElementById("paneNotes"), pl=document.getElementById("paneLetters");
-  NOTES.forEach(function(ex){
-    var d=el("div","ex");
-    ex.forEach(function(m){d.appendChild(el("div","sl "+m[0].toLowerCase(),m[1]))});
-    pn.appendChild(d);
+  var stage=el("div","rope-stage"); stage.dataset.s="idle";
+  stage.innerHTML='<svg class="rope" viewBox="0 0 100 150" preserveAspectRatio="none" aria-hidden="true"><line x1="4" y1="30" x2="92" y2="65" stroke="#8e2f25" stroke-width="5" stroke-linecap="round" vector-effect="non-scaling-stroke"/><line x1="4" y1="30" x2="92" y2="65" stroke="#c0392b" stroke-width="3" stroke-dasharray="5 4" vector-effect="non-scaling-stroke"/><rect x="2" y="24" width="4" height="12" fill="#3a2c1c"/><rect x="90" y="60" width="4" height="12" fill="#3a2c1c"/></svg>'+
+    '<span class="end a">주방 찬장 손잡이</span><span class="end b">곰굴 입구 의자</span>';
+  var nbox=el("button","nbox"); nbox.type="button"; nbox.setAttribute("aria-expanded","false"); nbox.setAttribute("aria-controls","ngrid");
+  nbox.setAttribute("aria-label","줄 우편 상자 열기");
+  nbox.innerHTML='<span class="bx"><b>'+NOTES.length+'</b></span><span class="lid"><i></i></span>';
+  stage.appendChild(nbox);
+  var cap=el("p","rope-cap",""); cap.setAttribute("aria-live","polite");
+  var grid=el("div","ngrid"); grid.id="ngrid"; grid.hidden=true;
+  var view=el("div","nhint","쪽지를 하나 골라요."); view.hidden=true;
+  pn.appendChild(stage); pn.appendChild(cap); pn.appendChild(grid); pn.appendChild(view);
+  var icons=[];
+  function showEx(i){
+    icons.forEach(function(b,j){b.setAttribute("aria-pressed",j===i?"true":"false")});
+    var v=el("div","nview"); v.appendChild(el("h4",null,"쪽지 "+(i+1)+"번 · 줄로 건너간 것"));
+    var d=el("div","ex"); NOTES[i].forEach(function(m){d.appendChild(el("div","sl "+m[0].toLowerCase(),m[1]))}); v.appendChild(d);
+    view.replaceWith(v); view=v;
+  }
+  NOTES.forEach(function(ex,i){
+    var first=ex[0], b=el("button","nic"+(first[0]==="L"?" l":"")); b.type="button";
+    b.style.setProperty("--i",i); b.style.setProperty("--r",(((i*37)%9)-4)*0.9+"deg");
+    b.setAttribute("aria-pressed","false"); b.setAttribute("aria-label","쪽지 "+(i+1)+"번: "+first[1]);
+    b.innerHTML='<em></em>'+(i+1)+'<s></s>';
+    b.addEventListener("click",function(){showEx(i)});
+    grid.appendChild(b); icons.push(b);
+  });
+  var reduce=false; try{reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches}catch(e){}
+  function closeBox(){stage.dataset.open=""; nbox.setAttribute("aria-expanded","false"); nbox.setAttribute("aria-label","줄 우편 상자 열기"); grid.hidden=true; view.hidden=true}
+  function arrive(){
+    closeBox();
+    if(reduce){stage.dataset.s="arrived"; cap.textContent="상자가 도착했어요. 눌러서 열어 보세요."; return}
+    stage.dataset.s="idle"; void nbox.offsetWidth; stage.dataset.s="travel"; cap.textContent="줄을 타고 오는 중……";
+  }
+  nbox.addEventListener("animationend",function(e){if(e.animationName==="ride"){stage.dataset.s="arrived"; cap.textContent="상자가 도착했어요. 눌러서 열어 보세요."}});
+  nbox.addEventListener("click",function(){
+    if(stage.dataset.s==="travel") return;
+    if(stage.dataset.open==="1"){closeBox(); cap.textContent="상자를 닫았어요. 다시 누르면 열려요."; return}
+    stage.dataset.open="1"; nbox.setAttribute("aria-expanded","true"); nbox.setAttribute("aria-label","줄 우편 상자 닫기");
+    grid.hidden=false; view.hidden=false;
+    icons.forEach(function(b){b.style.animation="none"; void b.offsetWidth; b.style.animation=""});
+    cap.textContent="쪽지 "+NOTES.length+"묶음이 들어 있어요. 하나를 눌러 펼쳐요. (빨간 점은 그가, 회색 점은 루카가 먼저 보낸 쪽지)";
   });
   LETTERS.forEach(function(L,i){
     var wrap=el("div"), b=el("button","env"); b.type="button"; b.id="env"+i; b.setAttribute("aria-expanded",i===0?"true":"false"); b.setAttribute("aria-controls","lt"+i);
@@ -4038,12 +4112,13 @@ P "접힌 데가 맛있어요ㅎㅎ"
     wrap.appendChild(b); wrap.appendChild(lt); pl.appendChild(wrap);
   });
   var sn=document.getElementById("slotNotes"), sL=document.getElementById("slotLetters");
+  var pt=document.getElementById("postToggle"), pb=document.getElementById("postBody"), pc=document.getElementById("postCue");
   function pick(which){
     var n=which==="notes"; sn.setAttribute("aria-pressed",n?"true":"false"); sL.setAttribute("aria-pressed",n?"false":"true"); pn.hidden=!n; pl.hidden=n;
+    if(n && !pb.hidden) arrive();
     try{localStorage.setItem("hoehle-slot",which)}catch(e){}
   }
-  var pt=document.getElementById("postToggle"), pb=document.getElementById("postBody"), pc=document.getElementById("postCue");
-  pt.addEventListener("click",function(){var open=pt.getAttribute("aria-expanded")==="true"; pt.setAttribute("aria-expanded",open?"false":"true"); pb.hidden=open; pc.textContent=open?"열기 ▾":"접기 ▴"});
+  pt.addEventListener("click",function(){var open=pt.getAttribute("aria-expanded")==="true"; pt.setAttribute("aria-expanded",open?"false":"true"); pb.hidden=open; pc.textContent=open?"열기 ▾":"접기 ▴"; if(!open && !pn.hidden) arrive()});
   sn.addEventListener("click",function(){pick("notes")}); sL.addEventListener("click",function(){pick("letters")});
   try{if(localStorage.getItem("hoehle-slot")==="letters") pick("letters")}catch(e){}
 })();
