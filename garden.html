@@ -653,8 +653,8 @@ function tapChick(x,y){if(!CK.bb||!(x>CK.bb[0]&&x<CK.bb[2]&&y>CK.bb[1]&&y<CK.bb[
 /* ---------- loop ---------- */
 let lastT=performance.now(),saveT=0,ui=0;
 function update(dt,T){
-  const t=now(),m=modeOf(t);const ws=wantScene(t,m);if(ws!==scn)switchScene(ws);if(m!==curMode)setMode(m);
-  if(t.dow===0)unlock('sunday',true);if(m==='bridge')unlock('bridge',true);
+  const t=now(),m0=modeOf(t);const ws=wantScene(t,m0);if(ws!==scn)switchScene(ws);const m=(m0==='bridge'&&scn!=='bridge')?'day':m0;if(m!==curMode)setMode(m);
+  if(t.dow===0)unlock('sunday',true);if(m0==='bridge')unlock('bridge',true);
   const st=stage();
   if(st>=1)unlock('polaroid');if(st>=2)unlock('buttons');
   if(scn==='den'){REST.on=false;SULK.on=false;REST.next=999;SULK.next=999;
