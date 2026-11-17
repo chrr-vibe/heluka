@@ -357,9 +357,9 @@ function tapPlot(i){const p=S.plots[i];
   else toast(PL[p.t].em+' '+PL[p.t].nm+' · '+Math.floor(p.g*100)+'% 자람');}
 
 /* ---------- modals ---------- */
-function modal(t,h){$('mTitle').textContent=t;$('mBody').innerHTML=h;$('modal').hidden=false}
+function modal(t,h){window.MOPEN=Date.now();$('mTitle').textContent=t;$('mBody').innerHTML=h;$('modal').hidden=false}
 function closeM(){$('modal').hidden=true}
-$('mClose').onclick=closeM;$('modal').onclick=e=>{if(e.target.id==='modal')closeM()};
+$('mClose').onclick=closeM;$('modal').onclick=e=>{if(e.target.id==='modal'&&Date.now()-(window.MOPEN||0)>450)closeM()};
 document.querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>({shop:shopModal,box:boxModal,place:placeModal,info:infoModal,dex:dexModal})[b.dataset.open]());
 $('bBell').onclick=bellModal;$('clk').onclick=bellModal;$('bMail').onclick=noteBox;$('bSet').onclick=infoModal;
 let ROOMY=null;
