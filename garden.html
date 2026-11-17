@@ -209,7 +209,7 @@ function layout(){const r=app.getBoundingClientRect();const dpr=Math.min(window.
   cv.width=Math.round(r.width*dpr);cv.height=Math.round(r.height*dpr);K=cv.width/W;H=r.height*W/r.width;
   const barL=($('bottom').offsetHeight+18)*W/r.width;
   L.ground=300;L.walkTop=300;L.plotY=H-barL-40;L.walkBot=L.plotY-58;L.ckY=H-barL+2;
-  L.hygro={x:52,y:L.walkTop+170};L.easel={x:340,y:L.walkTop+180};L.pan={x:127,y:426};
+  L.hygro={x:52,y:L.walkTop+170};L.easel={x:340,y:L.walkTop+180};L.pan={x:127,y:412};
   spots();
 }
 function spots(){const wt=L.walkTop,wb=L.walkBot;
@@ -599,7 +599,7 @@ function tapEgg(){const k=eggStage(),{x,y}=L.pan;
   else{gain('heart',2*m,{x,y:y+30});gain('coin',6*m,{x,y:y+50});say(HE,'맛있겠다ㅎㅎ',2.2)}
   heartsAt(x,y-40,3);save()}
 function drawPan(T){if(scn!=='camp')return;const{x,y}=L.pan;
-  if(!S.soupT&&!S.egg){const fx=124,fy=378+Math.sin(T*2.4)*3;ctx.save();ctx.shadowColor='rgba(255,150,80,.55)';ctx.shadowBlur=14;ctx.globalAlpha=.92;ell(fx,fy,17,17,'rgba(255,255,255,.88)');ctx.restore();
+  if(!S.soupT&&!S.egg){const fx=124,fy=366+Math.sin(T*2.4)*3;ctx.save();ctx.shadowColor='rgba(255,150,80,.55)';ctx.shadowBlur=14;ctx.globalAlpha=.92;ell(fx,fy,17,17,'rgba(255,255,255,.88)');ctx.restore();
     ctx.strokeStyle='#ffc99a';ctx.lineWidth=2;ctx.beginPath();ctx.arc(fx,fy,17,0,7);ctx.stroke();ctx.fillStyle='#e29a7a';ctx.font='24px Jua,sans-serif';ctx.textAlign='center';ctx.fillText('+',fx,fy+8);return}
   if(S.soupT){const el=(Date.now()-S.soupT)/1000,ok=el>=60,im=IMG.u_pot;if(!im||!im.naturalWidth)return;const w=70,h=im.naturalHeight*w/im.naturalWidth,bob=ok?0:Math.sin(T*9)*.8;
     ell(x,y-2,w*.4,6,'rgba(60,80,40,.18)');DIM(.2);ctx.drawImage(im,x-w/2,y-h-bob+6,w,h);UNDIM();
