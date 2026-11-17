@@ -321,6 +321,7 @@ for(const ev of['pointerup','pointercancel','pointerleave'])cv.addEventListener(
 function inBB(c,x,y){return c.bb&&!c.hidden&&x>c.bb[0]&&x<c.bb[2]&&y>c.bb[1]&&y<c.bb[3]}
 function tap(x,y){
   if(tapDream(x,y))return;
+  if(tapScarf(x,y))return;
   if(RAB.on&&Math.hypot(x-RAB.x,y-(RAB.y-32))<44)return tapRabbit();
   const cs=[LU,HE].sort((a,b)=>b.y-a.y);for(const c of cs)if(inBB(c,x,y))return c===LU?(SULK.on&&LU.state==='sulk'?sulkModal():patL()):patH();
   if(scn==='camp'&&x>250&&y>296&&y<384){S.scene='den';save();toast('🐻 곰굴에 들어왔어요<br>나갈 땐 🌷장소에서 이동해요');return}
@@ -561,6 +562,14 @@ function dayKey(){const t=now();return t.mo+'-'+t.day}
 function handWanted(){const t=now();return [11,12,1,2].includes(t.mo)&&t.h>=6&&t.h<12&&curMode==='day'&&S.handDay!==dayKey()&&scn!=='den'&&!LU.hidden&&LU.state!=='walk'&&LU.state!=='sulk'}
 function updHand(dt){if(HAND.on){if(!handWanted()){HAND.on=false;return}HAND.p=Math.min(1,HAND.p+dt/3.2);LU.sq=Math.max(LU.sq,.05);if(Math.random()<dt*4)heartsAt(LU.x+rnd(-10,10),LU.y-60);
   if(HAND.p>=1){HAND.on=false;HAND.p=0;S.handDay=dayKey();S.hands++;LU.flush=5;gain('heart',8*mult(),LU);S.intim+=3;say(LU,'…안 해도 돼.',2.2);setTimeout(()=>say(HE,'손은 안 빼시네요ㅎㅎ',2.6),1300);unlock('hand');save()}}}
+const SCF={x:0,y:0,on:false};
+function drawScarfFloat(T){SCF.on=false;if(S.scarf<1||S.scarf>3||LU.hidden||scn==='den')return;const im=IMG['u_sc'+S.scarf];if(!im||!im.naturalWidth)return;
+  const bob=Math.sin(T*1.8)*4,x=LU.x+(LU.x>W*.62?-56:56),y=LU.y-70+bob,w=58,h=im.naturalHeight/im.naturalWidth*w;SCF.x=x;SCF.y=y;SCF.on=true;
+  ell(x,LU.y-2,13-bob*.5,3.2,'rgba(60,80,40,.14)');ctx.save();if(NT>0)ctx.filter='brightness('+(1-NT*.2)+')';ctx.translate(x,y);ctx.rotate(Math.sin(T*1.3)*.06);ctx.drawImage(im,-w/2,-h/2,w,h);ctx.restore();
+  ctx.globalAlpha=.55+.45*Math.sin(T*4);ctx.fillStyle='#fff3a8';ctx.font='11px sans-serif';ctx.textAlign='center';ctx.fillText('✦',x+w*.5,y-h*.45);ctx.globalAlpha=1}
+function tapScarf(x,y){if(!SCF.on||Math.hypot(x-SCF.x,y-SCF.y)>38)return false;const k=S.scarf;
+  say(LU,pick([['…털실이야.','…만지지 마. 엉켜.','…계속 뜨는 중.'],['…한 코씩이야.','…배우는 중이야.','…줄이 삐뚤어졌어.'],['…거의 다 됐어.','…묻지 마.','…길이는 비밀이야.']][k-1]),2.4);
+  LU.sq=.25;LU.flush=2;heartsAt(SCF.x,SCF.y-16,2);if(Math.random()<.35)setTimeout(()=>say(HE,'루카, 그거 저 줄 거예요?ㅎㅎ',2.6),1200);return true}
 function drawHandHint(T){if(!handWanted())return;const x=LU.x+30,y=LU.y-118+Math.sin(T*3)*2;ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(x,y,16,0,7);ctx.fill();
   if(HAND.p>0){ctx.strokeStyle='#ff9fb8';ctx.lineWidth=3.5;ctx.beginPath();ctx.arc(x,y,16,-Math.PI/2,-Math.PI/2+HAND.p*Math.PI*2);ctx.stroke()}else{ctx.strokeStyle='#cfe3f5';ctx.lineWidth=2;ctx.beginPath();ctx.arc(x,y,16,0,7);ctx.stroke()}
   ctx.font='16px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(HAND.p>0?'🤲':'🧊',x,y+1);ctx.textBaseline='alphabetic'}
@@ -636,7 +645,7 @@ function render(T){const t=now(),ph=phaseOf(t),dark=ph==='night'||ph==='evening'
   for(const p of parts){ctx.globalAlpha=Math.min(1,p.life/p.max*1.5);if(p.k==='h'){ctx.fillStyle=p.s>9?'#ffa3bc':'#ff86a5';heart(p.x,p.y,p.s)}else{ctx.font='15px Jua,sans-serif';ctx.textAlign='center';ctx.lineWidth=3;ctx.strokeStyle='#fff';ctx.strokeText(p.txt,p.x,p.y);ctx.fillStyle='#ff7d9c';ctx.fillText(p.txt,p.x,p.y)}}ctx.globalAlpha=1;
   {const tint=(ph==='night'||ph==='evening')?null:ph==='sunset'?'rgba(255,140,80,.10)':ph==='dawn'?'rgba(255,170,170,.10)':null;if(tint){ctx.fillStyle=tint;ctx.fillRect(0,0,W,H)}}
 
-  drawDreams(T);drawHandHint(T);for(const c of list)drawBubble(c);
+  drawScarfFloat(T);drawDreams(T);drawHandHint(T);for(const c of list)drawBubble(c);
   if(scn==='camp'&&curMode!=='three'){const bb=Math.sin(T*3)*2;pbubble(318,304+bb,'🐻 곰굴','r',1)}
 }
 const fmt=n=>n<1000?Math.floor(n)+'':n<1e6?(n/1000).toFixed(1)+'k':(n/1e6).toFixed(1)+'m';
