@@ -194,6 +194,44 @@ button{font:inherit;color:inherit;cursor:pointer}
 .nview .ex{border-bottom:0}
 @keyframes unfold{from{opacity:0;transform:scaleY(.6) rotate(-1.5deg)}}
 .nhint{margin-top:14px;text-align:center;font-family:var(--hand);font-size:17px;color:var(--ink-soft)}
+/* 입구 우편함 */
+.mb-stage{position:relative;width:min(100%,320px);height:170px;margin:4px auto 2px;user-select:none}
+.mb-stage svg.scene{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.mbox{position:absolute;left:31.9%;top:52px;width:23.75%;height:66px;border:0;padding:0;background:none;cursor:pointer}
+.mbox .mb-body{position:absolute;inset:12px 0 0 0;background:#e9dfc6;border:1.5px solid var(--ink);border-radius:3px;box-shadow:2px 3px 0 rgba(58,44,28,.2);display:grid;place-content:center;gap:0;text-align:center}
+.mbox .mb-body small{font-family:var(--hand);font-size:12px;color:var(--ink-soft);line-height:1}
+.mbox .mb-body b{font-family:var(--hand);font-weight:700;font-size:17px;color:var(--wine);line-height:1.1}
+.mbox .mb-lid{position:absolute;left:-3px;right:-3px;top:0;height:14px;background:#f6f0df;border:1.5px solid var(--ink);border-radius:3px;transform-origin:4px 100%;transition:transform .45s cubic-bezier(.3,1.6,.5,1)}
+.mbox .mb-lid::after{content:"";position:absolute;left:28%;right:28%;top:5px;height:2.5px;border-radius:2px;background:var(--ink)}
+.mbox .mb-flag{position:absolute;right:-12px;top:30px;width:3px;height:26px;background:var(--ink);transform-origin:50% 100%;transform:rotate(90deg);transition:transform .5s cubic-bezier(.3,1.8,.5,1)}
+.mbox .mb-flag::after{content:"";position:absolute;left:3px;top:0;width:12px;height:9px;background:#c0392b;border:1px solid var(--ink)}
+.mbox:focus-visible{outline:3px solid var(--mustard);outline-offset:4px;border-radius:4px}
+.mb-drop{position:absolute;left:43.75%;top:-34px;width:34px;height:22px;margin-left:-17px;background:#fbf6e9;border:1.3px solid var(--ink);opacity:0;pointer-events:none}
+.mb-drop::before{content:"";position:absolute;inset:0;background:linear-gradient(to bottom right,transparent 48%,var(--ink) 48% 52%,transparent 52%) left/50% 100% no-repeat,linear-gradient(to bottom left,transparent 48%,var(--ink) 48% 52%,transparent 52%) right/50% 100% no-repeat;opacity:.6}
+.mb-drop::after{content:"";position:absolute;right:3px;top:3px;width:6px;height:7px;background:#c0392b}
+.mb-stage[data-s="drop"] .mb-drop{animation:post 1s cubic-bezier(.5,0,.7,1) forwards}
+@keyframes post{0%{opacity:1;top:-34px;transform:rotate(-24deg)}60%{opacity:1;top:40px;transform:rotate(4deg)}80%{opacity:1;top:46px;transform:rotate(0) scaleY(1)}100%{opacity:0;top:56px;transform:scaleY(.2)}}
+.mb-stage[data-s="arrived"] .mb-flag,.mb-stage[data-open="1"] .mb-flag{transform:rotate(0)}
+.mb-stage[data-s="arrived"]:not([data-open="1"]) .mbox{animation:nudge 2.6s ease-in-out infinite}
+@keyframes nudge{0%,88%,100%{transform:none}92%{transform:rotate(-2deg)}96%{transform:rotate(2deg)}}
+.mb-stage[data-open="1"] .mb-lid{transform:rotate(-32deg)}
+.lgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(66px,1fr));gap:12px 10px;padding:6px 2px 4px}
+.lic{border:0;padding:0;background:none;cursor:pointer;transform:rotate(var(--r,0deg));animation:drop .45s cubic-bezier(.3,1.5,.5,1) backwards;animation-delay:calc(var(--i)*30ms);transition:transform .15s;filter:drop-shadow(2px 3px 0 rgba(58,44,28,.18))}
+.lic svg{display:block;width:100%;height:auto}
+.lic:hover,.lic:focus-visible{transform:rotate(0) translateY(-3px);outline:none}
+.lic[aria-pressed="true"]{transform:rotate(0) translateY(-3px)}
+.lic[aria-pressed="true"] .env-b{fill:var(--wine)}
+.lic[aria-pressed="true"] .env-n{fill:var(--white)}
+.lic[aria-pressed="true"] .env-f{stroke:var(--white)}
+.lview{margin-top:14px;animation:unfold .4s ease-out;transform-origin:50% 0}
+.lview .lhead{display:flex;align-items:center;gap:12px;padding:8px 6px 10px;flex-wrap:wrap}
+.lview .lhead .stamps{display:flex;align-items:center}
+.lview .lhead .stamps .pm{margin-left:-16px}
+.lview .lhead .who{display:grid}
+.lview .lhead .who b{font-family:var(--hand);font-size:22px;line-height:1.25}
+.lview .lhead .who span{font-family:var(--latin);font-style:italic;font-size:13.5px;color:var(--ink-soft)}
+.lview .lt{margin:0}
+@media (prefers-reduced-motion:reduce){.mb-stage .mbox,.mb-drop,.lic,.lview{animation:none!important}.mbox .mb-lid,.mbox .mb-flag{transition:none}}
 @media (prefers-reduced-motion:reduce){.rope-stage .nbox,.nic,.nview{animation:none!important}.rope-stage[data-s="travel"] .nbox{left:78%;top:74px}.nbox .lid{transition:none}}
 .env{width:100%;display:flex;align-items:center;gap:12px;text-align:left;border:1.5px solid var(--ink-soft);background:var(--paper);color:var(--ink);border-radius:6px;padding:8px 12px;min-width:0}
 .env:hover,.env:focus-visible{border-color:var(--wine);outline:none}
@@ -4096,29 +4134,79 @@ P "접힌 데가 맛있어요ㅎㅎ"
     icons.forEach(function(b){b.style.animation="none"; void b.offsetWidth; b.style.animation=""});
     cap.textContent="쪽지 "+NOTES.length+"묶음이 들어 있어요. 하나를 눌러 펼쳐요. (빨간 점은 그가, 회색 점은 루카가 먼저 보낸 쪽지)";
   });
-  LETTERS.forEach(function(L,i){
-    var wrap=el("div"), b=el("button","env"); b.type="button"; b.id="env"+i; b.setAttribute("aria-expanded",i===0?"true":"false"); b.setAttribute("aria-controls","lt"+i);
-    var s=el("span","stamps"); s.innerHTML=L.st.map(function(x){return stamp(x[0],x[1])}).join("")+postmark(L.day,L.time); b.appendChild(s);
-    var w=el("span","who"); w.appendChild(el("b",null,L.t)); w.appendChild(el("span",null,(L.from==="L"?"루카가 그에게":"그가 루카에게")+" · "+L.day+" "+L.time)); b.appendChild(w);
-    b.appendChild(el("span","chev","›"));
-    var lt=el("div","lt"); lt.id="lt"+i; lt.hidden=i!==0;
+  function letterEl(L){
+    var lt=el("div","lt");
     var body=el("p","body",L.body); if(L.from==="L") body.style.color="var(--pencil)"; lt.appendChild(body);
     function rep(t){var r=el("div","reply"); r.appendChild(el("small",null,"소인 칸 · 연필")); r.appendChild(document.createTextNode(t)); lt.appendChild(r)}
     if(L.reply) rep(L.reply);
     if(L.back) lt.appendChild(el("p","back",L.back));
     if(L.reply2) rep(L.reply2);
     if(L.aside) lt.appendChild(el("p","aside",L.aside));
-    b.addEventListener("click",function(){var open=b.getAttribute("aria-expanded")==="true"; b.setAttribute("aria-expanded",open?"false":"true"); lt.hidden=open});
-    wrap.appendChild(b); wrap.appendChild(lt); pl.appendChild(wrap);
+    return lt;
+  }
+  var mst=el("div","mb-stage"); mst.dataset.s="idle";
+  mst.innerHTML='<svg class="scene" viewBox="0 0 320 170" preserveAspectRatio="none" aria-hidden="true">'+
+    '<line x1="0" y1="162" x2="320" y2="162" stroke="#a89878" stroke-width="1.5" stroke-dasharray="4 4"/>'+
+    '<path d="M206 162 C208 70 236 34 262 34 C288 34 314 70 316 162 Z" fill="#74825a" stroke="#3a2c1c" stroke-width="1.5"/>'+
+    '<path d="M226 162 C228 102 244 78 262 78 C280 78 296 102 298 162 Z" fill="#2c2418"/>'+
+    '<path d="M214 70 Q262 50 310 70" fill="none" stroke="#c9d6a8" stroke-width="1.3" opacity=".7"/><path d="M210 100 Q262 82 314 100" fill="none" stroke="#c9d6a8" stroke-width="1.3" opacity=".7"/>'+
+    '<rect x="240" y="44" width="44" height="16" rx="2" fill="#fbf6e9" stroke="#3a2c1c"/><text x="262" y="56" text-anchor="middle" font-size="9.5" fill="#3a2c1c" font-family="Gaegu, cursive">노크 두 번</text>'+
+    '<rect x="94" y="70" width="6" height="56" fill="#8a6a44" stroke="#3a2c1c"/><rect x="94" y="118" width="92" height="8" fill="#a07c50" stroke="#3a2c1c"/>'+
+    '<rect x="99" y="126" width="5" height="36" fill="#8a6a44" stroke="#3a2c1c"/><rect x="176" y="126" width="5" height="36" fill="#8a6a44" stroke="#3a2c1c"/>'+
+    '<text x="140" y="150" text-anchor="middle" font-size="10" fill="#7a6a52" font-family="Gaegu, cursive">입구 의자</text></svg>';
+  var drop=el("span","mb-drop"); mst.appendChild(drop);
+  var mbox=el("button","mbox"); mbox.type="button"; mbox.setAttribute("aria-expanded","false"); mbox.setAttribute("aria-controls","lgrid"); mbox.setAttribute("aria-label","입구 우편함 열기");
+  mbox.innerHTML='<span class="mb-body"><small>곰굴 우편</small><b>'+LETTERS.length+'</b></span><span class="mb-lid"></span><span class="mb-flag"></span>';
+  mst.appendChild(mbox);
+  var lcap=el("p","rope-cap",""); lcap.setAttribute("aria-live","polite");
+  var lgrid=el("div","lgrid"); lgrid.id="lgrid"; lgrid.hidden=true;
+  var lview=el("div","nhint","편지를 하나 골라요."); lview.hidden=true;
+  pl.className=""; pl.appendChild(mst); pl.appendChild(lcap); pl.appendChild(lgrid); pl.appendChild(lview);
+  var licons=[];
+  function stampColor(t){if(t==="blank") return null; var m=/fill="(#[0-9a-fA-F]{3,6})"/.exec(ART[t]?ART[t][0]:""); return m?m[1]:"#c0392b"}
+  function showLetter(i){
+    licons.forEach(function(b,j){b.setAttribute("aria-pressed",j===i?"true":"false")});
+    var L=LETTERS[i], v=el("div","lview");
+    var h=el("div","lhead"), st=el("span","stamps"); st.innerHTML=L.st.map(function(x){return stamp(x[0],x[1])}).join("")+postmark(L.day,L.time); h.appendChild(st);
+    var w=el("span","who"); w.appendChild(el("b",null,L.t)); w.appendChild(el("span",null,(L.from==="L"?"루카가 그에게":"그가 루카에게")+" · "+L.day+" "+L.time)); h.appendChild(w);
+    v.appendChild(h); v.appendChild(letterEl(L));
+    lview.replaceWith(v); lview=v;
+  }
+  LETTERS.forEach(function(L,i){
+    var b=el("button","lic"); b.type="button"; b.style.setProperty("--i",i); b.style.setProperty("--r",(((i*53)%9)-4)*0.8+"deg");
+    b.setAttribute("aria-pressed","false"); b.setAttribute("aria-label","편지 "+(i+1)+"번: "+L.t+(L.from==="L"?" (루카가 보냄)":" (그가 보냄)"));
+    var c=stampColor(L.st[0][0]);
+    var stp=c?'<rect x="45" y="6" width="13" height="15" fill="'+c+'" stroke="#fbf6e9" stroke-width="1.4" stroke-dasharray="2 1.5"/>':'<rect x="45" y="6" width="13" height="15" fill="none" stroke="#5f5a52" stroke-width="1" stroke-dasharray="2 2"/>';
+    b.innerHTML='<svg viewBox="0 0 64 44" aria-hidden="true"><rect class="env-b" x="2" y="2" width="60" height="40" rx="2" fill="#fbf6e9" stroke="#3a2c1c" stroke-width="1.5"/>'+
+      '<path class="env-f" d="M3 3 L32 25 L61 3" fill="none" stroke="#3a2c1c" stroke-width="1.3" stroke-linejoin="round"/>'+stp+
+      '<circle cx="9" cy="35" r="3" fill="'+(L.from==="L"?"#5f5a52":"#8e2f25")+'"/>'+
+      '<text class="env-n" x="32" y="39" text-anchor="middle" font-size="13" font-weight="700" fill="#3a2c1c" font-family="Gaegu, cursive">'+(i+1)+'</text></svg>';
+    b.addEventListener("click",function(){showLetter(i)});
+    lgrid.appendChild(b); licons.push(b);
+  });
+  function closeMb(){mst.dataset.open=""; mbox.setAttribute("aria-expanded","false"); mbox.setAttribute("aria-label","입구 우편함 열기"); lgrid.hidden=true; lview.hidden=true}
+  function arriveLetters(){
+    closeMb();
+    if(reduce){mst.dataset.s="arrived"; lcap.textContent="편지가 들어왔어요. 우편함을 눌러 열어 보세요."; return}
+    mst.dataset.s="idle"; void drop.offsetWidth; mst.dataset.s="drop"; lcap.textContent="편지가 들어가는 중……";
+  }
+  drop.addEventListener("animationend",function(){mst.dataset.s="arrived"; lcap.textContent="편지가 들어왔어요. 우편함을 눌러 열어 보세요."});
+  mbox.addEventListener("click",function(){
+    if(mst.dataset.s==="drop") return;
+    if(mst.dataset.open==="1"){closeMb(); lcap.textContent="우편함을 닫았어요. 다시 누르면 열려요."; return}
+    mst.dataset.open="1"; mbox.setAttribute("aria-expanded","true"); mbox.setAttribute("aria-label","입구 우편함 닫기");
+    lgrid.hidden=false; lview.hidden=false;
+    licons.forEach(function(b){b.style.animation="none"; void b.offsetWidth; b.style.animation=""});
+    lcap.textContent="편지 "+LETTERS.length+"통이 들어 있어요. 하나를 눌러 읽어요. (빨간 점은 그가, 회색 점은 루카가 보낸 편지)";
   });
   var sn=document.getElementById("slotNotes"), sL=document.getElementById("slotLetters");
   var pt=document.getElementById("postToggle"), pb=document.getElementById("postBody"), pc=document.getElementById("postCue");
   function pick(which){
     var n=which==="notes"; sn.setAttribute("aria-pressed",n?"true":"false"); sL.setAttribute("aria-pressed",n?"false":"true"); pn.hidden=!n; pl.hidden=n;
-    if(n && !pb.hidden) arrive();
+    if(!pb.hidden){ if(n) arrive(); else arriveLetters(); }
     try{localStorage.setItem("hoehle-slot",which)}catch(e){}
   }
-  pt.addEventListener("click",function(){var open=pt.getAttribute("aria-expanded")==="true"; pt.setAttribute("aria-expanded",open?"false":"true"); pb.hidden=open; pc.textContent=open?"열기 ▾":"접기 ▴"; if(!open && !pn.hidden) arrive()});
+  pt.addEventListener("click",function(){var open=pt.getAttribute("aria-expanded")==="true"; pt.setAttribute("aria-expanded",open?"false":"true"); pb.hidden=open; pc.textContent=open?"열기 ▾":"접기 ▴"; if(!open){ if(!pn.hidden) arrive(); else arriveLetters(); }});
   sn.addEventListener("click",function(){pick("notes")}); sL.addEventListener("click",function(){pick("letters")});
   try{if(localStorage.getItem("hoehle-slot")==="letters") pick("letters")}catch(e){}
 })();
