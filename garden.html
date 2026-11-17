@@ -175,7 +175,7 @@ const DEF={v:1,heart:0,coin:15,leaf:12,intim:0,hygro:1,soup:0,plotsN:2,lamp:fals
 let S;
 try{S=Object.assign({},DEF,JSON.parse(localStorage.getItem('twosteps')||'{}'))}catch(e){S=Object.assign({},DEF)}
 while(S.plots.length<5)S.plots.push({t:null,g:0,wet:0});
-function save(){if(!S)return;S.last=Date.now();try{localStorage.setItem('twosteps',JSON.stringify(S))}catch(e){}}
+function save(){if(!S||window.NOSAVE)return;S.last=Date.now();try{localStorage.setItem('twosteps',JSON.stringify(S))}catch(e){}}
 
 /* ---------- cloud save (artifact db) ---------- */
 let CLD=null;
@@ -183,9 +183,9 @@ const sKey=()=>{const o=Object.assign({},S);delete o.last;return JSON.stringify(
 async function cloudInit(){try{if(!window.claude||!claude.use)return;const db=await claude.use('db'),user=await claude.use('user');if(!db||!user)return;const id=await user.id();if(!id)return;
   const ref=db.collection('data/users/'+id).doc('save');const snap=await ref.get();
   if(snap.exists){const r=snap.data()&&snap.data().s;if(r){const rs=JSON.parse(r);const better=(rs.intim||0)>(S.intim||0)||((rs.intim||0)===(S.intim||0)&&(rs.last||0)>(S.last||0)&&(rs.heart||0)>(S.heart||0));
-    if(better){Object.assign(S,rs);try{localStorage.setItem('twosteps',JSON.stringify(S))}catch(e){}setTimeout(()=>toast('☁️ 저장된 진행을 불러왔어요'),600)}}}
+    if(localStorage.getItem('ts_force')){localStorage.removeItem('ts_force')}else if(better){Object.assign(S,rs);try{localStorage.setItem('twosteps',JSON.stringify(S))}catch(e){}setTimeout(()=>toast('☁️ 저장된 진행을 불러왔어요'),600)}}}
   CLD={ref,busy:false,key:''};}catch(e){CLD=null}}
-async function cloudSave(){if(!CLD||CLD.busy||!S)return;const k=sKey();if(k===CLD.key)return;CLD.busy=true;try{await CLD.ref.set({s:JSON.stringify(S),t:Date.now()});CLD.key=k}catch(e){}CLD.busy=false}
+async function cloudSave(){if(window.NOSAVE||!CLD||CLD.busy||!S)return;const k=sKey();if(k===CLD.key)return;CLD.busy=true;try{await CLD.ref.set({s:JSON.stringify(S),t:Date.now()});CLD.key=k}catch(e){}CLD.busy=false}
 setInterval(cloudSave,15000);document.addEventListener('visibilitychange',()=>{if(document.hidden)cloudSave()});
 setTimeout(cloudInit,800);
 
@@ -395,6 +395,9 @@ function albumHtml(){return S.photos.length?'<div class="alb">'+S.photos.map((p,
 function boxModal(){const n=BOX.filter(b=>S.box[b[0]]).length;let h=`<p class="note">습도계 붙은 상자 · ${n}/${BOX.length}</p>`;
   for(const b of BOX){const u=S.box[b[0]];h+=`<div class="item ${u?'':'locked'}"><div class="em">${u?b[1]:'?'}</div><div class="tx"><b>${u?b[2]:'???'}</b><small>${u?'“'+b[4]+'”':b[3]}</small></div></div>`}
   modal('📦 상자',h)}
+function importSave(btn){try{let v=$('svBox').value.trim().replace(/^["'\s]+|["'\s]+$/g,'').replace(/\s+/g,'');if(!v)throw '빈 칸이에요';let o;if(v[0]==='{')o=JSON.parse(v);else{v=v.replace(/-/g,'+').replace(/_/g,'/');while(v.length%4)v+='=';o=JSON.parse(decodeURIComponent(escape(atob(v))))}
+  if(!o||typeof o!=='object'||!('plots' in o||'heart' in o))throw '저장 코드가 아니에요';o=Object.assign({},DEF,o);window.NOSAVE=true;localStorage.setItem('twosteps',JSON.stringify(o));localStorage.setItem('ts_force','1');btn.textContent='불러오는 중…';setTimeout(()=>location.reload(),200)}
+  catch(e){window.NOSAVE=false;btn.textContent='코드가 이상해요: '+(typeof e==='string'?e:'끝까지 복사됐는지 확인')}}
 function goFull(){const d=document.documentElement,f=d.requestFullscreen||d.webkitRequestFullscreen;if(!f){toast('이 화면은 전체화면을 못 켜요. 크롬 메뉴 → 홈 화면에 추가를 해 보세요');return}try{const p=f.call(d,{navigationUI:'hide'});if(p&&p.catch)p.catch(()=>toast('전체화면이 막혀 있어요. 크롬 메뉴 → 홈 화면에 추가를 해 보세요'));try{screen.orientation&&screen.orientation.lock&&screen.orientation.lock('portrait').catch(()=>{})}catch(e){}}catch(e){toast('전체화면이 막혀 있어요')}}
 function infoModal(){const st=stage();let h=`<button class="btn" style="width:100%;margin-bottom:10px" onclick="goFull()">⛶ 전체화면으로 보기</button><div class="quote">함께한 거리: <b>${STAGE_NM[st]}</b><br>루카스 쓰다듬기 ${S.pats}번 · 그 쓰다듬기 ${S.herPats}번<br>수확 ${S.harvests}번 · 완성한 그림 ${S.paintings}장 · 습도계 ${S.hygro}개<br>꿈 ${S.dreams}번 · 데운 손 ${S.hands}번</div>
   <p class="note"><b>시간 미리보기</b> (한국 시간 대신 잠깐 바꿔 보기)</p><div class="grid2">
@@ -405,7 +408,7 @@ function infoModal(){const st=stage();let h=`<button class="btn" style="width:10
   <p class="note" style="margin-top:14px">루카스는 다섯 번 연달아 쓰다듬으면 귀 끝이 빨개져요. 가끔 삐져서 구석에 돌아서 버리면 루카스를 눌러 주세요.</p>
   <p class="note" style="margin-top:14px"><b>진행 옮기기</b> (다른 곳에서 열어도 이어서 하기)</p>
   <textarea id="svBox" rows="3" style="width:100%;border-radius:14px;border:2px solid #e8c9cf;padding:8px;font-size:11px" placeholder="여기에 저장 코드를 붙여 넣고 불러오기"></textarea>
-  <div class="grid2"><button class="btn alt" onclick="const t=$('svBox');t.value=btoa(unescape(encodeURIComponent(JSON.stringify(S))));t.select();try{document.execCommand('copy');this.textContent='복사됨!'}catch(e){this.textContent='위 코드를 복사하세요'}">저장 코드 만들기</button><button class="btn alt" onclick="try{const o=JSON.parse(decodeURIComponent(escape(atob($('svBox').value.trim()))));if(!o||!o.plots)throw 0;localStorage.setItem('twosteps',JSON.stringify(o));location.reload()}catch(e){this.textContent='코드가 이상해요'}">불러오기</button></div>
+  <div class="grid2"><button class="btn alt" onclick="const t=$('svBox');t.value=btoa(unescape(encodeURIComponent(JSON.stringify(S))));t.select();try{document.execCommand('copy');this.textContent='복사됨!'}catch(e){this.textContent='위 코드를 복사하세요'}">저장 코드 만들기</button><button class="btn alt" onclick="importSave(this)">불러오기</button></div>
   <button class="btn alt" style="width:100%" onclick="if(window.__r){try{localStorage.removeItem('twosteps')}catch(e){}S=null;location.reload()}else{window.__r=1;this.textContent='한 번 더 누르면 처음부터 시작해요'}">처음부터 다시</button>`;
   modal('🕰️ 기록',h)}
 
