@@ -376,7 +376,7 @@ const SHOP=[
  {id:'plot',em:'🪴',nm:'텃밭 한 칸',d:()=>'지금 '+S.plotsN+'칸 (최대 5칸)',cost:()=>[0,0,25,70,160][S.plotsN]||0,max:()=>S.plotsN>=5,buy:()=>{S.plotsN++}},
  {id:'scarf',em:()=>`<img src="${SPR['u_sc'+(S.scarf+1)]}" style="width:40px;height:40px;object-fit:contain">`,nm:()=>'뜨개 목도리 Lv.'+S.scarfLv+' · '+['털실 사기','뜨기 시작','모양 잡기','마무리하기'][S.scarf],d:()=>(S.scarf+1)+'/4 단계 · 완성할 때마다 마음 +5%'+(S.scarfLv?' (지금 +'+S.scarfLv*5+'%)':''),cost:()=>Math.round([20,45,90,150][S.scarf]*(1+.35*S.scarfLv)),max:()=>false,buy:()=>{S.scarf++;const k=S.scarf;
    if(k===1)say(LU,S.scarfLv?'…이번엔 더 길게.':'…털실은 그냥 산 거야.');else if(k===2)say(LU,'…배우는 중이야.');else if(k===3){say(HE,'루카 뭐 떠요?ㅎㅎ');setTimeout(()=>say(LU,S.scarfLv?'…새 거야. 묻지 마.':'…묻지 마.'),1300)}
-   else{S.scarf=0;S.scarfLv++;S.intim+=10;gain('heart',30*mult(),HE);LU.flush=5;unlock('scarf',true);scarfModal(true);return'stay'}}},
+   else{S.scarf=0;S.scarfLv++;SCW.on=true;SCW.t=performance.now()/1000+75;S.intim+=10;gain('heart',30*mult(),HE);LU.flush=5;unlock('scarf',true);scarfModal(true);return'stay'}}},
  {id:'soup',em:'🍲',nm:'감자 수프 냄비',d:()=>'새싹 +50% · Lv.'+S.soup,cost:()=>Math.round(15*Math.pow(1.7,S.soup)),max:()=>S.soup>=10,buy:()=>{S.soup++;say(HE,'수프 냄비 커졌어요ㅎㅎ')}},
 ];
 function shopModal(){let h='<p class="note">🪙 폭스링은 수확하거나 그림을 완성하면 생겨요.</p>';
@@ -508,7 +508,7 @@ function spriteFor(c){const s=c.state;
   if(s==='walk')return c.dir;if(s==='sleep')return'sleep';if(s==='nap')return'nap';if(s==='awake')return'wake';if(s==='sit')return'side';if(s==='gaze'||s==='sulk')return'back';if(s==='paint'||s==='water')return'side';if(c.hug>0&&c.who==='h')return'hug';return'front'}
 const SZ={front:['h',124],side:['h',124],back:['h',124],'34':['h',120],sleep:['w',116],fish:['w',116],hug:['h',124]};
 function drawChar(c,T){if(c.hidden){c.bb=null;return}
-  const key=spriteFor(c);let img=IMG[c.who+'_'+key];if(c.who==='h'&&key==='front'&&S.scarfLv>=1)img=IMG.h_scarf;if(c.who==='l'&&c.flush>0&&TINT[key])img=TINT[key];
+  const key=spriteFor(c);let img=IMG[c.who+'_'+key];if(c.who==='h'&&key==='front'&&S.scarfLv>=1&&SCW.on)img=IMG.h_scarf;if(c.who==='l'&&c.flush>0&&TINT[key])img=TINT[key];
   const sz=SZ[key]||['h',124];const isl=(key==='sleep'||key==='nap'||key==='wake');const sc=isl?100/img.width:(sz[0]==='h'?sz[1]/img.height:sz[1]/img.width),w=img.width*sc,h=img.height*sc;
   const wk=c.state==='walk',ph=c.walk||0,sn=Math.sin(ph),ab=Math.abs(sn);
   const bob=wk?ab*4:Math.sin(T*2+(c.who==='l'?0:1))*.8;
@@ -563,8 +563,11 @@ function dayKey(){const t=now();return t.mo+'-'+t.day}
 function handWanted(){const t=now();return [11,12,1,2].includes(t.mo)&&t.h>=6&&t.h<12&&curMode==='day'&&S.handDay!==dayKey()&&scn!=='den'&&!LU.hidden&&LU.state!=='walk'&&LU.state!=='sulk'}
 function updHand(dt){if(HAND.on){if(!handWanted()){HAND.on=false;return}HAND.p=Math.min(1,HAND.p+dt/3.2);LU.sq=Math.max(LU.sq,.05);if(Math.random()<dt*4)heartsAt(LU.x+rnd(-10,10),LU.y-60);
   if(HAND.p>=1){HAND.on=false;HAND.p=0;S.handDay=dayKey();S.hands++;LU.flush=5;gain('heart',8*mult(),LU);S.intim+=3;say(LU,'…안 해도 돼.',2.2);setTimeout(()=>say(HE,'손은 안 빼시네요ㅎㅎ',2.6),1300);unlock('hand');save()}}}
-const SCF={x:0,y:0,on:false};
-function drawScarfFloat(T){SCF.on=false;if(S.scarf<1||S.scarf>3||LU.hidden||scn==='den')return;const im=IMG['u_sc'+S.scarf];if(!im||!im.naturalWidth)return;
+const SCF={x:0,y:0,on:false},SCW={on:false,t:0};
+function scarfWear(T){if(S.scarfLv<1){SCW.on=false;return}if(!SCW.t)SCW.t=T+rnd(20,60);if(T<SCW.t)return;
+  const cold=[11,12,1,2].includes(now().mo)||scn==='snow';
+  if(SCW.on){SCW.on=false;SCW.t=T+(cold?rnd(50,110):rnd(150,320))}else{SCW.on=true;SCW.t=T+(cold?rnd(50,90):rnd(25,55))}}
+function drawScarfFloat(T){scarfWear(T);SCF.on=false;if(S.scarf<1||S.scarf>3||LU.hidden||scn==='den')return;const im=IMG['u_sc'+S.scarf];if(!im||!im.naturalWidth)return;
   SCF.up=(SCF.up||0)+(((LU.bubT>0)?1:0)-(SCF.up||0))*.12;const bob=Math.sin(T*1.8)*4,x=clamp(LU.x,34,W-34),y=(LU.bb?LU.bb[1]:LU.y-134)-30-SCF.up*34+bob,w=58,h=im.naturalHeight/im.naturalWidth*w;SCF.x=x;SCF.y=y;SCF.on=true;
   ctx.save();if(NT>0)ctx.filter='brightness('+(1-NT*.2)+')';ctx.translate(x,y);ctx.rotate(Math.sin(T*1.3)*.06);ctx.drawImage(im,-w/2,-h/2,w,h);ctx.restore();
   ctx.globalAlpha=.55+.45*Math.sin(T*4);ctx.fillStyle='#fff3a8';ctx.font='11px sans-serif';ctx.textAlign='center';ctx.fillText('✦',x+w*.5,y-h*.45);ctx.globalAlpha=1}
