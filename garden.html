@@ -201,7 +201,7 @@ function modeOf(t){const mm=t.h*60+t.m;
 function phaseOf(t){const h=t.h+t.m/60;if(h<5||h>=22)return'night';if(h<7)return'dawn';if(h<17)return'day';if(h<19)return'sunset';return'evening';}
 function mult(){const t=now();let m=1;if(t.dow===0)m*=2;if(modeOf(t)==='bridge')m*=2;m*=1+.05*(S.scarfLv||0);return m;}
 const stage=()=>S.intim>=300?2:S.intim>=100?1:0;
-const GAP=[100,74,60],STAGE_NM=['두 걸음 떨어져서','한 걸음 떨어져서','어깨가 닿게'];
+const GAP=[112,94,82],STAGE_NM=['두 걸음 떨어져서','한 걸음 떨어져서','어깨가 닿게'];
 
 /* ---------- layout ---------- */
 let W=390,H=760,K=1,L={};let scn='garden',prevScn=null,fadeT=1;
