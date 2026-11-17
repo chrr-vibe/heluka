@@ -484,7 +484,7 @@ function drawBG(t,ph,T){
     for(let i=0;i<7;i++){const ph2=(T*.5+i/7)%1;ctx.globalAlpha=1-ph2;ell(fx+Math.sin(T*2+i*2)*9,fy-6-ph2*60,1.5,1.5,'#ffc866')}ctx.globalAlpha=1}
 }
 const PV=()=>scn==='garden'||scn==='table',HP=()=>scn!=='market'&&scn!=='den';
-const PVAR=()=>scn==='snow'?'sn':scn==='beach'?'bc':(scn==='garden'||scn==='table')?'':'dk';
+const PVAR=()=>scn==='snow'?'sn':scn==='beach'?'bc':(scn==='garden'||scn==='table'||scn==='forest'||scn==='cherry')?'':'dk';
 const ORG={hy:{'':352,sn:338,bc:328,dk:325},ea:{'':310,sn:272,bc:272,dk:275}};
 const DIM=a=>{ctx.filter=NT>0?'brightness('+(1-NT*a)+') saturate('+(1-NT*Math.min(.22,a*1.3))+')':'none'},UNDIM=()=>{ctx.filter='none'};
 const VL=()=>{const dv=PVAR();return NT>0&&dv!=='dk'&&dv!=='sn'&&dv!=='bc'?[[dv,1-NT],['dk',NT]]:[[dv,1]]};
