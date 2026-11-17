@@ -171,9 +171,10 @@ function earTint(img){const c=document.createElement('canvas');c.width=img.width
 const TINT={};
 
 /* ---------- save ---------- */
-const DEF={v:1,heart:0,coin:15,leaf:12,intim:0,hygro:1,soup:0,plotsN:2,lamp:false,plots:[],box:{},pats:0,herPats:0,harvests:0,paintings:0,paint:0,egg:null,eggs:0,eggBest:0,eggLog:[0,0,0],dreams:0,handDay:'',hands:0,notes:[],noteN:0,last:0,sulkFixed:0,scene:'auto',scarf:0,photos:[],photoDay:''};
+const DEF={v:1,heart:0,coin:15,leaf:12,intim:0,hygro:1,soup:0,plotsN:2,lamp:false,plots:[],box:{},pats:0,herPats:0,harvests:0,paintings:0,paint:0,egg:null,eggs:0,eggBest:0,eggLog:[0,0,0],dreams:0,handDay:'',hands:0,notes:[],noteN:0,last:0,sulkFixed:0,scene:'auto',scarf:0,scarfLv:0,photos:[],photoDay:''};
 let S;
 try{S=Object.assign({},DEF,JSON.parse(localStorage.getItem('twosteps')||'{}'))}catch(e){S=Object.assign({},DEF)}
+if(S.scarf>=4){S.scarfLv=(S.scarfLv||0)+1;S.scarf=0}
 while(S.plots.length<5)S.plots.push({t:null,g:0,wet:0});
 function save(){if(!S||window.NOSAVE)return;S.last=Date.now();try{localStorage.setItem('twosteps',JSON.stringify(S))}catch(e){}}
 
@@ -198,7 +199,7 @@ function modeOf(t){const mm=t.h*60+t.m;
   if(mm>=7*60+55&&mm<8*60+55)return'bridge';
   return'day';}
 function phaseOf(t){const h=t.h+t.m/60;if(h<5||h>=22)return'night';if(h<7)return'dawn';if(h<17)return'day';if(h<19)return'sunset';return'evening';}
-function mult(){const t=now();let m=1;if(t.dow===0)m*=2;if(modeOf(t)==='bridge')m*=2;return m;}
+function mult(){const t=now();let m=1;if(t.dow===0)m*=2;if(modeOf(t)==='bridge')m*=2;m*=1+.05*(S.scarfLv||0);return m;}
 const stage=()=>S.intim>=300?2:S.intim>=100?1:0;
 const GAP=[100,74,60],STAGE_NM=['두 걸음 떨어져서','한 걸음 떨어져서','어깨가 닿게'];
 
@@ -373,9 +374,9 @@ function plant(i,k){const d=PL[k];if(S.leaf<d.cost)return;S.leaf-=d.cost;S.plots
 const SHOP=[
  {id:'hygro',em:'🌡️',nm:'습도계 하나 더',d:()=>'마음 +0.12/초 · 지금 '+S.hygro+'개',cost:()=>Math.round(12*Math.pow(1.55,S.hygro-1)),max:()=>S.hygro>=16,buy:()=>{S.hygro++;say(LU,'…하나 더.');LU.flush=3;if(S.hygro>=8)unlock('eight')}},
  {id:'plot',em:'🪴',nm:'텃밭 한 칸',d:()=>'지금 '+S.plotsN+'칸 (최대 5칸)',cost:()=>[0,0,25,70,160][S.plotsN]||0,max:()=>S.plotsN>=5,buy:()=>{S.plotsN++}},
- {id:'scarf',em:()=>`<img src="${SPR['u_sc'+Math.min(4,S.scarf+1)]}" style="width:40px;height:40px;object-fit:contain">`,nm:()=>S.scarf>=4?'뜨개 목도리':'뜨개 목도리 · '+['털실 사기','뜨기 시작','목도리 모양 잡기','마무리하기'][S.scarf],d:()=>S.scarf>=4?'그가 두르고 다녀요':(S.scarf+1)+'/4 단계 · '+['털실 한 뭉치','뜨는 중','목도리','완성'][S.scarf],cost:()=>[20,45,90,150][S.scarf]||0,max:()=>S.scarf>=4,buy:()=>{S.scarf++;const k=S.scarf;
-   if(k===1)say(LU,'…털실은 그냥 산 거야.');else if(k===2)say(LU,'…배우는 중이야.');else if(k===3){say(HE,'루카 뭐 떠요?ㅎㅎ');setTimeout(()=>say(LU,'…묻지 마.'),1300)}
-   else{S.intim+=10;gain('heart',30*mult(),HE);LU.flush=5;unlock('scarf',true);scarfModal();return'stay'}}},
+ {id:'scarf',em:()=>`<img src="${SPR['u_sc'+(S.scarf+1)]}" style="width:40px;height:40px;object-fit:contain">`,nm:()=>'뜨개 목도리 Lv.'+S.scarfLv+' · '+['털실 사기','뜨기 시작','모양 잡기','마무리하기'][S.scarf],d:()=>(S.scarf+1)+'/4 단계 · 완성할 때마다 마음 +5%'+(S.scarfLv?' (지금 +'+S.scarfLv*5+'%)':''),cost:()=>Math.round([20,45,90,150][S.scarf]*(1+.35*S.scarfLv)),max:()=>false,buy:()=>{S.scarf++;const k=S.scarf;
+   if(k===1)say(LU,S.scarfLv?'…이번엔 더 길게.':'…털실은 그냥 산 거야.');else if(k===2)say(LU,'…배우는 중이야.');else if(k===3){say(HE,'루카 뭐 떠요?ㅎㅎ');setTimeout(()=>say(LU,S.scarfLv?'…새 거야. 묻지 마.':'…묻지 마.'),1300)}
+   else{S.scarf=0;S.scarfLv++;S.intim+=10;gain('heart',30*mult(),HE);LU.flush=5;unlock('scarf',true);scarfModal(true);return'stay'}}},
  {id:'soup',em:'🍲',nm:'감자 수프 냄비',d:()=>'새싹 +50% · Lv.'+S.soup,cost:()=>Math.round(15*Math.pow(1.7,S.soup)),max:()=>S.soup>=10,buy:()=>{S.soup++;say(HE,'수프 냄비 커졌어요ㅎㅎ')}},
 ];
 function shopModal(){let h='<p class="note">🪙 폭스링은 수확하거나 그림을 완성하면 생겨요.</p>';
@@ -383,7 +384,7 @@ function shopModal(){let h='<p class="note">🪙 폭스링은 수확하거나 �
   modal('가게',h)}
 function buy(id){const it=SHOP.find(x=>x.id===id);const c=it.cost();if(it.max()||S.coin<c)return;S.coin-=c;const r=it.buy();save();if(r!=='stay')shopModal();}
 const V=x=>typeof x==='function'?x():x;
-function scarfModal(){modal('🧣 목도리 완성',`<img class="hero" src="${SPR.h_scarf}" style="width:58%;display:block;margin:0 auto 8px"><div class="quote">루카스가 말없이 목도리를 둘러 줬어요.<br>“…추워 보여서.”<br>“발바닥 무늬는요?ㅎㅎ” “……실수야.”</div><p class="note">📦 상자에 <b>🧣 뜨개 목도리</b>를 넣었어요. 이제 그가 목도리를 두르고 다녀요.</p>`)}
+function scarfModal(done){const n=S.scarfLv;modal(done?'🧣 목도리 완성':'🧣 뜨개 목도리',`<img class="hero" src="${SPR.h_scarf}" style="width:58%;display:block;margin:0 auto 8px"><div class="quote">${done?'루카스가 말없이 목도리를 둘러 줬어요.<br>“…추워 보여서.”<br>“발바닥 무늬는요?ㅎㅎ” “……실수야.”':'“…추워 보여서.”<br>“발바닥 무늬는요?ㅎㅎ” “……실수야.”'}</div><p class="note">🧣 뜨개 목도리 <b>Lv.${n}</b> · 지금까지 ${n}장 · 마음 얻는 양 <b>+${n*5}%</b><br>가게에서 새 목도리를 계속 뜰 수 있어요.</p>`)}
 /* ---------- photo ---------- */
 function flash(){const f=document.createElement('div');f.style.cssText='position:fixed;inset:0;background:#fff;z-index:99;opacity:.92;transition:opacity .7s;pointer-events:none';document.body.appendChild(f);requestAnimationFrame(()=>requestAnimationFrame(()=>f.style.opacity=0));setTimeout(()=>f.remove(),900)}
 function snapPhoto(){if(S.photoDay===dayKey())return;closeM();say(LU,pick(['…찍지 마.','…한 장만이야.','…사진에서는 냄새 안 나.']),2.4);
@@ -394,7 +395,7 @@ function snapPhoto(){if(S.photoDay===dayKey())return;closeM();say(LU,pick(['…�
 function photoView(i,fresh){const p=S.photos[i];if(!p)return;modal('📷 '+(fresh?'오늘의 한 장':p.d),`<div class="pola"><img src="${p.u}"><div>${p.d} · ${p.c}</div></div><button class="btn" style="width:100%;margin-top:12px" onclick="dexModal()">📖 앨범으로</button>`)}
 function albumHtml(){return S.photos.length?'<div class="alb">'+S.photos.map((p,i)=>`<img src="${p.u}" onclick="photoView(${i})">`).reverse().join('')+'</div>':'<div class="quote">아직 사진이 없어요.</div>'}
 function boxModal(){const n=BOX.filter(b=>S.box[b[0]]).length;let h=`<p class="note">습도계 붙은 상자 · ${n}/${BOX.length}</p>`;
-  for(const b of BOX){const u=S.box[b[0]];h+=`<div class="item ${u?'':'locked'}"><div class="em">${u?b[1]:'?'}</div><div class="tx"><b>${u?b[2]:'???'}</b><small>${u?'“'+b[4]+'”':b[3]}</small></div></div>`}
+  for(const b of BOX){const u=S.box[b[0]];const sc=b[0]==='scarf'&&u;h+=`<div class="item ${u?'':'locked'}" ${sc?'onclick="scarfModal()" style="cursor:pointer"':''}><div class="em">${u?b[1]:'?'}</div><div class="tx"><b>${u?b[2]+(sc?' Lv.'+S.scarfLv:''):'???'}</b><small>${u?'“'+b[4]+'”'+(sc?' · 눌러서 보기':''):b[3]}</small></div></div>`}
   modal('📦 상자',h)}
 function importSave(btn){try{let v=$('svBox').value.trim().replace(/^["'\s]+|["'\s]+$/g,'').replace(/\s+/g,'');if(!v)throw '빈 칸이에요';let o;if(v[0]==='{')o=JSON.parse(v);else{v=v.replace(/-/g,'+').replace(/_/g,'/');while(v.length%4)v+='=';o=JSON.parse(decodeURIComponent(escape(atob(v))))}
   if(!o||typeof o!=='object'||!('plots' in o||'heart' in o))throw '저장 코드가 아니에요';o=Object.assign({},DEF,o);window.NOSAVE=true;localStorage.setItem('twosteps',JSON.stringify(o));localStorage.setItem('ts_force','1');btn.textContent='불러오는 중…';setTimeout(()=>location.reload(),200)}
@@ -507,7 +508,7 @@ function spriteFor(c){const s=c.state;
   if(s==='walk')return c.dir;if(s==='sleep')return'sleep';if(s==='nap')return'nap';if(s==='awake')return'wake';if(s==='sit')return'side';if(s==='gaze'||s==='sulk')return'back';if(s==='paint'||s==='water')return'side';if(c.hug>0&&c.who==='h')return'hug';return'front'}
 const SZ={front:['h',124],side:['h',124],back:['h',124],'34':['h',120],sleep:['w',116],fish:['w',116],hug:['h',124]};
 function drawChar(c,T){if(c.hidden){c.bb=null;return}
-  const key=spriteFor(c);let img=IMG[c.who+'_'+key];if(c.who==='h'&&key==='front'&&S.scarf>=4)img=IMG.h_scarf;if(c.who==='l'&&c.flush>0&&TINT[key])img=TINT[key];
+  const key=spriteFor(c);let img=IMG[c.who+'_'+key];if(c.who==='h'&&key==='front'&&S.scarfLv>=1)img=IMG.h_scarf;if(c.who==='l'&&c.flush>0&&TINT[key])img=TINT[key];
   const sz=SZ[key]||['h',124];const isl=(key==='sleep'||key==='nap'||key==='wake');const sc=isl?100/img.width:(sz[0]==='h'?sz[1]/img.height:sz[1]/img.width),w=img.width*sc,h=img.height*sc;
   const wk=c.state==='walk',ph=c.walk||0,sn=Math.sin(ph),ab=Math.abs(sn);
   const bob=wk?ab*4:Math.sin(T*2+(c.who==='l'?0:1))*.8;
