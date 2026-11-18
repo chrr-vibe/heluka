@@ -947,8 +947,9 @@ function render(T){const t=now(),ph=phaseOf(t),dark=ph==='night'||ph==='evening'
 const fmt=n=>n<1000?Math.floor(n)+'':n<1e6?(n/1000).toFixed(1)+'k':(n/1e6).toFixed(1)+'m';
 function hud(){const t=now();$('rH').textContent=fmt(S.heart);$('rC').textContent=fmt(S.coin);$('rL').textContent=fmt(S.leaf);
   {const d=bellList().length?'block':'none';$('bDot').style.display=d;$('cDot').style.display=ROOMY?'none':d}$('clockT').textContent=+String(t.h).padStart(2,'0')+':'+String(t.m).padStart(2,'0');
-  const st=stage(),nx=[100,300][st];$('distTx').innerHTML='지금 둘은 <b>'+STAGE_NM[st]+'</b>'+(st<2?' · '+['한 걸음','어깨가 닿게'][st]+'까지 '+Math.floor(S.intim/nx*100)+'%':' · 함께 쉬면 마음 ×3');
-  $('distBar').style.width=(st<2?Math.min(100,S.intim/nx*100):100)+'%';
+  const st=stage(),nx=[100,300][st];let lv=1,rem=Math.max(0,S.intim-300),need=60;while(rem>=need&&lv<999){rem-=need;lv++;need=60+lv*12}
+  $('distTx').innerHTML='지금 둘은 <b>'+STAGE_NM[st]+'</b>'+(st<2?' · '+['한 걸음','어깨가 닿게'][st]+'까지 '+Math.floor(S.intim/nx*100)+'%':' · 마음 Lv.'+lv+' · 함께 쉬면 ×3');
+  $('distBar').style.width=(st<2?Math.min(100,S.intim/nx*100):Math.min(100,rem/need*100))+'%';
   const m=curMode;let b='';
   if(t.mo===10&&t.day===18)b='🎂 10월 18일 · 케이크는 하나';else if(t.mo===12&&t.day===21)b='🎄 12월 21일 · 어글리 스웨터 파티 날';
   else if(m==='bridge')b='🌉 7:55 · 옛 다리 아침 · 출근 전까지 같이 · 마음 ×2';else if(m==='three')b='🕒 새벽 세 시 · 루카스는 깨어 있어요';else if(m==='night')b='🌙 둘 다 자는 중 · 자는 동안에도 쌓여요';
