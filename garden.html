@@ -372,10 +372,12 @@ function tap(x,y){
   if(tapDream(x,y))return;
   if(scn==='garden'&&x>350&&y>205&&y<330)return homeEnter();
   if(scn==='camp'&&Math.abs(x-125)<26&&y>345&&y<425)return tapEgg();
+  if(scn==='market'&&x<100&&y>218&&y<262)return stallModal();
   if(tapScarf(x,y))return;
   if(tapChick(x,y))return;
   if(RAB.on&&Math.hypot(x-RAB.x,y-(RAB.y-32))<44)return tapRabbit();
   const cs=[LU,HE].sort((a,b)=>b.y-a.y);for(const c of cs)if(inBB(c,x,y))return c===LU?(SULK.on&&LU.state==='sulk'?sulkModal():patL()):patH();
+  if(scn==='market'&&x<82&&y>230&&y<445)return stallModal();
   if(scn==='camp'&&x>250&&y>296&&y<384){S.scene='den';save();toast('🐻 곰굴에 들어왔어요<br>나갈 땐 🌷장소에서 이동해요');return}
   if(scn==='camp'&&Math.abs(x-L.pan.x)<42&&y>L.pan.y-70&&y<L.pan.y+14)return tapEgg();
   if(PV())for(let i=0;i<S.plotsN;i++){const p=plotPos(i);if(Math.abs(x-p.x)<40&&y>p.y-64&&y<p.y+26)return tapPlot(i)}
@@ -400,7 +402,7 @@ function tapRabbit(){const r=RAB;if(r.phase!=='wait'||r.happy>0)return;r.happy=.
 function tapPlot(i){const p=S.plots[i];
   if(!p.t)return seedModal(i);
   if(p.g>=1){const d=PL[p.t];gain('coin',d.coin*mult(),{x:plotPos(i).x,y:plotPos(i).y+60});gain('heart',d.heart*mult(),{x:plotPos(i).x,y:plotPos(i).y+80});S.intim+=1.5;S.harvests++;heartsAt(plotPos(i).x,plotPos(i).y-20,3);
-    if(p.t==='potato'){S.potato=(S.potato||0)+1;say(HE,'감자 수프 끓일게요ㅎㅎ');toast('🥔 감자를 챙겼어요<br>캠핑 밤에 수프를 끓여요 (보유 '+S.potato+'개)')}else if(p.t==='sun')say(HE,'어머니가 좋아하시겠다ㅎㅎ');else{say(LU,'……아니. 내 거야.',3);LU.flush=4;unlock('mum')}
+    if(p.t==='potato'){S.potato=(S.potato||0)+1;say(HE,'감자 수프 끓일게요ㅎㅎ');toast('🥔 감자를 챙겼어요<br>캠핑 밤에 수프를 끓여요 (보유 '+S.potato+'개)')}else if(p.t==='sun'){say(HE,'어머니가 좋아하시겠다ㅎㅎ');flAdd('sun')}else{say(LU,'……아니. 내 거야.',3);LU.flush=4;unlock('mum');flAdd('mum')}
     unlock('gloves');p.t=null;p.g=0;p.wet=0;save();}
   else toast(PL[p.t].em+' '+PL[p.t].nm+' · '+Math.floor(p.g*100)+'% 자람');}
 
@@ -445,7 +447,44 @@ function snapPhoto(){if(S.photoDay===dayKey())return;closeM();say(LU,pick(['…�
     gain('heart',10*mult(),HE);S.intim+=2;LU.flush=4;unlock('album',true);save();flash();setTimeout(()=>photoView(S.photos.length-1,1),800)}catch(e){toast('사진을 못 찍었어요')}},450)}
 function photoView(i,fresh){const p=S.photos[i];if(!p)return;modal('📷 '+(fresh?'오늘의 한 장':p.d),`<div class="pola"><img src="${p.u}"><div>${p.d} · ${p.c}</div></div><button class="btn" style="width:100%;margin-top:12px" onclick="dexModal()">📖 앨범으로</button>`)}
 function albumHtml(){return S.photos.length?'<div class="alb">'+S.photos.map((p,i)=>`<img src="${p.u}" onclick="photoView(${i})">`).reverse().join('')+'</div>':'<div class="quote">아직 사진이 없어요.</div>'}
-function boxModal(){const n=BOX.filter(b=>S.box[b[0]]).length;let h=`<p class="note">습도계 붙은 상자 · ${n}/${BOX.length}</p>`;
+
+/* ---- bouquets ---- */
+const BQ=[['s1','해바라기 한 송이',1,0],['s3','해바라기 세 송이',3,0],['luca','분홍 리본 해바라기',3,0],['s5','해바라기 다섯 송이',5,0],['m1','국화 한 송이',0,1],['m2','국화 두 송이',0,2],['m4','국화 네 송이',0,4],['mix','해바라기·국화',2,2]];
+const BQK={};BQ.forEach(b=>BQK[b[0]]=b);const BQI={};
+function bqImg(k){if(!BQI[k]){const im=new Image();im.src='home/b/'+k+'.webp';BQI[k]=im}return BQI[k]}
+function flInit(){if(!S.fl||typeof S.fl!=='object')S.fl={sun:0,mum:0};if(!S.bq||typeof S.bq!=='object')S.bq={};if(S.almond==null)S.almond=0}
+function flAdd(k){flInit();S.fl[k]++;setTimeout(()=>toast((k==='sun'?'🌻 해바라기':'🌸 국화')+' 한 송이를 챙겼어요<br>상자 → 💐 꽃다발에서 묶어요'),900)}
+function bqN(k){const b=BQK[k];return b[2]+b[3]}
+function bqImgTag(k,w=44){return `<img src="home/b/${k}.webp" style="width:${w}px;height:${w}px;object-fit:contain">`}
+function flowerModal(){flInit();const F=S.fl;let h=`<div class="quote" style="text-align:center">가진 꽃 · 🌻 해바라기 <b>${F.sun}</b> · 🌸 국화 <b>${F.mum}</b></div>`;
+  const own=BQ.filter(b=>S.bq[b[0]]>0);
+  h+='<p class="note">💝 선물하기</p>';
+  if(!own.length&&!S.almond)h+='<div class="quote">아직 묶은 꽃다발이 없어요.</div>';
+  for(const b of own)h+=`<div class="item"><div class="em">${bqImgTag(b[0])}</div><div class="tx"><b>${b[1]} ×${S.bq[b[0]]}</b><small>꽃 ${bqN(b[0])}송이</small></div><div style="display:flex;flex-direction:column;gap:4px"><button class="btn" style="padding:5px 10px;font-size:12px" onclick="giveBq('${b[0]}',0)">여우 → 루카</button><button class="btn" style="padding:5px 10px;font-size:12px;background:linear-gradient(#8f8aa8,#6e6889)" onclick="giveBq('${b[0]}',1)">루카 → 여우</button></div></div>`;
+  if(S.almond>0)h+=`<div class="item"><div class="em">${bqImgTag('almond')}</div><div class="tx"><b>아몬드 과자 ×${S.almond}</b><small>크리스마스 시장에서 바꿔 온 것</small></div><button class="btn" style="padding:5px 10px;font-size:12px" onclick="giveAlmond()">여우 → 루카</button></div>`;
+  h+='<p class="note">💐 꽃다발 묶기</p>';
+  for(const b of BQ){const ok=F.sun>=b[2]&&F.mum>=b[3];const need=(b[2]?'🌻'+b[2]:'')+(b[2]&&b[3]?' ':'')+(b[3]?'🌸'+b[3]:'');
+    h+=`<div class="item ${ok?'':'locked'}"><div class="em">${bqImgTag(b[0])}</div><div class="tx"><b>${b[1]}</b><small>${need}${bqN(b[0])>=4?' · 장터 교환 가능':''}</small></div><button class="btn" ${ok?'':'disabled'} onclick="makeBq('${b[0]}')">묶기</button></div>`}
+  modal('💐 꽃다발',h)}
+function makeBq(k){flInit();const b=BQK[k];if(S.fl.sun<b[2]||S.fl.mum<b[3])return;S.fl.sun-=b[2];S.fl.mum-=b[3];S.bq[k]=(S.bq[k]||0)+1;save();toast('💐 '+b[1]+'를 묶었어요');flowerModal()}
+let GIFT=null,DTF=0;
+function giftAnim(k,from,to){bqImg(k);GIFT={k,from,to,t:0}}
+function giveBq(k,dir){flInit();if(!(S.bq[k]>0))return;S.bq[k]--;closeM();const n=bqN(k);
+  if(dir===0){giftAnim(k,HE,LU);say(HE,pick(['루카 주려고 묶었어요ㅎㅎ','받아 주세요ㅎㅎ','오늘 제일 예쁜 걸로요ㅎㅎ']));setTimeout(()=>{LU.flush=4;say(LU,pick(['……고마워.','…물 갈아 줄게.','……예쁘네. 꽃이.','…습도 맞춰 둘게.']),3);heartsAt(LU.x,LU.y-80,3+n)},1300)}
+  else{giftAnim(k,LU,HE);LU.flush=3;say(LU,pick(['……받아.','…남아서.','…네 거야.','……묻지 마.']));setTimeout(()=>{say(HE,pick(['루카가 주는 꽃이에요?!ㅎㅎ','평생 말려서 간직할게요ㅎㅎ','좋아서요ㅎㅎ']),3);heartsAt(HE.x,HE.y-80,3+n);HE.jump=.4},1300)}
+  gain('heart',4*n*mult(),dir===0?LU:HE);S.intim+=n;S.gifts=(S.gifts||0)+1;save()}
+function giveAlmond(){flInit();if(!(S.almond>0))return;S.almond--;closeM();giftAnim('almond',HE,LU);say(HE,'구운 아몬드 과자예요ㅎㅎ');
+  setTimeout(()=>{LU.flush=3;say(LU,pick(['…구운 거야?','……하나만.','…안 달아. 좋아.','……너도 먹어.']),3);heartsAt(LU.x,LU.y-80,6)},1300);gain('heart',30*mult(),LU);S.intim+=6;save()}
+function stallModal(){flInit();const ok=BQ.filter(b=>bqN(b[0])>=4&&S.bq[b[0]]>0);
+  let h=`<div class="quote" style="text-align:center">${bqImgTag('almond',70)}<br>꽃 네 송이 이상 묶은 꽃다발을 주면<br>구운 아몬드 과자 한 봉지로 바꿔 줘요.<br><small>가진 아몬드 과자 ${S.almond}봉지</small></div>`;
+  if(!ok.length)h+='<div class="quote">바꿀 수 있는 꽃다발이 없어요.<br><small>해바라기 다섯 · 국화 네 · 해바라기·국화 꽃다발만 돼요</small></div>';
+  for(const b of ok)h+=`<div class="item"><div class="em">${bqImgTag(b[0])}</div><div class="tx"><b>${b[1]} ×${S.bq[b[0]]}</b><small>꽃 ${bqN(b[0])}송이</small></div><button class="btn" onclick="tradeBq('${b[0]}')">교환</button></div>`;
+  modal('🎄 장터 가판대',h)}
+function tradeBq(k){if(!(S.bq[k]>0)||bqN(k)<4)return;S.bq[k]--;S.almond++;save();toast('🥨 아몬드 과자 한 봉지를 받았어요<br>여우가 루카에게 줄 수 있어요');say(HE,'루카 거예요ㅎㅎ');stallModal()}
+function drawGift(dt){if(!GIFT)return;GIFT.t+=dt;const g=GIFT,im=BQI[g.k];if(!im||!im.naturalWidth)return;const T1=.9,T2=3.6;if(g.t>T2){GIFT=null;return}
+  const a=g.from,b=g.to,u=Math.min(1,g.t/T1),e=u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;const x=a.x+(b.x-a.x)*e,y=(a.y-70)+((b.y-90)-(a.y-70))*e-Math.sin(u*Math.PI)*40;
+  const w=g.k==='almond'?46:54,h=im.naturalHeight*w/im.naturalWidth;ctx.save();ctx.globalAlpha=g.t>T2-.4?(T2-g.t)/.4:1;ctx.drawImage(im,x-w/2,y-h+(u>=1?Math.sin(g.t*4)*2:0),w,h);ctx.restore()}
+function boxModal(){const n=BOX.filter(b=>S.box[b[0]]).length;let h=`<button class="btn" style="width:100%;margin-bottom:10px" onclick="flowerModal()">💐 꽃다발 · 선물하기</button><p class="note">습도계 붙은 상자 · ${n}/${BOX.length}</p>`;
   for(const b of BOX){const u=S.box[b[0]];const sc=b[0]==='scarf'&&u;h+=`<div class="item ${u?'':'locked'}" ${sc?'onclick="scarfModal()" style="cursor:pointer"':''}><div class="em">${u?b[1]:'?'}</div><div class="tx"><b>${u?b[2]+(sc?' Lv.'+S.scarfLv:''):'???'}</b><small>${u?'“'+b[4]+'”'+(sc?' · 눌러서 보기':''):b[3]}</small></div></div>`}
   modal('📦 상자',h)}
 function importSave(btn){try{let v=$('svBox').value.trim().replace(/^["'\s]+|["'\s]+$/g,'').replace(/\s+/g,'');if(!v)throw '빈 칸이에요';let o;if(v[0]==='{')o=JSON.parse(v);else{v=v.replace(/-/g,'+').replace(/_/g,'/');while(v.length%4)v+='=';o=JSON.parse(decodeURIComponent(escape(atob(v))))}
@@ -873,6 +912,8 @@ function render(T){const t=now(),ph=phaseOf(t),dark=ph==='night'||ph==='evening'
   drawScarfFloat(T);drawDreams(T);drawHandHint(T);for(const c of list)drawBubble(c);
   if(scn==='camp'&&curMode!=='three'){const bb=Math.sin(T*3)*2;pbubble(318,304+bb,'🐻 곰굴','r',1)}
   if(scn==='garden'){const bb=Math.sin(T*3+1)*2;pbubble(362,232+bb,'🏡 집','r',1)}
+  if(scn==='market'){const bb=Math.sin(T*3+2)*2;pbubble(46,238+bb,'🎁 교환','l',1)}
+  drawGift(DTF);
 }
 const fmt=n=>n<1000?Math.floor(n)+'':n<1e6?(n/1000).toFixed(1)+'k':(n/1e6).toFixed(1)+'m';
 function hud(){const t=now();$('rH').textContent=fmt(S.heart);$('rC').textContent=fmt(S.coin);$('rL').textContent=fmt(S.leaf);
@@ -884,7 +925,7 @@ function hud(){const t=now();$('rH').textContent=fmt(S.heart);$('rC').textConten
   else if(m==='bridge')b='🌉 7:55 · 옛 다리 아침 · 출근 전까지 같이 · 마음 ×2';else if(m==='three')b='🕒 새벽 세 시 · 루카스는 깨어 있어요';else if(m==='night')b='🌙 둘 다 자는 중 · 자는 동안에도 쌓여요';
   if(t.dow===0)b=(b?b+'<br>':'')+'☀️ 일요일 · 쉬는 날 · 보상 ×2';
   const bn=$('banner');bn.innerHTML=b;bn.style.display=b?'block':'none';}
-function loop(){const n=performance.now();const dt=Math.min(.1,(n-lastT)/1000);lastT=n;const T=n/1000;update(dt,T);render(T);ui+=dt;if(ui>.25){ui=0;hud()}requestAnimationFrame(loop)}
+function loop(){const n=performance.now();const dt=Math.min(.1,(n-lastT)/1000);lastT=n;DTF=dt;const T=n/1000;update(dt,T);render(T);ui+=dt;if(ui>.25){ui=0;hud()}requestAnimationFrame(loop)}
 document.addEventListener('visibilitychange',()=>{if(document.hidden)save();else{const away=(Date.now()-S.last)/1000;if(away>60)offline(away);lastT=performance.now()}});
 window.addEventListener('resize',()=>{layout()});
 function ready(){for(const k of['front','side','back','34'])TINT[k]=earTint(IMG['l_'+k]);
