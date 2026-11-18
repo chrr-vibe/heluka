@@ -481,14 +481,14 @@ function giftAnim(k,from,to){bqImg(k);GIFT={k,from,to,t:0}}
 function giftScene(k,dir,gv,gl,rl,hearts){bqImg(k);
   const den=scn==='den',cx=den?(HE.x+LU.x)/2:W/2,y=den?HE.y:L.walkTop+(L.walkBot-L.walkTop)*.6;
   GIFT={k,t:-9,cx,y:y-26,ph:0};const G=dir===0?HE:LU,R=dir===0?LU:HE;
-  const done=()=>{if(GIFT&&GIFT.t<0&&HE.state!=='walk'&&LU.state!=='walk'&&Math.abs(HE.x-LU.x)<130){GIFT.t=0;
+  const done=()=>{if(GIFT&&GIFT.t<0&&HE.state!=='walk'&&LU.state!=='walk'&&Math.abs(HE.x-LU.x)<170){GIFT.t=0;HE.state=LU.state='idle';
     HE.fr=true;LU.fr=false;HE.dir='side';LU.dir='side';HE.t=LU.t=9;
     setTimeout(()=>say(G,pick(gl),2.4),400);
     setTimeout(()=>{R.flush=4;say(R,pick(rl),3);heartsAt(R.x,R.y-80,hearts)},3200);
     setTimeout(()=>{say(G,pick(gv),2.4);heartsAt(G.x,G.y-80,4);G.jump=.4},5600);
     setTimeout(()=>{HE.t=LU.t=1},8200)}};
   if(den){done();return}
-  go(HE,cx-52,y,'idle',done);go(LU,cx+52,y,'idle',done)}
+  go(HE,cx-68,y,'idle',done);go(LU,cx+68,y,'idle',done);setTimeout(()=>{if(GIFT&&GIFT.t<0){HE.x=HE.tx=cx-68;LU.x=LU.tx=cx+68;HE.y=HE.ty=LU.y=LU.ty=y;HE.state=LU.state='idle';done()}},2500)}
 function giveBq(k,dir){flInit();if(!(S.bq[k]>0))return;S.bq[k]--;closeM();const n=bqN(k);
   if(dir===0)giftScene(k,0,['루카 생각하면서 묶었어요ㅎㅎ','다음엔 더 큰 꽃다발로요ㅎㅎ','루카가 웃으면 제일 좋아요ㅎㅎ'],['루카 주려고 묶었어요ㅎㅎ','받아 주세요ㅎㅎ','오늘 제일 예쁜 걸로요ㅎㅎ'],['……고마워.','…물 갈아 줄게.','……예쁘네. 꽃이.','…습도 맞춰 둘게.','…꽃병 어디 있더라.','……향이 좋아. 이거.','…시들기 전에 말려 둘게.'],3+n);
   else giftScene(k,1,['…마음에 들어?','……바람 소리야.','…잘 어울려. 네 머리색이랑.'],['……받아.','…남아서.','…네 거야.','……묻지 마.'],['루카가 주는 꽃이에요?!ㅎㅎ','평생 말려서 간직할게요ㅎㅎ','좋아서요ㅎㅎ','저 지금 귀까지 빨개졌어요ㅎㅎ'],3+n);
@@ -503,7 +503,7 @@ function stallModal(){flInit();const ok=BQ.filter(b=>bqN(b[0])>=4&&S.bq[b[0]]>0)
 function tradeBq(k){if(!(S.bq[k]>0)||bqN(k)<4)return;S.bq[k]--;S.almond++;save();toast('🥨 아몬드 과자 한 봉지를 받았어요<br>그가 루카에게 줄 수 있어요');say(HE,'루카 거예요ㅎㅎ');stallModal()}
 function drawGift(dt){if(!GIFT)return;const g=GIFT;if(g.cx!=null){if(g.t<0)return;
     g.t+=dt;if(g.t>8.9){GIFT=null;return}const im=BQI[g.k];if(!im||!im.naturalWidth)return;
-    const al=Math.min(1,g.t/.6)*(g.t>8.3?(8.9-g.t)/.6:1),bob=Math.sin(g.t*2.4)*3,x=g.cx,y=g.y+bob-6,w=g.k==='almond'?56:68,h=im.naturalHeight*w/im.naturalWidth;
+    const al=Math.min(1,g.t/.6)*(g.t>8.3?(8.9-g.t)/.6:1),bob=Math.sin(g.t*2.4)*3,x=(HE.x+LU.x)/2,y=(HE.y+LU.y)/2-26+bob-6,w=g.k==='almond'?56:68,h=im.naturalHeight*w/im.naturalWidth;
     ctx.save();ctx.globalAlpha=al;
     const cy=y-h/2;ctx.filter='blur(7px) brightness(1.15) saturate(.9)';ctx.globalAlpha=al*.7;ctx.drawImage(im,x-w/2-4,y-h-4,w+8,h+8);ctx.filter='blur(2px) brightness(1.06)';ctx.globalAlpha=al*.55;ctx.drawImage(im,x-w/2,y-h,w,h);ctx.filter='none';ctx.globalAlpha=al*.82;ctx.drawImage(im,x-w/2,y-h,w,h);
     const gr=ctx.createRadialGradient(x,cy,2,x,cy,w*.75);gr.addColorStop(0,'rgba(255,246,228,.28)');gr.addColorStop(1,'rgba(255,246,228,0)');ctx.globalAlpha=al;ctx.fillStyle=gr;ctx.beginPath();ctx.arc(x,cy,w*.75,0,7);ctx.fill();
@@ -906,7 +906,7 @@ function update(dt,T){
     else if(m==='day'&&!REST.on&&scn!=='bridge'){c.t-=dt;
       if(c===HE&&c.state==='paint'){S.paint+=dt/40;if(S.paint>=1){S.paint=0;S.paintings++;gain('coin',12*mult(),c);say(c,'다 그렸어요ㅎㅎ');heartsAt(L.easel.x,L.easel.y-40,3);if(S.paintings>=3)unlock('paint')}}
       if(c===HE&&c.state==='water'&&c.wi!=null){const p=S.plots[c.wi];if(p.t)p.wet=30;c.wi=null}
-      if(c.t<=0&&!(SULK.on&&(c===LU||HE.t>100)))brain(c);}
+      if(c.t<=0&&!GIFT&&!(SULK.on&&(c===LU||HE.t>100)))brain(c);}
   }
   // rest & sulk
   if(m==='day'){
