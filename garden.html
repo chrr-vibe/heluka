@@ -596,9 +596,9 @@ const ORG={hy:{'':352,sn:338,bc:328,dk:325},ea:{'':310,sn:272,bc:272,dk:275}};
 const DIM=a=>{ctx.filter=NT>0?'brightness('+(1-NT*a)+') saturate('+(1-NT*Math.min(.22,a*1.3))+')':'none'},UNDIM=()=>{ctx.filter='none'};
 const VL=()=>{const dv=PVAR();return NT>0&&dv!=='dk'&&dv!=='sn'&&dv!=='bc'?[[dv,1-NT],['dk',NT]]:[[dv,1]]};
 function drawHygro(){if(!HP()||scn==='bridge')return;const{x,y}=L.hygro;const sm=IMG.p_hy_small;let hh=122,ww=78;
-  if(PVAR()===''&&NT<1){const n=Math.min(S.hygro,4),offs=[[54,6],[94,12],[132,18]];DIM(.04);ctx.globalAlpha=1;for(let i=n-2;i>=0;i--){const h=62,w=sm.width*h/sm.height;ctx.drawImage(sm,x+offs[i][0]-w/2,y+offs[i][1]-h,w,h)}UNDIM()}
+  if(PV()&&NT<1){const n=Math.min(S.hygro,4),offs=[[54,6],[94,12],[132,18]];DIM(.04);ctx.globalAlpha=1;for(let i=n-2;i>=0;i--){const h=62,w=sm.width*h/sm.height;ctx.drawImage(sm,x+offs[i][0]-w/2,y+offs[i][1]-h,w,h)}UNDIM()}
   for(const[v,a]of VL()){if(a<=0)continue;const mn=IMG['p_hy_'+(v||'front')],h=122*ORG.hy[v]/352,w=mn.width*h/mn.height;ctx.globalAlpha=a;ctx.drawImage(mn,x-w/2,y-h,w,h);hh=h;ww=w}ctx.globalAlpha=1;
-  if(S.hygro>1){const h=hh,w=ww,t='×'+S.hygro;ctx.font='13px Jua,sans-serif';const tw=ctx.measureText(t).width+16;ctx.save();ctx.shadowColor='rgba(200,150,180,.3)';ctx.shadowBlur=6;ctx.fillStyle='#fff';rr(x+w/2-10,y-h-4,tw,20,10);ctx.fill();ctx.restore();ctx.strokeStyle='#ffd3de';ctx.lineWidth=2;rr(x+w/2-10,y-h-4,tw,20,10);ctx.stroke();ctx.fillStyle='#ff7d9c';ctx.textAlign='center';ctx.fillText(t,x+w/2-10+tw/2,y-h+11)}}
+}
 function drawEasel(){if(!HP())return;const{x,y}=L.easel;
   if(scn==='bridge'){const im=IMG.p_ea_bridge;if(!im||!im.naturalWidth)return;const h=118,w=im.naturalWidth*h/im.naturalHeight;ell(x+4,y-1,w*.38,5,'rgba(60,50,60,.2)');DIM(.12);ctx.drawImage(im,x-w/2,y-h,w,h);UNDIM();return}
   for(const[v,a]of VL()){if(a<=0)continue;const im=IMG['p_ea_'+(v||'front')],h=122*ORG.ea[v]/310,w=im.width*h/im.height;ctx.globalAlpha=a;ctx.drawImage(im,x-w/2,y-h,w,h)}ctx.globalAlpha=1;
