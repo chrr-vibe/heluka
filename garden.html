@@ -400,7 +400,7 @@ function patL(){const c=LU,m=curMode;c.sq=.25;S.pats++;
   else if(c.combo===1)say(c,stage()===2?pick(['…응.','…왜.','……']):pick(['…뭐.','…왜.','……']));
   else if(c.combo===3)say(c,'……');
 }
-function patH(){const c=HE;c.jump=.35;if(Math.random()<.3&&c.state!=='walk'&&curMode==='day')c.hug=2.4;S.herPats++;heartsAt(c.x,c.y-90);S.leaf+=1;S.intim+=.5;
+function patH(){const c=HE;c.jump=.35;S.herPats++;heartsAt(c.x,c.y-90);S.leaf+=1;S.intim+=.5;
   if(c.state==='sleep'||c.state==='nap'){say(c,Math.random()<.15?'…이히 블라이-베…zZ':'…루카…zZ',2)}
   else if(curMode==='bridge')say(c,'다리 위가 제일 좋아요ㅎㅎ');
   else say(c,pick(['ㅎㅎ','좋아서요ㅎㅎ','루카 보셨어요?','간지러워요ㅎㅎ','보고 싶었어요']));
