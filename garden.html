@@ -76,6 +76,39 @@ button{font-family:var(--F)}
 #toast{position:absolute;left:50%;top:38%;transform:translate(-50%,8px) scale(.95);background:rgba(255,255,255,.95);color:#ff7d9c;border:2px solid #ffd6e2;padding:10px 18px;border-radius:24px;font-size:14px;opacity:0;transition:all .3s cubic-bezier(.3,1.4,.6,1);pointer-events:none;z-index:6;text-align:center;max-width:85%;box-shadow:0 8px 20px rgba(214,150,180,.35)}
 #toast b{font-weight:400;color:var(--ink)}
 #toast.on{opacity:1;transform:translate(-50%,0) scale(1)}
+
+#home{position:absolute;inset:0;z-index:4;overflow:hidden;background:#e9cfc9}
+#home[hidden]{display:none}
+#home .hbg{position:absolute;inset:-20px;background:url(home/bg.jpg) center/cover;filter:blur(2px) saturate(.95)}
+#home .htop{position:absolute;left:0;right:0;top:0;display:flex;align-items:center;gap:8px;padding:12px 12px 0;z-index:3}
+#home .hb{border:0;border-radius:20px;background:#fff8f6;color:#a26a74;box-shadow:0 3px 10px rgba(160,100,110,.25);padding:8px 13px;font-size:15px}
+#home .hb.on{background:#ff8fab;color:#fff}
+#home .hname{flex:1;text-align:center;font-size:19px;color:#8a5862;text-shadow:0 2px 0 #fff,0 0 8px #fff}
+#hStage{position:absolute;left:50%;transform:translateX(-50%);transition:transform .35s ease,opacity .35s ease}
+#hStage img.hex{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;-webkit-user-drag:none}
+#hStage .fu{position:absolute;pointer-events:none;-webkit-user-drag:none;transform-origin:50% 100%}
+#hStage .hc{position:absolute;pointer-events:none;-webkit-user-drag:none}
+#hStage .hbub{position:absolute;pointer-events:none;z-index:9000;transform-origin:80% 100%;animation:hbub .35s ease-out}
+@keyframes hbub{from{transform:scale(.3);opacity:0}to{transform:scale(1);opacity:1}}
+#home.edit #hStage .hc,#home.edit #hStage .hbub{display:none}
+#hStage .fu.held{filter:drop-shadow(0 0 5px #ff8fab) drop-shadow(0 0 2px #fff)}
+#hStage svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+#hStage svg polygon{fill:rgba(255,255,255,0);stroke:rgba(255,255,255,.55);stroke-width:1.2;stroke-dasharray:4 3}
+#hStage svg polygon.ok{fill:rgba(255,150,180,.18);stroke:rgba(255,140,175,.9)}
+#hStage svg polygon.occ{fill:rgba(255,255,255,.1)}
+#home .harr{position:absolute;left:50%;transform:translateX(-50%);width:46px;height:34px;border:0;border-radius:18px;background:rgba(255,248,246,.92);color:#c27b8a;font-size:18px;box-shadow:0 3px 10px rgba(160,100,110,.25);z-index:3}
+#hTray{position:absolute;left:0;right:0;bottom:0;background:#fff8f6;border-radius:24px 24px 0 0;box-shadow:0 -4px 16px rgba(160,100,110,.2);padding:10px 10px calc(10px + env(safe-area-inset-bottom));z-index:4;transform:translateY(105%);transition:transform .3s}
+#hTray.on{transform:none}
+#hTray .tabs{display:flex;gap:6px;margin-bottom:8px;align-items:center}
+#hTray .tabs button{border:0;border-radius:14px;padding:6px 11px;background:#fde6ec;color:#b06f7e;font-size:14px}
+#hTray .tabs button.on{background:#ff8fab;color:#fff}
+#hTray .tabs .sp{flex:1}
+#hTray .list{display:grid;grid-auto-flow:column;grid-template-rows:repeat(2,64px);grid-auto-columns:64px;gap:6px;overflow-x:auto;padding-bottom:4px}
+#hTray .list button{border:2px solid #fbe3ea;border-radius:14px;background:#fff;padding:3px;display:grid;place-items:center}
+#hTray .list button.on{border-color:#ff8fab;background:#fff0f4}
+#hTray .list img{max-width:100%;max-height:100%;pointer-events:none}
+#hTray .act{display:none;gap:6px}#hTray.hold .act{display:flex}
+#hTray .hint{font-size:12.5px;color:#a98890;margin:0 0 6px 2px;font-family:"Apple SD Gothic Neo","Noto Sans KR",sans-serif}
 </style>
 </head>
 <body>
@@ -106,6 +139,13 @@ button{font-family:var(--F)}
       <button data-open="info" aria-label="기록"></button>
       <button data-open="dex" aria-label="도감"></button>
     </div>
+  </div>
+  <div id="home" hidden><div class="hbg"></div>
+   <div class="htop"><button class="hb" onclick="homeExit()">← 정원</button><div class="hname" id="hName">거실</div><button class="hb" id="hEdit" onclick="homeEdit()">🪑 꾸미기</button></div>
+   <button class="harr" id="hUp" onclick="homeGo(-1)">▲</button>
+   <div id="hStage"><img class="hex" id="hHex"><div id="hFurn"></div><svg id="hGrid"></svg></div>
+   <button class="harr" id="hDn" onclick="homeGo(1)">▼</button>
+   <div id="hTray"><div class="tabs"><button data-t="f" class="on">가구</button><button data-t="w">벽</button><button data-t="r">러그</button><span class="sp"></span><span class="act"><button onclick="homeFlip()">↔ 뒤집기</button><button onclick="homeRemove()">치우기</button></span><button onclick="homeEdit()" style="background:#ff8fab;color:#fff">완료</button></div><p class="hint" id="hHint"></p><div class="list" id="hList"></div></div>
   </div>
   <div id="modal" hidden><div class="sheet"><div class="sheet-h"><b id="mTitle"></b><button id="mClose">✕</button></div><div id="mBody"></div></div></div>
   <div id="toast"></div>
@@ -327,6 +367,7 @@ for(const ev of['pointerup','pointercancel','pointerleave'])cv.addEventListener(
 function inBB(c,x,y){return c.bb&&!c.hidden&&x>c.bb[0]&&x<c.bb[2]&&y>c.bb[1]&&y<c.bb[3]}
 function tap(x,y){
   if(tapDream(x,y))return;
+  if(scn==='garden'&&x>350&&y>205&&y<330)return homeEnter();
   if(scn==='camp'&&Math.abs(x-125)<26&&y>345&&y<425)return tapEgg();
   if(tapScarf(x,y))return;
   if(tapChick(x,y))return;
@@ -650,6 +691,133 @@ function tapChick(x,y){if(!CK.bb||!(x>CK.bb[0]&&x<CK.bb[2]&&y>CK.bb[1]&&y<CK.bb[
     toast('🥚 계란을 받았어요<br>가진 계란 '+S.eggStock+'개 · 캠핑 밤에 구워요');save();return true}
   const mn=Math.max(1,Math.ceil((S.chickAt-Date.now())/60e3));CK.hop=.3;CK.say=pick(['꼬꼬~','꼬꼬꼬','…꼬?'])+' · 알은 '+mn+'분 뒤';CK.sayT=2.4;return true}
 
+
+/* ---------- home decorating ---------- */
+const HGEO={"living": {"T": [305.0, 28.0], "LT": [22.0, 194.0], "RT": [588.0, 194.0], "Bw": [305.0, 322.0], "LBw": [22.0, 489.0], "RBw": [588.0, 489.0], "B": [305.0, 322.0], "LB": [22.0, 489.0], "RB": [588.0, 489.0], "F": [305.0, 655.0], "W": 614, "H": 693}, "bed": {"T": [492.8, 46.1], "LT": [35.5, 322.4], "RT": [950.0, 322.4], "Bw": [492.8, 547.8], "LBw": [35.5, 819.2], "RBw": [950.0, 819.2], "B": [492.8, 547.8], "LB": [35.5, 819.2], "RB": [950.0, 819.2], "F": [492.8, 1090.6], "W": 992, "H": 1140}, "kitchen": {"T": [305.0, 28.0], "LT": [22.0, 194.0], "RT": [588.0, 194.0], "Bw": [305.0, 322.0], "LBw": [22.0, 489.0], "RBw": [588.0, 489.0], "B": [305.0, 322.0], "LB": [22.0, 489.0], "RB": [588.0, 489.0], "F": [305.0, 655.0], "W": 614, "H": 693}, "bath": {"T": [305.5, 25.0], "LT": [22.0, 183.0], "RT": [589.0, 183.0], "Bw": [305.5, 300.0], "LBw": [22.0, 458.0], "RBw": [589.0, 458.0], "B": [305.5, 335.0], "LB": [22.0, 493.0], "RB": [589.0, 493.0], "F": [305.5, 652.0], "W": 615, "H": 690}};
+const FURN=[["l00", "소파", "f", 345, 0, 2, 1, 303], ["l01", "안락의자", "f", 210, 0, 1, 1, 239], ["l02", "거실 테이블", "f", 283, 0, 2, 1, 266], ["l03", "TV장", "f", 281, 0, 2, 1, 327], ["l04", "담쟁이 책장", "f", 222, 0, 1, 1, 330], ["l05", "서랍 책상", "f", 302, 0, 2, 1, 305], ["l06", "나무 의자", "f", 136, 0, 1, 1, 223], ["l07", "비서 책상", "f", 264, 0, 1, 1, 300], ["l08", "유리 진열장", "f", 208, 0, 1, 1, 319], ["l09", "낮은 수납장", "f", 266, 0, 2, 1, 265], ["l10", "트렁크 더미", "f", 213, 0, 1, 1, 250], ["l11", "큰 화분", "f", 186, 0, 1, 1, 195], ["l12", "스툴 화분", "f", 166, 0, 1, 1, 186], ["l13", "걸이 화분", "w", 151, 0, 1, 1, 203], ["l14", "꽃 화분", "f", 127, 0, 1, 1, 143], ["l15", "꽃병", "f", 99, 0, 1, 1, 139], ["l16", "플로어 램프", "f", 131, 0, 1, 1, 233], ["l17", "탁상 램프", "f", 121, 0, 1, 1, 167], ["l18", "랜턴", "f", 84, 0, 1, 1, 138], ["l19", "촛불", "f", 92, 0, 1, 1, 103], ["l20", "장식 러그", "r", 266, 0, 2, 1, 157], ["l21", "둥근 러그", "r", 194, 0, 1, 1, 117], ["l22", "체크 러그", "r", 227, 0, 2, 1, 134], ["l23", "담요 바구니", "f", 130, 0, 1, 1, 134], ["l24", "책 상자", "f", 132, 0, 1, 1, 119], ["l25", "수납 상자", "f", 137, 0, 1, 1, 126], ["l26", "상자 쌓기", "f", 129, 0, 1, 1, 137], ["l27", "모자 상자", "f", 122, 0, 1, 1, 116], ["k00", "아일랜드 카운터", "f", 310, 0, 2, 1, 297], ["k01", "싱크대", "f", 247, 0, 1, 1, 298], ["k02", "가스레인지", "f", 219, 0, 1, 1, 284], ["k03", "냉장고", "f", 194, 0, 1, 1, 383], ["k04", "그릇장", "f", 210, 0, 1, 1, 379], ["k05", "선반 찬장", "f", 238, 0, 1, 1, 395], ["k06", "상부장", "w", 257, 0, 1, 1, 234], ["k07", "작은 상부장", "w", 185, 0, 1, 1, 203], ["k08", "벽 선반", "w", 200, 0, 1, 1, 240], ["k09", "팬 걸이", "w", 169, 1, 1, 1, 190], ["k10", "코너장", "f", 239, 0, 1, 1, 191], ["k11", "담쟁이 선반", "w", 227, 0, 1, 1, 211], ["k12", "긴 식탁", "f", 327, 0, 2, 1, 283], ["k13", "체크 식탁", "f", 271, 0, 1, 1, 258], ["k14", "원탁", "f", 237, 0, 1, 1, 244], ["k15", "식탁 의자", "f", 146, 0, 1, 1, 217], ["k16", "팔걸이 의자", "f", 130, 0, 1, 1, 188], ["k17", "둥근 스툴", "f", 105, 0, 1, 1, 136], ["k18", "사각 스툴", "f", 119, 0, 1, 1, 139], ["t00", "욕조", "f", 370, 0, 2, 1, 425], ["t01", "변기", "f", 182, 0, 1, 1, 273], ["t02", "세면대", "f", 312, 0, 1, 1, 395], ["t03", "샤워부스", "f", 277, 0, 1, 1, 433], ["t04", "수건 선반", "f", 181, 0, 1, 1, 401], ["t05", "거울", "w", 283, 1, 1, 1, 247], ["t06", "수건걸이", "w", 175, 1, 1, 1, 180], ["t07", "수건 링", "w", 94, 1, 1, 1, 173], ["t08", "욕실 벽 선반", "w", 209, 0, 1, 1, 189], ["t09", "고리 걸이", "w", 162, 0, 1, 1, 213], ["t10", "수건 바구니", "f", 165, 0, 1, 1, 184], ["t11", "수건 스툴", "f", 149, 0, 1, 1, 169], ["t12", "욕실 카트", "f", 220, 0, 1, 1, 276], ["t13", "욕실 장식장", "f", 210, 0, 1, 1, 309], ["t14", "욕실 서랍장", "f", 199, 0, 1, 1, 304], ["t15", "빨래통", "f", 160, 0, 1, 1, 246], ["t16", "롤 수건 바구니", "f", 169, 0, 1, 1, 185], ["t17", "꽃 스툴", "f", 169, 0, 1, 1, 240], ["d00", "침대", "f", 493, 0, 2, 2, 489], ["d01", "협탁", "f", 203, 0, 1, 1, 373], ["d02", "옷장", "f", 291, 0, 1, 1, 447], ["d03", "레이스 서랍장", "f", 299, 0, 1, 1, 396], ["d04", "화장대", "f", 259, 0, 1, 1, 353], ["d05", "책상", "f", 288, 0, 2, 1, 324], ["d06", "책장", "f", 223, 0, 1, 1, 328], ["d07", "책 선반", "w", 232, 0, 1, 1, 194], ["d08", "타원 액자", "w", 105, 1, 1, 1, 164], ["d09", "깃발", "w", 108, 1, 1, 1, 215], ["d10", "책 더미", "f", 138, 0, 1, 1, 133], ["d11", "꽃병", "f", 134, 0, 1, 1, 144], ["d12", "양초", "f", 130, 0, 1, 1, 142], ["d13", "트렁크", "f", 159, 0, 1, 1, 153], ["d14", "방석", "f", 169, 0, 1, 1, 124], ["d15", "체크 쿠션", "f", 145, 0, 1, 1, 138], ["d16", "풍경화", "w", 162, 1, 1, 1, 176], ["d17", "동그란 러그", "r", 274, 0, 2, 2, 154]];const FK={};FURN.forEach(f=>FK[f[0]]=f);
+const ROOMS=[['living','거실'],['bed','침실'],['kitchen','부엌'],['bath','욕실']];
+const HM={on:false,room:0,edit:false,tab:'f',held:null,sc:1};
+function homeData(){if(!S.home||typeof S.home!=='object')S.home={};const r=ROOMS[HM.room][0];if(!Array.isArray(S.home[r]))S.home[r]=[];return S.home[r]}
+function lerp2(a,b,t){return[a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t]}
+function bil(q,u,v){const a=lerp2(q[0],q[1],u),b=lerp2(q[2],q[3],u);return lerp2(a,b,v)}
+function quads(g){return{F:[g.B,g.LB,g.RB,g.F],L:[g.Bw,g.LBw,g.T,g.LT],R:[g.Bw,g.RBw,g.T,g.RT]}}
+const HN=4;
+function cellPoly(q,i,j,w=1,h=1){return[bil(q,i/HN,j/HN),bil(q,(i+w)/HN,j/HN),bil(q,(i+w)/HN,(j+h)/HN),bil(q,i/HN,(j+h)/HN)]}
+function homeUnit(g){return (g.RB[0]-g.LB[0])/2/HN}
+function homeDims(o){const f=FK[o.k];if(f[2]==='w'){const u=homeUnit({RB:[1,0],LB:[-1,0]});const cell=115;return[Math.max(1,Math.round(f[3]/cell)),Math.max(1,Math.round(f[7]/cell))]}
+  return o.f?[f[6],f[5]]:[f[5],f[6]]}
+
+function homeLayout(){const app=$('app').getBoundingClientRect(),g=HGEO[ROOMS[HM.room][0]];
+  const botPad=HM.edit?($('hTray').offsetHeight||210)+12:70;let w=Math.min(app.width*.98,(app.height-108-botPad)*g.W/g.H);const h=w*g.H/g.W;HM.sc=w/g.W;
+  const top=HM.edit?100:Math.max(100,(app.height-h)/2);
+  const st=$('hStage');st.style.width=w+'px';st.style.height=h+'px';st.style.top=top+'px';
+  $('hUp').style.top=(top-40)+'px';$('hDn').style.top=(top+h+4)+'px';$('hDn').style.display=HM.edit?'none':'';}
+function homeRender(){const r=ROOMS[HM.room],g=HGEO[r[0]],sc=HM.sc,Q=quads(g);$('hName').textContent=r[1];$('hHex').src='home/'+r[0]+'.webp';
+  const k=homeUnit(g)/115*sc;const it=homeData();const fl=$('hFurn');fl.querySelectorAll('.fu').forEach(e=>e.remove());
+  const order=it.map((o,n)=>{const d=homeDims(o);return{o,n,d,z:o.s==='G'?0:(o.s==='L'||o.s==='R')?1:2+(o.i+d[0])+(o.j+d[1])+o.j*.01}}).sort((a,b)=>a.z-b.z);
+  for(const{o,n,d,z}of order){const f=FK[o.k];if(!f)continue;const im=document.createElement('img');im.style.zIndex=Math.round(z*100);im.className='fu'+(HM.held&&HM.held.n===n?' held':'');im.src='home/f/'+o.k+'.webp';
+    const wall=o.s==='L'||o.s==='R';let w=f[3]*k*(o.s==='G'?1.25:1);im.style.width=w+'px';let tf=o.f&&!wall?'scaleX(-1)':'';
+    if(wall){const q=Q[o.s],c=bil(q,(o.i+d[0]/2)/HN,(o.j+d[1]/2)/HN);im.style.left=(c[0]*sc-w/2)+'px';im.style.top=(c[1]*sc)+'px';tf+=' translateY(-50%)';im.style.transformOrigin='50% 0';
+      const B=g.Bw,E=o.s==='L'?g.LBw:g.RBw;
+      if(f[4])tf+=' skewY('+(Math.atan((E[1]-B[1])/(E[0]-B[0]))*180/Math.PI).toFixed(1)+'deg)';else if(o.s==='R')tf+=' scaleX(-1)'}
+    else{const q=Q.F,p00=bil(q,o.i/HN,o.j/HN),p11=bil(q,(o.i+d[0])/HN,(o.j+d[1])/HN),p10=bil(q,(o.i+d[0])/HN,o.j/HN),p01=bil(q,o.i/HN,(o.j+d[1])/HN);
+      const cx=(p00[0]+p11[0])/2,cy=(p00[1]+p11[1])/2;im.style.left=(cx*sc-w/2)+'px';
+      if(o.s==='G'){im.style.top=(cy*sc)+'px';tf+=' translateY(-50%)'}
+      else{im.style.bottom=((g.H-p11[1])*sc+.2*homeUnit(g)*sc)+'px'}}
+    im.style.transform=tf;fl.appendChild(im)}
+  const svg=$('hGrid');let s='';if(HM.edit){for(const side of['L','R','F']){const q=Q[side];for(let i=0;i<HN;i++)for(let j=0;j<HN;j++){const p=cellPoly(q,i,j).map(v=>(v[0]*sc).toFixed(1)+','+(v[1]*sc).toFixed(1)).join(' ');
+      const cls=homeCellClass(side,i,j);s+=`<polygon class="${cls}" points="${p}" onclick="homeCell('${side}',${i},${j})"/>`}}}
+  svg.innerHTML=s;homeHint()}
+function homeLayerOf(k){const t=FK[k][2];return t==='w'?'W':t==='r'?'G':'F'}
+function homeCovers(o,side,i,j){const d=homeDims(o);return o.s===side&&i>=o.i&&i<o.i+d[0]&&j>=o.j&&j<o.j+d[1]}
+function homeFindAt(side,i,j,layer){return homeData().findIndex(o=>{if(!FK[o.k])return false;if(side==='F'){if(o.s!==layer)return false}else if(o.s!==side)return false;const d=homeDims(o);return i>=o.i&&i<o.i+d[0]&&j>=o.j&&j<o.j+d[1]})}
+function homeCellClass(side,i,j){const h=HM.held;let ok=false;if(h){const ly=homeLayerOf(h.k);ok=ly==='W'?side!=='F':side==='F'}
+  const occ=homeFindAt(side,i,j,'F')>=0||(side==='F'&&homeFindAt('F',i,j,'G')>=0&&false);return(ok?'ok':'')+(occ?' occ':'')}
+function homeFits(s,i,j,d,skip){if(i<0||j<0||i+d[0]>HN||j+d[1]>HN)return false;
+  return !homeData().some((o,n)=>{if(n===skip||!FK[o.k]||o.s!==s)return false;const e=homeDims(o);return i<o.i+e[0]&&o.i<i+d[0]&&j<o.j+e[1]&&o.j<j+d[1]})}
+function homeCell(side,i,j){const D=homeData(),h=HM.held;
+  if(!h){let n=homeFindAt(side,i,j,'F');if(n<0&&side==='F')n=homeFindAt('F',i,j,'G');if(n>=0){HM.held={k:D[n].k,n};homeTray()}homeRender();return}
+  const ly=homeLayerOf(h.k);if(ly==='W'?side==='F':side!=='F'){toast(ly==='W'?'벽에 거는 거예요':'바닥에 놓는 거예요');return}
+  const s=ly==='W'?side:ly==='G'?'G':'F';const base=h.n!=null?D[h.n]:{k:h.k,f:0};const d=homeDims(base);
+  const ci=Math.max(0,Math.min(i,HN-d[0])),cj=Math.max(0,Math.min(j,HN-d[1]));
+  if(!homeFits(s,ci,cj,d,h.n)){toast('자리가 겹쳐요');return}
+  if(h.n!=null){const o=D[h.n];o.s=s;o.i=ci;o.j=cj}else D.push({k:h.k,s,i:ci,j:cj,f:0});
+  HM.held=null;homeTray();save();homeRender()}
+function homeFlip(){const h=HM.held;if(!h||h.n==null)return;const D=homeData(),o=D[h.n];if(FK[o.k][2]==='w')return;const t={...o,f:o.f?0:1};const d=homeDims(t);
+  const ni=Math.min(o.i,HN-d[0]),nj=Math.min(o.j,HN-d[1]);if(!homeFits(o.s,ni,nj,d,h.n)){toast('뒤집으면 자리가 겹쳐요');return}
+  o.f=t.f;o.i=ni;o.j=nj;save();homeRender()}
+function homeRemove(){const h=HM.held;if(!h||h.n==null)return;homeData().splice(h.n,1);HM.held=null;save();homeTray();homeRender()}
+function homeHint(){const h=HM.held;let sz='';if(h){const d=homeDims(h.n!=null?homeData()[h.n]:{k:h.k,f:0});sz=' ['+d[0]+'×'+d[1]+'칸]'}$('hHint').textContent=!h?'가구를 고르거나, 놓인 가구를 눌러 옮겨요.':h.n!=null?FK[h.k][1]+sz+' · 옮길 칸을 누르거나 뒤집기·치우기':FK[h.k][1]+sz+' · 놓을 칸을 눌러요 ('+({f:'바닥',w:'벽',r:'바닥'}[FK[h.k][2]])+')'}
+function homeTray(){const tr=$('hTray');tr.classList.toggle('on',HM.edit);tr.classList.toggle('hold',!!(HM.held&&HM.held.n!=null));
+  tr.querySelectorAll('.tabs [data-t]').forEach(b=>b.classList.toggle('on',b.dataset.t===HM.tab));
+  $('hList').innerHTML=FURN.filter(f=>f[2]===HM.tab).map(f=>`<button class="${HM.held&&HM.held.n==null&&HM.held.k===f[0]?'on':''}" onclick="homePick('${f[0]}')"><img loading="lazy" src="home/f/${f[0]}.webp" alt="${f[1]}"></button>`).join('');homeHint()}
+function homePick(k){HM.held=(HM.held&&HM.held.n==null&&HM.held.k===k)?null:{k,n:null};homeTray();homeRender()}
+function homeEdit(){HM.edit=!HM.edit;HM.held=null;$('home').classList.toggle('edit',HM.edit);if(!HM.edit)homeCharsReset();$('hEdit').classList.toggle('on',HM.edit);$('hEdit').textContent=HM.edit?'✓ 완료':'🪑 꾸미기';homeLayout();homeTray();homeRender();if(!HM.edit)save()}
+function homeGo(d){HM.held=null;const st=$('hStage');st.style.opacity=0;st.style.transform='translateX(-50%) translateY('+(d*30)+'px)';
+  setTimeout(()=>{HM.room=(HM.room+d+ROOMS.length)%ROOMS.length;homeLayout();homeRender();homeTray();homeCharsReset();st.style.transition='none';st.style.transform='translateX(-50%) translateY('+(-d*30)+'px)';
+    requestAnimationFrame(()=>{st.style.transition='';st.style.opacity=1;st.style.transform='translateX(-50%)'})},200)}
+function homeEnter(){if(S.homeV!==2){S.home={};S.homeV=2}HM.on=true;$('home').hidden=false;homeLayout();homeRender();homeTray();homeCharsReset();HLT=0;requestAnimationFrame(homeLoop);if(!S.homeSeen){S.homeSeen=1;setTimeout(()=>toast('🏡 우리 집이에요<br>🪑꾸미기로 가구를 놓아요'),400)}}
+function homeExit(){if(HM.edit)homeEdit();HM.on=false;$('home').hidden=true;save()}
+
+/* ---- home characters ---- */
+const HACT={t00:'shower',t02:'shower',t03:'shower',l03:'tv',d00:'sleep',l00:'sleep',l04:'book',l05:'book',l07:'book',l02:'book',d05:'book',d06:'book',d07:'book',d10:'book',l24:'book',k00:'soup',k01:'soup',k02:'soup',k12:'meal',k13:'meal',k14:'meal'};
+const HCH=[{sp:'cat'},{sp:'fox'}];let HCT=0;
+(function(){for(const sp of['cat','fox'])for(const d of'fbs')for(let i=0;i<4;i++){const im=new Image();im.src=`home/c/${sp}_${d}${i}.webp`}})();
+function homeBlocked(){const B=new Set();for(const o of homeData()){if(o.s!=='F'||!FK[o.k])continue;const d=homeDims(o);for(let a=0;a<d[0];a++)for(let b=0;b<d[1];b++)B.add((o.i+a)+','+(o.j+b))}return B}
+function homeFree(B){const L=[];for(let i=0;i<HN;i++)for(let j=0;j<HN;j++)if(!B.has(i+','+j))L.push([i,j]);return L}
+function homePath(B,a,b){const k=p=>p[0]+','+p[1],prev={},q=[a];prev[k(a)]=null;
+  while(q.length){const c=q.shift();if(c[0]===b[0]&&c[1]===b[1]){const p=[];let x=c;while(x){p.unshift(x);x=prev[k(x)]}return p}
+    for(const[di,dj]of[[1,0],[-1,0],[0,1],[0,-1]]){const n=[c[0]+di,c[1]+dj];if(n[0]<0||n[1]<0||n[0]>=HN||n[1]>=HN||B.has(k(n))||k(n)in prev)continue;prev[k(n)]=c;q.push(n)}}return null}
+function homeCharsReset(){HLOVE=null;const B=homeBlocked(),F=homeFree(B).sort(()=>Math.random()-.5);
+  HCH.forEach((c,n)=>{const p=F[n];c.bub=null;c.love=0;c.path=[];if(!p){c.off=true;return}c.off=false;c.u=p[0]+.5;c.v=p[1]+.5;c.dir='f';c.flip=0;c.st='idle';c.until=HCT+.6+n*1.2;c.act=null})}
+function homeCharPlan(c){if(!HLOVE&&Math.random()<.22&&homeLovePlan())return;const B=homeBlocked(),cur=[Math.floor(c.u),Math.floor(c.v)];
+  if(B.has(cur[0]+','+cur[1])){homeCharsReset();return}
+  const other=HCH.find(o=>o!==c&&!o.off),occ=new Set();if(other){const t=other.path.length?other.path[other.path.length-1]:[Math.floor(other.u),Math.floor(other.v)];occ.add(t[0]+','+t[1])}
+  let goal=null,act=null;const R=Math.random();
+  if(R<.6){const acts=homeData().filter(o=>o.s==='F'&&HACT[o.k]);if(acts.length){const o=acts[Math.floor(Math.random()*acts.length)],d=homeDims(o),cand=[];
+      for(let a=-1;a<=d[0];a++)for(let b=-1;b<=d[1];b++){const inside=a>=0&&a<d[0]&&b>=0&&b<d[1];const edge=(a===-1||a===d[0])!==(b===-1||b===d[1]);if(inside||!edge)continue;const p=[o.i+a,o.j+b];
+        if(p[0]<0||p[1]<0||p[0]>=HN||p[1]>=HN||B.has(p[0]+','+p[1])||occ.has(p[0]+','+p[1]))continue;cand.push(p)}
+      cand.sort(()=>Math.random()-.5);for(const p of cand){if(homePath(B,cur,p)){goal=p;act=HACT[o.k];break}}}}
+  if(!goal){const F=homeFree(B).filter(p=>!occ.has(p[0]+','+p[1])&&!(p[0]===cur[0]&&p[1]===cur[1])).sort(()=>Math.random()-.5);for(const p of F){if(homePath(B,cur,p)){goal=p;break}}}
+  if(!goal){c.st='idle';c.until=HCT+2;return}
+  c.path=homePath(B,cur,goal).slice(1);c.act=act;c.st='walk';c.bub=null}
+function homeLovePlan(){const a=HCH[0],b=HCH[1];if(a.off||b.off||a.st==='walk'||b.st==='walk'||a.love||b.love)return false;const B=homeBlocked(),ca=[Math.floor(a.u),Math.floor(a.v)],cb=[Math.floor(b.u),Math.floor(b.v)];
+  const pairs=[];for(let i=0;i<HN-1;i++)for(let j=0;j<HN-1;j++){const L=[i+1,j],R=[i,j+1];if(!B.has(L+'')&&!B.has(R+''))pairs.push([L,R])}
+  pairs.sort(()=>Math.random()-.5);const sw=Math.random()<.5;
+  for(const[L,R]of pairs){const ta=sw?L:R,tb=sw?R:L,pa=homePath(B,ca,ta),pb=homePath(B,cb,tb);if(!pa||!pb)continue;
+    a.path=pa.slice(1);b.path=pb.slice(1);a.act=b.act='love';a.side=sw?0:1;b.side=sw?1:0;a.st=b.st='walk';a.bub=b.bub=null;a.love=b.love=0;return true}
+  return false}
+let HLOVE=null;
+function homeCharTick(dt){HCT+=dt;
+  for(const c of HCH){if(c.off)continue;
+    if(c.st==='walk'){const n=c.path[0];if(!n){if(c.act==='love'){c.st='lovewait';c.dir='s';c.flip=c.side?1:0;c.love=1;const o=HCH.find(x=>x!==c);if(o.st==='lovewait'){HLOVE={t0:HCT};c.st=o.st='love';c.until=o.until=HCT+8.5}continue}c.st=c.act?'act':'idle';c.dir='f';c.flip=0;
+        if(c.act){c.bub=c.act;c.until=HCT+5+Math.random()*4}else{c.bub=Math.random()<.3?'think':null;c.until=HCT+1.5+Math.random()*3}continue}
+      const tu=n[0]+.5,tv=n[1]+.5,du=tu-c.u,dv=tv-c.v,dist=Math.hypot(du,dv),sp=.85*dt;
+      if(Math.abs(du)>.01){c.dir=du>0?'s':'b';c.flip=du>0?1:1}else if(Math.abs(dv)>.01){c.dir=dv>0?'s':'b';c.flip=0}
+      if(dist<=sp){c.u=tu;c.v=tv;c.path.shift()}else{c.u+=du/dist*sp;c.v+=dv/dist*sp}}
+    else if(c.st==='love'){if(HCT>c.until){HLOVE=null;c.love=0;c.act=null;c.st='idle';c.until=HCT+.8+Math.random()}}
+    else if(c.st==='lovewait'){}
+    else if(HCT>c.until){c.bub=null;homeCharPlan(c)}}}
+function homeCharDraw(){const st=$('hFurn');if(!st)return;const g=HGEO[ROOMS[HM.room][0]],sc=HM.sc,Q=quads(g),k=homeUnit(g)/115*sc;
+  for(const c of HCH){if(!c.el){c.el=document.createElement('img');c.el.className='hc';c.b=document.createElement('img');c.b.className='hbub'}
+    if(!c.el.isConnected)st.appendChild(c.el);if(c.off){c.el.style.display='none';c.b.remove();continue}c.el.style.display='';
+    const w=150*k,h=w*138/96,p=bil(Q.F,c.u/HN,c.v/HN);
+    const fr=c.st==='walk'?Math.floor(HCT*6)%4:0,src=`home/c/${c.sp}_${c.dir}${fr}.webp`;if(c.el.dataset.s!==src){c.el.src=src;c.el.dataset.s=src}
+    c.el.style.width=w+'px';c.el.style.left=(p[0]*sc-w/2)+'px';c.el.style.top=(p[1]*sc-h*.93)+'px';c.el.style.transform=c.flip?'scaleX(-1)':'';
+    c.el.style.zIndex=Math.round((2+c.u+.5+c.v+.5+.01)*100);
+    if(c.bub){const bs=`home/c/b_${c.bub}.webp`;if(c.b.dataset.s!==bs){c.b.src=bs;c.b.dataset.s=bs;c.b.style.animation='none';void c.b.offsetWidth;c.b.style.animation=''}
+      if(!c.b.isConnected)st.appendChild(c.b);const bw=w*.95;c.b.style.width=bw+'px';c.b.style.left=(p[0]*sc-bw*.78)+'px';c.b.style.top=(p[1]*sc-h*.93-bw*.82)+'px'}
+    else c.b.remove()}
+  const A=HCH[0],Bc=HCH[1];if(!HCHB){HCHB=document.createElement('img');HCHB.className='hbub'}
+  if(HLOVE&&!A.off&&!Bc.off&&A.st==='love'&&Bc.st==='love'){const pa=bil(Q.F,A.u/HN,A.v/HN),pb=bil(Q.F,Bc.u/HN,Bc.v/HN),w=150*k,h=w*138/96;
+    const stg=Math.min(3,Math.floor((HCT-HLOVE.t0)/1.7));const src=`home/c/h${stg}.webp`;if(HCHB.dataset.s!==src){HCHB.src=src;HCHB.dataset.s=src;HCHB.style.animation='none';void HCHB.offsetWidth;HCHB.style.animation=''}
+    if(!HCHB.isConnected)st.appendChild(HCHB);const bw=w*.9;HCHB.style.width=bw+'px';HCHB.style.transformOrigin='50% 100%';HCHB.style.left=((pa[0]+pb[0])/2*sc-bw/2)+'px';HCHB.style.top=(Math.min(pa[1],pb[1])*sc-h*.93-bw*.78)+'px'}
+  else HCHB.remove()}
+let HCHB=null;
+let HLT=0;function homeLoop(t){if(!HM.on){HLT=0;return}const dt=HLT?Math.min(.1,(t-HLT)/1000):0;HLT=t;if(!HM.edit){homeCharTick(dt);homeCharDraw()}requestAnimationFrame(homeLoop)}
+document.querySelectorAll('#hTray .tabs [data-t]').forEach(b=>b.onclick=()=>{HM.tab=b.dataset.t;homeTray()});
+addEventListener('resize',()=>{if(HM.on){homeLayout();homeRender()}});
+
 /* ---------- loop ---------- */
 let lastT=performance.now(),saveT=0,ui=0;
 function update(dt,T){
@@ -701,6 +869,7 @@ function render(T){const t=now(),ph=phaseOf(t),dark=ph==='night'||ph==='evening'
 
   drawScarfFloat(T);drawDreams(T);drawHandHint(T);for(const c of list)drawBubble(c);
   if(scn==='camp'&&curMode!=='three'){const bb=Math.sin(T*3)*2;pbubble(318,304+bb,'🐻 곰굴','r',1)}
+  if(scn==='garden'){const bb=Math.sin(T*3+1)*2;pbubble(362,232+bb,'🏡 집','r',1)}
 }
 const fmt=n=>n<1000?Math.floor(n)+'':n<1e6?(n/1000).toFixed(1)+'k':(n/1e6).toFixed(1)+'m';
 function hud(){const t=now();$('rH').textContent=fmt(S.heart);$('rC').textContent=fmt(S.coin);$('rL').textContent=fmt(S.leaf);
