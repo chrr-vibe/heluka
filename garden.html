@@ -252,6 +252,7 @@ const TINT={};
 const DEF={v:1,heart:0,coin:15,leaf:12,intim:0,hygro:1,soup:0,plotsN:2,lamp:false,plots:[],box:{},pats:0,herPats:0,harvests:0,paintings:0,paint:0,egg:null,eggs:0,eggBest:0,eggLog:[0,0,0],dreams:0,handDay:'',hands:0,notes:[],noteN:0,last:0,sulkFixed:0,scene:'auto',scarf:0,scarfLv:0,eggStock:2,potato:1,chickAt:0,soupT:null,soupBuff:0,soups:0,photos:[],photoDay:''};
 let S;
 try{S=Object.assign({},DEF,JSON.parse(localStorage.getItem('twosteps')||'{}'))}catch(e){S=Object.assign({},DEF)}
+if(!S.lv2fix){S.lv2fix=1;if((S.scarfLv||0)>2)S.scarfLv=2}//GARDEN_ONLY
 if(S.scarf>=4){S.scarfLv=(S.scarfLv||0)+1;S.scarf=0}
 while(S.plots.length<5)S.plots.push({t:null,g:0,wet:0});
 function save(){if(!S||window.NOSAVE)return;S.last=Date.now();try{localStorage.setItem('twosteps',JSON.stringify(S))}catch(e){}}
