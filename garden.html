@@ -1199,8 +1199,31 @@ function kChev(c,x0,x1,ycen,amp,sw,cx0,dir){// draws chevron from x0->x1 (dir 1)
 function kLobe(c,X0,Wz,nS,y,dep,dir){const w=Wz/nS;if(dir<0){for(let j=nS-1;j>=0;j--){const xr=X0+(j+1)*w,xl=X0+j*w;c.lineTo(xr,y);c.bezierCurveTo(xr,y+dep,xl,y+dep,xl,y)}}else{for(let j=0;j<nS;j++){const xl=X0+j*w,xr=X0+(j+1)*w;c.lineTo(xl,y);c.bezierCurveTo(xl,y-dep,xr,y-dep,xr,y)}}}
 function kSide(c,x,y1,y2,st,b,vh){const d=y2>y1?1:-1;let y=y1;if(st<3){c.lineTo(x,y2);return}while((y2-y)*d>0){const n=y+d*st;if((d>0&&(n<-80||y>vh+80))||(d<0&&(y<-80||n>vh+80))){const ny=(y2-n)*d<=0?y2:n;c.lineTo(x,ny);y=ny;continue}const e=(y2-n)*d<0?y2:n;c.quadraticCurveTo(x+b,(y+e)/2,x,e);y=e}}
 function kHash(a,b){const x=Math.sin(a*127.1+b*311.7)*43758.5453;return x-Math.floor(x)}
+
+/* fluffy post-process: soft fibre halo + fibre grain, anchored to the scarf */
+let KFZ=null;
+function kFz(){if(KFZ)return KFZ;const mk=(n,f)=>{const cv=document.createElement('canvas');cv.width=cv.height=n;f(cv.getContext('2d'),n);return cv};
+  let sd=7;const rn=()=>{sd=(sd*16807)%2147483647;return sd/2147483647};
+  const hair=mk(128,(x,n)=>{x.clearRect(0,0,n,n);for(let i=0;i<260;i++){const px=rn()*n,py=rn()*n,a=rn()*6.28,l=2+rn()*5;x.strokeStyle='rgba(255,255,255,'+(.35+rn()*.5)+')';x.lineWidth=.8+rn()*.6;x.beginPath();x.moveTo(px,py);x.lineTo(px+Math.cos(a)*l,py+Math.sin(a)*l);x.stroke()}});
+  const dark=mk(128,(x,n)=>{x.clearRect(0,0,n,n);for(let i=0;i<150;i++){const px=rn()*n,py=rn()*n,a=rn()*6.28,l=2+rn()*4;x.strokeStyle='rgba(60,30,40,'+(.12+rn()*.18)+')';x.lineWidth=.8;x.beginPath();x.moveTo(px,py);x.lineTo(px+Math.cos(a)*l,py+Math.sin(a)*l);x.stroke()}});
+  const mask=mk(96,(x,n)=>{const id=x.createImageData(n,n);for(let i=0;i<n*n;i++){const v=rn();id.data[i*4]=id.data[i*4+1]=id.data[i*4+2]=255;id.data[i*4+3]=v>.42?Math.round(255*Math.min(1,(v-.42)*2.2)):0}x.putImageData(id,0,0)});
+  return KFZ={hair,dark,mask,off:null,hc:null}}
+function kRender(c,o,g,op){
+  if(!op.fluff||!c.filter&&c.filter!==''||typeof c.getTransform!=='function'){return kRender0(c,o,g,op)}
+  const F=kFz(),cv=c.canvas,w=cv.width,h=cv.height,dpr=w/(cv.clientWidth||w)||1;
+  if(!F.off||F.off.width!==w||F.off.height!==h){F.off=document.createElement('canvas');F.off.width=w;F.off.height=h;F.hc=document.createElement('canvas')}
+  const hw=Math.max(2,w>>1),hh=Math.max(2,h>>1);if(F.hc.width!==hw||F.hc.height!==hh){F.hc.width=hw;F.hc.height=hh}
+  const o2=F.off.getContext('2d');o2.setTransform(1,0,0,1,0,0);o2.globalCompositeOperation='source-over';o2.filter='none';o2.clearRect(0,0,w,h);o2.setTransform(c.getTransform());
+  kRender0(o2,o,g,op);o2.setTransform(1,0,0,1,0,0);
+  // halo (half-res, blurred, broken up by a speckle mask => stray fibres)
+  const hx=F.hc.getContext('2d');hx.setTransform(1,0,0,1,0,0);hx.globalCompositeOperation='source-over';hx.clearRect(0,0,hw,hh);hx.filter='blur('+Math.max(1,dpr*.7).toFixed(1)+'px)';hx.drawImage(F.off,0,0,hw,hh);hx.filter='none';
+  hx.globalCompositeOperation='destination-in';const mp=hx.createPattern(F.mask,'repeat');mp.setTransform(new DOMMatrix([op.z*dpr*.5,0,0,op.z*dpr*.5,(op.ox*dpr)/2,(op.oy*dpr)/2]));hx.fillStyle=mp;hx.fillRect(0,0,hw,hh);
+  // fibre grain on the scarf itself
+  const sc=Math.max(.5,op.z*dpr*.5);const tp=(img,a)=>{o2.globalCompositeOperation='source-atop';o2.globalAlpha=a;const pt=o2.createPattern(img,'repeat');pt.setTransform(new DOMMatrix([sc,0,0,sc,op.ox*dpr,op.oy*dpr]));o2.fillStyle=pt;o2.fillRect(0,0,w,h)};
+  tp(F.dark,.9);tp(F.hair,.38);o2.globalAlpha=1;o2.globalCompositeOperation='source-over';
+  c.save();c.setTransform(1,0,0,1,0,0);c.globalAlpha=.55;c.drawImage(F.hc,0,0,w,h);c.globalAlpha=1;c.drawImage(F.off,0,0);c.restore()}
 /* draw a scarf into ctx. opts: z, ox (screen x of scarf left), oy (screen y of scarf top=0), vh, sel, anim(0..1 of newest row), needle */
-function kRender(c,o,g,op){const z=op.z,W=g.W,X0=op.ox,Y=y=>op.oy+z*y;const Ytop=y=>KTOP+g.H-y;// cum->scarf y
+function kRender0(c,o,g,op){const z=op.z,W=g.W,X0=op.ox,Y=y=>op.oy+z*y;const Ytop=y=>KTOP+g.H-y;// cum->scarf y
   const vh=op.vh,cTop=KTOP+g.H-(-op.oy)/z,cBot=KTOP+g.H-(vh-op.oy)/z;// cum range visible (cTop larger)
   const lo=Math.max(0,cBot-20),hi=Math.min(g.H,cTop+20);
   // shadow body
@@ -1241,7 +1264,7 @@ function kDraw(){const cv=kCan();if(!cv||$('knit').hidden)return;const L=kLayout
   const o=kTgt(),st=kSt();if(st===1||st===0)return;
   let g=kGeo(o);if(st===2&&!o.runs.length)g=kGeo({w:o.w,runs:[[o.c,1,1]],pt:[]},true);
   const pv=st===2&&!o.runs.length;let zz=KN.z,oy=KN.oy;if(pv){zz=Math.min(kBaseZ(L),(L.vh-40)/(KTOP+g.H+KBOT));oy=20}else kClamp();
-  kRender(c,o.pt?o:{pt:[]},g,{z:zz,ox:st<4?(L.vw-(g.W+0*kSwNow())*zz)/2:(L.vw-g.W*zz)/2,oy,vh:L.vh,sel:st===4?KN.sel:-1,anim:KN.anim,needle:st<4})
+  kRender(c,o.pt?o:{pt:[]},g,{z:zz,ox:st<4?(L.vw-(g.W+0*kSwNow())*zz)/2:(L.vw-g.W*zz)/2,oy,vh:L.vh,sel:st===4?KN.sel:-1,anim:KN.anim,needle:st<4,fluff:true})
   $('kRows')&&($('kRows').textContent=(st===2&&!o.runs.length)?'미리보기':g.N.toLocaleString()+'단')}
 function kAnimRow(){KN.anim=1;kDraw();return;KN.anim=0;const t0=performance.now();cancelAnimationFrame(KN.raf);const f=()=>{KN.anim=Math.min(1,(performance.now()-t0)/620);kDraw();if(KN.anim<1)KN.raf=requestAnimationFrame(f)};f()}
 function knitOpen(arch){const el=$('knit');el.hidden=false;KN.arch=!!arch||S.scarf<1;KN.view=null;KN.sel=-1;KN.anim=1;KN.z=0;KN.back=false;kUI()}
