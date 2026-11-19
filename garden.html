@@ -624,8 +624,12 @@ function sceneOK(id){const c=SCENES[id];return !!c&&!c.hide&&!(c.lock&&stage()<c
 function wantScene(t,m){
   const sel=S.scene;
   if(sel==='den')return 'den';
-  if(m==='night'||m==='three'||m==='bridge')return autoScene(t,m);
+  if(m==='three'||m==='bridge')return autoScene(t,m);
   const ms=Date.now();
+  if(m==='night'){if(S.pin&&S.pin.until>ms&&S.pin.id!=='auto'&&sceneOK(S.pin.id))return S.pin.id;
+    const b2=Math.floor((ms+9*3600e3)/(35*60e3)),f2=x=>{const v=Math.sin(x*12.9898+78.233)*43758.5453;return v-Math.floor(v)};
+    const pool=Object.keys(SCENES).filter(k=>sceneOK(k)&&k!=='bridge'&&k!=='den'&&k!=='camp');
+    if(f2(b2)<.3||!pool.length)return'camp';return pool[Math.floor(f2(b2+.5)*pool.length)%pool.length]}
   if(S.pin&&S.pin.until>ms){const p=S.pin.id;return(p==='auto'||!sceneOK(p))?autoScene(t,m):p}
   const blk=Math.floor((ms+9*3600e3)/(35*60e3));const fr=x=>{const v=Math.sin(x*12.9898+78.233)*43758.5453;return v-Math.floor(v)};const r=fr(blk),r2=fr(blk+.5);
   const auto=autoScene(t,m),base=(sel&&sel!=='auto'&&sceneOK(sel))?sel:auto;
