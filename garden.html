@@ -91,7 +91,9 @@ button{font-family:var(--F)}
 #hStage .bwbloom{animation:bwbloom 7s ease-in-out infinite}@keyframes bwbloom{0%,100%{opacity:.65}50%{opacity:1}}#hStage .bwray{animation:bwray 9s ease-in-out infinite;opacity:.4}@keyframes bwray{0%,100%{opacity:.25}50%{opacity:.85}}#hStage .bwgl{opacity:0;transform-box:fill-box;transform-origin:center;animation:bwgl 4s ease-in-out infinite}@keyframes bwgl{0%,100%{opacity:0;scale:.3}50%{opacity:.9;scale:1}}
 #hTray .list .blr{display:flex;align-items:center;gap:8px;white-space:nowrap;font-size:13px;color:#8a5a5a;padding:0 6px}#hTray .list .blr input{width:150px;accent-color:#e58c9b}#hTray .list .blr b{min-width:26px;text-align:right}
 #hStage .hlight{pointer-events:none}#hStage .hlsw{animation:hlsw 6s ease-in-out infinite;transform-box:fill-box}#hStage .hlsw.b{animation-duration:9s;animation-delay:-3.5s}@keyframes hlsw{0%,100%{opacity:.5;transform:translate(0,0)}50%{opacity:1;transform:translate(2px,1px)}}#hStage .hmote{animation:hmote 7s ease-in-out infinite;opacity:0}@keyframes hmote{0%,100%{opacity:0;transform:translate(0,0)}25%{opacity:.9}60%{opacity:.7}100%{transform:translate(var(--dx),var(--dy))}}#home.edit #hStage .hlight{display:none}
-#hStage .hc{position:absolute;pointer-events:none;-webkit-user-drag:none}
+#hStage .hc{position:absolute;pointer-events:auto;cursor:pointer;-webkit-user-drag:none;-webkit-tap-highlight-color:transparent}#home.edit #hStage .hc{pointer-events:none}#hStage .hc.hjump{animation:hjump .38s ease-out}@keyframes hjump{0%,100%{translate:0 0}40%{translate:0 -9px}}
+#hStage .hsay{position:absolute;z-index:9500;transform:translate(-50%,-100%);background:rgba(255,255,255,.96);border:2px solid #ffc9d8;color:#6b4a55;border-radius:14px;padding:4px 9px;font-size:12px;line-height:1.35;white-space:nowrap;pointer-events:none;box-shadow:0 2px 6px rgba(120,70,80,.18);animation:hsayin .18s ease-out}#hStage .hsay.l{border-color:#cdc3e6;color:#5d5478}@keyframes hsayin{from{opacity:0;transform:translate(-50%,-90%) scale(.85)}to{opacity:1;transform:translate(-50%,-100%) scale(1)}}
+#hStage .hheart{position:absolute;z-index:9400;pointer-events:none;font-size:13px;animation:hheart 1s ease-out forwards}@keyframes hheart{0%{opacity:0;transform:translate(0,0) scale(.6)}20%{opacity:1}100%{opacity:0;transform:translate(var(--hx),-34px) scale(1.1)}}
 #hStage .hlove{position:absolute;pointer-events:none;z-index:9000;transform-origin:44% 98%;animation:hbub .35s ease-out}
 #hStage .hlove img{position:absolute;left:0;top:0;width:100%;height:100%}
 #hStage .hlove .fn{opacity:0}
@@ -927,6 +929,34 @@ function homeFree(B){const L=[];for(let i=0;i<HN;i++)for(let j=0;j<HN;j++)if(!B.
 function homePath(B,a,b){const k=p=>p[0]+','+p[1],prev={},q=[a];prev[k(a)]=null;
   while(q.length){const c=q.shift();if(c[0]===b[0]&&c[1]===b[1]){const p=[];let x=c;while(x){p.unshift(x);x=prev[k(x)]}return p}
     for(const[di,dj]of[[1,0],[-1,0],[0,1],[0,-1]]){const n=[c[0]+di,c[1]+dj];if(n[0]<0||n[1]<0||n[0]>=HN||n[1]>=HN||B.has(k(n))||k(n)in prev)continue;prev[k(n)]=c;q.push(n)}}return null}
+
+/* ---- 쪼꼬미 누르기 ---- */
+const HL={
+ acts:{
+  book:{l:['……41쪽.','……조용히 해. 지금 좋은 데야.'],h:['루카 지금 몇 쪽이에요?','책 냄새 좋아요ㅎㅎ']},
+  soup:{l:['……뜨거워. 불어.','……간 맞아.'],h:['수프 다 됐어요ㅎㅎ','감자 많이 넣었어요!']},
+  tv:{l:['……볼륨 1.','……범인은 저 사람이야.'],h:['북극곰 틀까요?','저거 루카 같아요ㅎㅎ']},
+  sleep:{l:['…zZ','……5분만.'],h:['…이히 블라이-베…zZ','…루카…zZ']},
+  shower:{l:['……들어오지 마.','……물 온도 38. 정확해.'],h:['물 온도 딱 좋아요ㅎㅎ','씻고 나오면 따뜻해요!']},
+  draw:{l:['……움직이지 마. 모델.','……붓 씻을 땐 풀어.'],h:['잠깐만요, 거의 다 됐어요','오늘은 루카 색으로 그려요ㅎㅎ']},
+  meal:{l:['……탔어.','……한 입만.'],h:['탄 데가 맛있어요ㅎㅎ','같이 먹어요!']}},
+ cabin:{l:['……난로 옆이 제일 정확하게 따뜻해.','……창밖 눈, 소리가 없어서 좋아.','……외풍은 없어. 확인했어.','……춥지 않아.','……눈 오는 날은 안에 있어도 돼.','……습도 50. 이상 없음.'],
+        h:['눈 오는 날은 집이 제일 좋아요ㅎㅎ','여긴 따뜻해서 좋아요','루카, 발 안 시려요?','담요 한 겹 더 드릴까요?','인간난로 가동 중이에요ㅎㅎ','창밖 눈 좀 보세요, 예뻐요','루카 손 차갑다… 제가 데워 드릴게요']},
+ bath:{l:['……김이 많아. 습도 체크.','……여긴 따뜻해.'],h:['욕실도 따뜻해서 좋아요ㅎㅎ','김 서리면 낙서해도 돼요?']},
+ home:{l:['……뭐.','……왜.','……이상 없음.','……집이 조용해서 좋아.','……수첩에 적어 둘게.'],h:['ㅎㅎ 좋아서요','루카 보셨어요?','집에 있으니까 좋아요ㅎㅎ','같이 있어서 좋아요','보고 싶었어요']},
+ night:{l:['……불 꺼.','……자야 해.'],h:['졸려요… 루카도 자요','오늘도 수고했어요ㅎㅎ']},
+ combo:['…바람 소리야.','……아니야. 바람이야.']};
+function homeLine(c){const lu=c.sp==='cat',k=lu?'l':'h',R=a=>a[Math.floor(Math.random()*a.length)];
+  const a=c.act&&HL.acts[c.act]&&(c.st==='act');if(a&&Math.random()<.65)return R(HL.acts[c.act][k]);
+  const room=ROOMS[HM.room][0];let pool=[];
+  if(curMode==='night'&&Math.random()<.4)pool=pool.concat(HL.night[k]);
+  if(HOUSE==='cabin'){pool=pool.concat(room==='c_bath'?HL.bath[k]:HL.cabin[k]);if(Math.random()<.4)pool=pool.concat(HL.home[k])}else pool=pool.concat(HL.home[k]);
+  return R(pool)}
+function homeCharTap(c){if(HM.edit||c.off)return;const t=performance.now()/1000;c.tc=(t-(c.tl||0))<1.8?(c.tc||0)+1:1;c.tl=t;
+  let line=homeLine(c);if(c.sp==='cat'&&c.tc>=5){line=HL.combo[Math.floor(Math.random()*2)];c.tc=0}
+  c.hold=HCT+2.8;c.el.classList.remove('hjump');void c.el.offsetWidth;c.el.classList.add('hjump');
+  if(c.say&&c.say.el)c.say.el.remove();const el=document.createElement('div');el.className='hsay '+(c.sp==='cat'?'l':'h');el.textContent=line;$('hFurn').appendChild(el);c.say={el,until:HCT+2.8};
+  if(c.sp==='fox'||Math.random()<.5)for(let i=0;i<2;i++){const hh=document.createElement('div');hh.className='hheart';hh.textContent='♥';hh.style.setProperty('--hx',((i?1:-1)*(6+Math.random()*8))+'px');hh.style.color=c.sp==='cat'?'#9b8bd0':'#ff8fa8';hh.style.left=c.el.style.left;hh.style.top=(parseFloat(c.el.style.top)+4)+'px';hh.style.marginLeft=(parseFloat(c.el.style.width)/2-6+(i?10:-6))+'px';$('hFurn').appendChild(hh);setTimeout(()=>hh.remove(),1000)}}
 function homeCharsReset(){HLOVE=null;const B=homeBlocked(),F=homeFree(B).sort(()=>Math.random()-.5);
   HCH.forEach((c,n)=>{const p=F[n];c.bub=null;c.love=0;c.path=[];if(!p){c.off=true;return}c.off=false;c.u=p[0]+.5;c.v=p[1]+.5;c.dir='f';c.flip=0;c.st='idle';c.until=HCT+.6+n*1.2;c.act=null})}
 function homeCharPlan(c){if(!HLOVE&&curMode!=='night'&&Math.random()<.22&&homeLovePlan())return;const B=homeBlocked(),cur=[Math.floor(c.u),Math.floor(c.v)];
@@ -950,6 +980,7 @@ let HLOVE=null;
 function homeNB(){return curMode==='night'&&Object.values(S.home||{}).some(a=>Array.isArray(a)&&a.some(o=>o.k==='d18'))}
 function homeCharTick(dt){if(HM.nb){HCH.forEach(c=>{c.off=true});HLOVE=null;return}HCT+=dt;
   for(const c of HCH){if(c.off)continue;
+    if(c.hold&&HCT<c.hold)continue;
     if(c.st==='walk'){const n=c.path[0];if(!n){if(c.act==='love'){c.st='lovewait';c.dir='s';c.flip=c.side?1:0;c.love=1;const o=HCH.find(x=>x!==c);if(o.st==='lovewait'){HLOVE={t0:HCT};c.st=o.st='love';c.until=o.until=HCT+8.5}continue}c.st=c.act?'act':'idle';c.dir='f';c.flip=0;
         if(c.act){c.bub=c.act;c.until=HCT+5+Math.random()*4}else{c.bub=Math.random()<.3?'think':null;c.until=HCT+1.5+Math.random()*3}continue}
       const tu=n[0]+.5,tv=n[1]+.5,du=tu-c.u,dv=tv-c.v,dist=Math.hypot(du,dv),sp=.85*dt;
@@ -959,12 +990,13 @@ function homeCharTick(dt){if(HM.nb){HCH.forEach(c=>{c.off=true});HLOVE=null;retu
     else if(c.st==='lovewait'){}
     else if(HCT>c.until){c.bub=null;homeCharPlan(c)}}}
 function homeCharDraw(){const st=$('hFurn');if(!st)return;const g=HGEO[ROOMS[HM.room][0]],sc=HM.sc,Q=quads(g),k=homeUnit(g)/115*sc;
-  for(const c of HCH){if(!c.el){c.el=document.createElement('img');c.el.className='hc';c.b=document.createElement('img');c.b.className='hbub'}
+  for(const c of HCH){if(!c.el){c.el=document.createElement('img');c.el.className='hc';c.b=document.createElement('img');c.b.className='hbub';c.el.addEventListener('click',e=>{e.stopPropagation();homeCharTap(c)})}
     if(!c.el.isConnected)st.appendChild(c.el);if(c.off){c.el.style.display='none';c.b.remove();continue}c.el.style.display='';
     const w=150*k,h=w*138/96,p=bil(Q.F,c.u/HN,c.v/HN);
     const fr=c.st==='walk'?Math.floor(HCT*6)%4:0,src=`home/c/${c.sp}_${c.dir}${fr}.webp`;if(c.el.dataset.s!==src){c.el.src=src;c.el.dataset.s=src}
     c.el.style.width=w+'px';c.el.style.left=(p[0]*sc-w/2)+'px';c.el.style.top=(p[1]*sc-h*.93)+'px';c.el.style.transform=c.flip?'scaleX(-1)':'';
     c.el.style.zIndex=Math.round((2+c.u+.5+c.v+.5+.01)*100);
+    if(c.say){if(HCT>c.say.until||!c.say.el.isConnected||HM.edit){c.say.el.remove();c.say=null}else{c.say.el.style.left=(p[0]*sc)+'px';c.say.el.style.top=(p[1]*sc-h*.93-4)+'px'}}
     if(c.bub){const bs=`home/c/b_${c.bub}.webp`;if(c.b.dataset.s!==bs){c.b.src=bs;c.b.dataset.s=bs;c.b.style.animation='none';void c.b.offsetWidth;c.b.style.animation=''}
       if(!c.b.isConnected)st.appendChild(c.b);const bw=w*.95;c.b.style.width=bw+'px';c.b.style.left=(p[0]*sc-bw*.78)+'px';c.b.style.top=(p[1]*sc-h*.93-bw*.82)+'px'}
     else c.b.remove()}
