@@ -332,16 +332,16 @@ function brain(c){
 
 function setMode(m){curMode=m;REST.on=false;const g=GAP[stage()];
   if(scn==='bridge'&&m!=='night'&&m!=='three'){if(SULK.on)endSulk(false);const gx=L.gaze.x;
-    go(LU,gx-g/2,L.gaze.y,'face',()=>{LU.state='face';LU.fr=true;LU.t=999;if(m==='bridge')say(LU,'…7시 55분.')});
-    go(HE,gx+g/2,L.gaze.y+2,'face',()=>{HE.state='face';HE.fr=false;HE.t=999;if(m==='bridge')setTimeout(()=>say(HE,'오늘 강 색 예뻐요ㅎㅎ'),2600)});return}
+    go(LU,gx-g/2,L.gaze.y,'face',()=>{LU.state='face';LU.fr=true;LU.t=999;if(m==='bridge'&&Date.now()>RQT)say(LU,'…7시 55분.')});
+    go(HE,gx+g/2,L.gaze.y+2,'face',()=>{HE.state='face';HE.fr=false;HE.t=999;if(m==='bridge'&&Date.now()>RQT)setTimeout(()=>say(HE,'오늘 강 색 예뻐요ㅎㅎ'),2600)});return}
   if(m==='night'||m==='three'){
     if(SULK.on)endSulk(false);
     go(LU,L.bed.x-(g+10)/2,L.bed.y,'sleep',()=>{LU.state=m==='three'?'awake':'sleep'});
     go(HE,L.bed.x+(g+10)/2,L.bed.y,'sleep',()=>{HE.state='sleep'});
   }else if(m==='bridge'){
     if(SULK.on)endSulk(false);
-    go(LU,L.gaze.x-(g+40)/2,L.gaze.y,'gaze',()=>{LU.state='gaze';say(LU,'…7시 55분.')});
-    go(HE,L.gaze.x+(g+40)/2,L.gaze.y,'gaze',()=>{HE.state='gaze';setTimeout(()=>say(HE,'오늘 강 색 예뻐요ㅎㅎ'),2600)});
+    go(LU,L.gaze.x-(g+40)/2,L.gaze.y,'gaze',()=>{LU.state='gaze';if(Date.now()>RQT)say(LU,'…7시 55분.')});
+    go(HE,L.gaze.x+(g+40)/2,L.gaze.y,'gaze',()=>{HE.state='gaze';if(Date.now()>RQT)setTimeout(()=>say(HE,'오늘 강 색 예뻐요ㅎㅎ'),2600)});
   }else{LU.state='idle';LU.t=.5;HE.state='idle';HE.t=1;}
 }
 
@@ -519,7 +519,7 @@ function flowerModal(){flInit();const F=S.fl;let h=`<div class="quote" style="te
     h+=`<div class="item ${ok?'':'locked'}"><div class="em">${bqImgTag(b[0])}</div><div class="tx"><b>${b[1]}</b><small>${need}${bqN(b[0])>=4?' · 장터 교환 가능':''}</small></div><button class="btn" ${ok?'':'disabled'} onclick="makeBq('${b[0]}')">묶기</button></div>`}
   modal('💐 꽃다발',h)}
 function makeBq(k){flInit();const b=BQK[k];if(S.fl.sun<b[2]||S.fl.mum<b[3])return;S.fl.sun-=b[2];S.fl.mum-=b[3];S.bq[k]=(S.bq[k]||0)+1;save();toast('💐 '+b[1]+'를 묶었어요');flowerModal()}
-let GIFT=null,DTF=0;
+let GIFT=null,DTF=0,RQT=0;
 function giftAnim(k,from,to){bqImg(k);GIFT={k,from,to,t:0}}
 function giftScene(k,dir,gv,gl,rl,hearts){bqImg(k);
   const den=scn==='den',cx=den?(HE.x+LU.x)/2:W/2,y=den?HE.y:L.walkTop+(L.walkBot-L.walkTop)*.6;
@@ -529,7 +529,7 @@ function giftScene(k,dir,gv,gl,rl,hearts){bqImg(k);
     setTimeout(()=>say(G,pick(gl),2.4),400);
     setTimeout(()=>{R.flush=4;say(R,pick(rl),3);heartsAt(R.x,R.y-80,hearts)},3200);
     setTimeout(()=>{say(G,pick(gv),2.4);heartsAt(G.x,G.y-80,4);G.jump=.4},5600);
-    setTimeout(()=>{HE.t=LU.t=1},8200)}};
+    setTimeout(()=>{HE.t=LU.t=1;if(['bridge','night','three'].includes(curMode)){RQT=Date.now()+20000;setMode(curMode)}},8200)}};
   if(den){done();return}
   go(HE,cx-68,y,'idle',done);go(LU,cx+68,y,'idle',done);setTimeout(()=>{if(GIFT&&GIFT.t<0){HE.x=HE.tx=cx-68;LU.x=LU.tx=cx+68;HE.y=HE.ty=LU.y=LU.ty=y;HE.state=LU.state='idle';done()}},2500)}
 function giveBq(k,dir){flInit();if(!(S.bq[k]>0))return;S.bq[k]--;closeM();const n=bqN(k);
@@ -589,7 +589,7 @@ function dexModal(){const n=BOX.filter(b=>S.box[b[0]]).length,dn=S.photoDay===da
   modal('📖 도감',h)}
 function bellList(){const a=[];if(RAB.on&&RAB.phase==='wait')a.push('🐰 요나스가 배달하러 왔어요');if(eggStage()>=2)a.push(eggStage()===4?'🔥 계란이 다 탔어요':'🍳 계란이 다 됐어요');if(handWanted())a.push('🧊 루카스 손이 차요 (꾹 눌러 주세요)');if(DRM.length)a.push('💭 꿈 풍선이 떠 있어요');if(SULK.on)a.push('💭 루카스가 삐졌어요');return a}
 function bellModal(){const a=bellList();modal('🔔 알림',a.length?a.map(t=>`<div class="item"><div class="tx"><b>${t}</b></div></div>`).join(''):'<p class="note">지금은 새 소식이 없어요. 둘이 잘 지내고 있어요.</p>')}
-function placeModal(){const cur=S.scene||'auto';let h='<p class="note">고르면 그곳으로 가요. 그래도 둘은 가끔 마음 내키는 대로 다른 곳에 놀러 가기도 해요. 밤과 7시 55분 다리는 늘 정해진 곳이에요.</p>';
+function placeModal(){const cur=S.scene||'auto';let h='<p class="note">고르면 그곳으로 가요. 그래도 둘은 가끔 마음 내키는 대로 다른 곳에 놀러 가기도 해요. 새벽 3시는 늘 정해진 곳이고, 7시 55분 다리는 따로 고르지 않으면 다리로 가요.</p>';
   h+=`<div class="item"><div class="em">🔄</div><div class="tx"><b>자동</b><small>지금: ${SCENES[scn].nm}</small></div><button class="btn ${cur==='auto'?'':'alt'}" onclick="setScene('auto')">${cur==='auto'?'선택됨':'선택'}</button></div>`;
   for(const id in SCENES){const sc=SCENES[id];if(sc.hide)continue;const lock=sc.lock&&stage()<sc.lock;h+=`<div class="item ${lock?'locked':''}"><div class="em">${sc.em}</div><div class="tx"><b>${sc.nm}</b><small>${lock?'어깨가 닿게 가까워지면 열려요':sc.d}</small></div><button class="btn ${cur===id?'':'alt'}" ${lock?'disabled':''} onclick="setScene('${id}')">${cur===id?'선택됨':'가기'}</button></div>`}
   modal('🗺️ 장소',h)}
@@ -626,8 +626,9 @@ function sceneOK(id){const c=SCENES[id];return !!c&&!c.hide&&!(c.lock&&stage()<c
 function wantScene(t,m){
   const sel=S.scene;
   if(sel==='den')return 'den';
-  if(m==='three'||m==='bridge')return autoScene(t,m);
+  if(m==='three')return autoScene(t,m);
   const ms=Date.now();
+  if(m==='bridge'){if(S.pin&&S.pin.until>ms&&S.pin.id!=='auto'&&sceneOK(S.pin.id))return S.pin.id;return autoScene(t,m)}
   if(m==='night'){if(S.pin&&S.pin.until>ms&&S.pin.id!=='auto'&&sceneOK(S.pin.id))return S.pin.id;
     const b2=Math.floor((ms+9*3600e3)/(35*60e3)),f2=x=>{const v=Math.sin(x*12.9898+78.233)*43758.5453;return v-Math.floor(v)};
     const pool=Object.keys(SCENES).filter(k=>sceneOK(k)&&k!=='bridge'&&k!=='den'&&k!=='camp');
