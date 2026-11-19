@@ -153,7 +153,7 @@ button{font-family:var(--F)}
    <button class="harr" id="hUp" onclick="homeGo(-1)">▲</button>
    <div id="hStage"><img class="hex" id="hHex"><div id="hFurn"></div><svg id="hGrid"></svg></div>
    <button class="harr" id="hDn" onclick="homeGo(1)">▼</button>
-   <div id="hTray"><div class="tabs"><button data-t="f" class="on">가구</button><button data-t="w">벽</button><button data-t="r">러그</button><button data-t="p">벽지</button><button data-t="g">통창</button><span class="sp"></span><span class="act"><button onclick="homeFlip()">↔ 뒤집기</button><button onclick="homeRemove()">치우기</button></span><button onclick="homeEdit()" style="background:#ff8fab;color:#fff">완료</button></div><p class="hint" id="hHint"></p><div class="list" id="hList"></div></div>
+   <div id="hTray"><div class="tabs"><button data-t="f" class="on">가구</button><button data-t="w">벽</button><button data-t="r">러그</button><button data-t="p">벽지</button><button data-t="g">통창</button><span class="sp"></span><span class="act"><button onclick="homeFlip()">↔</button><button onclick="homeRemove()">치우기</button></span><button onclick="homeEdit()" style="background:#ff8fab;color:#fff">완료</button></div><p class="hint" id="hHint"></p><div class="list" id="hList"></div></div>
   </div>
   <div id="modal" hidden><div class="sheet"><div class="sheet-h"><b id="mTitle"></b><button id="mClose">✕</button></div><div id="mBody"></div></div></div>
   <div id="toast"></div>
@@ -836,7 +836,7 @@ function homeHint(){const h=HM.held;let sz='';if(h){const d=homeDims(h.n!=null?h
 function homeTray(){const tr=$('hTray');tr.classList.toggle('on',HM.edit);tr.classList.toggle('hold',!!(HM.held&&HM.held.n!=null));
   tr.querySelectorAll('.tabs [data-t]').forEach(b=>b.classList.toggle('on',b.dataset.t===HM.tab));
   if(HM.tab==='g'){const cur=(S.homeBig||{})[ROOMS[HM.room][0]]||0;$('hList').innerHTML=[[0,'없음'],['L','왼쪽 벽'],['R','오른쪽 벽']].map(([v,t])=>`<button class="txt ${v===cur?'on':''}" onclick="homeBig('${v||0}')">${t}</button>`).join('');$('hHint').textContent='벽 절반이 통창이 돼요. 풍경은 시간에 따라 낮/밤으로 바뀌어요.';return}
-  if(HM.tab==='p'){const r=ROOMS[HM.room][0],cur=(S.homeWp||{})[r]||0;$('hList').innerHTML=[0,1,2,3,4].map(n=>`<button class="${n===cur?'on':''}" onclick="homeWp(${n})"><img loading="lazy" src="home/${n?'wp/'+RIMG(ROOMS[HM.room])+'_'+n:RIMG(ROOMS[HM.room])}.webp" alt="벽지${n}"></button>`).join('');homeHint();return}
+  if(HM.tab==='p'){const r=ROOMS[HM.room][0],cur=(S.homeWp||{})[r]||0;$('hList').innerHTML=[0,1,2,3,4,5,6].map(n=>`<button class="${n===cur?'on':''}" onclick="homeWp(${n})"><img loading="lazy" src="home/${n?'wp/'+RIMG(ROOMS[HM.room])+'_'+n:RIMG(ROOMS[HM.room])}.webp" alt="벽지${n}"></button>`).join('');homeHint();return}
   $('hList').innerHTML=FURN.filter(f=>f[2]===HM.tab).map(f=>`<button class="${HM.held&&HM.held.n==null&&HM.held.k===f[0]?'on':''}" onclick="homePick('${f[0]}')"><img loading="lazy" src="home/f/${f[0]}.webp" alt="${f[1]}"></button>`).join('');homeHint()}
 const CORNER=new Set(['v00','v36']);let CD=1;
 function homeBig(v){if(!S.homeBig)S.homeBig={};S.homeBig[ROOMS[HM.room][0]]=v==='0'?0:v;save();homeTray();homeRender()}
