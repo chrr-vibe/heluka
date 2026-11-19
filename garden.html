@@ -414,7 +414,7 @@ let OFF=null;
 
 /* ---------- input ---------- */
 cv.addEventListener('pointerdown',e=>{const r=cv.getBoundingClientRect();const x=(e.clientX-r.left)*W/r.width,y=(e.clientY-r.top)*W/r.width;if(handWanted()&&inBB(LU,x,y)){HAND.on=true;say(LU,'…차가워. 괜찮아.',2);return}tap(x,y)});
-for(const ev of['pointerup','pointercancel','pointerleave'])cv.addEventListener(ev,()=>{if(HAND.on){HAND.on=false;if(HAND.p<1)toast('🤲 꾹 누르고 있으면 손이 데워져요')}});
+for(const ev of['pointerup','pointercancel','pointerleave'])cv.addEventListener(ev,()=>{if(HAND.on){HAND.on=false;if(HAND.done){const t=Math.round(HAND.t*10)/10;S.handSum=(S.handSum||0)+t;if(t>(S.handBest||0)){const old=S.handBest||0;S.handBest=t;if(old>0)setTimeout(()=>toast('🤲 손 잡은 최장 기록!<br><b>'+t+'초</b>'),300)}S.handLog=(S.handLog||[]);S.handLog.unshift(t);S.handLog.length=Math.min(S.handLog.length,5);save();HAND.done=false;HAND.p=0;HAND.t=0}else{HAND.p=0;HAND.t=0;toast('🤲 꾹 누르고 있으면 손이 데워져요')}}});
 function inBB(c,x,y){return c.bb&&!c.hidden&&x>c.bb[0]&&x<c.bb[2]&&y>c.bb[1]&&y<c.bb[3]}
 function tap(x,y){
   if(tapDream(x,y))return;
@@ -582,6 +582,7 @@ function dexModal(){const n=BOX.filter(b=>S.box[b[0]]).length,dn=S.photoDay===da
   h+=`<p class="note"><b>📷 앨범</b> (${S.photos.length}장 · 하루 한 장)</p>`+albumHtml();
   h+=`<div class="quote">상자 <b>${n}/${BOX.length}</b> · 꿈 ${S.dreams}번 · 데운 손 ${S.hands}번<br>쓰다듬기 ${S.pats+S.herPats}번 · 수확 ${S.harvests}번 · 그림 ${S.paintings}장</div>`;
   h+=`<p class="note"><b>🍳 계란 기록</b></p><div class="quote">가진 계란 ${S.eggStock||0}개 · 감자 ${S.potato||0}개 · 끓인 수프 ${S.soups||0}번</div><div class="quote">구운 계란 ${S.eggs}개 · 알맞게 ${S.eggLog[0]} · 바삭 ${S.eggLog[1]} · 탄 것 ${S.eggLog[2]}<br>탄 정도 최고 기록 <b>${S.eggBest?S.eggBest+'초':'없음'}</b></div>`;
+  h+=`<p class="note"><b>🤲 손 기록</b></p><div class="quote">데운 손 ${S.hands}번 · 누적 ${Math.round(S.handSum||0)}초<br>가장 오래 잡은 손 <b>${S.handBest?S.handBest+'초':'없음'}</b>${(S.handLog&&S.handLog.length)?' · 최근 '+S.handLog.join('·')+'초':''}</div>`;
   h+=`<p class="note"><b>✉️ 쪽지함</b> (${S.notes.length}장)</p><div class="quote" style="max-height:170px;overflow:auto;text-align:left">${notesHtml()}</div>`;
   h+=`<p class="note"><b>🗺️ 장소</b></p><div class="quote">`+Object.keys(SCENES).filter(k=>!SCENES[k].hide).map(k=>SCENES[k].em+' '+SCENES[k].nm).join(' · ')+`</div>`;
   modal('📖 도감',h)}
@@ -739,11 +740,11 @@ function tapDream(x,y){const d=DRM.find(d=>d.x!=null&&Math.hypot(x-d.x,y-d.y)<26
   S.dreams++;gain('heart',4*mult(),{x:d.x,y:d.y+30});heartsAt(d.x,d.y,3);toast(d.em+' '+(d.c.who==='h'?'그의 꿈':'루카스의 꿈')+'<br><b>'+d.tx+'</b>');if(S.dreams>=5)unlock('dream');save();return true}
 
 /* ---------- warm hands ---------- */
-const HAND={on:false,p:0};
+const HAND={on:false,p:0,t:0,done:false};
 function dayKey(){const t=now();return t.mo+'-'+t.day}
 function handWanted(){const t=now();return [11,12,1,2].includes(t.mo)&&t.h>=6&&t.h<12&&curMode==='day'&&S.handDay!==dayKey()&&scn!=='den'&&!LU.hidden&&LU.state!=='walk'&&LU.state!=='sulk'}
-function updHand(dt){if(HAND.on){if(!handWanted()){HAND.on=false;return}HAND.p=Math.min(1,HAND.p+dt/3.2);LU.sq=Math.max(LU.sq,.05);if(Math.random()<dt*4)heartsAt(LU.x+rnd(-10,10),LU.y-60);
-  if(HAND.p>=1){HAND.on=false;HAND.p=0;S.handDay=dayKey();S.hands++;LU.flush=5;gain('heart',8*mult(),LU);S.intim+=3;say(LU,'…안 해도 돼.',2.2);setTimeout(()=>say(HE,'손은 안 빼시네요ㅎㅎ',2.6),1300);unlock('hand');save()}}}
+function updHand(dt){if(HAND.on){if(!handWanted()&&!HAND.done){HAND.on=false;return}HAND.t+=dt;if(HAND.done){LU.sq=Math.max(LU.sq,.05);if(Math.random()<dt*1.5)heartsAt(LU.x+rnd(-10,10),LU.y-60);const q=HAND.q|0;if(HAND.t>=10&&q<1){HAND.q=1;say(LU,'…아직이야?',2)}else if(HAND.t>=30&&q<2){HAND.q=2;say(LU,'…손은 이미 따뜻해.',2.2);setTimeout(()=>say(HE,'그래도 더 잡고 있을래요ㅎㅎ',2.6),1300)}else if(HAND.t>=60&&q<3){HAND.q=3;say(LU,'…출근 늦어.',2)}return}HAND.p=Math.min(1,HAND.p+dt/3.2);LU.sq=Math.max(LU.sq,.05);if(Math.random()<dt*4)heartsAt(LU.x+rnd(-10,10),LU.y-60);
+  if(HAND.p>=1){HAND.done=true;HAND.q=0;S.handDay=dayKey();S.hands++;LU.flush=5;gain('heart',8*mult(),LU);S.intim+=3;say(LU,'…안 해도 돼.',2.2);setTimeout(()=>say(HE,'손은 안 빼시네요ㅎㅎ',2.6),1300);unlock('hand');save()}}}
 const SCF={x:0,y:0,on:false},SCW={on:false,t:0};
 function scarfWear(T){if(S.scarfLv<1){SCW.on=false;return}if(!SCW.t)SCW.t=T+rnd(20,60);if(T<SCW.t)return;
   const cold=[11,12,1,2].includes(now().mo)||scn==='snow';
@@ -755,9 +756,9 @@ function drawScarfFloat(T){scarfWear(T);SCF.on=false;const ka=typeof kActive==='
 function tapScarf(x,y){if(!SCF.on||Math.hypot(x-SCF.x,y-SCF.y)>46)return false;const k=Math.max(1,Math.min(3,S.scarf||3));setTimeout(()=>knitOpen(),350);
   say(LU,pick([['…털실이야.','…만지지 마. 엉켜.','…계속 뜨는 중.'],['…한 코씩이야.','…배우는 중이야.','…줄이 삐뚤어졌어.'],['…거의 다 됐어.','…묻지 마.','…길이는 비밀이야.']][k-1]),2.4);
   LU.sq=.25;LU.flush=2;heartsAt(SCF.x,SCF.y-16,2);if(Math.random()<.35)setTimeout(()=>say(HE,'루카, 그거 저 줄 거예요?ㅎㅎ',2.6),1200);return true}
-function drawHandHint(T){if(!handWanted())return;const x=LU.x+30,y=LU.y-118+Math.sin(T*3)*2;ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(x,y,16,0,7);ctx.fill();
+function drawHandHint(T){if(!handWanted()&&!(HAND.on&&HAND.done))return;const x=LU.x+30,y=LU.y-118+Math.sin(T*3)*2;ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(x,y,16,0,7);ctx.fill();
   if(HAND.p>0){ctx.strokeStyle='#ff9fb8';ctx.lineWidth=3.5;ctx.beginPath();ctx.arc(x,y,16,-Math.PI/2,-Math.PI/2+HAND.p*Math.PI*2);ctx.stroke()}else{ctx.strokeStyle='#cfe3f5';ctx.lineWidth=2;ctx.beginPath();ctx.arc(x,y,16,0,7);ctx.stroke()}
-  ctx.font='16px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(HAND.p>0?'🤲':'🧊',x,y+1);ctx.textBaseline='alphabetic'}
+  ctx.font='16px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(HAND.p>0?'🤲':'🧊',x,y+1);ctx.textBaseline='alphabetic';if(HAND.on&&HAND.done){ctx.font='bold 13px Jua,sans-serif';ctx.fillStyle='#d2607f';ctx.fillText(HAND.t.toFixed(1)+'초',x,y+32)}}
 
 /* ---------- notes ---------- */
 const NOTES=[['h','오늘 습도 몇이에요? 저는 루카 보면 70이에요ㅎㅎ'],['l','…계란 탔어. 남겨 둬.'],['h','다리에서 기다릴게요. 7시 55분이요ㅎㅎ'],['l','…장갑 껴. 구멍 있는 거.'],['h','루카 손 그려도 돼요? 쉬는 손만요'],['l','…41쪽. 너 때문에 1밀리 틀렸어.'],['h','보고 싶었어요. 방금 봤는데도요ㅎㅎ'],['l','…빨강은 한 군데만.'],['h','오늘 저녁은 감자 수프예요!'],['l','…일찍 와. 여섯 시.'],['h','루카 웃었죠. 바람 소리 아니죠?'],['l','…바람 소리야.'],['h','단추 서른네 개, 오늘도 고마워요'],['l','…붓 씻을 때 부르는 거. 오늘도 불러.']];
