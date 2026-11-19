@@ -560,11 +560,11 @@ function dexModal(){const n=BOX.filter(b=>S.box[b[0]]).length,dn=S.photoDay===da
   modal('📖 도감',h)}
 function bellList(){const a=[];if(RAB.on&&RAB.phase==='wait')a.push('🐰 요나스가 배달하러 왔어요');if(eggStage()>=2)a.push(eggStage()===4?'🔥 계란이 다 탔어요':'🍳 계란이 다 됐어요');if(handWanted())a.push('🧊 루카스 손이 차요 (꾹 눌러 주세요)');if(DRM.length)a.push('💭 꿈 풍선이 떠 있어요');if(SULK.on)a.push('💭 루카스가 삐졌어요');return a}
 function bellModal(){const a=bellList();modal('🔔 알림',a.length?a.map(t=>`<div class="item"><div class="tx"><b>${t}</b></div></div>`).join(''):'<p class="note">지금은 새 소식이 없어요. 둘이 잘 지내고 있어요.</p>')}
-function placeModal(){const cur=S.scene||'auto';let h='<p class="note">장소는 계절·시간·일요일에 맞춰 자동으로 바뀌어요. 고르면 그곳에 머물러요.</p>';
+function placeModal(){const cur=S.scene||'auto';let h='<p class="note">고르면 그곳으로 가요. 그래도 둘은 가끔 마음 내키는 대로 다른 곳에 놀러 가기도 해요. 밤과 7시 55분 다리는 늘 정해진 곳이에요.</p>';
   h+=`<div class="item"><div class="em">🔄</div><div class="tx"><b>자동</b><small>지금: ${SCENES[scn].nm}</small></div><button class="btn ${cur==='auto'?'':'alt'}" onclick="setScene('auto')">${cur==='auto'?'선택됨':'선택'}</button></div>`;
   for(const id in SCENES){const sc=SCENES[id];if(sc.hide)continue;const lock=sc.lock&&stage()<sc.lock;h+=`<div class="item ${lock?'locked':''}"><div class="em">${sc.em}</div><div class="tx"><b>${sc.nm}</b><small>${lock?'어깨가 닿게 가까워지면 열려요':sc.d}</small></div><button class="btn ${cur===id?'':'alt'}" ${lock?'disabled':''} onclick="setScene('${id}')">${cur===id?'선택됨':'가기'}</button></div>`}
   modal('🗺️ 장소',h)}
-function setScene(id){S.scene=id;closeM();save()}
+function setScene(id){S.scene=id;S.pin={id,until:Date.now()+25*60e3};closeM();save();ROAM.user=true}
 function setOvr(o){OVR=o;closeM();}
 function sulkModal(){modal('루카스가 돌아서 버렸어요','<p class="note">반쪽만 듣고 판결해 버린 것 같아요. 어떻게 할까요?</p><div class="item"><div class="em">💬</div><div class="tx"><b>“끝까지 말해 줄래요? 반쪽 말고.”</b><small>곁에 가서 천천히 기다려요</small></div><button class="btn" onclick="closeM();endSulk(1)">말하기</button></div><div class="item"><div class="em">🚪</div><div class="tx"><b>“옆에서 기다릴게요ㅎㅎ”</b><small>두 걸음 떨어진 자리에서</small></div><button class="btn alt" onclick="closeM();say(HE,\'기다릴게요ㅎㅎ\');setTimeout(()=>{if(SULK.on)endSulk(2)},12000)">기다리기</button></div>')}
 
@@ -592,7 +592,21 @@ const SCENES={
 const SCN={};
 function sceneImg(id){if(!SCN[id]){const im=new Image();im.src='bg/'+id.replace('_n','')+(id.endsWith('_n')?'_n':'')+'.jpg';SCN[id]=im}return SCN[id]}
 function autoScene(t,m){if(m==='night'||m==='three')return'camp';if(m==='bridge')return'bridge';if(t.dow===0)return'table';const mo=t.mo;if(mo===12)return'market';if(mo<=2)return'snow';if(mo<=5)return'cherry';if(mo<=8)return'beach';return'garden'}
-function wantScene(t,m){const s=S.scene;if(s&&s!=='auto'&&SCENES[s]&&!(SCENES[s].lock&&stage()<SCENES[s].lock))return s;return autoScene(t,m)}
+const ROAM={user:false,ready:false};
+function sceneOK(id){const c=SCENES[id];return !!c&&!c.hide&&!(c.lock&&stage()<c.lock)}
+function wantScene(t,m){
+  const sel=S.scene;
+  if(sel==='den')return 'den';
+  if(m==='night'||m==='three'||m==='bridge')return autoScene(t,m);
+  const ms=Date.now();
+  if(S.pin&&S.pin.until>ms){const p=S.pin.id;return(p==='auto'||!sceneOK(p))?autoScene(t,m):p}
+  const blk=Math.floor((ms+9*3600e3)/(35*60e3));const fr=x=>{const v=Math.sin(x*12.9898+78.233)*43758.5453;return v-Math.floor(v)};const r=fr(blk),r2=fr(blk+.5);
+  const auto=autoScene(t,m),base=(sel&&sel!=='auto'&&sceneOK(sel))?sel:auto;
+  const others=Object.keys(SCENES).filter(k=>sceneOK(k)&&k!==base&&k!==auto&&k!=='camp'&&k!=='bridge');
+  if(r<.34||(!others.length&&r<.8))return base;
+  if(r<.5&&auto!==base)return auto;
+  const pool=others.length?others:[base];return pool[Math.floor(r2*pool.length)%pool.length];
+}
 function switchScene(ws){if(SULK.on)endSulk(false);prevScn=scn;scn=ws;fadeT=0;spots();if(curMode){setMode(curMode);for(const c of[LU,HE])if(c.state==='walk'){c.x=c.tx;c.y=c.ty}}}
 function drawScene(id,a){const im=sceneImg(id);if(!(im.complete&&im.naturalWidth))return false;const sc=W/780,dw=780*sc,dh=1800*sc;ctx.globalAlpha=a;ctx.drawImage(im,0,0,dw,dh);ctx.globalAlpha=1;return true}
 let NT=0;
@@ -971,7 +985,7 @@ addEventListener('resize',()=>{if(HM.on){homeLayout();homeRender()}});
 /* ---------- loop ---------- */
 let lastT=performance.now(),saveT=0,ui=0;
 function update(dt,T){
-  const t=now(),m0=modeOf(t);const ws=wantScene(t,m0);if(ws!==scn)switchScene(ws);const m=(m0==='bridge'&&scn!=='bridge')?'day':m0;if(m!==curMode)setMode(m);
+  const t=now(),m0=modeOf(t);const ws=wantScene(t,m0);if(ws!==scn){const was=scn;switchScene(ws);if(ROAM.ready&&!ROAM.user&&ws!=='den'&&was!=='den'&&SCENES[ws])toast(SCENES[ws].em+' 루카스와 그가 '+SCENES[ws].nm+'(으)로 놀러 갔어요');ROAM.user=false}const m=(m0==='bridge'&&scn!=='bridge')?'day':m0;if(m!==curMode)setMode(m);
   if(t.dow===0)unlock('sunday',true);if(m0==='bridge')unlock('bridge',true);
   const st=stage();
   if(st>=1)unlock('polaroid');if(st>=2)unlock('buttons');
@@ -1040,7 +1054,7 @@ function loop(){const n=performance.now();const dt=Math.min(.1,(n-lastT)/1000);l
 document.addEventListener('visibilitychange',()=>{if(document.hidden)save();else{const away=(Date.now()-S.last)/1000;if(away>60)offline(away);lastT=performance.now()}});
 window.addEventListener('resize',()=>{layout()});
 function ready(){for(const k of['front','side','back','34'])TINT[k]=earTint(IMG['l_'+k]);
-  scn=wantScene(now(),modeOf(now()));Object.keys(SCENES).forEach(k=>{sceneImg(k);if(k!=='den')sceneImg(k+'_n')});layout();LU=mk('l',150,L.walkTop+60,36);HE=mk('h',230,L.walkTop+70,44);
+  scn=wantScene(now(),modeOf(now()));setTimeout(()=>{ROAM.ready=true},2500);Object.keys(SCENES).forEach(k=>{sceneImg(k);if(k!=='den')sceneImg(k+'_n')});layout();LU=mk('l',150,L.walkTop+60,36);HE=mk('h',230,L.walkTop+70,44);
   unlock('first',true);if(S.last){offline((Date.now()-S.last)/1000)}else{say(HE,'루카, 여기 우리 정원이에요ㅎㅎ',3.5);setTimeout(()=>say(LU,'……두 걸음만.',3),1800)}
   hud();layout();loop();}
 </script>
