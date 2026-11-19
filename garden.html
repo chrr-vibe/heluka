@@ -1075,7 +1075,7 @@ addEventListener('resize',()=>{if(HM.on){homeLayout();homeRender()}});
 /* ---------- loop ---------- */
 let lastT=performance.now(),saveT=0,ui=0;
 function update(dt,T){
-  const t=now(),m0=modeOf(t);const ws=wantScene(t,m0);if(ws!==scn){const was=scn;switchScene(ws);if(ROAM.ready&&!ROAM.user&&ws!=='den'&&was!=='den'&&SCENES[ws])toast(SCENES[ws].em+' 루카스와 그가 '+SCENES[ws].nm+'(으)로 놀러 갔어요');ROAM.user=false}const m=(m0==='bridge'&&scn!=='bridge')?'day':m0;if(m!==curMode)setMode(m);
+  const t=now(),m0=modeOf(t);const ws=wantScene(t,m0);if(ws!==scn){const was=scn;switchScene(ws);if(ROAM.ready&&!ROAM.user&&ws!=='den'&&was!=='den'&&SCENES[ws])toast(ws==='bridge'?'🌉 이 시간엔 다리에서 만나요':SCENES[ws].em+' 루카스와 그가 '+SCENES[ws].nm+'(으)로 놀러 갔어요');ROAM.user=false}const m=(m0==='bridge'&&scn!=='bridge')?'day':m0;if(m!==curMode)setMode(m);
   if(t.dow===0)unlock('sunday',true);if(m0==='bridge')unlock('bridge',true);
   const st=stage();
   if(st>=1)unlock('polaroid');if(st>=2)unlock('buttons');
