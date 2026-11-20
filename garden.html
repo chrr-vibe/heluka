@@ -627,7 +627,7 @@ const SCENES={
  den:{nm:'곰굴',em:'🐻',d:'캠핑 텐트에서 들어가요',hide:true}
 };
 const SCN={};
-function sceneImg(id){if(!SCN[id]){const im=new Image();im.src='bg/'+id.replace('_n','')+(id.endsWith('_n')?'_n':'')+'.jpg';SCN[id]=im}return SCN[id]}
+function sceneImg(id){if(!SCN[id]){const im=new Image();im.src='bg/'+id.replace('_n','')+(id.endsWith('_n')?'_n':'')+'.jpg?v=1120b';SCN[id]=im}return SCN[id]}
 function autoScene(t,m){if(m==='night'||m==='three')return'camp';if(m==='bridge')return'bridge';if(t.dow===0)return'table';const mo=t.mo;if(mo===12)return'market';if(mo<=2)return'snow';if(mo<=5)return'cherry';if(mo<=8)return'beach';return'garden'}
 const ROAM={user:false,ready:false};
 function sceneOK(id){const c=SCENES[id];return !!c&&!c.hide&&!(c.lock&&stage()<c.lock)}
