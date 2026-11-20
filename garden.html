@@ -713,11 +713,12 @@ function drawChar(c,T){if(c.hidden){c.bb=null;return}
   if(c.state==='water'){for(let k=0;k<3;k++){const ph=(T*2+k/3)%1;ell(c.x-34-k*4,c.y-34+ph*30,1.8,2.6,'#7cc4ea')}}
   if(c.state==='paint'&&Math.floor(T*3)%2){ctx.fillStyle='#d9546b';ell(c.x+20,c.y-46,2,2,'#d9546b')}
 }
-function pbubble(cx,top,txt,who,a){ctx.globalAlpha=a;ctx.font='14px Jua,"Apple SD Gothic Neo",sans-serif';const tw=ctx.measureText(txt).width+22,bh=26;
+const BIC=new Image();BIC.src='home/bungalow_icon.webp';
+function pbubble(cx,top,txt,who,a){ctx.globalAlpha=a;ctx.font='14px Jua,"Apple SD Gothic Neo",sans-serif';const ic=txt.startsWith('🛖');if(ic)txt=txt.slice(2).trim();const tw=ctx.measureText(txt).width+22+(ic?22:0),bh=26;
   const bx=clamp(cx-tw/2,4,W-tw-4),by=top-bh-6;const col={l:['#ffffff','#cbbfe6','#6f6390'],h:['#fff4f7','#ffc1d1','#e46a8c'],r:['#fffdf7','#f6d9a8','#b98542']}[who];
   ctx.save();ctx.shadowColor='rgba(200,150,180,.3)';ctx.shadowBlur=8;ctx.shadowOffsetY=3;ctx.fillStyle=col[0];rr(bx,by,tw,bh,13);ctx.fill();
   ctx.beginPath();ctx.moveTo(cx-6,by+bh-1);ctx.quadraticCurveTo(cx,by+bh+9,cx+2,by+bh+9);ctx.quadraticCurveTo(cx+3,by+bh+3,cx+7,by+bh-1);ctx.fill();ctx.restore();
-  ctx.strokeStyle=col[1];ctx.lineWidth=2;rr(bx,by,tw,bh,13);ctx.stroke();ctx.fillStyle=col[2];ctx.textAlign='center';ctx.fillText(txt,bx+tw/2,by+18);ctx.globalAlpha=1}
+  ctx.strokeStyle=col[1];ctx.lineWidth=2;rr(bx,by,tw,bh,13);ctx.stroke();ctx.fillStyle=col[2];ctx.textAlign='center';if(ic){if(BIC.complete&&BIC.naturalWidth)ctx.drawImage(BIC,bx+8,by+2,22,22);ctx.fillText(txt,bx+tw/2+11,by+18)}else ctx.fillText(txt,bx+tw/2,by+18);ctx.globalAlpha=1}
 function drawBubble(c){if(c.bubT<=0||c.hidden||!c.bb)return;pbubble(c.x,c.bb[1]+4,c.bub,c.who,Math.min(1,c.bubT*2))}
 function drawRabbit(T){const r=RAB;if(!r.on||scn==='den')return;let key,th=62,flip=false,yo=0;
   if(r.phase==='in'){key=Math.floor(r.ph/3.2)%2?'hop':'side';yo=Math.abs(Math.sin(r.ph))*8}
@@ -878,14 +879,14 @@ function homeLayout(){const app=$('app').getBoundingClientRect(),g=HGEO[ROOMS[HM
   $('hUp').style.top=(top-40)+'px';$('hDn').style.top=(top+h+4)+'px';$('hDn').style.display=(HM.edit||ROOMS.length<2)?'none':'';$('hUp').style.display=ROOMS.length<2?'none':'';}
 function homeBack(g,sc){const el=$('hBack');if(!el)return;if(ROOMS[HM.room][0]!=='b_terrace'){el.style.display='none';el.innerHTML='';return}
   const w=g.W*sc,h=g.H*sc,fx=x=>(x-22)/1135*w,fy=y=>(y-26)/1278*h,night=curMode==='night';HM.vk=bigKey();
-  const hx0=fx(68),hx1=fx(1112),hw=hx1-hx0,iw=hw*1.02,ih=iw*1120/424,hor=.607,iy=fy(235)-hor*ih,ix=hx0-(iw-hw)/2;
+  const hx0=fx(68),hx1=fx(1112),hw=hx1-hx0,CX0=night?180:300,CX1=720,CY0=night?0:100,CY1=405,hh0=fy(95),hhh=fy(940)-hh0,iw=hw*720/(CX1-CX0),ih=hhh*405/(CY1-CY0),iy=hh0-hhh*CY0/(CY1-CY0),ix=hx0-hw*CX0/(CX1-CX0);
   const clip=[[590,95],[1112,398],[1112,940],[68,940],[68,398]].map(([x,y])=>(fx(x)).toFixed(1)+'px '+(fy(y)).toFixed(1)+'px').join(',');
   const t=now(),hh=t.h+t.m/60;let ov='';
   if(!night){ov+=`<div style="left:0;top:${fy(480)}px;width:${w}px;height:${fy(940)-fy(480)}px;background:linear-gradient(#fff0,#ffffff30)"></div>`;let tint='',ta=0;if(hh<8.5){ta=Math.max(0,(8.5-hh)/2.5)*.3;tint='#ffb58a'}else if(hh>16){ta=Math.min(1,(hh-16)/3)*.38;tint=hh>18?'#ff8a6a':'#ffb070'}
     if(ta>0)ov+=`<div style="inset:0;background:${tint};opacity:${ta.toFixed(2)};mix-blend-mode:soft-light"></div><div style="inset:0;background:${tint};opacity:${(ta*.3).toFixed(2)}"></div>`}
-  else for(const[fx2,fy2,rr]of[[.94,.535,.05],[.99,.645,.035]]){const cx=ix+fx2*iw,cy=iy+fy2*ih,r=hw*rr;ov+=`<div class="bwlamp" style="left:${(cx-r).toFixed(1)}px;top:${(cy-r).toFixed(1)}px;width:${(2*r).toFixed(1)}px;height:${(2*r).toFixed(1)}px;border-radius:50%;background:radial-gradient(#ffdf9ae6,#ffc66b59 40%,#ffc66b00 70%)"></div>`}
+  else for(const[fx2,fy2,rr]of[]){const cx=ix+fx2*iw,cy=iy+fy2*ih,r=hw*rr;ov+=`<div class="bwlamp" style="left:${(cx-r).toFixed(1)}px;top:${(cy-r).toFixed(1)}px;width:${(2*r).toFixed(1)}px;height:${(2*r).toFixed(1)}px;border-radius:50%;background:radial-gradient(#ffdf9ae6,#ffc66b59 40%,#ffc66b00 70%)"></div>`}
   el.style.cssText='display:block;clip-path:polygon('+clip+')';
-  el.innerHTML=`<img src="home/view/${night?'bch2_night':'bch2_day'}.webp" style="left:${ix.toFixed(1)}px;top:${iy.toFixed(1)}px;width:${iw.toFixed(1)}px;height:${ih.toFixed(1)}px;filter:blur(${(blurStd()*1.2).toFixed(2)}px)">`+ov}
+  el.innerHTML=`<img src="home/view/${night?'bch3_night':'bch3_day'}.webp" style="left:${ix.toFixed(1)}px;top:${iy.toFixed(1)}px;width:${iw.toFixed(1)}px;height:${ih.toFixed(1)}px;filter:blur(${(blurStd()*1.2).toFixed(2)}px)">`+ov}
 function homeRender(){const r=ROOMS[HM.room],g=HGEO[r[0]],sc=HM.sc,Q=quads(g);$('hName').textContent=r[1];{const wp=(S.homeWp||{})[r[0]]||0;$('hHex').src='home/'+(wp?'wp/'+RIMG(r)+'_'+wp:RIMG(r))+'.webp'}homeBack(g,sc);
   const k=homeUnit(g)/115*sc;const it=homeData();const fl=$('hFurn');fl.querySelectorAll('.fu').forEach(e=>e.remove());homeBigWin(g,sc,Q,fl);homeTerFx(g,sc,Q,fl);
   const order=it.map((o,n)=>{const d=homeDims(o);return{o,n,d,z:o.s==='G'?0:(o.s==='L'||o.s==='R')?1:2+(o.i+d[0])+(o.j+d[1])+o.j*.01}}).sort((a,b)=>a.z-b.z);
@@ -937,7 +938,7 @@ const VBG={"bday": "#7fb6ee", "bnight": "#2f2f78", "day": "#cedef8", "night": "#
 function homeBigWin(g,sc,Q,fl){const side=(S.homeBig||{})[ROOMS[HM.room][0]];if(!side)return;const q=Q[side],P=(u,v)=>{const p=bil(q,u,v);return(p[0]*sc).toFixed(1)+','+(p[1]*sc).toFixed(1)},poly=(u0,u1,v0,v1)=>[P(u0,v0),P(u1,v0),P(u1,v1),P(u0,v1)].join(' ');
   const gu0=.5,gu1=1.014,gv0=HOUSE==='bungalow'?0:.052,gv1=1.018,key0=bigKey();
   const a=bil(q,gu0,gv0),b=bil(q,gu1,gv0),c=bil(q,gu0,gv1),d=bil(q,gu1,gv1);const xs=[a[0],b[0],c[0],d[0]],ys=[a[1],b[1],c[1],d[1]],x0=Math.min(...xs)*sc,x1=Math.max(...xs)*sc,y0=Math.min(...ys)*sc,y1=Math.max(...ys)*sc;
-  const e=bil(q,gu0,gv1),f=bil(q,gu1,gv1);const slope=(f[1]-e[1])/(f[0]-e[0]);const vw=x1-x0,vh=(y1-y0)+Math.abs(slope)*vw;const rw=vw+2,rh=(y1-y0)+2,dw=Math.max(rw*1.12,rh*.62),dh=dw*1120/424;const FLP=side==='R';const ix=FLP?x0-1:x0-1+rw-dw;const iy=y0-1+rh*.48-.607*dh;
+  const e=bil(q,gu0,gv1),f=bil(q,gu1,gv1);const slope=(f[1]-e[1])/(f[0]-e[0]);const vw=x1-x0,vh=(y1-y0)+Math.abs(slope)*vw;const rw=vw+2,rh=(y1-y0)+2,dh=rh*1.25,dw=Math.max(dh*.9,rh*1.2);const FLP=side==='R';const st=key0==='bnight'?.42:.52,ix=FLP?x0-1+rw-st*dw:x0-1-st*dw;const iy=y0-1+rh*.5-(key0==='bnight'?.521:.477)*dh;
   const key=bigKey();HM.vk=key;const BG=HOUSE==='bungalow',BCH=key==='bday'||key==='bnight',DK=BG?'#8e624b':'#49312e',BR=BG?'#f1cba0':'#795551',HI=BG?'#fbe6cc':'#9e746c';
   const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.setAttribute('class','fu bigwin');svg.style.cssText='left:0;top:0;width:'+g.W*sc+'px;height:'+g.H*sc+'px;z-index:50;overflow:visible';
   const band=(uc,w,sk)=>[P(uc-w/2,gv0),P(uc+w/2,gv0),P(uc+w/2+sk,gv1),P(uc-w/2+sk,gv1)].join(' ');
@@ -949,11 +950,11 @@ function homeBigWin(g,sc,Q,fl){const side=(S.homeBig||{})[ROOMS[HM.room][0]];if(
       h2+=`<rect x="${x0}" y="${y0}" width="${vw}" height="${H1}" fill="url(#bwhz)"/>`;
       let tint='',ta=0;if(hh<8.5){ta=Math.max(0,(8.5-hh)/2.5)*.3;tint='#ffb58a'}else if(hh>16){ta=Math.min(1,(hh-16)/3)*.38;tint=hh>18?'#ff8a6a':'#ffb070'}
       if(ta>0)h2+=`<rect x="${x0}" y="${y0}" width="${vw}" height="${H1}" fill="${tint}" opacity="${ta.toFixed(2)}" style="mix-blend-mode:soft-light"/><rect x="${x0}" y="${y0}" width="${vw}" height="${H1}" fill="${tint}" opacity="${(ta*.35).toFixed(2)}"/>`}
-    else if(key==='bnight'){for(const[fx,fy,rr]of[[.94,.535,.05],[.99,.645,.035]])h2+=`<circle class="bwlamp" cx="${(ix+(FLP?1-fx:fx)*dw).toFixed(1)}" cy="${(iy+fy*dh).toFixed(1)}" r="${(vw*rr).toFixed(1)}" fill="url(#bwlg)" style="animation-delay:${(fx*7).toFixed(1)}s"/>`}
+    else if(key==='bnight'){for(const[fx,fy,rr]of[])h2+=`<circle class="bwlamp" cx="${(ix+(FLP?1-fx:fx)*dw).toFixed(1)}" cy="${(iy+fy*dh).toFixed(1)}" r="${(vw*rr).toFixed(1)}" fill="url(#bwlg)" style="animation-delay:${(fx*7).toFixed(1)}s"/>`}
     else{for(const[fx,fy]of[[.53,.5],[.62,.5]])h2+=`<circle class="bwlamp" cx="${X(fx)}" cy="${Y(fy)}" r="${vw*.09}" fill="url(#bwlg)" style="animation-delay:${(fx*7).toFixed(1)}s"/>`}
     extra=h2}
   svg.innerHTML=`<defs><clipPath id="bwc"><polygon points="${poly(gu0,gu1,gv0,gv1)}"/></clipPath></defs>`
-   +`<g clip-path="url(#bwc)"><rect x="${x0-5}" y="${y0-5}" width="${vw+10}" height="${(y1-y0)+10}" fill="${VBG[key]}"/>${BCH?`<image href="home/view/${key==='bday'?'bch2_day':'bch2_night'}.webp" x="${ix.toFixed(1)}" y="${iy.toFixed(1)}" width="${dw.toFixed(1)}" height="${dh.toFixed(1)}" filter="url(#bwo)" preserveAspectRatio="none"${FLP?` transform="matrix(-1 0 0 1 ${(2*ix+dw).toFixed(1)} 0)"`:''}/>`:(key==='day'||key==='night')?`<image href="home/view/scene_${key}${side==='R'?'_r':''}.webp" x="${x0-1}" y="${y0-1}" width="${vw+2}" height="${((y1-y0)+2)*1.07*(side==='R'?1.14:1)}" filter="url(#bwo)" preserveAspectRatio="none"/>`:`<image filter="url(#bwb)" href="home/view/${key}.webp" x="${x0-vw*.9}" y="${Math.max(c[1],d[1])*sc-vw*.45}" width="${vw*1.9}" height="${vw*1.9*380/300}" preserveAspectRatio="none"/>`}${extra}</g>`
+   +`<g clip-path="url(#bwc)"><rect x="${x0-5}" y="${y0-5}" width="${vw+10}" height="${(y1-y0)+10}" fill="${VBG[key]}"/>${BCH?`<image href="home/view/${key==='bday'?'bch3_day':'bch3_night'}.webp" x="${ix.toFixed(1)}" y="${iy.toFixed(1)}" width="${dw.toFixed(1)}" height="${dh.toFixed(1)}" filter="url(#bwo)" preserveAspectRatio="none"${FLP?` transform="matrix(-1 0 0 1 ${(2*ix+dw).toFixed(1)} 0)"`:''}/>`:(key==='day'||key==='night')?`<image href="home/view/scene_${key}${side==='R'?'_r':''}.webp" x="${x0-1}" y="${y0-1}" width="${vw+2}" height="${((y1-y0)+2)*1.07*(side==='R'?1.14:1)}" filter="url(#bwo)" preserveAspectRatio="none"/>`:`<image filter="url(#bwb)" href="home/view/${key}.webp" x="${x0-vw*.9}" y="${Math.max(c[1],d[1])*sc-vw*.45}" width="${vw*1.9}" height="${vw*1.9*380/300}" preserveAspectRatio="none"/>`}${extra}</g>`
    +`<defs><filter id="bwo" x="0" y="0" width="100%" height="100%"><feGaussianBlur stdDeviation="${blurStd().toFixed(2)}"/>${key==='day'?'<feComponentTransfer><feFuncR type="linear" slope="1.07" intercept=".035"/><feFuncG type="linear" slope="1.07" intercept=".035"/><feFuncB type="linear" slope="1.05" intercept=".04"/></feComponentTransfer>':''}</filter><filter id="bwb" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation=".7"/></filter><filter id="bwe"><feGaussianBlur stdDeviation="3"/></filter><linearGradient id="bwg" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".55"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient><radialGradient id="bwr"><stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset=".6" stop-color="#fff" stop-opacity=".18"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient><linearGradient id="bwt" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".34"/><stop offset=".6" stop-color="#fff" stop-opacity="0"/></linearGradient></defs>`
    +`<g clip-path="url(#bwc)"><polygon points="${poly(gu0,gu1,gv0,gv1)}" fill="url(#bwt)"/><polygon points="${poly(gu0,gu1,gv0,gv1)}" fill="none" stroke="#fff" stroke-width="10" opacity=".7" filter="url(#bwe)"/>`
    +`<ellipse cx="${(x0+x1)/2}" cy="${y0+(y1-y0)*.18}" rx="${(x1-x0)*.95}" ry="${(y1-y0)*.55}" fill="url(#bwr)"/>`
@@ -984,10 +985,10 @@ function homeBigWin(g,sc,Q,fl){const side=(S.homeBig||{})[ROOMS[HM.room][0]];if(
     fl.appendChild(ls)}}
 function homeTerFx(g,sc,Q,fl){if(ROOMS[HM.room][0]!=='b_terrace'||HM.edit)return;const night=curMode==='night',t=now(),hh=t.h+t.m/60;
   const FP=(u,v)=>{const p=bil(Q.F,u,v);return[(p[0]*sc).toFixed(1),(p[1]*sc).toFixed(1)]},S2=a=>a.map(p=>p.join(',')).join(' ');
-  const f=Math.max(0,Math.sin(Math.PI*(hh-6)/13)),al=night?.18:.45+.45*f,lean=night?0:(hh-12.5)/6.5*.3,warm=night?'#bfc8ff':(hh<9||hh>16.5?'#ffd7a0':'#fff2c2');
+  const f=Math.max(0,Math.sin(Math.PI*(hh-6)/13)),al=night?.16:.3+.3*f,lean=night?0:(hh-12.5)/6.5*.3,warm=night?'#bfc8ff':(hh<9||hh>16.5?'#ffd7a0':'#fff2c2');
   const ls=document.createElementNS('http://www.w3.org/2000/svg','svg');ls.setAttribute('class','fu bigwin hlight');ls.style.cssText='left:0;top:0;width:'+g.W*sc+'px;height:'+g.H*sc+'px;z-index:1;overflow:visible;mix-blend-mode:screen';
   const all=S2([FP(0,0),FP(1,0),FP(1,1),FP(0,1)]),b=FP(.5,0),fr=FP(.5,1);
-  let bands='';for(const[u0,u1]of[[.08,.26],[.38,.5],[.64,.9]])bands+=`<polygon points="${S2([FP(u0,0),FP(u1,0),FP(u1+lean,1),FP(u0+lean,1)])}" fill="url(#tfg)"/>`;
+  let bands='';bands=`<polygon points="${all}" fill="url(#tfg)"/>`;
   let sand='',rn=23;const rr=()=>(rn=(rn*9301+49297)%233280)/233280;
   for(let i=0;i<30;i++){const p=FP(rr(),rr()*.95),c=['#f2d6a2','#fff0c8','#e6c088'][i%3];
     sand+=`<circle class="hmote" cx="${p[0]}" cy="${p[1]}" r="${(.9+rr()*1.1).toFixed(1)}" fill="${c}" style="animation-duration:${(4+rr()*5).toFixed(1)}s;animation-delay:${(-rr()*9).toFixed(1)}s;--dx:${(8+rr()*16).toFixed(1)}px;--dy:${(-2-rr()*8).toFixed(1)}px"/>`}
@@ -999,7 +1000,7 @@ function homeEdit(){HM.edit=!HM.edit;HM.held=null;$('home').classList.toggle('ed
 function homeGo(d){HM.held=null;const st=$('hStage');st.style.opacity=0;st.style.transform='translateX(-50%) translateY('+(d*30)+'px)';
   setTimeout(()=>{HM.room=(HM.room+d+ROOMS.length)%ROOMS.length;homeLayout();homeRender();homeTray();homeCharsReset();st.style.transition='none';st.style.transform='translateX(-50%) translateY('+(-d*30)+'px)';
     requestAnimationFrame(()=>{st.style.transition='';st.style.opacity=1;st.style.transform='translateX(-50%)'})},200)}
-function homeEnter(h){h=h||'main';HOUSE=h;ROOMS=HOUSES[h].slice();HM.room=0;HM.vk=null;if(h==='cabin'){if(!S.homeWp)S.homeWp={};if(S.homeWp.c_living==null)S.homeWp.c_living=2}if(S.home&&typeof S.home==='object')for(const r in S.home)if(Array.isArray(S.home[r]))S.home[r]=S.home[r].filter(o=>FK[o.k]);HM.nb=false;if(S.homeV!==2){S.home={};S.homeV=2}HM.on=true;$('home').hidden=false;homeLayout();homeRender();homeTray();homeCharsReset();HLT=0;requestAnimationFrame(homeLoop);if(h==='bungalow'&&!S.bungSeen){S.bungSeen=1;setTimeout(()=>toast('🛖 바닷가 방갈로예요<br>통창으로 바다가 보여요'),400)}if(!S.homeSeen){S.homeSeen=1;setTimeout(()=>toast('🏡 우리 집이에요<br>🪑꾸미기로 가구를 놓아요'),400)}}
+function homeEnter(h){h=h||'main';HOUSE=h;ROOMS=HOUSES[h].slice();HM.room=0;HM.vk=null;if(h==='cabin'){if(!S.homeWp)S.homeWp={};if(S.homeWp.c_living==null)S.homeWp.c_living=2}if(S.home&&typeof S.home==='object')for(const r in S.home)if(Array.isArray(S.home[r]))S.home[r]=S.home[r].filter(o=>FK[o.k]);HM.nb=false;if(S.homeV!==2){S.home={};S.homeV=2}HM.on=true;$('home').hidden=false;homeLayout();homeRender();homeTray();homeCharsReset();HLT=0;requestAnimationFrame(homeLoop);if(h==='bungalow'&&!S.bungSeen){S.bungSeen=1;setTimeout(()=>toast('<img src="home/bungalow_icon.webp" style="width:20px;height:20px;vertical-align:-4px"> 바닷가 방갈로예요<br>통창으로 바다가 보여요'),400)}if(!S.homeSeen){S.homeSeen=1;setTimeout(()=>toast('🏡 우리 집이에요<br>🪑꾸미기로 가구를 놓아요'),400)}}
 function homeExit(){if(HM.edit)homeEdit();HM.on=false;$('home').hidden=true;save()}
 
 /* ---- home characters ---- */
