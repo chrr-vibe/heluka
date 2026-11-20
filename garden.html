@@ -885,7 +885,7 @@ const SCENES={
  den:{nm:'곰굴',em:'🐻',d:'캠핑 텐트에서 들어가요',hide:true}
 };
 const SCN={};
-function sceneImg(id){if(!SCN[id]){const im=new Image();im.src='bg/'+id.replace('_n','')+(id.endsWith('_n')?'_n':'')+'.jpg?v=1120b';SCN[id]=im}return SCN[id]}
+function sceneImg(id){if(!SCN[id]){const im=new Image();im.src='bg/'+id.replace('_n','')+(id.endsWith('_n')?'_n':'')+'.jpg?v=1120c';SCN[id]=im}return SCN[id]}
 function autoScene(t,m){if(m==='night'||m==='three')return'camp';if(m==='bridge')return'bridge';if(t.dow===0)return'table';const mo=t.mo;if(mo===12)return'market';if(mo<=2)return'snow';if(mo<=5)return'cherry';if(mo<=8)return'beach';return'garden'}
 const ROAM={user:false,ready:false};
 function sceneOK(id){const c=SCENES[id];return !!c&&!c.hide&&!(c.lock&&stage()<c.lock)}
@@ -980,6 +980,10 @@ function drawChar(c,T){if(c.hidden){c.bb=null;return}
     for(let k=0;k<4;k++){const ph=(T*2.2+k/4)%1;ctx.globalAlpha=1-ph*.6;ell(tx-1-ph*5-k%2*2,ty+3+ph*26,1.7,2.6,'#8fd0f0')}ctx.globalAlpha=1}
   if(c.state==='paint'&&Math.floor(T*3)%2){ctx.fillStyle='#d9546b';ell(c.x+20,c.y-46,2,2,'#d9546b')}
 }
+const MDEC={};function deco(n){if(!MDEC[n]){const i=new Image();i.src='deco/'+n+'.webp';MDEC[n]=i}return MDEC[n]}
+function drawMarketDeco(T,dark){if(scn!=='market')return;
+  const put=(n,x,b,w,bob)=>{const im=deco(n);if(!im.naturalWidth)return;const h=w*im.naturalHeight/im.naturalWidth;ctx.drawImage(im,x-w/2,b-h+(bob||0),w,h)};
+  put('mailbox',60,500,62);put('gifts',200,556,85);put('snowman',312,490,92,Math.sin(T*1.2)*.7)}
 const WCAN=new Image();WCAN.src='tea/can.webp';const BIC=new Image();BIC.src='home/bungalow_icon.webp';const TIC=new Image();TIC.src='tea/icon.webp';
 function pbubble(cx,top,txt,who,a){ctx.globalAlpha=a;ctx.font='14px Jua,"Apple SD Gothic Neo",sans-serif';const ic=txt.startsWith('🛖')||txt.startsWith('🍵'),IM=txt.startsWith('🍵')?TIC:BIC;if(ic)txt=txt.slice(2).trim();const tw=ctx.measureText(txt).width+22+(ic?22:0),bh=26;
   const bx=clamp(cx-tw/2,4,W-tw-4),by=top-bh-6;const col={l:['#ffffff','#cbbfe6','#6f6390'],h:['#fff4f7','#ffc1d1','#e46a8c'],r:['#fffdf7','#f6d9a8','#b98542']}[who];
@@ -1412,7 +1416,7 @@ function render(T){const t=now(),ph=phaseOf(t),dark=ph==='night'||ph==='evening'
   drawBG(t,ph,T);{const sb=PVAR()==='sn'||PVAR()==='bc';DIM(sb?.06:.04);drawHygro();drawEasel();UNDIM()}drawPan(T);
   if(PV())for(let i=0;i<S.plotsN;i++)drawPlot(i,T);
   drawChick(T);
-  const list=[LU,HE].slice().sort((a,b)=>a.y-b.y);for(const c of list)drawChar(c,T);drawRabbit(T);
+  const list=[LU,HE].slice().sort((a,b)=>a.y-b.y);for(const c of list)drawChar(c,T);drawRabbit(T);drawMarketDeco(T,dark);
   for(const p of parts){ctx.globalAlpha=Math.min(1,p.life/p.max*1.5);if(p.k==='h'){ctx.fillStyle=p.s>9?'#ffa3bc':'#ff86a5';heart(p.x,p.y,p.s)}else{ctx.font='15px Jua,sans-serif';ctx.textAlign='center';ctx.lineWidth=3;ctx.strokeStyle='#fff';ctx.strokeText(p.txt,p.x,p.y);ctx.fillStyle='#ff7d9c';ctx.fillText(p.txt,p.x,p.y)}}ctx.globalAlpha=1;
   {const tint=(ph==='night'||ph==='evening')?null:ph==='sunset'?'rgba(255,140,80,.10)':ph==='dawn'?'rgba(255,170,170,.10)':null;if(tint){ctx.fillStyle=tint;ctx.fillRect(0,0,W,H)}}
 
