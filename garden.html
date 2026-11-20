@@ -1017,7 +1017,7 @@ function tapDream(x,y){const d=DRM.find(d=>d.x!=null&&Math.hypot(x-d.x,y-d.y)<26
 /* ---------- warm hands ---------- */
 
 let HO=null;
-function handOpen(){if(HO)return;const gx=L.gaze.x,gy=L.gaze.y;
+function handOpen(){if(HO)return;const gx=L.gaze.x,gy=L.gaze.y;if(REST.on)endRest();
   go(LU,gx-30,gy,'face',()=>{LU.state='face';LU.fr=true;LU.t=999});go(HE,gx+30,gy+2,'face',()=>{HE.state='face';HE.fr=false;HE.t=999});
   const o=document.createElement('div');o.id='handOv';
   o.innerHTML=`<style>#handOv{position:fixed;left:50%;bottom:14%;transform:translateX(-50%);z-index:60;display:flex;flex-direction:column;align-items:center;gap:8px;font-family:Jua,sans-serif;touch-action:none;user-select:none;-webkit-user-select:none}
@@ -1038,7 +1038,8 @@ function handOpen(){if(HO)return;const gx=L.gaze.x,gy=L.gaze.y;
     LU.sq=.2;HO.iv=setInterval(()=>{const t=(performance.now()-HO.t0)/1000,n=Math.floor(t);
       while(HO.n<n){HO.n++;const q=document.createElement('div');q.className='pop';q.textContent='+1';q.style.marginLeft=(-14+(HO.n%3-1)*30)+'px';B.appendChild(q);setTimeout(()=>q.remove(),1000);LU.sq=.22;heartsAt(LU.x+rnd(-10,10),LU.y-60)}
       if(!HO.rew&&t>=3.2){HO.rew=true;S.handDay=dayKey();S.hands++;LU.flush=5;gain('heart',8*mult(),LU);S.intim+=3;say(LU,'…안 해도 돼.',2.2);setTimeout(()=>say(HE,'손은 안 빼시네요ㅎㅎ',2.6),1300);unlock('hand');save()}
-      if(t>=10&&HO.n===10&&!HO.q1){HO.q1=1;say(LU,'…아직이야?',2)}if(t>=30&&HO.n===30&&!HO.q2){HO.q2=1;say(LU,'…손은 이미 따뜻해.',2.2)}if(t>=60&&HO.n===60&&!HO.q3){HO.q3=1;say(LU,'…출근 늦어.',2)}},100)});
+      const HL=[[10,'…아직이야?',2,'LU'],[20,'손 따뜻해졌어요ㅎㅎ',2.2,'HE'],[30,'…손은 이미 따뜻해.',2.2,'LU'],[40,'그래도 더 잡고 있을래요ㅎㅎ',2.4,'HE'],[50,'…너 손은 항상 따뜻하네.',2.4,'LU'],[60,'…출근 늦어.',2,'LU'],[75,'늦으면 제가 같이 사과할게요',2.4,'HE'],[90,'…안 놔?',2,'LU'],[105,'네. 루카 손이 제일 좋아요ㅎㅎ',2.6,'HE'],[120,'…바람 소리야. 그만하면 돼. …조금만 더.',3,'LU']];
+      HO.sd=HO.sd||{};for(const[s,tx,d,w]of HL){if(t>=s&&HO.n===s&&!HO.sd[s]){HO.sd[s]=1;say(w==='LU'?LU:HE,tx,d)}}},100)});
   for(const ev of['pointerup','pointercancel'])B.addEventListener(ev,stop);
   o.querySelector('.x').onclick=()=>{stop();o.remove();HO=null;LU.t=0;HE.t=0}}
 const HAND={on:false,p:0,t:0,done:false};
@@ -1386,13 +1387,13 @@ function update(dt,T){
     else if(m==='day'&&!REST.on&&scn!=='bridge'){c.t-=dt;
       if(c===HE&&c.state==='paint'){S.paint+=dt/40;if(S.paint>=1){S.paint=0;S.paintings++;gain('coin',12*mult(),c);say(c,'다 그렸어요ㅎㅎ');heartsAt(L.easel.x,L.easel.y-40,3);if(S.paintings>=3)unlock('paint')}}
       if(c===HE&&c.state==='water'&&c.wi!=null){const p=S.plots[c.wi];if(p.t)p.wet=30;c.wi=null}
-      if(c.t<=0&&!GIFT&&!(SULK.on&&(c===LU||HE.t>100)))brain(c);}
+      if(c.t<=0&&!GIFT&&!HO&&!HAND.on&&!(SULK.on&&(c===LU||HE.t>100)))brain(c);}
   }
   // rest & sulk
   if(m==='day'){
-    if(REST.on){REST.t-=dt;S.intim+=.15*dt;if(Math.random()<dt*.7&&LU.state==='sit')heartsAt((LU.x+HE.x)/2,LU.y-60);if(st>=1&&LU.flush<=0&&Math.random()<dt*.05&&LU.state==='sit'){LU.flush=4;say(LU,'…바람 소리야.')}if(REST.t<=0)endRest()}
-    else if(!SULK.on&&scn!=='bridge'){REST.next-=dt;if(REST.next<=0&&LU.state!=='walk')startRest()}
-    if(!SULK.on&&!REST.on&&scn!=='bridge'){SULK.next-=dt;if(SULK.next<=0)startSulk()}
+    if(REST.on){if(!HO)REST.t-=dt;S.intim+=.15*dt;if(Math.random()<dt*.7&&LU.state==='sit')heartsAt((LU.x+HE.x)/2,LU.y-60);if(st>=1&&LU.flush<=0&&Math.random()<dt*.05&&LU.state==='sit'){LU.flush=4;say(LU,'…바람 소리야.')}if(REST.t<=0)endRest()}
+    else if(!SULK.on&&scn!=='bridge'&&!HO&&!HAND.on){REST.next-=dt;if(REST.next<=0&&LU.state!=='walk')startRest()}
+    if(!SULK.on&&!REST.on&&scn!=='bridge'&&!HO&&!HAND.on){SULK.next-=dt;if(SULK.next<=0)startSulk()}
     else if(SULK.on&&LU.state==='sulk'){SULK.wait+=dt;if(SULK.wait>90)endSulk(2)}
   }
   // economy
