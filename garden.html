@@ -1413,10 +1413,10 @@ function update(dt,T){
 }
 function render(T){const t=now(),ph=phaseOf(t),dark=ph==='night'||ph==='evening';
   ctx.setTransform(K,0,0,K,0,0);ctx.clearRect(0,0,W,H);
-  drawBG(t,ph,T);{const sb=PVAR()==='sn'||PVAR()==='bc';DIM(sb?.06:.04);drawHygro();drawEasel();UNDIM()}drawPan(T);
+  drawBG(t,ph,T);{const sb=PVAR()==='sn'||PVAR()==='bc';DIM(sb?.06:.04);drawHygro();drawEasel();UNDIM()}drawPan(T);drawMarketDeco(T,dark);
   if(PV())for(let i=0;i<S.plotsN;i++)drawPlot(i,T);
   drawChick(T);
-  const list=[LU,HE].slice().sort((a,b)=>a.y-b.y);for(const c of list)drawChar(c,T);drawRabbit(T);drawMarketDeco(T,dark);
+  const list=[LU,HE].slice().sort((a,b)=>a.y-b.y);for(const c of list)drawChar(c,T);drawRabbit(T);
   for(const p of parts){ctx.globalAlpha=Math.min(1,p.life/p.max*1.5);if(p.k==='h'){ctx.fillStyle=p.s>9?'#ffa3bc':'#ff86a5';heart(p.x,p.y,p.s)}else{ctx.font='15px Jua,sans-serif';ctx.textAlign='center';ctx.lineWidth=3;ctx.strokeStyle='#fff';ctx.strokeText(p.txt,p.x,p.y);ctx.fillStyle='#ff7d9c';ctx.fillText(p.txt,p.x,p.y)}}ctx.globalAlpha=1;
   {const tint=(ph==='night'||ph==='evening')?null:ph==='sunset'?'rgba(255,140,80,.10)':ph==='dawn'?'rgba(255,170,170,.10)':null;if(tint){ctx.fillStyle=tint;ctx.fillRect(0,0,W,H)}}
 
