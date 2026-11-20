@@ -687,7 +687,6 @@ function tap(x,y){
   const cs=[LU,HE].sort((a,b)=>b.y-a.y);for(const c of cs)if(inBB(c,x,y))return c===LU?(SULK.on&&LU.state==='sulk'?sulkModal():patL()):patH();
   if(scn==='beach'&&x>200&&y>170&&y<355)return homeEnter('bungalow');
   if(scn==='table'&&!teaOn()&&x>120&&x<320&&y>255&&y<425)return teaOpen();
-  if(scn==='market'&&x<82&&y>230&&y<445)return stallModal();
   if(scn==='camp'&&x>250&&y>296&&y<384){S.scene='den';save();toast('🐻 곰굴에 들어왔어요<br>나갈 땐 🌷장소에서 이동해요');return}
   if(scn==='camp'&&Math.abs(x-L.pan.x)<42&&y>L.pan.y-70&&y<L.pan.y+14)return tapEgg();
   if(PV())for(let i=0;i<S.plotsN;i++){const p=plotPos(i);if(Math.abs(x-p.x)<40&&y>p.y-64&&y<p.y+26)return tapPlot(i)}
