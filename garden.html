@@ -296,6 +296,7 @@ function layout(){const r=app.getBoundingClientRect();const dpr=Math.min(window.
 function spots(){const wt=L.walkTop,wb=L.walkBot;L.easel={x:340,y:L.walkTop+180};
   L.chairs={x:195,y:wt+(wb-wt)*.4,real:false};L.bed={x:195,y:wt+(wb-wt)*.55};L.gaze={x:195,y:wt+(wb-wt)*.35};
   if(scn==='cherry')L.chairs={x:272,y:366,real:true};
+  if(scn==='table')L.chairs={x:222,y:416,real:false};
   if(scn==='camp')L.bed={x:228,y:452};
   if(scn==='forest')L.gaze={x:150,y:420};
   if(scn==='bridge'){L.easel={x:92,y:566};L.gaze={x:238,y:572}}}
