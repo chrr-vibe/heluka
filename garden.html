@@ -1208,7 +1208,7 @@ const VBG={"bday": "#7fb6ee", "bnight": "#2f2f78", "day": "#cedef8", "night": "#
 function homeBigWin(g,sc,Q,fl){const side=(S.homeBig||{})[ROOMS[HM.room][0]];if(!side)return;const q=Q[side],P=(u,v)=>{const p=bil(q,u,v);return(p[0]*sc).toFixed(1)+','+(p[1]*sc).toFixed(1)},poly=(u0,u1,v0,v1)=>[P(u0,v0),P(u1,v0),P(u1,v1),P(u0,v1)].join(' ');
   const gu0=.5,gu1=1.014,gv0=HOUSE==='bungalow'?0:.052,gv1=1.018,key0=bigKey();
   const a=bil(q,gu0,gv0),b=bil(q,gu1,gv0),c=bil(q,gu0,gv1),d=bil(q,gu1,gv1);const xs=[a[0],b[0],c[0],d[0]],ys=[a[1],b[1],c[1],d[1]],x0=Math.min(...xs)*sc,x1=Math.max(...xs)*sc,y0=Math.min(...ys)*sc,y1=Math.max(...ys)*sc;
-  const e=bil(q,gu0,gv1),f=bil(q,gu1,gv1);const slope=(f[1]-e[1])/(f[0]-e[0]);const vw=x1-x0,vh=(y1-y0)+Math.abs(slope)*vw;const rw=vw+2,rh=(y1-y0)+2,dh=rh*1.25,dw=Math.max(dh*.9,rh*1.2);const FLP=side==='R';const st=key0==='bnight'?.42:.52,ix=FLP?x0-1+rw-st*dw:x0-1-st*dw;const iy=y0-1+rh*.5-(key0==='bnight'?.521:.477)*dh;
+  const e=bil(q,gu0,gv1),f=bil(q,gu1,gv1);const slope=(f[1]-e[1])/(f[0]-e[0]);const vw=x1-x0,vh=(y1-y0)+Math.abs(slope)*vw;const rw=vw+2,rh=(y1-y0)+2,dh=rh*1.25,dw=Math.max(dh*.9,rh*1.2);const FLP=false;const st=key0==='bnight'?.42:.52,ix=FLP?x0-1+rw-st*dw:x0-1-st*dw;const iy=y0-1+rh*.5-(key0==='bnight'?.521:.477)*dh;
   const key=bigKey();HM.vk=key;const BG=HOUSE==='bungalow',BCH=key==='bday'||key==='bnight',DK=BG?'#8e624b':'#49312e',BR=BG?'#f1cba0':'#795551',HI=BG?'#fbe6cc':'#9e746c';
   const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.setAttribute('class','fu bigwin');svg.style.cssText='left:0;top:0;width:'+g.W*sc+'px;height:'+g.H*sc+'px;z-index:50;overflow:visible';
   const band=(uc,w,sk)=>[P(uc-w/2,gv0),P(uc+w/2,gv0),P(uc+w/2+sk,gv1),P(uc-w/2+sk,gv1)].join(' ');
