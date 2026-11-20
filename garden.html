@@ -806,9 +806,9 @@ function giveBq(k,dir){flInit();if(!(S.bq[k]>0))return;S.bq[k]--;closeM();const 
   if(dir===0)giftScene(k,0,['루카 생각하면서 묶었어요ㅎㅎ','다음엔 더 큰 꽃다발로요ㅎㅎ','루카가 웃으면 제일 좋아요ㅎㅎ'],['루카 주려고 묶었어요ㅎㅎ','받아 주세요ㅎㅎ','오늘 제일 예쁜 걸로요ㅎㅎ'],['……고마워.','…물 갈아 줄게.','……예쁘네. 꽃이.','…습도 맞춰 둘게.','…꽃병 어디 있더라.','……향이 좋아. 이거.','…시들기 전에 말려 둘게.'],3+n);
   else giftScene(k,1,['…마음에 들어?','……바람 소리야.','…잘 어울려. 네 머리색이랑.'],['……받아.','…남아서.','…네 거야.','……묻지 마.'],['루카가 주는 꽃이에요?!ㅎㅎ','평생 말려서 간직할게요ㅎㅎ','좋아서요ㅎㅎ','저 지금 귀까지 빨개졌어요ㅎㅎ'],3+n);
   gain('heart',4*n*mult(),dir===0?LU:HE);S.intim+=n;giftBuff(n>=5?45:n>=3?30:20);S.gifts=(S.gifts||0)+1;save()}
-function giveScarf(i){const s=S.scarves&&S.scarves[i];if(!s||s.gift)return;s.gift=Date.now();knitClose();closeM();const nm=(s.nm||'목도리').trim(),n=6;
+function giveScarf(i){const s=S.scarves&&S.scarves[i];if(!s||s.gift)return;s.gift=Date.now();knitClose();closeM();const nm=(s.nm||'목도리').trim(),n=6,jp=(c=>{const k=c.charCodeAt(0);return k>=44032&&k<=55203?(k-44032)%28!==0:false})(nm.slice(-1)),NY=jp?'이네요':'네요';
   if(!BQI.scarf){const im=new Image();im.src=SPR.u_sc4;BQI.scarf=im}
-  giftScene('scarf',1,['…추워 보여서.','……바람 소리야.','…네 거야. 잘 둘러.'],['……받아.','…남아서.','…네 거야.','……묻지 마.','……떴어. 너 주려고.'],[nm+'네요ㅎㅎ',nm+'네요ㅎㅎ 좋아서요',nm+'네요ㅎㅎ 평생 두를게요','루카가 뜬 거예요?! '+nm+'네요ㅎㅎ'],3+n);
+  giftScene('scarf',1,['…추워 보여서.','……바람 소리야.','…네 거야. 잘 둘러.'],['……받아.','…남아서.','…네 거야.','……묻지 마.','……떴어. 너 주려고.'],[nm+NY+'ㅎㅎ',nm+NY+'ㅎㅎ 좋아서요',nm+NY+'ㅎㅎ 평생 두를게요','루카가 뜬 거예요?! '+nm+NY+'ㅎㅎ'],3+n);
   gain('heart',4*n*mult(),HE);S.intim+=n;giftBuff(45);S.gifts=(S.gifts||0)+1;save()}
 function giveAlmond(){flInit();if(!(S.almond>0))return;S.almond--;closeM();gain('heart',30*mult(),LU);S.intim+=6;giftBuff(60);save();
   giftScene('almond',0,['반으로 나눠요ㅎㅎ','다음 장에도 사 올게요ㅎㅎ','루카가 먹는 거 보는 게 제일 좋아요ㅎㅎ'],['루카, 이거 봐요ㅎㅎ','구운 아몬드 과자예요ㅎㅎ','루카 거예요. 시장에서 받아 왔어요ㅎㅎ'],['…구운 거야?','……하나만.','…안 달아. 좋아.','……너도 먹어.','…향이 좋네. 아몬드.','……습기 안 먹게 잘 싸 왔네.','…어디서 났어.','……고마워. 반만.','…같이 먹자. 반반.','……금방 구운 냄새야.'],6)}
