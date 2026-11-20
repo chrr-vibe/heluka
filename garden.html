@@ -972,10 +972,13 @@ function drawChar(c,T){if(c.hidden){c.bb=null;return}
   if(key==='sleep'||key==='nap'){ctx.fillStyle='#7a6aa0';ctx.font='13px Jua,sans-serif';ctx.textAlign='center';for(let k=0;k<2;k++){const ph=(T*.6+k*.5)%1;ctx.globalAlpha=1-ph;ctx.fillText('z',c.x+18+ph*10,c.y-h-6-ph*18)}ctx.globalAlpha=1}
   if(c.state==='sulk'){const bb=Math.sin(T*3)*2;ctx.fillStyle='#fff';rr(c.x-17,c.y-h-30+bb,34,22,9);ctx.fill();ctx.font='13px sans-serif';ctx.textAlign='center';ctx.fillText('💭',c.x,c.y-h-14+bb)}
   if(c.state==='awake'){ctx.globalAlpha=.5+.5*Math.sin(T*6);ctx.fillStyle='#e86a80';heart(c.x,c.y-h-16,9);ctx.globalAlpha=1}
-  if(c.state==='water'){for(let k=0;k<3;k++){const ph=(T*2+k/3)%1;ell(c.x-34-k*4,c.y-34+ph*30,1.8,2.6,'#7cc4ea')}}
+  if(c.state==='water'){const w=42,hh=w*WCAN.naturalHeight/(WCAN.naturalWidth||1)||27,px=c.x-24,py=c.y-42,tl=-.55+Math.sin(T*3)*.07,cs=Math.cos(tl),sn=Math.sin(tl);
+    if(WCAN.complete&&WCAN.naturalWidth){ctx.save();ctx.translate(px,py);ctx.rotate(tl);ctx.drawImage(WCAN,-.9*w,-.35*hh,w,hh);ctx.restore()}
+    const tx=px+(-.8*w)*cs-(-.06*hh)*sn,ty=py+(-.8*w)*sn+(-.06*hh)*cs;
+    for(let k=0;k<4;k++){const ph=(T*2.2+k/4)%1;ctx.globalAlpha=1-ph*.6;ell(tx-1-ph*5-k%2*2,ty+3+ph*26,1.7,2.6,'#8fd0f0')}ctx.globalAlpha=1}
   if(c.state==='paint'&&Math.floor(T*3)%2){ctx.fillStyle='#d9546b';ell(c.x+20,c.y-46,2,2,'#d9546b')}
 }
-const BIC=new Image();BIC.src='home/bungalow_icon.webp';const TIC=new Image();TIC.src='tea/icon.webp';
+const WCAN=new Image();WCAN.src='tea/can.webp';const BIC=new Image();BIC.src='home/bungalow_icon.webp';const TIC=new Image();TIC.src='tea/icon.webp';
 function pbubble(cx,top,txt,who,a){ctx.globalAlpha=a;ctx.font='14px Jua,"Apple SD Gothic Neo",sans-serif';const ic=txt.startsWith('🛖')||txt.startsWith('🍵'),IM=txt.startsWith('🍵')?TIC:BIC;if(ic)txt=txt.slice(2).trim();const tw=ctx.measureText(txt).width+22+(ic?22:0),bh=26;
   const bx=clamp(cx-tw/2,4,W-tw-4),by=top-bh-6;const col={l:['#ffffff','#cbbfe6','#6f6390'],h:['#fff4f7','#ffc1d1','#e46a8c'],r:['#fffdf7','#f6d9a8','#b98542']}[who];
   ctx.save();ctx.shadowColor='rgba(200,150,180,.3)';ctx.shadowBlur=8;ctx.shadowOffsetY=3;ctx.fillStyle=col[0];rr(bx,by,tw,bh,13);ctx.fill();
