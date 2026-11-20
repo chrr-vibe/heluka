@@ -908,10 +908,7 @@ function wantScene(t,m){
   const pool=others.length?others:[base];return pool[Math.floor(r2*pool.length)%pool.length];
 }
 function switchScene(ws){if(SULK.on)endSulk(false);prevScn=scn;scn=ws;fadeT=0;spots();if(curMode){setMode(curMode);for(const c of[LU,HE])if(c.state==='walk'){c.x=c.tx;c.y=c.ty}}}
-function drawScene(id,a){const im=sceneImg(id);if(!(im.complete&&im.naturalWidth))return false;const sc=W/780,dw=780*sc,dh=1800*sc;
-  /* 화면이 길면(전체화면) 땅선(330) 기준으로 그림을 확대해 아래 빈 공간을 채움. 양옆은 잘림 */
-  const cb=id.replace('_n','')==='market'?740:900,zs=Math.max(1,Math.min(1.35,(H-416)/(cb-416)));ctx.save();if(zs>1){ctx.translate(W/2,416);ctx.scale(zs,zs);ctx.translate(-W/2,-416)}
-  ctx.globalAlpha=a;ctx.drawImage(im,0,0,dw,dh);ctx.restore();ctx.globalAlpha=1;return true}
+function drawScene(id,a){const im=sceneImg(id);if(!(im.complete&&im.naturalWidth))return false;const sc=W/780,dw=780*sc,dh=1800*sc;ctx.globalAlpha=a;ctx.drawImage(im,0,0,dw,dh);ctx.globalAlpha=1;return true}
 let NT=0;
 const FX=[];for(let i=0;i<26;i++)FX.push([Math.random(),Math.random(),.5+Math.random()]);
 function drawBG(t,ph,T){
