@@ -9,8 +9,10 @@
 <style>
 :root{--ink:#6d5866;--ink2:#a08a97;--pink:#ffc6d6;--pink2:#ff9fb8;--lav:#dccbff;--mint:#c4efdc;--butter:#ffeaa8;--peach:#ffd6c2;--cream:#fffaf6;--F:"Jua","Apple SD Gothic Neo","Noto Sans KR",sans-serif}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;height:100%;height:100dvh;background:#fdeff4;font-family:var(--F);color:var(--ink);overflow:hidden;user-select:none;-webkit-user-select:none}
-#app{position:relative;margin:0 auto;height:100%;height:100dvh;max-width:440px;overflow:hidden;background:#cfe9f7}
+html,body{margin:0;height:100%;height:100dvh;background:#bfe4f7;font-family:var(--F);color:var(--ink);overflow:hidden;user-select:none;-webkit-user-select:none}
+body{display:flex;align-items:center;justify-content:center}
+#pad{position:fixed;left:-40px;top:-40px;width:calc(100vw + 80px);height:calc(100dvh + 80px);filter:blur(22px);z-index:0}
+#app{position:relative;z-index:1;width:100%;margin:0 auto;height:100%;height:100dvh;max-height:calc(min(100vw,440px)*1.95);max-width:440px;overflow:hidden;background:#cfe9f7;flex:none}
 canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:manipulation}
 button{font-family:var(--F)}
 #hud{position:absolute;left:0;right:0;top:0;padding:calc(env(safe-area-inset-top) + 4px) 8px 0;pointer-events:none;color:#6b4650}
@@ -185,6 +187,7 @@ button{font-family:var(--F)}
 </style>
 </head>
 <body>
+<canvas id="pad" width="48" height="104"></canvas>
 <div id="app">
   <canvas id="cv"></canvas>
   <div id="hud">
@@ -1443,7 +1446,13 @@ function hud(){const t=now();$('rH').textContent=fmt(S.heart);$('rC').textConten
   else if(m==='bridge')b='🌉 7:55 · 옛 다리 아침 · 출근 전까지 같이 · 마음 ×2';else if(m==='three')b='🕒 새벽 세 시 · 루카스는 깨어 있어요';else if(m==='night')b='🌙 둘 다 자는 중 · 자는 동안에도 쌓여요';
   if(t.dow===0)b=(b?b+'<br>':'')+'☀️ 일요일 · 쉬는 날 · 보상 ×2';
   const bn=$('banner');bn.innerHTML=b;bn.style.display=b?'block':'none';}
-function loop(){const n=performance.now();const dt=Math.min(.1,(n-lastT)/1000);lastT=n;DTF=dt;const T=n/1000;update(dt,T);render(T);ui+=dt;if(ui>.25){ui=0;hud()}requestAnimationFrame(loop)}
+let PADF=0;
+function padDraw(){if(++PADF%3)return;const p=document.getElementById('pad'),a=app.getBoundingClientRect(),vh=innerHeight;if(a.top<2&&vh-a.bottom<2){if(p.dataset.o!=='0'){p.dataset.o='0';p.style.display='none'}return}
+if(p.dataset.o!=='1'){p.dataset.o='1';p.style.display='block'}
+const pw=48,ph=Math.max(40,Math.round(pw*(vh+80)/(innerWidth+80)));if(p.height!==ph)p.height=ph;const c=p.getContext('2d'),sy=ph/(vh+80),tb=Math.ceil((a.top+40)*sy)+1,bb=Math.ceil((vh-a.bottom+40)*sy)+1,sh=Math.max(6,8*K);
+c.drawImage(cv,0,0,cv.width,sh,0,0,pw,tb);c.drawImage(cv,0,cv.height-sh,cv.width,sh,0,ph-bb,pw,bb);
+if(NT>0){c.fillStyle='rgba(8,10,40,'+(.22*NT)+')';c.fillRect(0,0,pw,ph)}}
+function loop(){const n=performance.now();const dt=Math.min(.1,(n-lastT)/1000);lastT=n;DTF=dt;const T=n/1000;update(dt,T);render(T);padDraw();ui+=dt;if(ui>.25){ui=0;hud()}requestAnimationFrame(loop)}
 document.addEventListener('visibilitychange',()=>{if(document.hidden)save();else{const away=(Date.now()-S.last)/1000;if(away>60)offline(away);lastT=performance.now()}});
 window.addEventListener('resize',()=>{layout()});
 function ready(){for(const k of['front','side','back','34'])TINT[k]=earTint(IMG['l_'+k]);
