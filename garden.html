@@ -746,7 +746,7 @@ function tapPlot(i){const p=S.plots[i];
 /* ---------- modals ---------- */
 function modal(t,h){window.MOPEN=Date.now();$('mTitle').textContent=t;$('mBody').innerHTML=h;$('modal').hidden=false}
 function closeM(){$('modal').hidden=true}
-$('mClose').onclick=closeM;$('modal').onclick=e=>{if(e.target.id==='modal'&&Date.now()-(window.MOPEN||0)>450)closeM()};
+$('mClose').onclick=closeM;['click','pointerup','mouseup','touchend'].forEach(t=>$('modal').addEventListener(t,e=>{if(Date.now()-(window.MOPEN||0)<450){e.stopPropagation();e.preventDefault()}},true));$('modal').onclick=e=>{if(e.target.id==='modal'&&Date.now()-(window.MOPEN||0)>450)closeM()};
 document.querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>({shop:shopModal,box:boxModal,place:placeModal,info:infoModal,dex:dexModal})[b.dataset.open]());
 $('bBell').onclick=bellModal;$('clk').onclick=bellModal;$('bMail').onclick=noteBox;$('bSet').onclick=infoModal;
 let ROOMY=null;
