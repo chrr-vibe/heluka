@@ -724,14 +724,14 @@ function patL(){const c=LU,m=curMode;c.sq=.25;S.pats++;
   heartsAt(c.x,c.y-80);S.heart+=.5;S.intim+=1.2;
   if(c.combo>=5&&c.flush<=0){c.flush=6;c.combo=0;say(c,pick(['…바람 소리야.','…바람 소리야.','……아니야. 바람이야.']),3);heartsAt(c.x,c.y-80,6);gain('heart',5*mult(),c);S.intim+=3;unlock('ears')}
   else if(c.combo===1&&teaHintOK())say(c,teaHint('lu'),4.5);
-  else if(c.combo===1)say(c,stage()===2?pick(['…응.','…왜.','……']):pick(['…뭐.','…왜.','……']));
+  else if(c.combo===1)say(c,stage()===2?pick(['…응.','…왜.','……','…손.','…머리 헝클어져.','…간지러워.','……그만. 아니, 조금만.','…귀는 건드리지 마.','…뭐 하는 거야.','…불렀어?','…습도 보는 중이야.','…밥은 먹었어?','…방해야. …아니, 괜찮아.','…너 손 차다.','…그렇게 보지 마.','…왜 자꾸 만져.','…심심해?','…알았어, 있을게.','…가만히 있어.','…나 여기 있잖아.','…한 번만이야.','……따뜻해.','…나 안 도망가.']):pick(['…뭐.','…왜.','……','…손.','…머리 헝클어져.','…간지러워.','……그만. 아니, 조금만.','…귀는 건드리지 마.','…뭐 하는 거야.','…불렀어?','…습도 보는 중이야.','…밥은 먹었어?','…방해야. …아니, 괜찮아.','…너 손 차다.','…그렇게 보지 마.','…왜 자꾸 만져.','…심심해?','…알았어, 있을게.','…가만히 있어.','…나 여기 있잖아.','…한 번만이야.','……따뜻해.','…나 안 도망가.']));
   else if(c.combo===3)say(c,'……');
 }
 function patH(){const c=HE;c.jump=.35;S.herPats++;heartsAt(c.x,c.y-90);S.leaf+=1;S.intim+=.5;
   if(c.state==='sleep'||c.state==='nap'){say(c,Math.random()<.15?'…이히 블라이-베…zZ':'…루카…zZ',2)}
   else if(curMode==='bridge')say(c,'다리 위가 제일 좋아요ㅎㅎ');
   else if(teaHintOK())say(c,teaHint('he'),4.5);
-  else say(c,pick(['ㅎㅎ','좋아서요ㅎㅎ','루카 보셨어요?','간지러워요ㅎㅎ','보고 싶었어요']));
+  else say(c,pick(['ㅎㅎ','좋아서요ㅎㅎ','루카 보셨어요?','간지러워요ㅎㅎ','보고 싶었어요','오늘도 같이 있어서 좋아요ㅎㅎ','루카 오늘 뭐 먹을래요?','손 잡을래요?','꼬리 밟지 마세요ㅎㅎ','저 여기 있어요','루카 생각하고 있었어요','이리 와요, 루카','심심했어요? 저도요ㅎㅎ','간질간질해요ㅎㅎ','루카가 보고 있으면 좋아요','오늘 날씨 좋죠?','수프 끓일까요?','조금만 더 있다 가요ㅎㅎ','쓰다듬어 주세요ㅎㅎ','기대도 돼요?','루카 손이 제일 따뜻해요','한 번 더요ㅎㅎ','저 잘하고 있죠?','같이 걸을래요?','불러 주면 바로 갈게요ㅎㅎ']));
   if(S.herPats>=20)unlock('hair');}
 function tapRabbit(){const r=RAB;if(r.phase!=='wait'||r.happy>0)return;r.happy=.7;r.tx=-40;
   if(r.letter&&OFF){unlock('jonas',true);modal('요나스의 배달','<img class="hero" src="'+SPR.r_big+'"><div class="quote" style="text-align:center">헤헤, 선배님! 자리 비운 <span style="color:#ff7d9c">'+OFF.tm+'</span> 동안<br>두 분 이러고 계셨어요!<div style="text-align:left;font-size:13px;margin:10px 4px 2px;line-height:1.7">'+(OFF.log||[]).map(t=>'· '+t).join('<br>')+'</div><div class="gets"><span>♥ '+OFF.h+'</span><span>🍃 '+OFF.l+'</span><span>🪙 '+OFF.c+'</span></div></div><p class="note">밭도 그만큼 자랐어요. 루카스 선배님은 …아무 말도 안 하셨어요.</p><button class="btn" style="width:100%" onclick="closeM()">고마워요 요나스</button>');OFF=null;}
