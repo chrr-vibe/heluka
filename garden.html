@@ -907,7 +907,7 @@ const SCENES={
  den:{nm:'곰굴',em:'🐻',d:'캠핑 텐트에서 들어가요',hide:true}
 };
 const SCN={};
-function sceneImg(id){if(!SCN[id]){const im=new Image();im.src='bg/'+id.replace('_n','')+(id.endsWith('_n')?'_n':'')+'.jpg?v=1121a';SCN[id]=im}return SCN[id]}
+function sceneImg(id){if(!SCN[id]){const im=new Image();im.src='bg/'+id.replace('_n','')+(id.endsWith('_n')?'_n':'')+'.jpg?v=1121b';SCN[id]=im}return SCN[id]}
 function autoScene(t,m){if(m==='night'||m==='three')return'camp';if(m==='bridge')return'bridge';if(t.dow===0)return'table';const mo=t.mo;if(mo===12)return'market';if(mo<=2)return'snow';if(mo<=8&&mo>=6)return'beach';return'garden'}
 const ROAM={user:false,ready:false};
 function sceneOK(id){const c=SCENES[id];return !!c&&!c.hide&&!(c.lock&&stage()<c.lock)}
@@ -1173,14 +1173,14 @@ function homeLayout(){const app=$('app').getBoundingClientRect(),g=HGEO[ROOMS[HM
   $('hUp').style.top=(top-40)+'px';$('hDn').style.top=(top+h+4)+'px';$('hDn').style.display=(HM.edit||ROOMS.length<2)?'none':'';$('hUp').style.display=ROOMS.length<2?'none':'';}
 function homeBack(g,sc){const el=$('hBack');if(!el)return;if(ROOMS[HM.room][0]!=='b_terrace'){el.style.display='none';el.innerHTML='';return}
   const w=g.W*sc,h=g.H*sc,fx=x=>(x-22)/1135*w,fy=y=>(y-26)/1278*h,night=vNight();HM.vk=bigKey();
-  const hx0=fx(68),hx1=fx(1112),hw=hx1-hx0,CX0=night?260:300,CX1=night?680:720,CY0=night?20:100,CY1=night?325:405,hh0=fy(95),hhh=fy(940)-hh0,iw=hw*720/(CX1-CX0),ih=hhh*405/(CY1-CY0),iy=hh0-hhh*CY0/(CY1-CY0),ix=hx0-hw*CX0/(CX1-CX0);
+  const hx0=fx(68),hx1=fx(1112),hw=hx1-hx0,CX0=300,CX1=720,CY0=night?124:100,CY1=night?429:405,hh0=fy(95),hhh=fy(940)-hh0,iw=hw*720/(CX1-CX0),ih=hhh*405/(CY1-CY0),iy=hh0-hhh*CY0/(CY1-CY0),ix=hx0-hw*CX0/(CX1-CX0);
   const clip=[[590,95],[1112,398],[1112,940],[68,940],[68,398]].map(([x,y])=>(fx(x)).toFixed(1)+'px '+(fy(y)).toFixed(1)+'px').join(',');
   const t=now(),hh=t.h+t.m/60;let ov='';
   if(!night){ov+=`<div style="left:0;top:${fy(480)}px;width:${w}px;height:${fy(940)-fy(480)}px;background:linear-gradient(#fff0,#ffffff30)"></div>`;let tint='',ta=0;if(hh<8.5){ta=Math.max(0,(8.5-hh)/2.5)*.3;tint='#ffb58a'}else if(hh>16){ta=Math.min(1,(hh-16)/3)*.38;tint=hh>18?'#ff8a6a':'#ffb070'}
     if(ta>0)ov+=`<div style="inset:0;background:${tint};opacity:${ta.toFixed(2)};mix-blend-mode:soft-light"></div><div style="inset:0;background:${tint};opacity:${(ta*.3).toFixed(2)}"></div>`}
   else for(const[fx2,fy2,rr]of[]){const cx=ix+fx2*iw,cy=iy+fy2*ih,r=hw*rr;ov+=`<div class="bwlamp" style="left:${(cx-r).toFixed(1)}px;top:${(cy-r).toFixed(1)}px;width:${(2*r).toFixed(1)}px;height:${(2*r).toFixed(1)}px;border-radius:50%;background:radial-gradient(#ffdf9ae6,#ffc66b59 40%,#ffc66b00 70%)"></div>`}
   el.style.cssText='display:block;clip-path:polygon('+clip+')';
-  el.innerHTML=`<img src="home/view/${night?'bch3_night.webp?v=2':'bch3_day.webp'}" style="left:${ix.toFixed(1)}px;top:${iy.toFixed(1)}px;width:${iw.toFixed(1)}px;height:${ih.toFixed(1)}px;filter:blur(${(blurStd()*1.2).toFixed(2)}px)">`+ov}
+  el.innerHTML=`<img src="home/view/${night?'bch4_night.webp':'bch3_day.webp'}" style="left:${ix.toFixed(1)}px;top:${iy.toFixed(1)}px;width:${iw.toFixed(1)}px;height:${ih.toFixed(1)}px;filter:blur(${(blurStd()*1.2).toFixed(2)}px)">`+ov}
 function homeRender(){const r=ROOMS[HM.room],g=HGEO[r[0]],sc=HM.sc,Q=quads(g);$('hName').textContent=r[1];{const wp=(S.homeWp||{})[r[0]]||0;$('hHex').src='home/'+(wp?'wp/'+RIMG(r)+'_'+wp:RIMG(r))+'.webp'}homeBack(g,sc);
   const k=homeUnit(g)/115*sc;const it=homeData();const fl=$('hFurn');fl.querySelectorAll('.fu').forEach(e=>e.remove());homeBigWin(g,sc,Q,fl);homeTerFx(g,sc,Q,fl);
   const order=it.map((o,n)=>{const d=homeDims(o);return{o,n,d,z:o.s==='G'?0:(o.s==='L'||o.s==='R')?1:2+(o.i+d[0])+(o.j+d[1])+o.j*.01}}).sort((a,b)=>a.z-b.z);
