@@ -326,14 +326,14 @@ function layout(){const r=app.getBoundingClientRect();const dpr=Math.min(window.
   cv.width=Math.round(r.width*dpr);cv.height=Math.round(r.height*dpr);K=cv.width/W;H=r.height*W/r.width;
   const barL=($('bottom').offsetHeight+18)*W/r.width;
   L.ground=300;L.walkTop=300;L.plotY=H-barL-40;L.walkBot=L.plotY-58;L.ckY=H-barL+2;
-  L.hygro={x:52,y:L.walkTop+170};L.easel={x:340,y:L.walkTop+180};L.pan={x:127,y:412};
+  L.hygro={x:52,y:L.walkTop+170};L.easel={x:340,y:L.walkTop+180};L.pan={x:190,y:452};
   spots();
 }
-function spots(){const wt=L.walkTop,wb=L.walkBot;L.easel={x:340,y:L.walkTop+180};
+function spots(){const wt=L.walkTop,wb=L.walkBot;L.easel={x:340,y:L.walkTop+180};L.hygro={x:52,y:L.walkTop+170};if(scn==='camp'){L.easel.y+=78;L.hygro.y+=78}
   L.chairs={x:195,y:wt+(wb-wt)*.4,real:false};L.bed={x:195,y:wt+(wb-wt)*.55};L.gaze={x:195,y:wt+(wb-wt)*.35};
   if(scn==='cherry')L.chairs={x:272,y:366,real:true};
   if(scn==='table')L.chairs={x:222,y:416,real:false};
-  if(scn==='camp')L.bed={x:228,y:452};
+  if(scn==='camp')L.bed={x:190,y:540};
   if(scn==='forest')L.gaze={x:150,y:420};
   if(scn==='bridge'){L.easel={x:92,y:566};L.gaze={x:238,y:572}}}
 function plotPos(i){const n=S.plotsN;return{x:W/2+(i-(n-1)/2)*Math.min(84,(W-30)/n),y:L.plotY};}
@@ -687,7 +687,7 @@ function tap(x,y){
   if(tapDream(x,y))return;
   if(scn==='garden'&&x>350&&y>205&&y<330)return homeEnter();
   if(scn==='snow'&&x>W*.64&&y>W*.33&&y<W*.82)return homeEnter('cabin');
-  if(scn==='camp'&&Math.abs(x-125)<26&&y>345&&y<425)return tapEgg();
+  if(scn==='camp'&&Math.abs(x-190)<32&&y>380&&y<480)return tapEgg();
   if(scn==='market'&&x<100&&y>218&&y<262)return stallModal();
   if(scn==='table'&&!teaOn()&&x>160&&x<276&&y>244&&y<292)return teaOpen();
   if(tapScarf(x,y))return;
@@ -890,7 +890,7 @@ const SCENES={
  den:{nm:'곰굴',em:'🐻',d:'캠핑 텐트에서 들어가요',hide:true}
 };
 const SCN={};
-function sceneImg(id){if(!SCN[id]){const im=new Image();im.src='bg/'+id.replace('_n','')+(id.endsWith('_n')?'_n':'')+'.jpg?v=1120c';SCN[id]=im}return SCN[id]}
+function sceneImg(id){if(!SCN[id]){const im=new Image();im.src='bg/'+id.replace('_n','')+(id.endsWith('_n')?'_n':'')+'.jpg?v=1121a';SCN[id]=im}return SCN[id]}
 function autoScene(t,m){if(m==='night'||m==='three')return'camp';if(m==='bridge')return'bridge';if(t.dow===0)return'table';const mo=t.mo;if(mo===12)return'market';if(mo<=2)return'snow';if(mo<=8&&mo>=6)return'beach';return'garden'}
 const ROAM={user:false,ready:false};
 function sceneOK(id){const c=SCENES[id];return !!c&&!c.hide&&!(c.lock&&stage()<c.lock)}
@@ -931,7 +931,7 @@ function drawBG(t,ph,T){
   ctx.globalAlpha=1;
   // weather / ambience
   if(scn==='snow'||scn==='cherry'){for(const f of FX){const x=(f[0]*W+Math.sin(T*.8+f[1]*9)*14)%W,y=((T*14*f[2]+f[1]*H)%(H+20))-10;ctx.globalAlpha=.85;if(scn==='snow')ell(x,y,1.8*f[2],1.8*f[2],'#fff');else ell(x,y,3*f[2],1.8*f[2],'#f9c4d6');ctx.globalAlpha=1}}
-  if(scn==='camp'){const fx=124,fy=412;const gr=ctx.createRadialGradient(fx,fy,3,fx,fy,95);gr.addColorStop(0,'rgba(255,170,70,'+(.34+.06*Math.sin(T*9))+')');gr.addColorStop(1,'rgba(255,170,70,0)');ctx.fillStyle=gr;ctx.fillRect(fx-100,fy-100,200,200);
+  if(scn==='camp'){const fx=190,fy=445;const gr=ctx.createRadialGradient(fx,fy,3,fx,fy,95);gr.addColorStop(0,'rgba(255,170,70,'+(.34+.06*Math.sin(T*9))+')');gr.addColorStop(1,'rgba(255,170,70,0)');ctx.fillStyle=gr;ctx.fillRect(fx-100,fy-100,200,200);
     for(let i=0;i<7;i++){const ph2=(T*.5+i/7)%1;ctx.globalAlpha=1-ph2;ell(fx+Math.sin(T*2+i*2)*9,fy-6-ph2*60,1.5,1.5,'#ffc866')}ctx.globalAlpha=1}
 }
 const PV=()=>scn==='garden'||scn==='table',HP=()=>scn!=='market'&&scn!=='den';
@@ -1086,7 +1086,7 @@ function tapEgg(){const k=eggStage(),{x,y}=L.pan;
   else{gain('heart',2*m,{x,y:y+30});gain('coin',6*m,{x,y:y+50});say(HE,'맛있겠다ㅎㅎ',2.2)}
   heartsAt(x,y-40,3);save()}
 function drawPan(T){if(scn!=='camp')return;const{x,y}=L.pan;
-  if(!S.soupT&&!S.egg){const fx=124,fy=366+Math.sin(T*2.4)*3;ctx.save();ctx.shadowColor='rgba(255,150,80,.55)';ctx.shadowBlur=14;ctx.globalAlpha=.92;ell(fx,fy,17,17,'rgba(255,255,255,.88)');ctx.restore();
+  if(!S.soupT&&!S.egg){const fx=190,fy=402+Math.sin(T*2.4)*3;ctx.save();ctx.shadowColor='rgba(255,150,80,.55)';ctx.shadowBlur=14;ctx.globalAlpha=.92;ell(fx,fy,17,17,'rgba(255,255,255,.88)');ctx.restore();
     ctx.strokeStyle='#ffc99a';ctx.lineWidth=2;ctx.beginPath();ctx.arc(fx,fy,17,0,7);ctx.stroke();ctx.fillStyle='#e29a7a';ctx.font='24px Jua,sans-serif';ctx.textAlign='center';ctx.fillText('+',fx,fy+8);return}
   if(S.soupT){const el=(Date.now()-S.soupT)/1000,ok=el>=60,im=IMG.u_pot;if(!im||!im.naturalWidth)return;const w=70,h=im.naturalHeight*w/im.naturalWidth,bob=ok?0:Math.sin(T*9)*.8;
     ell(x,y-2,w*.4,6,'rgba(60,80,40,.18)');DIM(.2);ctx.drawImage(im,x-w/2,y-h-bob+6,w,h);UNDIM();
@@ -1384,7 +1384,7 @@ function update(dt,T){
   const st=stage();
   if(st>=1)unlock('polaroid');if(st>=2)unlock('buttons');
   if(scn==='den'){REST.on=false;SULK.on=false;REST.next=999;SULK.next=999;
-    for(const[c,x,fr]of[[HE,138,true],[LU,252,false]]){c.hidden=false;c.state='sleep';c.t=999;c.after=null;c.hug=0;c.x=c.tx=x;c.y=c.ty=428;c.fr=fr}}
+    for(const[c,x,fr]of[[HE,128,true],[LU,262,false]]){c.hidden=false;c.state='sleep';c.t=999;c.after=null;c.hug=0;c.x=c.tx=x;c.y=c.ty=478;c.fr=fr}}
   // characters
   for(const c of[LU,HE]){c.bubT-=dt;c.hug=Math.max(0,(c.hug||0)-dt);c.flush=Math.max(0,c.flush-dt);c.jump=Math.max(0,c.jump-dt);c.sq=Math.max(0,c.sq-dt);if(c.hidden)continue;
     if(c.state==='walk'){const dx=c.tx-c.x,dy=c.ty-c.y,d=Math.hypot(dx,dy);
