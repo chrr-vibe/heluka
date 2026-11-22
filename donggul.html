@@ -82,7 +82,11 @@ button{font:inherit;color:inherit;cursor:pointer}
 .cover h1{margin:0;font-family:var(--script);font-weight:400;font-size:clamp(56px,15vw,92px);line-height:1;color:var(--wine)}
 .cover .ko{font-weight:800;font-size:22px;letter-spacing:.04em}
 .cover svg{width:min(100%,460px);height:auto}
-.cover img{width:min(100%,680px);height:auto;border-radius:6px;box-shadow:0 2px 10px rgba(58,44,28,.18)}
+.leaf.is-cover{background-color:#fcecd2;box-shadow:0 22px 50px rgba(0,0,0,.55),inset 14px 0 18px -10px rgba(58,44,28,.30)}
+.cover img{display:block;width:calc(100% + 80px);max-width:none;height:auto;margin:-6px -34px -6px -46px;justify-self:center;
+  -webkit-mask-image:linear-gradient(to right,transparent 0,#000 9%,#000 91%,transparent 100%),linear-gradient(to bottom,transparent 0,#000 14%,#000 86%,transparent 100%);
+  -webkit-mask-composite:source-in;mask-image:linear-gradient(to right,transparent 0,#000 9%,#000 91%,transparent 100%),linear-gradient(to bottom,transparent 0,#000 14%,#000 86%,transparent 100%);mask-composite:intersect}
+@media (max-width:520px){.cover img{width:calc(100% + 44px);margin:-4px -18px -4px -26px}}
 .cover p{margin:0;max-width:30em;color:var(--ink)}
 .cover .by{font-family:var(--hand);font-size:17px;color:var(--ink-soft)}
 .open{border:2px solid var(--wine);background:none;color:var(--wine);font-family:var(--hand);font-weight:700;font-size:20px;padding:6px 22px;border-radius:30px}
@@ -5204,12 +5208,12 @@ P "하루에 한 알이니까 사흘이에요ㅎㅎ"
     var reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if(animate&&cur>=0&&!reduce){
       ghost=leaf.cloneNode(true); ghost.removeAttribute("id"); ghost.classList.add("ghost");
-      if(dir==="back"){ghost.innerHTML=""; ghost.appendChild(build(i))}
+      if(dir==="back"){ghost.innerHTML=""; ghost.appendChild(build(i)); ghost.classList.toggle("is-cover",pages[i].id==="cover")}
       ghost.classList.add(dir); book.appendChild(ghost);
       ghost.addEventListener("animationend",function(){ghost.remove()});
       setTimeout(function(){if(ghost.parentNode) ghost.remove()},900);
     }
-    leaf.innerHTML=""; leaf.appendChild(build(i)); cur=i;
+    leaf.innerHTML=""; leaf.appendChild(build(i)); cur=i; leaf.classList.toggle("is-cover",pages[i].id==="cover");
     var tb=tabFor(i); Array.prototype.forEach.call(marks.children,function(b,k){b.setAttribute("aria-current",k===tb?"true":"false")});
     try{localStorage.setItem("hoehle-page",pages[i].id)}catch(e){}
     if(location.hash.slice(1)!==pages[i].id){try{history.replaceState(null,"","#"+pages[i].id)}catch(e){location.hash=pages[i].id}}
