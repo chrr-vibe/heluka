@@ -852,7 +852,7 @@ function drawGift(dt){if(!GIFT)return;const g=GIFT;if(g.cx!=null){if(g.t<0)retur
   g.t+=dt;const im=BQI[g.k];if(!im||!im.naturalWidth)return;const T1=.9,T2=3.6;if(g.t>T2){GIFT=null;return}
   const a=g.from,b=g.to,u=Math.min(1,g.t/T1),e=u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;const x=a.x+(b.x-a.x)*e,y=(a.y-70)+((b.y-90)-(a.y-70))*e-Math.sin(u*Math.PI)*40;
   const w=54,h=im.naturalHeight*w/im.naturalWidth;ctx.save();ctx.globalAlpha=g.t>T2-.4?(T2-g.t)/.4:1;ctx.drawImage(im,x-w/2,y-h+(u>=1?Math.sin(g.t*4)*2:0),w,h);ctx.restore()}
-function boxModal(){const n=BOX.filter(b=>S.box[b[0]]).length;let h=`<button class="btn" style="width:100%;margin-bottom:10px" onclick="flowerModal()">💐 꽃다발 · 선물하기</button><button class="btn" style="width:100%;margin-bottom:10px" onclick="closeM();teaOpen()"><img class="temj" src="tea/icon.webp"> 오후의 티타임 <small>12~4시</small></button><p class="note">습도계 붙은 상자 · ${n}/${BOX.length}</p>`;
+function boxModal(){const n=BOX.filter(b=>S.box[b[0]]).length;let h=`<button class="btn" style="width:100%;margin-bottom:10px" onclick="flowerModal()">💐 꽃다발 · 선물하기</button><p class="note">습도계 붙은 상자 · ${n}/${BOX.length}</p>`;
   for(const b of BOX){const XF={xcocoa:['cocoa','cocoaUse()'],xorgel:['orgel','orgelUse()'],xgift:['gift','giftUse()']}[b[0]];const u=S.box[b[0]]||(XF&&xHas(XF[0]));const sc=b[0]==='scarf'&&u;const xc=XF&&u?`onclick="${XF[1]}" style="cursor:pointer"`:'';h+=`<div class="item ${u?'':'locked'}" ${sc?'onclick="scarfModal()" style="cursor:pointer"':xc}><div class="em">${u?(XF?`<img src="xmas/${XF[0]==='orgel'?'globe':XF[0]}.webp" style="width:36px;height:36px;object-fit:contain">`:b[1]):'?'}</div><div class="tx"><b>${u?b[2]+(sc?' Lv.'+S.scarfLv:''):'???'}</b><small>${u?(XF?b[4]+(b[0]==='xorgel'&&carolOn()?' · <b>재생 중</b>':''):'“'+b[4]+'”'+(sc?' · 눌러서 보기':'')):b[3]}</small></div></div>`}
   modal('📦 상자',h)}
 function importSave(btn){try{let v=$('svBox').value.trim().replace(/^["'\s]+|["'\s]+$/g,'').replace(/\s+/g,'');if(!v)throw '빈 칸이에요';let o;if(v[0]==='{')o=JSON.parse(v);else{v=v.replace(/-/g,'+').replace(/_/g,'/');while(v.length%4)v+='=';o=JSON.parse(decodeURIComponent(escape(atob(v))))}
@@ -1546,7 +1546,6 @@ function render(T){const t=now(),ph=phaseOf(t),dark=ph==='night'||ph==='evening'
   {const tint=(ph==='night'||ph==='evening')?null:ph==='sunset'?'rgba(255,140,80,.10)':ph==='dawn'?'rgba(255,170,170,.10)':null;if(tint){ctx.fillStyle=tint;ctx.fillRect(0,0,W,H)}}
 
   drawScarfFloat(T);drawDreams(T);drawHandHint(T);drawTeaCups(T);drawCocoaCups(T);for(const c of list)drawBubble(c);
-  if(scn==='table'&&!teaOn()){const bb=Math.sin(T*3+2)*2;pbubble(218,282+bb,'🍵 티타임','r',teaAvail()?1:.75)}
   if(scn==='camp'&&curMode!=='three'){const bb=Math.sin(T*3)*2;pbubble(318,304+bb,'🐻 곰굴','r',1)}
   if(scn==='garden'){const bb=Math.sin(T*3+1)*2;pbubble(362,232+bb,'🏡 집','r',1)}
   if(scn==='snow'){const bb=Math.sin(T*3+1)*2;pbubble(W*.9,W*.58+bb,'🏡 오두막','r',1)}
