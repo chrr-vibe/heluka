@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>보증기간</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Pinyon+Script&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Nanum+Myeongjo:wght@400;700;800&family=Nanum+Gothic+Coding:wght@400;700&display=swap">
+<style>
+:root{color-scheme:dark;--night:#17110c;--gold:#c4a676;--gold-hi:#e6d6b2;--line:rgba(196,166,118,.42);--parch:#ece2cd;--text:#ddd2bd;--muted:#a39580;
+  --caps:"Cinzel","Times New Roman",serif;--script:"Pinyon Script","Times New Roman",cursive;--ko:"Nanum Myeongjo","AppleMyungjo","Batang",serif}
+*{box-sizing:border-box}
+html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;background-color:var(--night);color:var(--text);font-family:var(--ko);font-size:17px;line-height:2;
+  background-image:radial-gradient(ellipse 70% 40% at 50% 0%,rgba(214,180,120,.12),transparent 70%);background-repeat:no-repeat;
+  padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px));padding-block:24px 80px}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;opacity:.5;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .9  0 0 0 0 .8  0 0 0 0 .6  0 0 0 .05 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+.wrap{max-width:620px;margin:0 auto}
+.back{display:inline-block;font-family:var(--caps);font-size:11px;letter-spacing:.2em;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:2px}
+.back:hover,.back:focus-visible{color:var(--gold-hi);outline:none}
+header{text-align:center;margin:56px 0 48px;display:grid;gap:6px;justify-items:center}
+header .lat{font-family:var(--script);font-size:44px;line-height:1;color:var(--gold)}
+header h1{margin:0;font-family:var(--ko);font-weight:800;font-size:clamp(28px,6vw,36px);color:var(--parch);letter-spacing:.08em}
+header .when{font-family:var(--caps);font-size:11px;letter-spacing:.28em;color:var(--muted)}
+header svg{width:160px;height:16px;margin-top:10px}
+article p{margin:0 0 1.1em;word-break:keep-all}
+.talk{margin:0 0 1.1em;padding-left:14px;border-left:1px solid var(--line)}
+.talk p{margin:0;color:var(--parch)}
+h2{margin:2.6em 0 1.4em;text-align:center;font-family:var(--ko);font-weight:700;font-size:16px;letter-spacing:.12em;color:var(--gold)}
+h2 span{padding:0 14px;background:var(--night);position:relative}
+h2::before{content:"";display:block;height:1px;background:var(--line);transform:translateY(1em)}
+.end{text-align:center;margin-top:56px;display:grid;gap:18px;justify-items:center}
+.end .mark{font-family:var(--caps);font-size:11px;letter-spacing:.3em;color:var(--muted)}
+.end a{font-family:var(--ko);font-size:15px;color:var(--gold-hi);text-decoration:none;border:1px solid var(--line);border-radius:40px 40px 10px 10px;padding:8px 22px}
+.end a:hover,.end a:focus-visible{background:rgba(196,166,118,.15);outline:none}
+
+.part{text-align:center;margin:84px 0 40px;display:grid;gap:4px;justify-items:center}
+.part.first{margin-top:0}
+.part .eyebrow{font-family:var(--script);font-size:32px;line-height:1.1;color:var(--gold)}
+.part h2{margin:0;font-family:var(--ko);font-weight:800;font-size:24px;color:var(--parch);letter-spacing:.06em}
+.part h2::before{display:none}
+.part .sub{font-family:var(--caps);font-size:11px;letter-spacing:.24em;color:var(--muted)}
+.orn2{color:var(--gold);margin-bottom:22px}
+.scene{display:flex;align-items:center;gap:12px;margin:56px 0 26px;color:var(--muted);font-size:14px;letter-spacing:.1em}
+.scene::before,.scene::after{content:"";flex:1;height:1px;background:var(--line)}
+.scene b{font-family:var(--caps);font-weight:600;color:var(--gold);letter-spacing:.12em}
+.list{margin:4px 0 1.4em;padding:14px 20px;border:1px solid var(--line);border-radius:6px;background:rgba(236,226,205,.05);font-size:15.5px;line-height:1.9;color:var(--parch)}
+.list ol{margin:0;padding-left:1.4em}
+.list .note{color:var(--muted);font-size:14px}
+.chat{margin:4px 0 1.6em;display:flex;flex-direction:column;gap:6px}
+.chat .who{font-size:12.5px;color:var(--muted);margin:4px 0 -2px}
+.chat .msg{align-self:flex-start;max-width:86%;background:rgba(236,226,205,.08);border:1px solid var(--line);color:var(--parch);padding:6px 13px;border-radius:14px 14px 14px 4px;font-size:15px;line-height:1.6}
+.chat .msg.me{align-self:flex-end;border-radius:14px 14px 4px 14px;background:rgba(217,130,106,.18);border-color:rgba(217,130,106,.45)}
+.chat .room{align-self:center;font-family:var(--ko);font-size:12px;color:var(--gold);letter-spacing:.06em;margin-bottom:4px}
+.quiet{color:var(--muted)}
+.note-card{margin:4px auto 1.4em;padding:12px 18px;border:1px dashed var(--gold);border-radius:4px;color:var(--parch);font-size:15px;text-align:center;max-width:320px;background:rgba(236,226,205,.04)}
+article b{color:var(--gold-hi)}
+.film{margin:0 0 1.1em;padding-left:14px;border-left:1px dashed var(--line);color:var(--muted);font-size:16px}
+
+.rc-fig{margin:2.4em auto 2.2em;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;justify-items:center;align-items:start;max-width:620px}
+.rc-fig canvas{width:100%;max-width:300px;height:auto;display:block;filter:drop-shadow(0 8px 20px rgba(0,0,0,.5))}
+.rc-fig figcaption{grid-column:1/-1;margin-top:4px;text-align:center;font-family:var(--caps);font-size:11px;letter-spacing:.2em;color:var(--muted);line-height:1.8}
+@media (max-width:560px){.rc-fig{grid-template-columns:1fr;gap:26px}.rc-fig canvas{max-width:340px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="index.html#chron" onclick="if(history.length>1){history.back();return false}">← 목록으로</a>
+  <header>
+    <span class="lat">Belege</span>
+    <h1>보증기간</h1>
+    <span class="when">외전 · 채도 이후 · 12월</span>
+    <svg viewBox="0 0 180 18" aria-hidden="true"><g fill="none" stroke="#c4a676" stroke-width="1.2"><path d="M0 9 H70 M110 9 H180"/><path d="M90 3 l6 6 -6 6 -6 -6z" fill="#c4a676"/></g></svg>
+  </header>
+  <article>
+
+<div class="scene"><b>월요일 저녁</b> F2</div>
+
+<p>루카스는 현관에서 코트를 벗기 전에 습도계를 보았다. 58이었다. 평소보다 여덟이 높았다. 습도가 오르는 데는 대개 이유가 둘이었다. 비가 오거나, 온도가 내려가거나. 창밖은 마른 12월이었다.</p>
+<p>그래서 그다음에 온도를 보았다. 16.5도. 집이 추웠다는 것을 루카스는 몸이 아니라 숫자로 먼저 알았다.</p>
+<p>거실 북향 창 앞에 그가 서 있었다. 코트를 입은 채로, 손가락 끝이 트인 장갑을 끼고, 여섯 번째 구멍에는 붓을 꽂고. 이젤 앞은 집에서 가장 추운 자리였다. 그는 루카스를 보더니 웃었다.</p>
+<p>"루카, 어서 와요ㅎㅎ 저 지금 입김이 나오는지 실험 중이었는데요."</p>
+<p>"……나와?"</p>
+<p>"아직은요. 근데 곧요."</p>
+<p>루카스는 코트를 벗지 않고 라디에이터 앞으로 갔다. 라디에이터 위에 달린 조절기의 작은 화면에 두 글자가 떠 있었다. F2.</p>
+<p>루카스는 그 두 글자를 오래 보았다. 오래 본다고 달라지는 글자는 아니었다. 그래도 보았다. 읽는 일은 언제나 먼저였고, 판단은 그다음이었다. 모터 이상. 밸브가 닫힌 채로 굳은 것이다.</p>
+<p>"……고장이야."</p>
+<p>"집주인 분께 전화할까요?"</p>
+<p>"……건물 쪽은 밸브까지야. 이 머리는 우리가 달았어."</p>
+<p>"언제요?"</p>
+<p>"……5년 전 12월."</p>
+<p>그가 눈을 깜빡였다. 5년 전 12월을 어떻게 그렇게 정확히 아느냐고 묻고 싶은 얼굴이었다. 루카스는 질문이 나오기 전에 먼저 말했다.</p>
+<p>"……5년 보증이야. 12월 14일까지."</p>
+<p>"오늘이 며칠인데요?"</p>
+<p>"……6일."</p>
+<p>"그럼 8일 남았네요?"</p>
+<p>"……8일."</p>
+<p>"방금 계산하신 거 아니죠."</p>
+<p>"……처음부터 알았어."</p>
+<p>루카스는 코트를 입은 채로 복도를 걸어 서재와 욕실 사이의 작은 창고 앞에 섰다. 문이 반만 열리는 좁은 칸이었다. 그는 이 집의 거의 모든 칸에 들어가 보았지만 그 창고에서는 늘 문턱에서 멈췄다. 안쪽에서 루카스의 규칙이 느껴지는 칸이었다.</p>
+<p>두 번째 선반 아래, 검은 합지 바인더가 등을 맞춰 한 줄로 서 있었다. 등마다 흰 라벨이 붙어 있었다. 그 옆에는 습도계가 하나 있었다. 아끼는 것에는 습도계가 붙었다.</p>
+<p>"……이게 다 뭐예요?"</p>
+<p>"……관리 대장."</p>
+<p>"몇 권이에요?"</p>
+<p>"……스물세 권."</p>
+<p>그는 세어 보았다. 스물세 권이 맞았다. 그리고 맨 앞에 한 권이 더 있었다. 등에 'B-00'이라고 적힌 그 바인더는 다른 것보다 라벨이 새것이었다. 접착제 가장자리가 아직 덜 바래 있었다.</p>
+<p>"이것만 라벨이 새거예요."</p>
+<p>"……봄에 만들었어."</p>
+<p>그는 더 묻지 않았다. 어느 봄인지 알았기 때문이다. 4월의 한 달, 루카스가 스물다섯이던 한 달. 그 뒤로 루카스는 수첩 말고도 만든 것이 있었다. 있었던 일을 순서대로 다시 찾아갈 수 있는 길이었다.</p>
+<p>루카스는 B-07을 뽑았다. 등에는 '난방 · 설비'라고 적혀 있었다. 바인더를 펴자 중성지 슬리브가 한 칸에 한 장씩 들어 있었고, 슬리브마다 영수증이 두 장이었다. 왼쪽이 원본, 오른쪽이 사본.</p>
+<p>"……원본은 감열지야. 3년이면 글씨가 날아가. 그래서 받은 날 복사해."</p>
+<p>"그럼 원본은 버려도 되잖아요."</p>
+<p>"……원본은 증거야. 사본은 읽으라고 있는 거고."</p>
+<p>루카스는 한 칸에서 손을 멈추었다. 5년 전 12월 14일의 영수증이었다.</p>
+
+<figure class="rc-fig" data-rc="r1">
+  <canvas data-rc-front aria-label="철물점 영수증. 라디에이터 온도조절기 4개, 건전지, 테플론 테이프. 합계 128,48 유로."></canvas>
+  <canvas data-rc-back aria-label="영수증 뒷면의 연필 메모. 설치 위치와 보증 만료일이 적혀 있다."></canvas>
+  <figcaption>B-07 · 난방 · 설비 — 앞면은 원본, 뒷면은 연필</figcaption>
+</figure>
+
+<p>루카스가 영수증을 뒤집었다. 뒷면에는 연필 글씨가 있었다. 가장자리와 평행하게, 자로 잰 듯 같은 간격으로.</p>
+<p>그가 소리 내어 읽었다. "거실, 북쪽 창 아래. 침실, 서재, 욕실. 건전지는 3월과 9월. 보증 5년……" 그는 읽다가 멈췄다. "만료일까지 써 놨어요."</p>
+<p>"……써 두면 안 잊어."</p>
+<p>"루카가 잊을 리가 없잖아요."</p>
+<p>"……잊을 수 있어."</p>
+<p>거실 쪽에서 라디에이터가 식어 가는 소리가 났다. 아주 작은 금속음이었다.</p>
+<p>"……그 봄에 알았어."</p>
+<p>그는 웃지 않았다. ㅎㅎ도 쓰지 않았다. 대신 B-00을 보았다. 루카스는 그 시선을 알아보고 말없이 B-00을 꺼내 첫 장을 펼쳐 주었다. 번호 · 품목 · 위치 · 보증 · 만료. 줄은 스물세 줄이었다. 난방 칸에는 'B-07 · 난방 · 설비 · 5년 · 12.14.'라고 적혀 있고, 그 옆에 노란 인덱스 탭이 붙어 있었다.</p>
+<p>서랍장 위의 상자에는 못 버린 것이 있었다. 이 선반에는 버리지 않은 것이 있었다. 둘은 달랐다. 못 버린 것은 마음이 정하고, 버리지 않은 것은 규칙이 정한다. 그리고 가끔은 규칙이 마음 대신 해 주는 일이 있었다.</p>
+<p>"이거 다 보관하는 거, 안 무거워요?"</p>
+<p>"……대부분의 영수증은 버려도 돼."</p>
+<p>"그런데요?"</p>
+<p>"……어느 게 대부분이 아닌지는, 버린 다음에야 알아."</p>
+<p>다음 날 점심시간에 루카스는 하우프트슈트라세의 철물점에 갔다. 주인은 5년 전 12월의 거래가 전산에 남아 있지 않다고 했다. 그해 가게의 시스템이 바뀌었다는 것이다. 루카스는 아무 말 없이 원본과 사본을 카운터에 나란히 올려놓았다. 주인은 두 장을 번갈아 보다가 한참 뒤에 말했다.</p>
+<p>"손님 같은 분이 많으면 저희는 장사가 안 됩니다."</p>
+<p>그러고는 새 조절기를 한 상자 꺼냈다. 교환품은 새 제품이라 보증이 처음부터 다시 시작된다고 했다. 5년. 주인이 내민 교환 확인서 맨 아래의 만료 칸에는 날짜가 인쇄되어 있었다. 루카스는 그것을 오래 읽었다.</p>
+<p>그날 저녁 거실은 21도가 되었다. 습도 51. 그는 이젤 앞에서 장갑을 벗지 않았다.</p>
+<p>"버릇이에요ㅎㅎ"</p>
+
+<div class="scene"><b>목요일 아침</b> 로트</div>
+
+<p>목요일 아침, 그는 이젤 앞에서 튜브 하나를 든 채 한참 서 있었다. 카드뮴 레드 딥. 40밀리리터. 라벨은 5년 전 것과 같았고 이름도 같았다. 그는 종이 위에 한 점을 짜서 옆에 놓인 오래된 견본 곁에 나란히 두었다.</p>
+<p>"……같은 이름인데요."</p>
+<p>아침을 먹던 루카스가 물었다. "……뭐가."</p>
+<p>"오렌지가 한 칸 들어갔어요."</p>
+<p>루카스는 접시를 내려놓고 건너와서 두 점을 보았다. 오래 보지 않았다. 한 번 보고 고개를 끄덕였다.</p>
+<p>"……배합이 바뀌었어."</p>
+<p>"그럴 수 있어요?"</p>
+<p>"……이름은 안 바뀌어. 로트가 바뀌어."</p>
+<p>그가 그 빨강을 찾는 이유는 그림 한 점이었다. 5년 전 가을에 그린 큰 그림, 둘이 '창문'이라고 부르는 것. 봄에 미술관 전시에 나갈 예정이었고, 미술관 보존 담당자가 상태 보고서를 보내왔다. 왼쪽 아래 모서리의 붉은 면에 4센티미터쯤 들뜬 자리가 있다는 것이었다. 운송 중에 생긴 것이었다. 작가가 직접 메우는 것을 허락한다고 했다. 단, 같은 재료로.</p>
+<p>그는 그 빨강을 어디서 샀는지 기억하지 못했다. 그해 가을은 물감을 사는 일이 숨 쉬는 일 같아서, 어디서 샀는지가 남지 않았다.</p>
+<p>"……B-12."</p>
+<p>루카스는 벌써 일어나 있었다.</p>
+<p>바인더를 연 루카스는 쪽을 넘기지 않고 날짜로 곧장 갔다. 10월 12일. 슬리브에 영수증이 두 장이었다.</p>
+
+<figure class="rc-fig" data-rc="r2">
+  <canvas data-rc-front aria-label="화방 영수증. 카드뮴 레드 딥 3개, 로트 2217-B. 아마씨유, 팔레트 나이프."></canvas>
+  <canvas data-rc-back aria-label="영수증 뒷면. 연필 메모와, 글라신지로 덮은 손톱만 한 붉은 색 견본."></canvas>
+  <figcaption>B-12 · 화구 · 물감 — 뒷면 왼쪽 아래에 글라신지로 덮은 견본</figcaption>
+</figure>
+
+<p>뒷면에는 연필 글씨가 있었고, 모서리에 손톱만 한 붉은 점이 있었다. 점 위에는 글라신지 한 조각이 접착 테이프 없이 덮여 있었다.</p>
+<p>"……이게."</p>
+<p>"……색 견본이야. 그날 튜브에서 한 점."</p>
+<p>"영수증에다 칠했어요?"</p>
+<p>"……표시한 거야."</p>
+<p>그는 글라신지를 걷었다. 5년 전의 빨강이 거기 있었다. 라벨보다, 기억보다, 방금 짠 새 튜브보다 정확하게. 이 점은 종이 뒤에서 빛을 보지 못한 채로 그날의 색을 지키고 있었다. 그는 오래 그것을 들여다보다가 말했다.</p>
+<p>"루카, 이건요. 제 물감인데요. 저보다 루카가 더 잘 가지고 있었어요."</p>
+<p>"……기록은 내가 해. 그리는 건 네가 해."</p>
+<p>금요일 점심에 루카스는 코른마르크트의 화방에 갔다. 가게는 5년 사이에 한 번 단장을 했지만 카운터 뒤의 노부인은 그대로였다. 루카스가 사본을 내밀자 노부인은 안경을 올려 쓰고 뒷면까지 뒤집어 본 뒤 말했다.</p>
+<p>"로트 번호를 물어보던 분이네요."</p>
+<p>그러고는 아무 말 없이 카운터 아래 서랍을 열었다. 서랍 맨 안쪽에 종이로 싼 튜브 둘이 있었다.</p>
+<p>"이 로트는 다 나갔어요. 이 두 개만 빼고. 매번 로트를 물으시는 손님이 있어서, 언젠가 오겠다 싶어서요."</p>
+<p>"……5년이 지났습니다."</p>
+<p>"로트를 묻는 사람은, 꼭 돌아오거든요."</p>
+<p>루카스는 대답하지 않았다. 귀 끝이 붉어졌는지는 아무도 알 수 없었다. 가게의 조명이 노랗고 노부인의 안경이 두꺼웠다.</p>
+<p>그가 4센티미터를 메우는 데는 사흘이 걸렸다. 일요일에는 붓을 들지 않았으니 나흘이었다. 루카스는 지켜보지 않았다. 대신 이젤 옆에 습도계를 하나 놓아 두었다. 49. 50. 51. 숫자가 흔들리지 않았다.</p>
+<p>보존 담당자의 회신은 짧았다. 영수증 사본과 색 견본 사진을 보고 안료 분석은 생략하겠다고 했다. 마지막 줄은 이랬다. '이런 재료 기록은 처음 봅니다. 연구실에 한 권 두고 싶을 정도입니다.'</p>
+<p>루카스는 그 메일을 읽고 아무 말도 하지 않았다. 그날 저녁 수첩에는 한 줄이 늘었다. '대부분이 아닌 쪽.'</p>
+
+<div class="scene"><b>일요일</b> 편도</div>
+
+<p>그다음 일요일은 쉬는 날이었다. 붓도 핀셋도 메일도 금지. 바인더는 금지 목록에 없었다.</p>
+<p>아침에 B-12를 제자리에 꽂은 그가 선반 앞에서 떠나지 않았다.</p>
+<p>"루카, 하나만 더 열어 봐도 돼요?"</p>
+<p>"……하나만."</p>
+<p>그는 맨 끝 쪽에서 한 권을 뽑았다. 등에는 'B-19 · 여행 · 교통'이라고 적혀 있었다.</p>
+<p>"보스턴 갔을 때 것도 있어요?"</p>
+<p>루카스가 대답하기까지 시간이 걸렸다. 그는 그 시간이 길다는 것을 알았다.</p>
+<p>"……있어."</p>
+<p>그는 천천히 넘겼다. 11월. 슬리브가 하나 있었고, 안에는 영수증이 두 장이었다.</p>
+
+<figure class="rc-fig" data-rc="r3">
+  <canvas data-rc-front aria-label="항공권 예약 영수증. 프랑크푸르트에서 보스턴까지 편도, 일반석. 환불 불가."></canvas>
+  <canvas data-rc-back aria-label="영수증 뒷면의 연필 메모. 결제 직전에 한 번 멈춘 일, 환불하지 않은 일이 적혀 있다."></canvas>
+  <figcaption>B-19 · 여행 · 교통 — 편도, 환불 불가</figcaption>
+</figure>
+
+<p>그는 앞면을 읽었다. 그다음 뒷면을 뒤집어 읽었다. 이번에는 소리 내지 않았다.</p>
+<p>방 안이 조용해졌다. 라디에이터는 이제 고장 나지 않았기 때문에, 조용한 것은 정말 조용한 것이었다.</p>
+<p>"……영수증, 있었네요."</p>
+<p>"……있다고 했잖아."</p>
+<p>"항공권이 영수증이라는 말은 그냥 비유인 줄 알았어요."</p>
+<p>"……비유 아니야. 증빙이야."</p>
+<p>그는 소리 없이 웃었다. 웃다가 눈가가 먼저 젖었다. 그러다 웃음이 먼저 끝났다.</p>
+<p>"반품 안 한다면서요. 반품 안 하는데 왜 보관했어요?"</p>
+<p>"……반품 안 해도 영수증은 있어야 해."</p>
+<p>"왜요?"</p>
+<p>"……있었던 일은, 있었다고 말할 수 있어야 하니까."</p>
+<p>"누구한테요?"</p>
+<p>루카스는 바인더를 보고 있었다. 그가 아니라 슬리브 속의 두 장을.</p>
+<p>"……나중의 나한테."</p>
+<p>그는 대답하지 않았다. 대신 바인더를 루카스 쪽으로 돌려 놓았다. 루카스가 펴 보지 않아도 되도록, 연필 글씨가 위로 오게.</p>
+<p>'다음엔 물어'의 예외 1회. 사유: 'ㅎ'가 하나였음. 거기 그대로 적혀 있었다. 루카스는 4년 전의 자신에게 이 영수증을 쓰게 한 것이 그 'ㅎ' 하나였다는 것을, 새삼 다시 읽어야 했다.</p>
+<p>"……예외 사유는 맞게 적었어."</p>
+<p>"맞게 적으셨네요."</p>
+<p>"……정확하게."</p>
+<p>그날 오후에 루카스는 서재에서 교환 확인서를 B-07의 슬리브에 넣었다. 노란 탭에 새 날짜를 썼다. 12.2032.</p>
+<p>"5년 뒤네요."</p>
+<p>"……응."</p>
+<p>"그때도 이 영수증 들고 철물점 가는 거예요?"</p>
+<p>루카스는 연필을 내려놓았다. 대답은 바로 나오지 않았다.</p>
+<p>"……같이."</p>
+<p>"일정이에요?"</p>
+<p>"……일정이야."</p>
+<p>그가 뒤에서 팔을 둘렀다. 루카스는 B-07을 닫아 선반에 꽂고 습도계를 보았다. 50. 이상 없음.</p>
+<p>수첩 12월의 맨 아랫줄에는 한 줄이 늘었다.</p>
+<p>'2032. 12. 14. 온도조절기 보증 만료. 철물점. (같이 감.)'</p>
+<p>괄호는 지우지 않았다. 괄호 안의 말은 나중의 자신에게 보내는 것이었다. 나중의 나는 그것을 읽을 것이다. 읽고, 믿을 것이다. 영수증이 있으니까.</p>
+
+  </article>
+  <div class="end"><span class="mark">— FIN —</span><a href="index.html#chron" onclick="if(history.length>1){history.back();return false}">목록으로 돌아가기</a></div>
+</div>
+<!--bgm--><script>window.BGM={"ids": ["rOcWd2jRPJU", "vw2vg6zvBaM"], "title": "Gymnopédie No.1 · Satie"};</script><script src="bgm.js" defer></script><!--/bgm-->
+
+<script>
+/* 영수증 그리기: 「하이델베르크 영수증 프린터」 아티팩트의 drawReceipt를 그대로 옮겨 온 것
+   (흰 감열지 · 파란 잉크 · 점선 · 톱니 가장자리 · 바코드). 이야기용으로 온라인 결제(r.online)와 §19 문구 생략(r.noS19)만 추가. */
+(function(){
+"use strict";
+var INK="#2547b4",PENCIL="#4a4a54",FONT='"Nanum Gothic Coding", ui-monospace, monospace',W=360,PAD=20,SC=3;
+var KO={bon:"영수증 번호",srv:"담당",sum:"합계 EUR",tip:"팁",tot:"총액 EUR",cash:"받은 현금",chg:"거스름돈",card:"girocard 비접촉",cardOn:"신용카드 · 온라인",ok:"결제 완료 · 승인",vat:"부가세",cols:["공급가","세액","합계"],tse:"TSE 서명",start:"시작",end:"종료",table:"테이블",dine:"식사 영수증",tel:"Tel.",s19:["소규모 사업자 (§19 UStG)","부가세 표시 없음"]};
+function hashHex(str,len){len=len||64;var h1=0x811c9dc5,out="",i=0;while(out.length<len){for(var k=0,t=str+i;k<t.length;k++){h1^=t.charCodeAt(k);h1=Math.imul(h1,0x01000193)>>>0}out+=h1.toString(16).padStart(8,"0");i++}return out.slice(0,len)}
+function money(x){var s=Math.abs(x).toFixed(2).split("."),a=s[0].replace(/\B(?=(\d{3})+(?!\d))/g,",");return(x<0?"-":"")+a+"."+s[1]}
+function dstr(d){var p=d.split("-");return p[0]+"."+p[1]+"."+p[2]}
+function fnt(sz,b){return(b?"700 ":"400 ")+sz+"px "+FONT}
+function wrap(ctx,text,maxW){text=String(text==null?"":text);if(ctx.measureText(text).width<=maxW)return[text];var words=text.split(/(\s+)/),lines=[],cur="";
+ function pushLong(w){for(var i=0;i<w.length;i++){var ch=w[i];if(ctx.measureText(cur+ch).width>maxW&&cur){lines.push(cur);cur=ch}else cur+=ch}}
+ words.forEach(function(w){if(ctx.measureText(cur+w).width<=maxW){cur+=w}else{if(cur.trim())lines.push(cur.replace(/\s+$/,""));cur="";if(ctx.measureText(w).width>maxW)pushLong(w.replace(/^\s+/,""));else cur=w.replace(/^\s+/,"")}});
+ if(cur.trim())lines.push(cur.replace(/\s+$/,""));return lines.length?lines:[""]}
+function calc(r){var sum=0,by={};r.items.forEach(function(it){var t=Math.round(it.qty*it.unit*100)/100;it.total=t;sum+=t;by[it.vat]=(by[it.vat]||0)+t});
+ sum=Math.round(sum*100)/100;var tip=r.tip||0;return{sum:sum,tip:tip,grand:Math.round((sum+tip)*100)/100,by:by}}
+function zigzag(ctx,H){ctx.fillStyle="#fff";ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(W,0);ctx.lineTo(W,H);for(var x=W;x>=0;x-=8){ctx.lineTo(x-4,H+5);ctx.lineTo(x-8,H)}ctx.closePath();ctx.fill()}
+
+function drawReceipt(r){
+ var lb=KO,c=calc(r),cv=document.createElement("canvas"),ops=[];
+ function add(){ops.push([].slice.call(arguments))}
+ add("c",r.shop,17,true);if(r.sub)add("c",r.sub,11.5);if(r.street)add("c",r.street,11.5);if(r.city)add("c",r.city,11.5);if(r.tel)add("c",lb.tel+" "+r.tel,11.5);
+ add("dash");
+ add("lr",dstr(r.date)+"  "+r.time,lb.bon+" "+r.bon,12.5);if(r.cashier)add("l",lb.srv+": "+r.cashier,12.5);
+ add("dash");
+ r.items.forEach(function(it){add("lr",it.name,money(it.total)+(it.vat==="N"?"  ":" "+it.vat),12.5);if(it.qty>1)add("ind",it.qty+" x "+money(it.unit),11);if(it.note)add("ind",it.note,11)});
+ add("solid");add("lr",lb.sum,money(c.sum),15,true);add("dash");
+ add("lr",r.online?lb.cardOn:lb.card,money(c.grand),12.5);add("l",lb.ok,10.5);
+ if(!r.online)add("l","Terminal "+(4000+parseInt(hashHex(r.shop,4),16)%999)+" · AID A0000003591010",10.5);
+ var rates={A:7,B:19},vk=Object.keys(c.by).filter(function(k){return k!=="N"}).sort();
+ if(vk.length){add("dash");add("vat",lb.vat,lb.cols[0],lb.cols[1],lb.cols[2]);vk.forEach(function(k){var g=c.by[k],n=g/(1+rates[k]/100);add("vat",k+"= "+rates[k]+" %",money(n),money(g-n),money(g))})}
+ var foot=(r.footer||[]).slice();if(!vk.length&&!r.noS19)foot=lb.s19.concat(foot);
+ if(foot.length){add("dash");foot.forEach(function(f){add("c",f,11.5)})}
+ var seed=hashHex(JSON.stringify(r.items)+r.shop+r.time);
+ add("gap",8);add("bar",seed);add("gap",4);
+ if(!r.online){add("c",lb.tse+": "+seed+hashHex(seed,32),8.5,false,.75);
+  var sec=parseInt(seed.slice(0,2),16)%40;
+  add("c",lb.start+" "+dstr(r.date)+" "+r.time+":"+String(sec).padStart(2,"0")+" · "+lb.end+" "+dstr(r.date)+" "+r.time+":"+String(sec+19).padStart(2,"0"),8.5,false,.75)}
+ add("gap",10);
+ function run(ctx,draw){var y=PAD+6,iw=W-PAD*2;
+  ops.forEach(function(o){var t=o[0];
+   if(t==="c"){var txt=o[1],sz=o[2],b=o[3],al=o[4];ctx.font=fnt(sz,b);var lh=sz*1.42;wrap(ctx,txt,iw).forEach(function(ln){if(draw){ctx.globalAlpha=al||1;ctx.textAlign="center";ctx.fillText(ln,W/2,y+sz);ctx.globalAlpha=1}y+=lh})}
+   else if(t==="l"||t==="ind"){var txt2=o[1],sz2=o[2];ctx.font=fnt(sz2);var x=PAD+(t==="ind"?12:0);wrap(ctx,txt2,iw-(x-PAD)).forEach(function(ln){if(draw){ctx.textAlign="left";ctx.globalAlpha=t==="ind"?.88:1;ctx.fillText(ln,x,y+sz2);ctx.globalAlpha=1}y+=sz2*1.42})}
+   else if(t==="lr"){var a=o[1],b2=o[2],sz3=o[3],bold=o[4];ctx.font=fnt(sz3,bold);var bw=ctx.measureText(b2).width,lines=wrap(ctx,a,iw-bw-12);lines.forEach(function(ln,i){if(draw){ctx.textAlign="left";ctx.fillText(ln,PAD,y+sz3);if(i===0){ctx.textAlign="right";ctx.fillText(b2,W-PAD,y+sz3)}}y+=sz3*1.42});if(bold)y+=2}
+   else if(t==="vat"){var sz4=10.5;ctx.font=fnt(sz4);if(draw){ctx.textAlign="left";ctx.fillText(o[1],PAD,y+sz4);ctx.textAlign="right";ctx.fillText(o[4],W-PAD,y+sz4);ctx.fillText(o[3],W-PAD-62,y+sz4);ctx.fillText(o[2],W-PAD-118,y+sz4)}y+=sz4*1.5}
+   else if(t==="dash"){y+=6;if(draw){ctx.save();ctx.globalAlpha=.7;ctx.setLineDash([3,3]);ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(PAD,y+.5);ctx.lineTo(W-PAD,y+.5);ctx.stroke();ctx.restore()}y+=8}
+   else if(t==="solid"){y+=6;if(draw){ctx.fillRect(PAD,y,iw,2)}y+=10}
+   else if(t==="gap"){y+=o[1]}
+   else if(t==="bar"){var s=o[1],bw2=210,h=34,x0=(W-bw2)/2;if(draw){var xx=x0,i2=0;while(xx<x0+bw2-2){var v=parseInt(s[i2%s.length],16),w=v%3===0?2.2:1.1,g=(v>>2)%2?2.2:1.4;ctx.fillRect(xx,y,w,h);xx+=w+g;i2++}}y+=h+2}
+  });return y+PAD}
+ var m=document.createElement("canvas").getContext("2d"),H=Math.ceil(run(m,false));
+ cv.width=W*SC;cv.height=(H+8)*SC;var ctx=cv.getContext("2d");ctx.scale(SC,SC);
+ zigzag(ctx,H);ctx.fillStyle=INK;ctx.strokeStyle=INK;run(ctx,true);return cv}
+
+/* 뒷면: 같은 종이, 연필 글씨(루카스의 글씨는 자로 잰 듯 같은 간격) */
+function drawBack(r){
+ var lines=r.back,lh=27,top=PAD+22,H=Math.max(top+lines.length*lh+PAD+(r.swatch?74:10),260);
+ var cv=document.createElement("canvas");cv.width=W*SC;cv.height=(H+8)*SC;var ctx=cv.getContext("2d");ctx.scale(SC,SC);
+ zigzag(ctx,H);
+ ctx.fillStyle=PENCIL;ctx.textAlign="left";
+ ctx.font=fnt(9.5);ctx.globalAlpha=.45;ctx.fillText("(뒷면)",PAD,PAD+10);ctx.globalAlpha=1;
+ ctx.font=fnt(13.5);
+ lines.forEach(function(ln,i){ctx.globalAlpha=.9;ctx.fillText(ln,PAD,top+i*lh+14);ctx.globalAlpha=1});
+ if(r.swatch){
+  var sx=PAD+4,sy=top+lines.length*lh+10;
+  ctx.save();ctx.fillStyle=r.swatch;ctx.beginPath();
+  ctx.moveTo(sx+3,sy+7);ctx.bezierCurveTo(sx+2,sy+1,sx+14,sy-1,sx+26,sy+2);ctx.bezierCurveTo(sx+36,sy+4,sx+40,sy+12,sx+36,sy+22);ctx.bezierCurveTo(sx+30,sy+30,sx+12,sy+31,sx+4,sy+24);ctx.bezierCurveTo(sx-1,sy+19,sx+1,sy+12,sx+3,sy+7);ctx.fill();
+  ctx.globalAlpha=.34;ctx.fillStyle="#f3f3ee";ctx.fillRect(sx-8,sy-8,64,50);ctx.globalAlpha=.5;ctx.strokeStyle="#c9c9c0";ctx.lineWidth=.8;ctx.strokeRect(sx-8,sy-8,64,50);
+  ctx.restore();
+  ctx.fillStyle=PENCIL;ctx.font=fnt(11.5);ctx.globalAlpha=.85;ctx.fillText("← 견본 (글라신지)",sx+64,sy+20);ctx.globalAlpha=1}
+ return cv}
+
+var DATA={
+ r1:{date:"2022-12-14",time:"16:20",shop:"EISENWAREN SCHNEIDER",sub:"철물 · 난방 · 설비",street:"Hauptstraße 117",city:"69117 Heidelberg",tel:"06221 / 18 42 07",cashier:"계산대 1",
+  items:[{name:"난방 온도조절기 프로그램형",qty:4,unit:29.90,vat:"B",note:"거실 · 침실 · 서재 · 욕실"},{name:"건전지 AA 4개입",qty:2,unit:3.49,vat:"B"},{name:"테플론 테이프",qty:1,unit:1.90,vat:"B"}],
+  footer:["온도조절기 5년 제조사 보증","보증 청구 시 영수증 지참"],
+  back:["거실 (북쪽 창 아래)","침실 · 서재 · 욕실","설치: 같은 날 오후","건전지: 3월 · 9월","보증 5년","만료: 14.12.2027","(고장 나면 원본 + 사본)"]},
+ r2:{date:"2022-10-12",time:"10:40",shop:"KUNSTBEDARF AM KORNMARKT",sub:"화방 · 미술 재료",street:"Kornmarkt 3",city:"69117 Heidelberg",tel:"06221 / 65 17 30",cashier:"계산대 1",
+  items:[{name:"카드뮴 레드 딥 40ml",qty:3,unit:21.40,vat:"B",note:"로트 2217-B"},{name:"아마씨유 250ml",qty:1,unit:8.80,vat:"B"},{name:"팔레트 나이프",qty:1,unit:12.50,vat:"B"}],
+  footer:["물감 로트 번호는 요청 시 적어 드립니다","종이로 포장해 드려요"],
+  back:["화방. 오전.","카드뮴 레드 딥 3 — 로트 2217-B","→ 큰 그림(가을), 가장자리 붉은 면","   2개 사용 · 1개 예비","가게 재고: 이 로트 4개 (확인 12.10.)","※ 배합이 바뀌면 로트가 바뀜.","   같은 이름 ≠ 같은 색.","(견본: 아래. 글라신지 덮음.)"],swatch:"#a3191f"},
+ r3:{date:"2023-11-22",time:"22:48",shop:"FLUGWEG ONLINE",sub:"항공권 예약",street:"Mainzer Landstraße 90",city:"60325 Frankfurt am Main",tel:"",cashier:"",online:true,noS19:true,
+  items:[{name:"항공권 FRA → BOS 편도",qty:1,unit:612.00,vat:"N",note:"일반석 · 환불 불가 · 변경 불가"},{name:"공항세 · 수수료",qty:1,unit:148.30,vat:"N"}],
+  footer:["이 영수증은 세금계산서가 아닙니다","예약 확인서와 함께 보관하세요"],
+  back:["22.11. 22:48","결제 직전 1분 멈춤.","편도. 환불 불가. (환불 안 함.)","'다음엔 물어'의 예외 1회.","사유: 'ㅎ'가 하나였음.","","영수증: 있음. (헛거 아님.)"]}
+};
+Object.keys(DATA).forEach(function(k){DATA[k].bon=String(parseInt(hashHex(k+DATA[k].shop,6),16)%90000+10000)});
+
+function paint(){
+ document.querySelectorAll("figure.rc-fig").forEach(function(fig){
+  var r=DATA[fig.getAttribute("data-rc")];if(!r)return;
+  [["canvas[data-rc-front]",drawReceipt],["canvas[data-rc-back]",drawBack]].forEach(function(p){
+   var el=fig.querySelector(p[0]);if(!el)return;var cv=p[1](r);el.width=cv.width;el.height=cv.height;el.getContext("2d").drawImage(cv,0,0)})})}
+var started=false;function go(){if(started)return;started=true;paint()}
+try{
+ var t=0;document.fonts&&document.fonts.load&&Promise.all([document.fonts.load(fnt(12,false),"영수증 합계 ㅎ가나다"),document.fonts.load(fnt(12,true),"영수증 합계 ㅎ가나다")]).then(go,go);
+ setTimeout(go,1800);
+}catch(e){go()}
+})();
+</script>
+</body>
+</html>
