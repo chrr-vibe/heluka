@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>한 꼬집은 0.4그램</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Pinyon+Script&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Nanum+Myeongjo:wght@400;700;800&display=swap">
+<style>
+:root{color-scheme:dark;--night:#17110c;--gold:#c4a676;--gold-hi:#e6d6b2;--line:rgba(196,166,118,.42);--parch:#ece2cd;--text:#ddd2bd;--muted:#a39580;
+  --caps:"Cinzel","Times New Roman",serif;--script:"Pinyon Script","Times New Roman",cursive;--ko:"Nanum Myeongjo","AppleMyungjo","Batang",serif}
+*{box-sizing:border-box}
+html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;background-color:var(--night);color:var(--text);font-family:var(--ko);font-size:17px;line-height:2;
+  background-image:radial-gradient(ellipse 70% 40% at 50% 0%,rgba(214,180,120,.12),transparent 70%);background-repeat:no-repeat;
+  padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px));padding-block:24px 80px}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;opacity:.5;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .9  0 0 0 0 .8  0 0 0 0 .6  0 0 0 .05 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+.wrap{max-width:620px;margin:0 auto}
+.back{display:inline-block;font-family:var(--caps);font-size:11px;letter-spacing:.2em;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:2px}
+.back:hover,.back:focus-visible{color:var(--gold-hi);outline:none}
+header{text-align:center;margin:56px 0 48px;display:grid;gap:6px;justify-items:center}
+header .lat{font-family:var(--script);font-size:44px;line-height:1;color:var(--gold)}
+header h1{margin:0;font-family:var(--ko);font-weight:800;font-size:clamp(28px,6vw,36px);color:var(--parch);letter-spacing:.08em}
+header .when{font-family:var(--caps);font-size:11px;letter-spacing:.28em;color:var(--muted)}
+header svg{width:160px;height:16px;margin-top:10px}
+article p{margin:0 0 1.1em;word-break:keep-all}
+.talk{margin:0 0 1.1em;padding-left:14px;border-left:1px solid var(--line)}
+.talk p{margin:0;color:var(--parch)}
+h2{margin:2.6em 0 1.4em;text-align:center;font-family:var(--ko);font-weight:700;font-size:16px;letter-spacing:.12em;color:var(--gold)}
+h2 span{padding:0 14px;background:var(--night);position:relative}
+h2::before{content:"";display:block;height:1px;background:var(--line);transform:translateY(1em)}
+.end{text-align:center;margin-top:56px;display:grid;gap:18px;justify-items:center}
+.end .mark{font-family:var(--caps);font-size:11px;letter-spacing:.3em;color:var(--muted)}
+.end a{font-family:var(--ko);font-size:15px;color:var(--gold-hi);text-decoration:none;border:1px solid var(--line);border-radius:40px 40px 10px 10px;padding:8px 22px}
+.end a:hover,.end a:focus-visible{background:rgba(196,166,118,.15);outline:none}
+
+.part{text-align:center;margin:84px 0 40px;display:grid;gap:4px;justify-items:center}
+.part.first{margin-top:0}
+.part .eyebrow{font-family:var(--script);font-size:32px;line-height:1.1;color:var(--gold)}
+.part h2{margin:0;font-family:var(--ko);font-weight:800;font-size:24px;color:var(--parch);letter-spacing:.06em}
+.part h2::before{display:none}
+.part .sub{font-family:var(--caps);font-size:11px;letter-spacing:.24em;color:var(--muted)}
+.orn2{color:var(--gold);margin-bottom:22px}
+.scene{display:flex;align-items:center;gap:12px;margin:56px 0 26px;color:var(--muted);font-size:14px;letter-spacing:.1em}
+.scene::before,.scene::after{content:"";flex:1;height:1px;background:var(--line)}
+.scene b{font-family:var(--caps);font-weight:600;color:var(--gold);letter-spacing:.12em}
+.list{margin:4px 0 1.4em;padding:14px 20px;border:1px solid var(--line);border-radius:6px;background:rgba(236,226,205,.05);font-size:15.5px;line-height:1.9;color:var(--parch)}
+.list ol{margin:0;padding-left:1.4em}
+.list .note{color:var(--muted);font-size:14px}
+.chat{margin:4px 0 1.6em;display:flex;flex-direction:column;gap:6px}
+.chat .who{font-size:12.5px;color:var(--muted);margin:4px 0 -2px}
+.chat .msg{align-self:flex-start;max-width:86%;background:rgba(236,226,205,.08);border:1px solid var(--line);color:var(--parch);padding:6px 13px;border-radius:14px 14px 14px 4px;font-size:15px;line-height:1.6}
+.chat .msg.me{align-self:flex-end;border-radius:14px 14px 4px 14px;background:rgba(217,130,106,.18);border-color:rgba(217,130,106,.45)}
+.chat .room{align-self:center;font-family:var(--ko);font-size:12px;color:var(--gold);letter-spacing:.06em;margin-bottom:4px}
+.quiet{color:var(--muted)}
+.note-card{margin:4px auto 1.4em;padding:12px 18px;border:1px dashed var(--gold);border-radius:4px;color:var(--parch);font-size:15px;text-align:center;max-width:320px;background:rgba(236,226,205,.04)}
+article b{color:var(--gold-hi)}
+.film{margin:0 0 1.1em;padding-left:14px;border-left:1px dashed var(--line);color:var(--muted);font-size:16px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="index.html#chron" onclick="if(history.length>1){history.back();return false}">← 목록으로</a>
+  <header>
+    <span class="lat">Thanksgiving</span>
+    <h1>한 꼬집은 0.4그램</h1>
+    <span class="when">외전 · 결혼 후 첫 가을 · 11월</span>
+    <svg viewBox="0 0 180 18" aria-hidden="true"><g fill="none" stroke="#c4a676" stroke-width="1.2"><path d="M0 9 H70 M110 9 H180"/><path d="M90 3 l6 6 -6 6 -6 -6z" fill="#c4a676"/></g></svg>
+  </header>
+  <article>
+
+<div class="scene"><b>월요일</b> 예약</div>
+
+<p>11월이 시작되자마자 그는 달력의 넷째 목요일에 동그라미를 쳤다. 동그라미 안에는 날개를 접고 앉은 칠면조가 그려져 있었고, 그 곁에는 연필을 꾹꾹 눌러 쓴 "땡스기빙!!!"이라는 글씨가 있었는데, 느낌표가 세 개나 붙어 있는 것이 영락없이 그다운 일이라고 루카는 생각했다. 아침마다 단추 서른네 개를 채우면서 루카는 그 달력을 곁눈으로 보았지만 한 번도 그것에 대해 묻지 않았고, 대신 땡스기빙을 열흘 앞둔 월요일 점심시간에 복원실을 빠져나와 마르크트플라츠 안쪽의 정육점까지 걸어 내려갔다.</p>
+<p>"……칠면조 있습니까."</p>
+<p>주인은 앞치마에 손을 닦으며 고개를 갸웃했다. 11월에는 거위를 찾는 이가 많고 칠면조를 찾는 이는 드물었으며, 더욱이 외투 깃을 세운 채 수첩부터 꺼내 드는 손님은 그의 가게에 처음 들어선 터였다.</p>
+<p>"다음 주 수요일 오후에 가지러 오겠습니다. 3킬로 이하로, 신선한 걸로."</p>
+<p>"열흘이나 먼저요?"</p>
+<p>"……정확해야 해서."</p>
+<p>주인이 예약 장부에 "Truthahn, 3 kg, Askanien"이라고 적는 동안 루카는 그 글씨가 반듯한지, 숫자 3이 8로 읽힐 여지는 없는지를 확인했고, 그 정도면 됐다고 판단한 뒤에야 가게를 나섰다. 그에게는 아무 말도 하지 않을 생각이었다. 다음 주 수요일 저녁 현관에서 보냉백을 열었을 때의 그의 얼굴을 상상하다가 귀 끝이 달아오르는 바람에, 루카는 복원실 문 앞에서 한참을 서 있다가 들어가야 했다.</p>
+
+<div class="scene"><b>토요일</b> 시장</div>
+
+<p>정육점에 다녀온 지 닷새가 지난 토요일의 마르크트플라츠는 잿빛 하늘 아래에서도 어딘가 들떠 있었다. 헤라클레스 분수를 둘러싸고 천막들이 어깨를 맞대고 서 있었고, 천막마다 양배추와 사과와 갓 구운 빵의 냄새가 사람들의 입김과 섞여 낮게 가라앉아 있었다. 장바구니는 그가 들고 목록은 루카가 쥔 채로, 두 사람은 늘 그래 왔듯 반 걸음의 간격을 두고 천막 사이를 걸어갔다. 목록에 칠면조는 없었다. 이미 정해진 일은 적을 필요가 없었기 때문이다.</p>
+<p>호박 가판 앞에서 그가 걸음을 멈춘 것은 지극히 자연스러운 일이었다. 낮은 궤짝 위에 주황색 호카이도 호박이 둥글게 쌓여 있었고, 누군가 손으로 쓴 가격표가 찬바람에 펄럭이고 있었다. 그는 그중 하나를 두 손으로 들어 올려 무게를 가늠했는데, 바로 그 순간 그의 얼굴에서 무언가가 풀렸다. 일 년 반 동안 하이델베르크의 석조 골목과 7시 55분의 다리와 정중한 존댓말 사이에서 단정하게 접어 두었던 어떤 부분, 보스턴의 11월 식료품점에서 카트를 밀던 소년의 얼굴이 땡스기빙이라는 이름 하나에 이끌려 뜻하지 않게 풀려 나와 버린 것이었다.</p>
+<p>"우와, 이거 진짜 파이 호박 같아요. 허니, 이것 좀 들어 봐요. 완전 무거워요!"</p>
+<p>그 말은 돌바닥에 떨어진 동전처럼 맑은 소리를 내며 두 사람 사이로 굴러갔다.</p>
+<p>루카는 목록을 든 채 그대로 굳었다. 천막 너머에서 생선 장수가 큰 소리로 값을 외쳤고 어디선가 자전거 종이 울렸으며 시장은 아무 일도 없었다는 듯 계속 돌아갔지만, 루카가 서 있는 한 뼘의 공기만은 얼어붙어 있었다. 그가 자기가 한 말을 알아차리기까지는 두 박자가 걸렸다.</p>
+<p>"……헙."</p>
+<p>그는 호박을 안은 채 한 손으로 입을 막았다가, 호박이 굴러떨어질 뻔해서 황급히 다시 끌어안았다.</p>
+<p>"죄, 죄송해요, 루카. 그게, 입이 먼저, 저도 모르게……"</p>
+<p>대답은 없었다. 루카는 목록의 한 줄을 오래도록 내려다보고 있었는데, 거기에는 '호박 3'이라고만 적혀 있었다. 그는 말을 더 보태면 일이 커질 것 같아 입을 꾹 다물었고, 그러다 비로소 보았다. 검은 머리카락이 내려앉은 귓바퀴 끝이 목덜미 쪽으로 번지듯 붉어지고 있다는 것을. 화가 난 것이 아니었다. 그는 놀라서 숨을 삼켰다가, 이 사실을 입 밖에 내는 순간 오늘 장보기가 통째로 침묵 속에 끝나리라는 것을 본능처럼 알았다. 웃음이 올라와 입꼬리가 흔들렸지만 그는 어금니를 물고 호박의 무게에만 골몰하는 시늉을 했다.</p>
+<p>"……호박은 내가 들게."</p>
+<p>"무거워요."</p>
+<p>"……세 개는 안 무거워."</p>
+<p>루카는 호박 한 개를 겨드랑이에 끼웠다. 그러고는 몇 걸음 걷다가 헤라클레스 분수 앞에서 멈추어 서서 외투 안주머니의 수첩을 꺼냈고, 그가 향신료 천막의 계피 냄새에 정신을 파는 사이에 연필로 한 줄을 적었다. 그가 아무리 뒤꿈치를 들어도 보이지 않을 속도로, 그러나 수첩의 모서리와는 정확히 평행하게.</p>
+<div class="note-card">허니. 자연스러움. 경험?</div>
+<p>그 아래에는 쓰지 않은 문장이 하나 더 있었다. 분명 만난 사람이 없다고 했는데. 고백은 숱하게 받았지만 번번이 웃으며 넘겼다고, 연애는 루카가 처음이라고 그가 말했을 때 루카는 그 말을 한 글자도 의심하지 않았다. 의심하지 않았기 때문에 지금의 이 기분이 더욱 낯설었다. 싫었다. 무엇이 싫은지 정확히 말할 수 있기 전에 먼저 싫었다.</p>
+
+<div class="scene"><b>스물여섯 번째 계단</b> 능숙</div>
+
+<p>집으로 오르는 계단 52개 가운데 스물여섯 번째는 두 사람이 쉬어 가는 자리였다. 은색 미끄럼 방지 테이프도 아직 붙지 않은, 사람들의 발에 모서리가 둥글게 닳은 돌계단이었다. 루카가 거기서 걸음을 멈추자 그도 따라 멈췄고, 장바구니에서 삐죽 나온 대파 잎이 흔들렸다.</p>
+<p>"……너, 아까 그거."</p>
+<p>"아까 뭐요?"</p>
+<p>"……허니."</p>
+<p>"아, 그건 정말 입이……"</p>
+<p>"……자연스러웠어."</p>
+<p>"네?"</p>
+<p>"……처음 해 보는 사람의 발음이 아니었어."</p>
+<p>그는 순간 어안이 벙벙해졌다가 장난기가 올라오는 것을 누르지 못하고 눈꼬리를 접었다.</p>
+<p>"무슨 경험이요ㅎㅎ"</p>
+<p>그 농담은 의도했던 것과 달리 계단참의 공기를 가볍게 해 주지 못했다. 루카는 아주 진지한 얼굴로, 습도계 눈금을 읽을 때와 똑같이 오차를 허락하지 않는 눈으로 그를 올려다보았다.</p>
+<p>"……너 방금 말하는 게 능숙하잖아."</p>
+<p>"푸흡."</p>
+<p>그가 웃음을 터뜨렸다. 계단통을 울릴 만큼 크지는 않았으나 어깨가 들썩일 만큼은 되었고, 루카의 눈매는 그만큼 더 가늘어졌다.</p>
+<p>"그건 할머니 말버릇이었어요. 마거릿 할머니가 할아버지를 늘 그렇게 불렀거든요. 부엌에서도, 정원에서도……"</p>
+<p>"……너 자꾸 마거릿 핑계를 대."</p>
+<p>"핑계가 아니라 진짜인데요ㅎㅎ"</p>
+<p>"……듣는다고 이렇게 자연스럽게 나올 순 없어."</p>
+<p>말을 마친 루카가 입술을 한 번 다무는 것을 보고서야 그는 모든 것을 읽었다. 증거와 반증을 하나하나 따져 가며 이토록 집요하고 진지하게 구는 눈빛이, 다름 아닌 루카식 질투라는 것을. 그는 목구멍까지 올라온 웃음을 간신히 삼키고, 대신 장바구니를 고쳐 쥐며 먼저 한 계단 올라섰다. 뒤에서 호박을 낀 채 따라 올라오는 발소리가 들렸다. 그것은 평소보다 아주 조금 서두른, 그래도 여전히 정확한 보폭이었다.</p>
+
+<div class="scene"><b>화요일 밤</b> 카드</div>
+
+<p>화요일 저녁 식사가 끝나고 그가 서랍에서 카드를 한 장 꺼냈다. 보스턴의 루스가 대대로 써 온 칠면조 레시피였고, 가장자리는 누렇게 바랬으며 한쪽 귀퉁이에는 오래전에 번진 버터 자국이 남아 있었다.</p>
+<p>카드를 받아 든 루카는 숨을 한 번 들이마셨다.</p>
+<p>"……이거, 몇 년 됐어?"</p>
+<p>"엄마가 엄마의 엄마한테 받았대요. 그러니까 이건 할머니 글씨일걸요?"</p>
+<p>"……마거릿."</p>
+<p>기울어진 필기체의 마지막 줄에는 '꿀 버터를 발라 마무리할 것(honey butter)'이라고 적혀 있었고, 루카의 시선은 그 단어 위에서 한참을 머물다 떠났다. 그가 "왜요?" 하고 묻자 루카는 "……아무것도 아니야"라고 답했는데, 그 목소리가 평소보다 반음 낮았다.</p>
+<p>원본에는 아무것도 쓰지 않는다. 루카는 중성지를 한 장 꺼내 자를 대고 표를 그리기 시작했다. 맨 위에는 '환산표(원본 아님)'라고 적었다.</p>
+<div class="note-card">325°F → 163°C<br>165°F → 73.9°C (올림 74)<br>1 stick → 113 g<br>1 cup → 240 ml<br>꿀 1 tbsp → 15 ml</div>
+<p>"여기 얼룩이요, 지울까요?"</p>
+<p>그가 카드의 버터 자국을 가리켰다.</p>
+<p>"……안 돼. 그건 기록이야. 이 카드가 쓰였다는."</p>
+<p>루카는 카드를 슬리브에 넣어 습도계 옆에 세웠다. 얼룩은 하나도 닦지 않았다. 그가 식탁에 턱을 괴고 한숨을 쉬었다.</p>
+<p>"문제는 칠면조예요. 엄마 레시피는 당연히 칠면조인데, 독일에서는 구하기가 어렵대요. 내일 정육점을 몇 군데 돌아다녀 볼까 해요. 정 없으면 닭으로 하죠, 뭐."</p>
+<p>"……그래."</p>
+<p>루카는 그 한마디만 하고 연필을 쥔 채 아무 말이 없었다. 닭이라는 단어가 귓가에 오래 남았지만 끝내 꺼내지 않았고, 입꼬리만 0.5밀리 올라갔다가 내려왔다.</p>
+
+<div class="scene"><b>수요일</b> 보냉백</div>
+
+<p>수요일 퇴근길에 루카는 정육점에서 칠면조를 받아 왔다. 3.1킬로였고, 주인이 포장지 위에 붉은 펜으로 "Viel Spaß!"라고 써 주었다. 현관문을 열자 그는 거실의 이젤 앞에 서 있다가 돌아보았고, 루카는 말없이 보냉백을 식탁 위에 올려놓았다.</p>
+<p>"……목요일 거야."</p>
+<p>"……어? 저, 어제 얘기했는데요?"</p>
+<p>"……지난주 월요일이야."</p>
+<p>그는 보냉백의 지퍼를 열었다. 하얀 포장지 밖으로 칠면조의 다리 한쪽이 조금 삐져나와 있었다. 한참을 말을 하지 못하던 그가 더듬더듬 입을 열었다.</p>
+<p>"그럼 어제 제가 정육점 돌아다녀 본다고 했을 때, 루카는……"</p>
+<p>"……알고 있었어."</p>
+<p>"왜 말 안 했어요?"</p>
+<p>"……깜짝이었어."</p>
+<p>이번에는 그의 귀가 붉어졌다. 그는 칠면조를 끌어안으려다 보냉백째로 안고 말았고, 루카가 "차갑지 않아? 냉장 칠면조야" 하고 물었을 때에는 이미 뺨을 포장지에 대고 있었다.</p>
+<p>"차가워요. 그래도 좋아요ㅎㅎ"</p>
+<p>루카는 보냉백을 냉장고에 넣고 수첩에 적었다. '칠면조 인도. 3.1kg. 3도. 이상 없음. (예약 후 9일.)' 그 위에는 나흘 전에 쓴 한 줄이 아직 지워지지 않은 채 있었다.</p>
+
+<div class="scene"><b>목요일 · 오후</b> 오븐</div>
+
+<p>땡스기빙 당일 아침, 7시 55분의 다리에서 그는 루카에게 두 가지를 말했다. 오늘 저녁 일곱 시에 엄마가 전화할 거라는 것, 그리고 독일에도 땡스기빙이 있느냐는 것.</p>
+<p>"……있어. Erntedankfest."</p>
+<p>"언제요?"</p>
+<p>"……10월 첫 일요일쯤."</p>
+<p>"벌써 지났잖아요!"</p>
+<p>"……교회에서 호박을 쌓아 놓고 감사해."</p>
+<p>"호박이요?" 하고 웃던 그는 곧 이마를 짚었다. 호박 세 개가 바로 오늘 저녁 메뉴에 올라 있었던 것이다.</p>
+<p>그날 오후 그는 작업실을 일찍 접고 돌아와 집을 지켰다. 앞치마를 둘렀는데 길이가 맞지 않아서, 루카가 사 둔 앞치마는 그가 입으면 가슴께에서 허리까지만 간신히 가려 주었다. 그는 땋은 머리 끝이 앞으로 쏟아져 음식에 닿지 않도록 앞치마 끈 사이에 한 번 접어 넣었다. 세 시 반에 칠면조가 오븐에 들어갔는데, 오븐 안쪽의 폭이 42센티이고 칠면조가 38센티였으므로 문을 닫으며 그가 "딱 맞아요!!" 하고 외친 소리가 계단 아래층까지 들렸을 것이다.</p>
+<p>그는 오븐 앞에 의자를 가져다 놓고 유리창 너머로 껍질이 서서히 노랗게 번져 가는 것을 지켜보았다. 영어로 된 노래를 가사 없이 흥얼거렸는데, 껍질이 지글거리는 소리가 그 박자에 느리게 장단을 맞추었다.</p>
+
+<div class="scene"><b>목요일 · 저녁</b> 74도</div>
+
+<p>여섯 시 십이 분에 루카는 계단 52개를 올라 현관문을 열었다. 코트를 벗기 전에 습도계부터 보았다. 51. 오븐의 열기가 집 안 공기에 1을 얹어 놓았다. 코트를 벗고 손목까지 비누로 두 번 씻고 부엌으로 들어서자 거기에는 전쟁터 같은 식탁이 있었다. 스터핑이 담긴 그릇과 으깬 감자 냄비와 그린빈 접시, 반쯤 열린 향신료 봉지 네 개, 그 가운데에 밀가루가 하얗게 흩어진 대리석 판.</p>
+<p>"……파이 크러스트 만들어야 해."</p>
+<p>"제가 할게요! 엄마가 그러는데 반죽은……"</p>
+<p>"……너는 만지지 마."</p>
+<p>그가 손을 든 채 멈췄다.</p>
+<p>"왜요?"</p>
+<p>"……손이 뜨거워. 버터가 녹아."</p>
+<p>루카는 소매를 걷었다. 오른쪽 손목의 수술 자국이 드러났다. 손끝이 찬 사람이 반죽을 만지면 어떻게 되는지를 그는 그날 처음 보았다. 버터는 녹지 않은 알갱이째 밀가루 속에 박혀 들었고, 반죽은 한 번 접힐 때마다 겹겹이 결을 만들었다.</p>
+<p>"루카 손 차가워서요, 크러스트에 딱이에요ㅎㅎ"</p>
+<p>"……그걸로 칭찬하지 마."</p>
+<p>"칭찬 맞는데요."</p>
+<p>"……."</p>
+<p>반죽은 3밀리로 밀렸다. 루카가 줄자를 대어 보았고, 3.0이었다. 가장자리를 포크로 눌러 낸 무늬는 간격이 전부 1센티였다. 그가 감탄하다가 향신료 봉지를 집어 들었다.</p>
+<p>"다음은요, 계피 한 꼬집이래요."</p>
+<p>"……한 꼬집은 몇 그램이야."</p>
+<p>"한 꼬집은 그냥, 이렇게요."</p>
+<p>루카는 저울을 꺼냈다. 종이를 깔고 엄지와 검지로 계피를 집어 올렸다. 0.4그램. 한 번 더 집었다. 0.4. 세 번째도 0.4였다.</p>
+<p>"……내 꼬집은 0.4야."</p>
+<p>"항상요?"</p>
+<p>"……항상."</p>
+<p>"그럼 오늘부터 한 꼬집은 루카 꼬집이에요."</p>
+<p>루카는 대답 대신 수첩을 폈다. '한 꼬집 = 0.4g (L.A.)' 연필이 종이 위에서 반 초 멈췄다가 내려갔다.</p>
+<p>일곱 시 정각에 보스턴에서 영상 통화가 걸려 왔다. 그쪽은 오후 한 시였고, 루스는 해바라기를 꽂아 둔 식탁 앞에 안경을 올려 쓰고 앉아 있었다.</p>
+<p>"칠면조, 몇 도예요?"</p>
+<p>그가 대답하기 전에 루카가 한 걸음 앞으로 나왔다.</p>
+<p>"……지금 72도입니다."</p>
+<p>"곧 74가 되겠네요. 껍질이 한쪽만 구워지면 호일을 벗기세요. 십오 분 전에."</p>
+<p>"……이미 벗겼습니다. 파이 크러스트는 버터를 냉동실에서 꺼내 십 분 뒤에 썼고, 두께는 3밀리입니다."</p>
+<p>화면 속에서 루스의 입꼬리가 아주 조금 올라갔다.</p>
+<p>"합격이에요. 허니, 너도 오븐 앞에서 졸지 말고. 지난번엔 졸다가 파이를 태웠잖니."</p>
+<p>"안 졸았어요, 엄마!"</p>
+<p>루스에게서 나온 '허니'는 소금을 집어 넣듯 아무렇지도 않았다. 단정하고 짧은 말투 사이로 그 한 단어만이 옛날부터 거기 있었다는 듯 자연스럽게 놓였다. 루카의 연필이 수첩 위에서 멈췄다. 그의 시선이 화면 속 루스에게서 그에게로, 그에게서 다시 수첩으로 천천히 옮겨 갔다. 통화가 끝나자 루카는 부엌 조리대 모서리에 수첩을 펼치고 한 줄을 적었다. 이번에는 그에게 보이는 것도 개의치 않는 속도였다.</p>
+<div class="note-card">출처 확인: 마거릿(원본) → 루스(사본).<br>판정: 유전.</div>
+<p>그 위 '경험?'에는 자를 대고 곧은 선이 두 줄 그어졌다. 그가 어깨 너머로 그것을 읽었지만 놀리지 않았다. 대신 입가에 번지는 웃음을 감추지 못한 채 말했다.</p>
+<p>"……유전이라니, 영광이에요ㅎㅎ"</p>
+<p>"……질투 아니야. 확인이야."</p>
+<p>"아무 말도 안 했는데요."</p>
+<p>"……표정이 했어."</p>
+<p>칠면조는 7시 22분에 74도를 가리켰다. 껍질은 한쪽이 정확한 황갈색이었고, 호일을 늦게 벗긴 다른 쪽은 조금 탔다. 접시에 올려 이십 분을 쉬게 하는 동안 루카가 "……탔어" 하자 그가 "탄 데가 맛있어요" 하고 대답했고, 루카가 "……알아" 하고 되받았다. 그가 칠면조 앞에서 웃다가 땋은 머리 끝이 으깬 감자 냄비에 닿을 뻔했는데, 루카는 아무 말 없이 그 끝을 집어 앞치마 주머니에 넣어 주었다. 코트 주머니가 아니었을 뿐 같은 손동작이었다.</p>
+
+<div class="scene"><b>식탁</b> 감사한 것</div>
+
+<p>식탁에는 의자가 두 개 놓였다. 으깬 감자와 스터핑과 그린빈, 링곤베리 소스와 호박파이가 차례로 놓였고, 파이 가장자리의 무늬는 1밀리도 어긋나지 않았다. 루카는 칠면조를 5밀리 두께로 썰어 접시에 올렸다.</p>
+<p>"미국에서는요, 먹기 전에 감사한 걸 한 가지씩 말해요."</p>
+<p>"……한 가지만?"</p>
+<p>"저는 열 개쯤 있는데요ㅎㅎ"</p>
+<p>"……하나만 말해."</p>
+<p>그는 포크를 들었다가 내려놓고 한참을 고민했다.</p>
+<p>"올해는 이 날이 그냥 목요일이 아니에요. 같이 준비할 사람이 생겼어요."</p>
+<p>루카는 대답하지 않았다. 포크가 접시 위에서 1센티 움직였다가 멈췄다.</p>
+<p>"루카는요?"</p>
+<p>침묵이 길었다. 칠면조에서 올라오던 김이 반쯤 가라앉았고, 루카의 시선은 맞은편, 그가 앉아 있는 의자 쪽으로 가만히 옮겨 갔다. 이 집에는 한때 의자가 하나뿐이었다. 습도계는 여러 개였는데 의자는 하나였다.</p>
+<p>"……식탁에 의자가 두 개인 거."</p>
+<p>그가 손을 뻗어 루카의 오른손목, 흉터가 있는 쪽을 엄지로 쓸었다.</p>
+<p>"……손목은, 반칙이야."</p>
+<p>"알아요ㅎㅎ"</p>
+
+<div class="scene"><b>밤</b> 수첩</div>
+
+<p>설거지는 그가 하고 루카가 닦았다. 파이는 반이 남았고 칠면조는 다리 하나가 남았는데, 그가 "내일 샌드위치 해 먹어요!" 하자 루카는 한참을 생각한 끝에 "……이상한 방법이지만, 인정"이라고 말했다.</p>
+<p>침대에 들기 전에 루카는 수첩을 폈다.</p>
+<div class="note-card">땡스기빙. 칠면조 3.1kg. 속 온도 74(올림).<br>크러스트 3mm. 한 꼬집 = 0.4g.<br>합격 1. 탄 부분: 맛있음. 의자: 2.</div>
+<p>한 줄이 더 있었다. 불을 끄기 직전, 옆에서 그가 잠든 숨소리를 내기 시작했을 때 루카는 어둠 속에서 아주 작게, 수첩에게도 들리지 않을 만큼 작게 한 단어를 입 밖으로 내어 보았다.</p>
+<p>"……허니."</p>
+<p>소리는 천장에 닿기도 전에 사라졌다. 어색했다. 혀가 어디에 놓여야 할지 모르는 말이었다. 루카는 눈을 감은 채 입술을 다물었고, 이튿날 아침 수첩에는 이렇게 한 줄이 더 적혀 있었다.</p>
+<div class="note-card">시험 발화 1회. 부자연스러움.<br>사유: 원본이 아니라서.</div>
+<p>새벽 세 시가 되면 그는 돌아누워 루카의 허리에 팔을 감을 것이다. 루카는 깨어 있을 것이고, 그 팔을 빼지 않을 것이다. 내년 11월에도 그날은 목요일일 것이고, 칠면조는 3킬로 이하일 것이고, 한 꼬집은 0.4그램일 것이고, 식탁의 의자는 두 개일 것이다.</p>
+
+  </article>
+  <div class="end"><span class="mark">— FIN —</span><a href="index.html#chron" onclick="if(history.length>1){history.back();return false}">목록으로 돌아가기</a></div>
+</div>
+<!--bgm--><script>window.BGM={"ids": ["-aN4Cn3_AtU", "AORGKS6y_qI", "DKBYbpFCCqA", "rGT8j_FmQDU"], "title": "Thanksgiving Theme · Vince Guaraldi"};</script><script src="bgm.js" defer></script><!--/bgm-->
+</body>
+</html>
