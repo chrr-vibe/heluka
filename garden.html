@@ -1143,6 +1143,72 @@ const LETTERS=[[1, "1월 9일", "너에게. 이건 첫 번째야.\n이런 걸 �
 /* ---------- warm hands ---------- */
 
 
+
+/* ---------- bath ---------- */
+let BA=null;
+const BATH_LU=['…습도 100이야.','…물 식어. 빨리 들어와.','…머리 묶었네. 잘했어.','…거품 너무 많아.','…눈 감은 거 아니야. 쉬는 거야.','…41도. 딱 맞아.','…네 머리 젖으면 말리는 데 한 시간이야.','…이따 빗어 줄게. 끝에서부터.','…귀 빨간 거 물 때문이야.','…종이는 물 싫어해. 나는 괜찮아.','…다리 펴지 마. 좁아.','…너 무릎이 내 쪽까지 와.','…손 쭈글쭈글해졌어. 보지 마.','…조금만 더 있다 나가.'];
+const BATH_HE=['루카 털 다 젖어서 반쪽 됐어요ㅎㅎ','오리가 루카 닮았어요. 표정이요ㅎㅎ','그림 그리고 싶은데 스케치북이 젖어요','이따 머리 말려 줄 거죠?','물 더 데울까요?','루카 손 쭈글쭈글해졌어요ㅎㅎ','여긴 두 걸음이 안 되네요. 욕조가 좁아서요ㅎㅎ','루카 귀 빨개요. 물 때문이에요?ㅎㅎ','오늘 다리에서 5분, 욕조에서 50분이에요ㅎㅎ','머리 묶었어요. 루카가 젖으면 혼낼 것 같아서요','거품 왕관 씌워 드릴까요?','따뜻하다… 루카 옆이라서요ㅎㅎ'];
+const BATH_DUCK_LU=['…밀지 마.','…파도 생겨.','…반칙이야.','…이건 내 쪽 물이야.','…오리한테 왜 그래.'];
+const BATH_DUCK_BACK=['…돌려줄게.','…가져가.','…네 거야.'];
+const BATH_DUCK_HE=['오리 선물이에요?ㅎㅎ','앗 오리가 왔어요ㅎㅎ','루카가 보내 준 거죠?','오리야 다시 루카한테 가렴ㅎㅎ'];
+function bathOpen(){if(BA)return;const o=document.createElement('div');o.id='bathOv';const P='bath/';
+  o.innerHTML=`<style>#bathOv{position:fixed;inset:0;z-index:250;background:url(${P}tile.webp) center/cover;overflow:hidden;font-family:Jua,sans-serif;user-select:none;-webkit-user-select:none}
+#bathOv:after{content:'';position:absolute;left:0;right:0;bottom:0;height:19%;background:linear-gradient(#5d877e,#4b7169);border-top:4px solid #e9dcc3;z-index:0}
+#bathOv .st{position:absolute;left:50%;bottom:11%;width:min(108vw,560px);aspect-ratio:1100/694;transform:translateX(-50%);z-index:1}
+#bathOv .st img{position:absolute;-webkit-user-drag:none}
+#bathOv .ch{transform-origin:50% 100%;transition:transform .25s}#bathOv .ch.sq{transform:scaleY(.94) scaleX(1.04)}
+#bathOv .bb{filter:blur(.7px) brightness(1.06) saturate(.8) drop-shadow(0 0 5px rgba(255,255,255,.7));opacity:.8;position:absolute;bottom:0;animation:bfl 2.6s ease-out forwards;pointer-events:none;z-index:9}
+@keyframes dkb{50%{translate:0 -.6%;rotate:2deg}}#bathOv .flt{animation:dkb 2.6s ease-in-out infinite;filter:blur(.3px) brightness(1.03) saturate(.95) drop-shadow(0 0 5px rgba(255,255,255,.45))}#bathOv .flt2{animation:dkb 3.4s ease-in-out -1s infinite}
+@keyframes bfl{0%{transform:translate(0,0) scale(.4);opacity:0}15%{opacity:1}100%{transform:translate(var(--dx),-55vh) scale(1);opacity:0}}
+#bathOv .stm{position:absolute;border-radius:50%;background:radial-gradient(rgba(255,255,255,.55),rgba(255,255,255,0) 70%);animation:stm 7s linear infinite;pointer-events:none;z-index:2}
+@keyframes stm{0%{transform:translateY(0) scale(.6);opacity:0}30%{opacity:.8}100%{transform:translateY(-40vh) scale(1.6);opacity:0}}
+#bathOv .say{position:absolute;transform:translate(-50%,-100%);background:#fff;border-radius:16px;padding:4px 12px 0;font-size:14px;line-height:1.3;text-wrap:balance;color:#5a4636;box-shadow:0 2px 6px rgba(0,0,0,.15);z-index:20;pointer-events:none;width:max-content;max-width:44vw;height:54px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden}
+#bathOv .say:after{content:'';position:absolute;left:50%;bottom:-6px;border:6px solid transparent;border-top-color:#fff;border-bottom:0;transform:translateX(-50%)}
+#bathOv .x{position:absolute;left:14px;top:14px;z-index:30;padding:8px 16px;border-radius:20px;background:rgba(255,250,245,.92);border:0;color:#9b5b6b;font:inherit;font-size:16px}
+#bathOv .gone{opacity:0!important;pointer-events:none!important;transform:scale(.4)}#bathOv .foamm{filter:blur(.6px) brightness(1.05) saturate(.85) drop-shadow(0 0 6px rgba(255,255,255,.6));opacity:.92;animation:dkb 3.2s ease-in-out -.5s infinite;transition:opacity .5s,transform .6s cubic-bezier(.3,1.4,.5,1);transform-origin:50% 100%}
+#bathOv .dr{position:absolute;z-index:8;pointer-events:none;filter:blur(.3px) brightness(1.05) drop-shadow(0 0 3px rgba(255,255,255,.6));animation:drp .95s ease-out forwards;opacity:0}
+@keyframes drp{0%{transform:translate(0,0) scale(.5);opacity:0}15%{opacity:1}55%{transform:translate(calc(var(--dx)*.65),var(--dy)) scale(1)}100%{transform:translate(var(--dx),calc(var(--dy)*-.25)) scale(.9);opacity:0}}
+#bathOv .ht img{width:24px;display:block}
+#bathOv .fb{position:absolute;right:14px;top:14px;z-index:30;padding:8px 14px;border-radius:20px;background:rgba(255,250,245,.92);border:0;color:#5b8fa8;font:inherit;font-size:16px}
+#bathOv .fp{position:absolute;transition:opacity .5s,transform .6s cubic-bezier(.3,1.4,.5,1);transform-origin:50% 100%}#bathOv .fp.off{opacity:0;transform:scale(.2)}
+#bathOv .ht{position:absolute;font-size:18px;animation:bht 1.4s ease-out forwards;pointer-events:none;z-index:21}@keyframes bht{to{transform:translateY(-50px);opacity:0}}</style>
+<button class="x">← 나가기</button>
+<div class="st" id="baSt">
+<img src="${P}tub.webp" style="left:0;top:0;width:100%;z-index:1">
+<img class="ch" id="baL" src="${P}lu.webp" style="left:13%;bottom:46.5%;width:28%;z-index:3">
+<img class="ch" id="baH" src="${P}he.webp" style="left:60%;bottom:46.5%;width:28%;z-index:3">
+<img id="baD" class="flt gone" src="${P}duck.webp" style="left:46%;top:34%;width:8%;z-index:5;transition:left 1.1s cubic-bezier(.3,.7,.4,1),transform .4s,opacity .5s">
+<img id="baFm" class="gone foamm" src="${P}foam2.webp" style="left:34%;bottom:51.3%;width:32%;z-index:4">
+<img src="${P}tubf.webp" style="left:0;top:0;width:100%;z-index:6;pointer-events:none">
+<img id="baS" src="${P}soap.webp" style="left:74%;top:101%;width:22%;z-index:7">
+<img id="baDF" src="${P}duck.webp" style="left:35.5%;top:100%;width:11%;z-index:7;transition:opacity .4s">
+<img src="${P}brush.webp" style="left:46%;top:103%;width:24%;z-index:6;pointer-events:none">
+<img src="${P}pump.webp" style="left:2%;top:101%;width:11%;z-index:6;pointer-events:none">
+<img src="${P}sponge.webp" style="left:17%;top:101%;width:18%;z-index:6;pointer-events:none">
+</div>`;
+  document.body.appendChild(o);const st=o.querySelector('#baSt'),$b=id=>o.querySelector('#'+id),Lm=$b('baL'),Hm=$b('baH'),D=$b('baD');
+  BA={o,duck:44,side:0,tm:[]};
+  for(let i=0;i<6;i++){const e=document.createElement('div');e.className='stm';const w=60+Math.random()*70;e.style.cssText=`width:${w}px;height:${w}px;left:${10+Math.random()*75}%;bottom:${35+Math.random()*12}%;animation-delay:${-Math.random()*7}s`;o.appendChild(e)}
+  const say2=(who,tx,sec)=>{const el=who==='L'?Lm:Hm;const old=o.querySelector('.say.'+who);if(old)old.remove();const r=el.getBoundingClientRect(),q=document.createElement('div');q.className='say '+who;q.textContent=tx;q.style.left=Math.min(innerWidth-90,Math.max(90,r.left+r.width*(who==='L'?.45:.55)))+'px';const rt=Math.min(Lm.getBoundingClientRect().top,Hm.getBoundingClientRect().top);q.style.top=(rt-30)+'px';o.appendChild(q);setTimeout(()=>q.remove(),(sec||2.4)*1000)};
+  const sq=el=>{el.classList.add('sq');setTimeout(()=>el.classList.remove('sq'),250)};
+  const ht=(el,n,ch)=>{const r=el.getBoundingClientRect();for(let i=0;i<(n||1);i++){const h=document.createElement('div');h.className='ht';if(ch)h.textContent=ch;else h.innerHTML='<img src="'+P+'heart.webp">';h.style.left=(r.left+r.width*(.3+Math.random()*.4))+'px';h.style.top=(r.top+r.height*.2+Math.random()*20)+'px';h.style.animationDelay=(i*.15)+'s';o.appendChild(h);setTimeout(()=>h.remove(),1800)}};
+  const later=(f,ms)=>BA.tm.push(setTimeout(()=>{if(BA)f()},ms));
+  const bubbles=(x,n)=>{const sr=st.getBoundingClientRect();for(let i=0;i<n;i++){const b=document.createElement('img');b.src=P+'bub.webp';b.className='bb';const w=14+Math.random()*30;b.style.width=w+'px';b.style.left=(sr.left+sr.width*(x+(Math.random()-.5)*.25))+'px';b.style.bottom=(innerHeight-sr.top-sr.height*.46)+'px';b.style.setProperty('--dx',((Math.random()-.5)*80)+'px');b.style.animationDelay=(i*.12)+'s';o.appendChild(b);setTimeout(()=>b.remove(),3200)}};
+  let lu=0,he=0;Lm.onclick=()=>{sq(Lm);splash(28,45,4);say2('L',BATH_LU[lu++%BATH_LU.length]);if(Math.random()<.3)ht(Lm,2)};
+  Hm.onclick=()=>{sq(Hm);splash(73,45,4);say2('H',BATH_HE[he++%BATH_HE.length]);ht(Hm,1)};
+  const duckTo=(side,by)=>{BA.side=side;BA.duck=side?53:41;D.style.left=BA.duck+'%';D.style.transform='rotate('+(side?8:-8)+'deg)';setTimeout(()=>{if(BA)D.style.transform=''},600);bubbles((BA.duck+6)/100,3);
+    later(()=>{if(side){sq(Hm);say2('H',pick(BATH_DUCK_HE));ht(Hm,1)}else{sq(Lm);say2('L',pick(BATH_DUCK_LU));
+      if(Math.random()<.55)later(()=>{say2('L',pick(BATH_DUCK_BACK));sq(Lm);duckTo(1,'L')},1600)}},1100)};
+  const splash=(x,y,n)=>{for(let i=0;i<(n||5);i++){const d=document.createElement('img');d.src=P+'drop'+(1+Math.floor(Math.random()*5))+'.webp';d.className='dr';const w=1.6+Math.random()*1.8;d.style.cssText=`left:${x+(Math.random()-.5)*3}%;top:${y}%;width:${w}%;--dx:${(Math.random()-.5)*70}px;--dy:${-(30+Math.random()*40)}px;animation-delay:${i*.05}s`;st.appendChild(d);setTimeout(()=>d.remove(),1400)}};
+  const DF=$b('baDF'),FM=$b('baFm');
+  DF.onclick=()=>{if(D.classList.contains('gone')){D.style.left='46%';BA.duck=46;BA.side=0;D.classList.remove('gone');DF.style.opacity=.4;splash(50,43,6);say2('H','오리가 물에 들어왔어요ㅎㅎ');later(()=>{say2('L','…조용히 띄워.');sq(Lm)},1800)}else{D.classList.add('gone');DF.style.opacity=1;splash(BA.duck+4,43,4)}};
+  D.onclick=()=>{duckTo(BA.side?0:1,'H');splash(BA.duck+4,43,4)};
+  $b('baS').onclick=()=>{if(FM.classList.contains('gone')){FM.classList.remove('gone');bubbles(.5,6);splash(50,45,6);say2('H','거품이 퐁퐁 나요ㅎㅎ')}else{FM.classList.add('gone');splash(50,45,4)}};
+  FM.onclick=()=>{bubbles(.5,9);splash(50,44,6);if(Math.random()<.4)say2('L','…간지러워.')};
+      o.querySelector('.x').onclick=()=>bathClose();
+  later(()=>say2('H','루카, 물 딱 좋아요ㅎㅎ',2.4),700);later(()=>say2('L','…들어왔으면 조용히 해.',2.4),2300);
+  const k=dkey(now());if(S.bathDay!==k){S.bathDay=k;S.baths=(S.baths||0)+1;gain('heart',10*mult(),LU);S.intim+=3;save()}}
+function bathClose(){if(!BA)return;BA.tm.forEach(clearTimeout);BA.o.remove();BA=null}
 /* ---------- sunday contract / evening letters ---------- */
 let KO=null;
 function sunWanted(){const t=now();return t.dow===0&&t.h>=7&&t.h<22&&curMode==='day'&&S.sunDay!==dkey(t)&&scn!=='den'&&!LU.hidden&&LU.state!=='walk'&&LU.state!=='sulk'&&!KO&&!HO}
@@ -1316,7 +1382,7 @@ function homeBack(g,sc){const el=$('hBack');if(!el)return;if(ROOMS[HM.room][0]!=
 function homeRender(){const r=ROOMS[HM.room],g=HGEO[r[0]],sc=HM.sc,Q=quads(g);$('hName').textContent=r[1];{const wp=(S.homeWp||{})[r[0]]||0;$('hHex').src='home/'+(wp?'wp/'+RIMG(r)+'_'+wp:RIMG(r))+'.webp'}homeBack(g,sc);
   const k=homeUnit(g)/115*sc;const it=homeData();const fl=$('hFurn');fl.querySelectorAll('.fu').forEach(e=>e.remove());homeBigWin(g,sc,Q,fl);homeTerFx(g,sc,Q,fl);
   const order=it.map((o,n)=>{const d=homeDims(o);return{o,n,d,z:o.s==='G'?0:(o.s==='L'||o.s==='R')?1:2+(o.i+d[0])+(o.j+d[1])+o.j*.01}}).sort((a,b)=>a.z-b.z);
-  for(const{o,n,d,z}of order){const f=FK[o.k];if(!f)continue;const im=document.createElement('img');im.style.zIndex=Math.round(z*100);im.className='fu'+(HM.held&&HM.held.n===n?' held':'')+(!HM.edit&&BOOKK.has(o.k)?(letterOk()?' bk ok':' bk'):'');if(!HM.edit&&BOOKK.has(o.k))im.onclick=letterRead;im.src='home/f/'+o.k+''+'.webp';
+  for(const{o,n,d,z}of order){const f=FK[o.k];if(!f)continue;const im=document.createElement('img');im.style.zIndex=Math.round(z*100);im.className='fu'+(HM.held&&HM.held.n===n?' held':'')+(!HM.edit&&BOOKK.has(o.k)?(letterOk()?' bk ok':' bk'):'');if(!HM.edit&&BOOKK.has(o.k))im.onclick=letterRead;if(!HM.edit&&o.k==='t00'){im.classList.add('bk');im.onclick=bathOpen}im.src='home/f/'+o.k+''+'.webp';
     const wall=o.s==='L'||o.s==='R';let w=f[3]*k*(o.s==='G'?1.25:1);im.style.width=w+'px';let tf=((o.f?1:0)^((wall&&f[4]===2&&o.s==='L')?1:0)^(o.k==='l03'?1:0))?'scaleX(-1)':'';
     if(wall){const q=Q[o.s],c=bil(q,(o.i+d[0]/2)/HN,(o.j+d[1]/2)/HN);im.style.left=(c[0]*sc-w/2)+'px';im.style.top=(c[1]*sc)+'px';tf+=' translateY(-50%)';im.style.transformOrigin='50% 0';
       const B=g.Bw,E=o.s==='L'?g.LBw:g.RBw;
