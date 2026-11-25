@@ -202,7 +202,7 @@ button{font-family:var(--F)}
 #hTray .list:has(.txt){grid-auto-columns:92px}
 #hTray .act{display:none;gap:6px}#hTray.hold .act{display:flex}
 #hTray .hint{font-size:12.5px;color:#a98890;margin:0 0 6px 2px;font-family:"Apple SD Gothic Neo","Noto Sans KR",sans-serif}
-#hStage .stm{width:18px;height:18px;margin-left:-9px;margin-top:-18px;border-radius:50%;background:radial-gradient(circle,rgba(255,246,252,.95) 0,rgba(255,226,242,.7) 55%,rgba(255,226,242,0) 72%);pointer-events:none;opacity:0;animation:stm 2.4s ease-out infinite}@keyframes stm{0%{opacity:0;translate:0 0;scale:.5}20%{opacity:.95}100%{opacity:0;translate:var(--sx,0) -56px;scale:1.7}}
+#hStage .stm{width:24px;height:24px;margin-left:-12px;margin-top:-24px;border-radius:50%;background:radial-gradient(circle,rgba(255,248,253,1) 0,rgba(255,232,245,.85) 55%,rgba(255,232,245,0) 74%);pointer-events:none;opacity:0;animation:stm 2.8s ease-out infinite}@keyframes stm{0%{opacity:0;translate:0 0;scale:.5}18%{opacity:1}100%{opacity:0;translate:var(--sx,0) -70px;scale:2}}
 #hStage .fu.bk2{pointer-events:auto;cursor:pointer}#hStage .fu.lit{filter:drop-shadow(0 0 10px rgba(255,205,110,.95)) drop-shadow(0 0 22px rgba(255,170,80,.55))}#hStage .fu.lit.flk{animation:flk 1.7s ease-in-out infinite}@keyframes flk{0%,100%{filter:drop-shadow(0 0 8px rgba(255,190,90,.9)) drop-shadow(0 0 16px rgba(255,150,70,.4))}45%{filter:drop-shadow(0 0 14px rgba(255,215,120,1)) drop-shadow(0 0 30px rgba(255,170,80,.7))}70%{filter:drop-shadow(0 0 9px rgba(255,195,95,.9)) drop-shadow(0 0 20px rgba(255,150,70,.5))}}#hStage .fu.swy{animation:swy .9s ease-in-out}@keyframes swy{0%,100%{rotate:0deg}20%{rotate:3.5deg}50%{rotate:-3deg}80%{rotate:1.5deg}}
 </style>
 </head>
@@ -1605,17 +1605,17 @@ const FCLK={
  v02:{tog:1,flk:1,on:[['h','랜턴 히터 켰어요. 은은하죠ㅎㅎ'],['l','……발밑에 둬. 따뜻해.']],off:[['l','……껐어. 랜턴은 식으면 만져.']]},
  v03:{tog:1,flk:1,on:[['l','……온도 22도. 이상 없음.'],['h','라디에이터 위에 양말 말려도 돼요?']],off:[['l','……껐어. 방이 식는 데 한 시간.']]},
  v04:{fx:'🍊',L:[['h','귤 하나 까 드릴까요?ㅎㅎ'],['l','……발 넣어. 따뜻해.'],['h','코타츠 들어오면 못 나가요…'],['l','……나갈 때는 내가 끌어낼 거야.']]},
- n30:{tog:1,hum:1,fx:'💧',on:[['h','곰 가습기 켰어요! 방이 촉촉해져요ㅎㅎ'],['l','……습도 55. 정확해.']],off:[['l','……껐어. 물은 내일 갈아.']]},
- n31:{tog:1,hum:1,fx:'💧',on:[['h','꽃무늬 주전자에서 김이 나요ㅎㅎ'],['l','……습도계 확인한다. 잠깐 기다려.']],off:[['l','……껐어. 물때 닦아 둘게.']]},
- n32:{tog:1,hum:1,fx:'💧',sx:.73,on:[['h','오두막 굴뚝에서 연기 나요!'],['l','……연기 아니야. 수증기야.']],off:[['l','……전원 껐어. 굴뚝도 쉬어.']]},
- x01:{tog:1,hum:1,fx:'💧',on:[['h','가습기 켰어요ㅎㅎ 목 안 아프게요'],['l','……습도 50 유지.']],off:[['l','……껐어. 습도는 습도계로 본다.']]},
+ n30:{tog:1,hum:1,on:[['h','곰 가습기 켰어요! 방이 촉촉해져요ㅎㅎ'],['l','……습도 55. 정확해.']],off:[['l','……껐어. 물은 내일 갈아.']]},
+ n31:{tog:1,hum:1,on:[['h','꽃무늬 주전자에서 김이 나요ㅎㅎ'],['l','……습도계 확인한다. 잠깐 기다려.']],off:[['l','……껐어. 물때 닦아 둘게.']]},
+ n32:{tog:1,hum:1,sx:.73,on:[['h','오두막 굴뚝에서 연기 나요!'],['l','……연기 아니야. 수증기야.']],off:[['l','……전원 껐어. 굴뚝도 쉬어.']]},
+ x01:{tog:1,hum:1,on:[['h','가습기 켰어요ㅎㅎ 목 안 아프게요'],['l','……습도 50 유지.']],off:[['l','……껐어. 습도는 습도계로 본다.']]},
  n27:{fx:'♨',L:[['h','후후 불어서 드세요. 뜨거워요'],['h','마시멜로 하나 더 넣었어요ㅎㅎ'],['l','……뜨거워. 불어.']]},
  n06:{fx:'🥨',L:[['h','프레첼 하나 먹어도 돼요?ㅎㅎ'],['l','……한 개만. 소금 떨어져.'],['h','빵 냄새 좋아요!']]},
  n25:{swy:1,L:[['h','양말 하트 보이죠? 루카 거예요ㅎㅎ'],['l','……다 말랐는지는 내가 확인해.'],['h','발 시릴 땐 이거 신어요']]}};
 let FSAY=null;
 function humSteam(){const st=$('hFurn');if(!st)return;st.querySelectorAll('.stm').forEach(e=>e.remove());if(HM.edit)return;
   st.querySelectorAll('img.fu[data-hum="1"][data-on="1"]').forEach(im=>{const C=FCLK[im.dataset.k]||{},sx=C.sx||.5;
-    for(let i=0;i<3;i++){const d=document.createElement('div');d.className='fu stm';d.style.left=(im.offsetLeft+im.offsetWidth*sx)+'px';d.style.top=(im.offsetTop+im.offsetHeight*.03)+'px';d.style.zIndex=(+im.style.zIndex||0)+1;d.style.animationDelay=(i*.8)+'s';d.style.setProperty('--sx',((i-1)*7)+'px');st.appendChild(d)}})}
+    for(let i=0;i<7;i++){const d=document.createElement('div');d.className='fu stm';d.style.left=(im.offsetLeft+im.offsetWidth*sx)+'px';d.style.top=(im.offsetTop+im.offsetHeight*.03)+'px';d.style.zIndex=(+im.style.zIndex||0)+1;d.style.animationDelay=(i*.4)+'s';d.style.setProperty('--sx',(((i*37)%5-2)*6)+'px');d.style.marginLeft=(((i*53)%7-3)*2-11)+'px';st.appendChild(d)}})}
 
 function furnTap(o,im){if(HM.edit)return;const C=FCLK[o.k];if(!C)return;const R=a=>a[Math.floor(Math.random()*a.length)];
   let pool=C.L;if(C.tog){o.on=!o.on;pool=o.on?C.on:C.off;if(C.hum){im.dataset.on=o.on?'1':'0';humSteam()}else{im.classList.toggle('lit',!!o.on);im.classList.toggle('flk',!!(o.on&&C.flk))}save()}
