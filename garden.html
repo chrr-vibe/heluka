@@ -1607,7 +1607,7 @@ function furnTap(o,im){if(HM.edit)return;const C=FCLK[o.k];if(!C)return;const R=
   const [v,line]=R(pool);const st=$('hFurn');
   if(FSAY){FSAY.el.remove();clearTimeout(FSAY.t)}
   const el=document.createElement('div');el.className='hsay'+(v==='l'?' l':'')+(gmOK(line)?'':' fb');el.textContent=line;
-  el.style.left=(im.offsetLeft+im.offsetWidth/2)+'px';el.style.top=Math.max(34,im.offsetTop-2)+'px';st.appendChild(el);
+  el.style.left=(im.offsetLeft+im.offsetWidth/2)+'px';el.style.top=Math.max(34,im.offsetTop-22)+'px';st.appendChild(el);
   FSAY={el,t:setTimeout(()=>{el.remove();if(FSAY&&FSAY.el===el)FSAY=null},2700)};
   im.classList.remove('hjump');void im.offsetWidth;im.classList.add('hjump');
   if(C.swy){im.style.transformOrigin='50% 100%';im.classList.remove('swy');void im.offsetWidth;im.classList.add('swy')}
