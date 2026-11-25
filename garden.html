@@ -202,6 +202,7 @@ button{font-family:var(--F)}
 #hTray .list:has(.txt){grid-auto-columns:92px}
 #hTray .act{display:none;gap:6px}#hTray.hold .act{display:flex}
 #hTray .hint{font-size:12.5px;color:#a98890;margin:0 0 6px 2px;font-family:"Apple SD Gothic Neo","Noto Sans KR",sans-serif}
+.fu.bk2{pointer-events:auto;cursor:pointer}.fu.lit{filter:drop-shadow(0 0 10px rgba(255,205,110,.95)) drop-shadow(0 0 22px rgba(255,170,80,.55))}.fu.lit.flk{animation:flk 1.7s ease-in-out infinite}@keyframes flk{0%,100%{filter:drop-shadow(0 0 8px rgba(255,190,90,.9)) drop-shadow(0 0 16px rgba(255,150,70,.4))}45%{filter:drop-shadow(0 0 14px rgba(255,215,120,1)) drop-shadow(0 0 30px rgba(255,170,80,.7))}70%{filter:drop-shadow(0 0 9px rgba(255,195,95,.9)) drop-shadow(0 0 20px rgba(255,150,70,.5))}}.fu.swy{animation:swy .9s ease-in-out}@keyframes swy{0%,100%{rotate:0deg}20%{rotate:3.5deg}50%{rotate:-3deg}80%{rotate:1.5deg}}
 </style>
 </head>
 <body>
@@ -1466,7 +1467,7 @@ function homeBack(g,sc){const el=$('hBack');if(!el)return;if(ROOMS[HM.room][0]!=
 function homeRender(){const r=ROOMS[HM.room],g=HGEO[r[0]],sc=HM.sc,Q=quads(g);$('hName').textContent=r[1];{const wp=(S.homeWp||{})[r[0]]||0;$('hHex').src='home/'+(wp?'wp/'+RIMG(r)+'_'+wp:RIMG(r))+'.webp'}homeBack(g,sc);
   const k=homeUnit(g)/115*sc;const it=homeData();const fl=$('hFurn');fl.querySelectorAll('.fu').forEach(e=>e.remove());homeBigWin(g,sc,Q,fl);homeTerFx(g,sc,Q,fl);
   const order=it.map((o,n)=>{const d=homeDims(o);return{o,n,d,z:o.s==='G'?0:(o.s==='L'||o.s==='R')?1:2+(o.i+d[0])+(o.j+d[1])+o.j*.01}}).sort((a,b)=>a.z-b.z);
-  for(const{o,n,d,z}of order){const f=FK[o.k];if(!f)continue;const im=document.createElement('img');im.style.zIndex=Math.round(z*100);im.className='fu'+(HM.held&&HM.held.n===n?' held':'')+(!HM.edit&&BOOKK.has(o.k)?(letterOk()?' bk ok':' bk'):'');if(!HM.edit&&BOOKK.has(o.k))im.onclick=letterRead;if(!HM.edit&&o.k==='t00'){im.classList.add('bk');im.onclick=bathOpen}im.src='home/f/'+o.k+''+'.webp';
+  for(const{o,n,d,z}of order){const f=FK[o.k];if(!f)continue;const im=document.createElement('img');im.style.zIndex=Math.round(z*100);im.className='fu'+(HM.held&&HM.held.n===n?' held':'')+(!HM.edit&&BOOKK.has(o.k)?(letterOk()?' bk ok':' bk'):'');if(!HM.edit&&BOOKK.has(o.k))im.onclick=letterRead;if(!HM.edit&&o.k==='t00'){im.classList.add('bk');im.onclick=bathOpen}im.src='home/f/'+o.k+''+'.webp';if(!HM.edit&&FCLK[o.k]){im.classList.add('bk2');im.onclick=e=>{e.stopPropagation();furnTap(o,im)}}if(o.on&&FCLK[o.k]&&FCLK[o.k].tog)im.classList.add('lit',FCLK[o.k].flk?'flk':'x');
     const wall=o.s==='L'||o.s==='R';let w=f[3]*k*(o.s==='G'?1.25:1);im.style.width=w+'px';let tf=((o.f?1:0)^((wall&&f[4]===2&&o.s==='L')?1:0)^(o.k==='l03'?1:0))?'scaleX(-1)':'';
     if(wall){const q=Q[o.s],c=bil(q,(o.i+d[0]/2)/HN,(o.j+d[1]/2)/HN);im.style.left=(c[0]*sc-w/2)+'px';im.style.top=(c[1]*sc)+'px';tf+=' translateY(-50%)';im.style.transformOrigin='50% 0';
       const B=g.Bw,E=o.s==='L'?g.LBw:g.RBw;
@@ -1582,7 +1583,7 @@ function homeEnter(h){h=h||'main';HOUSE=h;ROOMS=HOUSES[h].slice();HM.room=0;HM.v
 function homeExit(){if(HM.edit)homeEdit();HM.on=false;$('home').hidden=true;save()}
 
 /* ---- home characters ---- */
-const HACT={t00:'shower',t02:'shower',t03:'shower',l03:'tv',d00:'sleep',d18:'sleep',l00:'sleep',l04:'book',l05:'book',l07:'book',l02:'book',d05:'book',d06:'book',d07:'book',d10:'book',l24:'book',k00:'soup',k01:'soup',k02:'soup',x03:'draw',x04:'draw',k12:'meal',k13:'meal',k14:'meal',v13:'book',v19:'book',v22:'book',v11:'meal'};
+const HACT={t00:'shower',t02:'shower',t03:'shower',l03:'tv',d00:'sleep',d18:'sleep',l00:'sleep',l04:'book',l05:'book',l07:'book',l02:'book',d05:'book',d06:'book',d07:'book',d10:'book',l24:'book',k00:'soup',k01:'soup',k02:'soup',x03:'draw',x04:'draw',k12:'meal',k13:'meal',k14:'meal',v13:'book',v19:'book',v22:'book',v11:'meal',n09:'draw',n21:'sleep',n00:'sleep',n22:'sleep',n27:'soup',n06:'meal',n05:'book',n20:'warm',n26:'warm'};
 const HCH=[{sp:'cat'},{sp:'fox'}];let HCT=0;
 (function(){for(const sp of['cat','fox'])for(const d of'fbs')for(let i=0;i<4;i++){const im=new Image();im.src=`home/c/${sp}_${d}${i}.webp`}})();
 function homeBlocked(){const B=new Set();for(const o of homeData()){if(o.s!=='F'||!FK[o.k])continue;const d=homeDims(o);for(let a=0;a<d[0];a++)for(let b=0;b<d[1];b++)B.add((o.i+a)+','+(o.j+b))}return B}
@@ -1591,6 +1592,26 @@ function homePath(B,a,b){const k=p=>p[0]+','+p[1],prev={},q=[a];prev[k(a)]=null;
   while(q.length){const c=q.shift();if(c[0]===b[0]&&c[1]===b[1]){const p=[];let x=c;while(x){p.unshift(x);x=prev[k(x)]}return p}
     for(const[di,dj]of[[1,0],[-1,0],[0,1],[0,-1]]){const n=[c[0]+di,c[1]+dj];if(n[0]<0||n[1]<0||n[0]>=HN||n[1]>=HN||B.has(k(n))||k(n)in prev)continue;prev[k(n)]=c;q.push(n)}}return null}
 
+/* ---- 가구 누르기 ---- */
+const FCLK={
+ n21:{fx:'🍊',L:[['h','귤 하나 까 드릴까요?ㅎㅎ'],['l','……발 넣어. 따뜻해.'],['h','코타츠 들어오면 못 나가요…'],['l','……나갈 때는 내가 끌어낼 거야.']]},
+ n07:{tog:1,on:[['l','……켰어. 눈 안 부셔.'],['l','……은은해. 이 정도가 적당해.']],off:[['l','……껐어. 자야 해.'],['l','……불 껐다. 5분만.']]},
+ n20:{tog:1,flk:1,fx:'🔥',on:[['l','……장작 넣었어. 정확하게 따뜻해.'],['l','……불 앞에 오래 있지 마. 졸려.']],off:[['l','……불 줄였어. 재 식을 때까지 만지지 마.']]},
+ n26:{tog:1,flk:1,on:[['h','켰어요! 곰이 따뜻해졌어요ㅎㅎ'],['h','발 대고 있어도 돼요']],off:[['h','껐어요. 곰이 쉬는 중이에요']]},
+ n27:{fx:'♨',L:[['h','후후 불어서 드세요. 뜨거워요'],['h','마시멜로 하나 더 넣었어요ㅎㅎ'],['l','……뜨거워. 불어.']]},
+ n06:{fx:'🥨',L:[['h','프레첼 하나 먹어도 돼요?ㅎㅎ'],['l','……한 개만. 소금 떨어져.'],['h','빵 냄새 좋아요!']]},
+ n25:{swy:1,L:[['h','양말 하트 보이죠? 루카 거예요ㅎㅎ'],['l','……다 말랐는지는 내가 확인해.'],['h','발 시릴 땐 이거 신어요']]}};
+let FSAY=null;
+function furnTap(o,im){if(HM.edit)return;const C=FCLK[o.k];if(!C)return;const R=a=>a[Math.floor(Math.random()*a.length)];
+  let pool=C.L;if(C.tog){o.on=!o.on;pool=o.on?C.on:C.off;im.classList.toggle('lit',!!o.on);im.classList.toggle('flk',!!(o.on&&C.flk));save()}
+  const [v,line]=R(pool);const st=$('hFurn');
+  if(FSAY){FSAY.el.remove();clearTimeout(FSAY.t)}
+  const el=document.createElement('div');el.className='hsay'+(v==='l'?' l':'')+(gmOK(line)?'':' fb');el.textContent=line;
+  el.style.left=(im.offsetLeft+im.offsetWidth/2)+'px';el.style.top=Math.max(34,im.offsetTop-2)+'px';st.appendChild(el);
+  FSAY={el,t:setTimeout(()=>{el.remove();if(FSAY&&FSAY.el===el)FSAY=null},2700)};
+  im.classList.remove('hjump');void im.offsetWidth;im.classList.add('hjump');
+  if(C.swy){im.style.transformOrigin='50% 100%';im.classList.remove('swy');void im.offsetWidth;im.classList.add('swy')}
+  if(C.fx&&(!C.tog||o.on))for(let i=0;i<2;i++){const hh=document.createElement('div');hh.className='hheart';hh.textContent=C.fx;hh.style.setProperty('--hx',((i?1:-1)*(6+Math.random()*8))+'px');hh.style.left=(im.offsetLeft+im.offsetWidth/2+(i?12:-12))+'px';hh.style.top=(im.offsetTop+12)+'px';st.appendChild(hh);setTimeout(()=>hh.remove(),1000)}}
 /* ---- 쪼꼬미 누르기 ---- */
 const HL={
  acts:{
@@ -1608,6 +1629,7 @@ const HL={
  home:{l:['……뭐.','……왜.','……이상 없음.','……집이 조용해서 좋아.','……수첩에 적어 둘게.'],h:['ㅎㅎ 좋아서요','루카 보셨어요?','집에 있으니까 좋아요ㅎㅎ','같이 있어서 좋아요','보고 싶었어요']},
  night:{l:['……불 꺼.','……자야 해.'],h:['졸려요… 루카도 자요','오늘도 수고했어요ㅎㅎ']},
  combo:['…바람 소리야.','……아니야. 바람이야.']};
+HL.acts.warm={l:['……난로 앞이 제일 정확하게 따뜻해.','……너무 가까이 가지 마. 5센티.'],h:['따뜻해요ㅎㅎ 루카도 와요','손 녹이는 중이에요']};
 const GMCH='·×“”…←→↔▲▼♥♪가각간갈감갑갔강같개거건걸것게겠겨결겹겼경곁계고곤곰곳과괜교구국군굴굽귀귄그극근글금기긴길김깃까깐깨꺼께껴꼬꼭꽂꽃꾸꾹꿀꿈꿔뀌끄끓끔끝끼나낙난날남납났낮낳내냄냉냥너넘넣네녁노놀놓놨누눈눌눠뉴는늘능늬니님다닥단달닭담닷당닿대더덟덩덮데델도독돌돔동돼됐된됨두둘둥둬뒀뒤드듣들듬듭디따딱땋때땐떠떨떴떻또뚤뜨뜰뜻라락란람랍랐랑래랜램러렀렁레려렸로록롤롬료루륨르른를름릇리린릴림링마막만많말맛맞맣매머먹먼멈멍메며면몇모목몬못무묶문묻물뭐뭘미밀바밖반받발밤밥방밭배버번범벚베벤벽변병보복본볼봉봐봤부북분불붓붙블비빈빨빼뺌뻐쁘쁜삐사삭산상새색생샤서석선설섯섰성세셋션셨소속손송쇠수순숲쉬쉿스슬습시식신실심십싱싶싸싹쌓썼쑥쓰씩씻아안앉않알았앞액앨야양어얻얼없엇었엉엌에엔엣여연열였옆예옛오온올옮옷와완왔왜외왼요욕용우운울움웃워원월웨위유으은을음응의이익인일읽임입있잎자작잘잠잡잤장재쟁저적전절점접정제젤져졌조졸좀좋죠주줄중줘줬쥐증지직진짐집짜째쩍쪼쪽찍차찬찮참찻창채책챙처천첩첫체쳐쳤초촛최추출춥춰췄츠치칙칠침카칸캐캔캠커컵케켜켰코콧쿠크큰클큼키타탁탄탔택터턴털텃테텐토통투툴트틀티파판팔팡팬펭편폈평폐폭폴푸풀풍프플피핀핑하한할함해했행향허헤혀협혔형호혼홈홍화확환회후흉흐흘흙히';const GMS=new Set(GMCH);const gmOK=t=>[...t].every(c=>c.charCodeAt(0)<128||GMS.has(c));
 function homeLine(c){const lu=c.sp==='cat',k=lu?'l':'h',R=a=>a[Math.floor(Math.random()*a.length)];
   const a=c.act&&HL.acts[c.act]&&(c.st==='act');if(a&&Math.random()<.65)return R(HL.acts[c.act][k]);
