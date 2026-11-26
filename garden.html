@@ -1669,6 +1669,7 @@ const FCLK={
  n27:{fx:'♨',L:[['h','후후 불어서 드세요. 뜨거워요'],['h','마시멜로 하나 더 넣었어요ㅎㅎ'],['l','……뜨거워. 불어.']]},
  n06:{fx:'🥨',L:[['h','프레첼 하나 먹어도 돼요?ㅎㅎ'],['l','……한 개만. 소금 떨어져.'],['h','빵 냄새 좋아요!']]},
  n25:{swy:1,L:[['h','양말 하트 보이죠? 루카 거예요ㅎㅎ'],['l','……다 말랐는지는 내가 확인해.'],['h','발 시릴 땐 이거 신어요']]}};
+const FXIMG={'🍊':'orange','🔥':'fire','♨':'steam','🥨':'pretzel','🥥':'coconut','♪':'note','🐚':'shell','✉️':'letter','✨':'sparkle','🌊':'wave','🌸':'blossom'};
 let FSAY=null;
 function humSteam(){const st=$('hFurn');if(!st)return;st.querySelectorAll('.stm').forEach(e=>e.remove());if(HM.edit)return;
   st.querySelectorAll('img.fu[data-hum="1"][data-on="1"]').forEach(im=>{const C=FCLK[im.dataset.k]||{},sx=C.sx||.5;
@@ -1683,7 +1684,7 @@ function furnTap(o,im){if(HM.edit)return;const C=FCLK[o.k];if(!C)return;const R=
   FSAY={el,t:setTimeout(()=>{el.remove();if(FSAY&&FSAY.el===el)FSAY=null},2700)};
   im.classList.remove('hjump');void im.offsetWidth;im.classList.add('hjump');
   if(C.swy){im.style.transformOrigin='50% 100%';im.classList.remove('swy');void im.offsetWidth;im.classList.add('swy')}
-  if(C.fx&&(!C.tog||o.on))for(let i=0;i<2;i++){const hh=document.createElement('div');hh.className='hheart';hh.textContent=C.fx;hh.style.setProperty('--hx',((i?1:-1)*(6+Math.random()*8))+'px');hh.style.left=(im.offsetLeft+im.offsetWidth/2+(i?12:-12))+'px';hh.style.top=(im.offsetTop+12)+'px';st.appendChild(hh);setTimeout(()=>hh.remove(),1000)}}
+  if(C.fx&&(!C.tog||o.on))for(let i=0;i<2;i++){const hh=document.createElement('div');hh.className='hheart';const fi=FXIMG[C.fx];if(fi){hh.style.cssText='width:26px;height:26px;margin:-13px 0 0 -13px;background:url(home/fx/'+fi+'.webp) center/contain no-repeat'}else hh.textContent=C.fx;hh.style.setProperty('--hx',((i?1:-1)*(6+Math.random()*8))+'px');hh.style.left=(im.offsetLeft+im.offsetWidth/2+(i?12:-12))+'px';hh.style.top=(im.offsetTop+12)+'px';st.appendChild(hh);setTimeout(()=>hh.remove(),1000)}}
 /* ---- 쪼꼬미 누르기 ---- */
 const HL={
  acts:{
