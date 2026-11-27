@@ -708,6 +708,9 @@ let OFF=null;
 cv.addEventListener('pointerdown',e=>{const r=cv.getBoundingClientRect();const x=(e.clientX-r.left)*W/r.width,y=(e.clientY-r.top)*W/r.width;if(handWanted()&&(inBB(LU,x,y)||Math.hypot(x-(LU.x+30),y-(LU.y-118))<28)){handOpen();return}if(sunWanted()&&Math.hypot(x-(LU.x-34),y-(LU.y-118))<28){sunOpen();return}tap(x,y)});
 for(const ev of['pointerup','pointercancel','pointerleave'])cv.addEventListener(ev,()=>{if(HAND.on){HAND.on=false;if(HAND.done){const t=Math.round(HAND.t*10)/10;S.handSum=(S.handSum||0)+t;if(t>(S.handBest||0)){const old=S.handBest||0;S.handBest=t;if(old>0)setTimeout(()=>toast('🤲 손 잡은 최장 기록!<br><b>'+t+'초</b>'),300)}S.handLog=(S.handLog||[]);S.handLog.unshift(t);S.handLog.length=Math.min(S.handLog.length,5);save();HAND.done=false;HAND.p=0;HAND.t=0}else{HAND.p=0;HAND.t=0;toast('🤲 꾹 누르고 있으면 손이 데워져요')}}});
 function inBB(c,x,y){return c.bb&&!c.hidden&&x>c.bb[0]&&x<c.bb[2]&&y>c.bb[1]&&y<c.bb[3]}
+function tapHygro(x,y){if(!HP()||scn==='bridge')return false;const hp=L.hygro,n=S.hygro;if(x<hp.x-42||x>hp.x+(PV()&&n>1?150:42)||y<hp.y-122||y>hp.y+8)return false;
+  const t=n>=8?(Math.random()<.67?'……여덟 개. 이제 집 전체가 정확해.':pick(['……습도 52. 이상 없음.','……아홉 개 될 수도 있어.','……계속 늘어나.'])):pick(['…'+n+'개.','…습도 52. 이상 없음.','…아끼는 건 붙여.']);
+  say(LU,t,2.6);LU.flush=2;heartsAt(hp.x,hp.y-100,n>=8?3:1);return true}
 function tap(x,y){
   if(tapDream(x,y))return;
   if(scn==='garden'&&x>350&&y>205&&y<330)return homeEnter();
@@ -719,6 +722,7 @@ function tap(x,y){
   if(tapChick(x,y))return;
   if(RAB.on&&Math.hypot(x-RAB.x,y-(RAB.y-32))<44)return tapRabbit();
   const cs=[LU,HE].sort((a,b)=>b.y-a.y);for(const c of cs)if(inBB(c,x,y))return c===LU?(SULK.on&&LU.state==='sulk'?sulkModal():patL()):patH();
+  if(tapHygro(x,y))return;
   if(scn==='market'&&x>228&&y>40&&y<325)return advOpen();
   if(scn==='beach'&&x>200&&y>170&&y<355)return homeEnter('bungalow');
   if(scn==='table'&&!teaOn()&&x>120&&x<320&&y>255&&y<425)return teaOpen();
